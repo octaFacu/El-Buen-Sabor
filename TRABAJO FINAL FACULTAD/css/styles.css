@@ -1,0 +1,139 @@
+:root {
+  --letra-titulo: "Alfa Slab One", cursive;
+  --letra-btn: "ABeeZee", sans-serif;
+  --letra-inputs: "Varela Round", sans-serif;
+  --font-size: 16px;
+  --main-color: #f99132;
+  --input-text: #fda859;
+  --btn-color: #864e1b;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-image: url(/Assets/Background40Opacity.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+  margin: 0;
+}
+
+/* nav bar */
+
+.headerLogo {
+  background-color: var(--main-color);
+  display: flex;
+  position: sticky;
+  justify-content: space-between;
+  align-items: center;
+  height: 80px;
+  position: sticky;
+}
+
+.headerLogo .logo img {
+  height: 70px;
+  width: auto;
+}
+
+.btnIngresoNav {
+  background: var(--btn-color);
+  border-radius: 30px;
+  border: 0;
+  padding: 15px 35px;
+  margin-right: 3rem;
+  cursor: pointer;
+  color: #ffff;
+}
+
+
+
+/* Estilos de login */
+
+.login-wrapper {
+  display: flex;
+  justify-content: center;
+  position: relative;
+}
+
+.loginLinkRegister{
+    text-decoration: none;
+    color: #fff;
+}
+
+.conteinerLogin {
+  display: flex;
+  flex-direction: column;
+  width: 30%;
+  height: auto;
+  margin-top: 10%;
+  align-items: center;
+  background: var(--main-color);
+  justify-content: center;
+  border-radius: 11px;
+}
+
+.conteinerLogin h1 {
+  margin: 50px;
+  color: #fff;
+}
+
+.conteinerLogin a {
+  margin-bottom: 25px;
+}
+
+.inputs {
+  background-color: var(--input-text);
+  border-radius: 30px;
+  padding: 10px;
+  width: 60%;
+  margin: 10px;
+  border: 0;
+  text-align: center;
+  margin-top: 15px;
+}
+
+.inputs::placeholder{
+    color: #fff;
+}
+
+.btnLogin {
+  padding: 10px 25px;
+  margin-top: 25px;
+  width: 40%;
+  margin-bottom: 1rem;
+  cursor: pointer;
+  color: #fff;
+  background: var(--btn-color);
+  border-radius: 30px;
+  border: 0;
+}
+
+
+/* Estilos boton de google */
+
+ 
+  .actions .btn-google{
+   margin-bottom: 30px;
+    padding: 10px 35px;
+    background-color: #fff;
+    cursor: pointer;
+    color: #000;
+    border-radius: 30px;
+    margin-top: 10px;
+    border: 0;
+    font-family: var(--letra-inputs);
+    font-weight: bold;
+  }
+
+  .actions .btn-google .icon img{
+    display: inline-block;
+    vertical-align: middle;
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
+    
+    margin-right: 5px;
+  }
+  
+

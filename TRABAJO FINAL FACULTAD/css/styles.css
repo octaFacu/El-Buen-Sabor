@@ -360,3 +360,52 @@ hr {
   margin-left:15%;
 
 }
+
+/*---------------------------------Estilos Registro------------------------ */
+
+.hrWhite{
+  background-color:#fff;
+  color:#fff
+}
+
+.register-wrapper {
+  margin-top: 10%;
+  display: flex;
+  justify-content: center;
+  position: relative;
+}
+
+.form-register {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background-color: var(--main-color);
+  align-items: center;
+  width: 30%;
+  height: auto;
+  border-radius: 11px;
+}
+
+.form-register h1 {
+  color: #fff;
+  font-size: 2vw;
+}
+
+.form-register a {
+  color: #fff;
+  text-decoration: none;
+  margin-bottom: 15px;
+}
+
+.btnRegister {
+  padding: 10px 25px;
+  margin-top: 25px;
+  width: 40%;
+  margin-bottom: 1rem;
+  cursor: pointer;
+  background: var(--btn-color);
+  border-radius: 30px;
+  border: 0;
+  font-size: 2vh;
+  color: #fff;
+}

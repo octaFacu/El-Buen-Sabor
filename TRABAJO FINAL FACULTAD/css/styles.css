@@ -6,13 +6,15 @@
   --main-color: #f99132;
   --input-text: #fda859;
   --btn-color: #864e1b;
+  --green-color: #659355;
+  --red-color: #C34942;
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
 body {
-  background-image: url(/Assets/Background40Opacity.jpg);
+  background-image: url(../Assets/Background40Opacity.jpg);
   background-repeat: no-repeat;
   background-size: cover;
   background-attachment: fixed;
@@ -24,11 +26,15 @@ body {
 .headerLogo {
   background-color: var(--main-color);
   display: flex;
-  position: sticky;
+  /* position: sticky; */
   justify-content: space-between;
   align-items: center;
   height: 80px;
-  position: sticky;
+
+  /* position: fixed;
+  top: 0;
+  width: 100%; */
+
 }
 
 .headerLogo .logo img {
@@ -137,3 +143,184 @@ body {
   }
   
 
+/****************** Estilos carrito ******************/
+
+
+.btnBack{
+  width: 5rem;
+  height: 5rem;
+  background-color: var(--main-color);
+  border-radius: 50%;
+  border: 0;
+  margin: 1rem;
+  cursor: pointer;
+}
+
+.cartSection{
+  border-radius: 10px;
+}
+
+.cartTitle{
+  border-radius:10px 10px 0px 0px;
+}
+
+.btnBack img{
+  width: 55%;
+  
+}
+
+.cartSection{
+  background-color: var(--main-color);
+  width: 80%;
+  margin: auto;
+  
+}
+
+.cartTitle{
+  display: flex;
+  justify-content: center;
+
+  background-color: var(--btn-color);
+  height: 4rem;
+  font-family: var(--letra-titulo);
+  color: #fff;
+  
+}
+
+.cartCard{
+  display: flex;
+  align-items: center;
+
+  margin: auto;
+  margin-top: 1rem;
+  border-radius: 10px;
+  background-color: var(--input-text);
+  width: 90%;
+
+  max-height: 140px;
+  min-height: 110px;
+}
+
+.cartCard img{
+  border-radius: 10px;
+
+  width: 20%;
+  max-height: 140px;
+  object-fit: cover;
+
+}
+
+/* Centrado de contenido eje Y*/
+.textCont{
+  text-align: center;
+  color: #fff;
+  font-size: 1.1rem;
+  font-family: var(--letra-inputs);
+}
+/*  */
+
+.cardName{
+  width: 20%;
+  font-family: var(--letra-titulo);
+}
+
+.unitPrice{
+  width: 10%;
+  font-family: var(--letra-inputs);
+}
+
+.cardCount{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--main-color);
+  width: 20%;
+  border-radius: 10px;
+}
+
+.cardCount button{
+  background-color: var(--btn-color);
+  width: 20%;
+  height: 2rem;
+  border: 0;
+  border-radius: 10px;
+  font-weight: bold;
+  color: #fff;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.equal{
+  width: 5%;
+}
+
+.cardAmount{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 15%;
+  background-color: var(--btn-color);
+  height: 2rem;
+  border-radius: 10px;
+}
+
+.deleteCard{
+  width: 20%;
+}
+
+.deleteCard button{
+  background-color: var(--red-color);
+  border: 0;
+  border-radius: 10px;
+  width: 3rem;
+  height: 3rem;
+  color: #fff;
+  font-size: 30px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+
+.confirmCart{
+  display: flex;
+  justify-content: space-around;
+
+  width: 90%;
+  margin: auto;
+  margin-top: 3rem;
+  padding-bottom: 1rem;
+}
+
+.confirmCart button{
+  width: 25%;
+  height: 3rem;
+  background-color: var(--green-color);
+  border: 0;
+  border-radius: 10px;
+  cursor: pointer;
+  color: #fff;
+  font-family: var(--letra-btn);
+  font-size: 1.1rem;
+}
+
+.cartTotalAmount{
+  display: flex;
+  color: #fff;
+  align-items: center;
+  font-family: var(--letra-btn);
+  font-size: 1.1rem;
+}
+
+.totalAmount{
+  display: flex;
+  align-items: center;
+
+  width: 100%;
+  background-color: var(--btn-color);
+  height: 2rem;
+  border-radius: 10px;
+  padding: 5px;
+  margin-left: 10%;
+  align-items: center;
+}

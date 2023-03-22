@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/styles.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com/%22%3E" />
+    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=ABeeZee&family=Alfa+Slab+One&family=Varela+Round&display=swap"
+        rel="stylesheet" />
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
+    <link >
+    <title>Carrito</title>
+</head>
+
+<body>
+
+    <header class="headerLogo">
+        <div class="logo">
+            <img src="./Assets/logo.png" alt="logo de la empresa" />
+        </div>
+        <nav>
+            <button class="btnIngresoNav">Ingresar</button>
+        </nav>
+    </header>
+
+    
+    <button class="btnBack">
+        <img src="Assets/left-arrow.png" alt="Volver" />
+    </button>
+
+    <section class="cartSection">
+        <div class="cartTitle">
+            <h2>Mi Carrito</h2>
+        </div>
+
+        <div class="cartCard">
+            <img src="./Assets/hamburguesa.jpg" alt="Hamburguesa americana">
+            <span class="cardName textCont">Hamburguesa americana</span>
+            <span class="unitPrice textCont">$1500</span>
+            <div class="cardCount textCont">
+                <button class="removeElement">-</button>
+                <span>2</span>
+                <button class="addElement">+</button>
+            </div>
+            <span class="equal textCont">=</span>
+            <div class="cardAmount textCont">
+                <span class="sumPrice">$3000</span>
+            </div>
+            
+            <div class="deleteCard textCont">
+                <button>X</button>
+            </div>
+        </div>
+
+        <div class="cartCard">
+            <img src="./Assets/cocacola.jpg" alt="Cocacola">
+            <span class="cardName textCont">Coca-cola</span>
+            <span class="unitPrice textCont">$400</span>
+            <div class="cardCount textCont">
+                <button class="removeElement">-</button>
+                <span>2</span>
+                <button class="addElement">+</button>
+            </div>
+            <span class="equal textCont">=</span>
+            <div class="cardAmount textCont">
+                <span class="sumPrice">$800</span>
+            </div>
+            
+            <div class="deleteCard textCont">
+                <button>X</button>
+            </div>
+        </div>
+
+        <div class="cartCard">
+            <img src="./Assets/papasCheddar.jpg" alt="Papas con cheddar">
+            <span class="cardName textCont">Papas con cheddar</span>
+            <span class="unitPrice textCont">$800</span>
+            <div class="cardCount textCont">
+                <button class="removeElement">-</button>
+                <span>1</span>
+                <button class="addElement">+</button>
+            </div>
+            <span class="equal textCont">=</span>
+            <div class="cardAmount textCont">
+                <span>$800</span>
+            </div>
+            
+            <div class="deleteCard textCont">
+                <button>X</button>
+            </div>
+        </div>
+
+        <div class="confirmCart">
+            <div></div>
+            <button>Confirmar pedido</button>
+            <div class="cartTotalAmount">
+                <span>Total:</span>
+                <div class="totalAmount">
+                    <span>$4600</span>
+                </div>
+            </div>
+        </div>
+        
+
+    </section>
+
+</body>
+
+</html>

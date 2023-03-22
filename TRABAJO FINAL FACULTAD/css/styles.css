@@ -139,6 +139,7 @@ body {
 /*------------------------------------------ MAIN PAGE ---------------------------------------------*/
   .imgContainer{
     object-fit: contain;
+    
   }
 
 .imgMain{
@@ -215,6 +216,7 @@ body {
   display: inline-flex;
   flex-direction: row;
   margin-bottom: 3%;
+  
 
 }
 
@@ -296,4 +298,65 @@ hr {
   position:absolute;
   bottom:3%;
   right: 3%;
+}
+
+/*------------------------------------------ DETAILS PAGE ---------------------------------------------*/
+
+.detail-card {
+  margin-top: 4%;
+  position: relative;
+  color: white;
+}
+
+.detail-img {
+  margin-top: 0%;
+  margin-right: 0%;
+  margin-left: 0%;
+  min-width: 100%;
+  max-height: 300px;
+  object-fit: cover;
+}
+
+.bottom-leftDetail {
+  margin-left: 2%;
+  position: absolute;
+  top: 30px;
+  left: 10px;
+  text-size-adjust: auto;
+  font-size: 30px;
+  
+}
+
+.card-text{
+  margin-left: 3%;
+}
+
+.container-text{
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  position: relative;
+}
+
+.bottom-rightDetail {
+  margin-right: 2%;
+  position: absolute;
+  top: 30px;
+  right: 10px;
+  text-size-adjust: auto;
+  font-size: 30px;
+  background-color: #864e1b;
+  font-family: var(--letra-btn);
+  font-weight: lighter;
+  border-radius: 11px;
+  padding: 2%;
+  
+}
+
+.text-margin{
+
+  margin-top: 2%;
+  display: inline-flex;
+  margin-left:15%;
+
 }

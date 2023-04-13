@@ -1,0 +1,598 @@
+:root {
+  --letra-titulo: "Alfa Slab One", cursive;
+  --letra-btn: "ABeeZee", sans-serif;
+  --letra-inputs: "Varela Round", sans-serif;
+  --font-size: 16px;
+  --main-color: #f99132;
+  --input-text: #fda859;
+  --btn-color: #864e1b;
+  --green-color: #659355;
+  --red-color: #C34942;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-image: url(../Assets/Background40Opacity.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+  margin: 0;
+}
+
+/* nav bar */
+
+.headerLogo {
+  background-color: var(--main-color);
+  display: flex;
+  /* position: sticky; */
+  justify-content: space-between;
+  align-items: center;
+  height: 80px;
+
+  /* position: fixed;
+  top: 0;
+  width: 100%; */
+
+}
+
+.headerLogo .logo img {
+  height: 70px;
+  width: auto;
+}
+
+.btnIngresoNav {
+  background: var(--btn-color);
+  border-radius: 30px;
+  border: 0;
+  padding: 15px 35px;
+  margin-right: 3rem;
+  cursor: pointer;
+  color: #ffff;
+}
+
+
+
+/************************* Estilos de login ************************/
+
+.login-wrapper {
+  display: flex;
+  justify-content: center;
+  position: relative;
+}
+
+.loginLinkRegister{
+    text-decoration: none;
+    color: #fff;
+}
+
+.conteinerLogin {
+  display: flex;
+  flex-direction: column;
+  width: 30%;
+  height: auto;
+  margin-top: 10%;
+  align-items: center;
+  background: var(--main-color);
+  justify-content: center;
+  border-radius: 11px;
+}
+
+.conteinerLogin h1 {
+  margin: 50px;
+  color: #fff;
+}
+
+.conteinerLogin a {
+  margin-bottom: 25px;
+}
+
+.inputs {
+  background-color: var(--input-text);
+  border-radius: 30px;
+  padding: 10px;
+  width: 60%;
+  margin: 10px;
+  border: 0;
+  text-align: center;
+  margin-top: 15px;
+}
+
+.inputs::placeholder{
+    color: #fff;
+}
+
+.btnLogin {
+  padding: 10px 25px;
+  margin-top: 25px;
+  width: 40%;
+  margin-bottom: 1rem;
+  cursor: pointer;
+  color: #fff;
+  background: var(--btn-color);
+  border-radius: 30px;
+  border: 0;
+}
+
+
+/* Estilos boton de google */
+
+ 
+  .actions .btn-google{
+   margin-bottom: 30px;
+    padding: 10px 35px;
+    background-color: #fff;
+    cursor: pointer;
+    color: #000;
+    border-radius: 30px;
+    margin-top: 10px;
+    border: 0;
+    font-family: var(--letra-inputs);
+    font-weight: bold;
+  }
+
+  .actions .btn-google .icon img{
+    display: inline-block;
+    vertical-align: middle;
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
+    
+    margin-right: 5px;
+  }
+
+/*------------------------------------------ MAIN PAGE ---------------------------------------------*/
+  .imgContainer{
+    object-fit: contain;
+    
+  }
+
+.imgMain{
+    margin: 0;
+    width: 100%;
+    max-height: 30%;
+    position: absolute;
+    left: 0px;
+    right: 0px;
+    
+  }
+
+  .logoMain {
+    position:relative;
+    width: 40%;
+    height: 20%;
+
+    display: block;
+    margin-left: auto;
+  margin-right: auto;
+    padding: 5px;
+}
+  
+.inputColor{
+  font-family: var(--letra-inputs);
+  background-color: #fda859;
+  color: white;
+  margin-left: 5%;
+}
+
+.menuCat {
+  background-color: #fda859;
+  color: white;
+  width: 90%;
+  margin-left: 5%;
+  margin-right: 5%;
+  margin-top: 2%;
+  margin-bottom: 2%;
+  display: flex;
+  justify-content: center;
+  font-family: var(--letra-titulo);
+  border-radius: 30px;
+  padding-top: 2%;
+  padding-bottom: 2%;
+  display: inline-flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.btnPag {
+  border-radius: 100px;
+  background-color: #864e1b;
+  color: white;
+  cursor: pointer;
+  border: 0;
+}
+
+.containerMain {
+  width: 90%;
+  margin-left: 5%;
+  margin-right: 5%;
+  display: flex;
+  justify-content: center;
+  font-family: var(--letra-titulo);
+  flex-direction: column;
+  
+  
+}
+
+.containerCards {
+  display: flex;
+  justify-content: center;
+  display: inline-flex;
+  flex-direction: row;
+  margin-bottom: 3%;
+}
+
+/****************** Estilos carrito ******************/
+
+
+.btnBack{
+  width: 5rem;
+  height: 5rem;
+  background-color: var(--main-color);
+  border-radius: 50%;
+  border: 0;
+  margin: 1rem;
+  cursor: pointer;
+}
+
+.cartSection{
+  border-radius: 10px;
+}
+
+.cartTitle{
+  border-radius:10px 10px 0px 0px;
+}
+
+.btnBack img{
+  width: 55%;
+  
+}
+
+.cartSection{
+  background-color: var(--main-color);
+  width: 80%;
+  margin: auto;
+  
+}
+
+.cartTitle{
+  display: flex;
+  justify-content: center;
+
+  background-color: var(--btn-color);
+  height: 4rem;
+  font-family: var(--letra-titulo);
+  color: #fff;
+  
+}
+
+.cartCard{
+  display: flex;
+  align-items: center;
+
+  margin: auto;
+  margin-top: 1rem;
+  border-radius: 10px;
+  background-color: var(--input-text);
+  width: 90%;
+
+  max-height: 140px;
+  min-height: 110px;
+}
+
+.cartCard img{
+  border-radius: 10px;
+
+  width: 20%;
+  max-height: 140px;
+  object-fit: cover;
+
+}
+
+/* Centrado de contenido eje Y*/
+.textCont{
+  text-align: center;
+  color: #fff;
+  font-size: 1.1rem;
+  font-family: var(--letra-inputs);
+}
+/*  */
+
+.cardName{
+  width: 20%;
+  font-family: var(--letra-titulo);
+}
+
+.unitPrice{
+  width: 10%;
+  font-family: var(--letra-inputs);
+}
+
+.cardCount{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--main-color);
+  width: 20%;
+  border-radius: 10px;
+}
+
+.cardCount button{
+  background-color: var(--btn-color);
+  width: 20%;
+  height: 2rem;
+  border: 0;
+  border-radius: 10px;
+  font-weight: bold;
+  color: #fff;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.equal{
+  width: 5%;
+}
+
+.cardAmount{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 15%;
+  background-color: var(--btn-color);
+  height: 2rem;
+  border-radius: 10px;
+}
+
+.deleteCard{
+  width: 20%;
+}
+
+.deleteCard button{
+  background-color: var(--red-color);
+  border: 0;
+  border-radius: 10px;
+  width: 3rem;
+  height: 3rem;
+  color: #fff;
+  font-size: 30px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+
+.confirmCart{
+  display: flex;
+  justify-content: space-around;
+
+  width: 90%;
+  margin: auto;
+  margin-top: 3rem;
+  padding-bottom: 1rem;
+}
+
+.confirmCart button{
+  width: 25%;
+  height: 3rem;
+  background-color: var(--green-color);
+  border: 0;
+  border-radius: 10px;
+  cursor: pointer;
+  color: #fff;
+  font-family: var(--letra-btn);
+  font-size: 1.1rem;
+}
+
+.cartTotalAmount{
+  display: flex;
+  color: #fff;
+  align-items: center;
+  font-family: var(--letra-btn);
+  font-size: 1.1rem;
+}
+
+.totalAmount{
+  display: flex;
+  align-items: center;
+
+  width: 100%;
+  background-color: var(--btn-color);
+  height: 2rem;
+  border-radius: 10px;
+  padding: 5px;
+  margin-left: 10%;
+  align-items: center;
+}
+
+
+.cardNew {
+  background-color: #f99132;
+  border-radius: 11px;
+  color: white;
+  border: 0;
+  padding: auto;
+  margin-left: 1%;
+  margin-right: 1%;
+  position: relative;
+}
+
+.imgCard {
+  border-radius: 11px;
+  margin-left: 2%;
+  margin-right :2%;
+  margin-top: 2%;
+  margin-bottom: 2%;
+  max-width: 90%
+}
+
+.bottom-left {
+  margin-left: 2%;
+  position: absolute;
+  bottom: 20px;
+  left: 10px;
+  text-size-adjust: auto;
+  font-size: 23px;
+}
+
+.centerTitle{
+  display: inline-flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: baseline;
+}
+
+hr {
+  border: 0;
+  clear:both;
+  display:block;
+  width: 90%;               
+  height: 3px;
+  margin-top: 2%;
+  border: 2px;
+  background-color:#864e1b;
+  color:#864e1b
+}
+
+.container-cat{
+  border-radius: 11px;
+  background-color: #f99132;
+  display: flex;
+  justify-content: center;
+  display: inline-flex;
+  flex-direction: column;
+
+}
+
+.colorMain {
+  background-color: var(--input-text);
+  position: relative;
+}
+
+.secondary-text{
+  color: white;
+  font-family: var(--letra-btn);
+  font-weight: lighter;
+}
+
+.margin-text{
+  margin-left: 2%;
+  margin-bottom: 2%;
+}
+
+.shopping {
+  position:absolute;
+  bottom:3%;
+  right: 3%;
+}
+
+/*------------------------------------------ DETAILS PAGE ---------------------------------------------*/
+
+.detail-card {
+  margin-top: 4%;
+  position: relative;
+  color: white;
+}
+
+.detail-img {
+  margin-top: 0%;
+  margin-right: 0%;
+  margin-left: 0%;
+  min-width: 100%;
+  max-height: 300px;
+  object-fit: cover;
+}
+
+.bottom-leftDetail {
+  margin-left: 2%;
+  position: absolute;
+  top: 30px;
+  left: 10px;
+  text-size-adjust: auto;
+  font-size: 30px;
+  
+}
+
+.card-text{
+  margin-left: 3%;
+}
+
+.container-text{
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  position: relative;
+}
+
+.bottom-rightDetail {
+  margin-right: 2%;
+  position: absolute;
+  top: 30px;
+  right: 10px;
+  text-size-adjust: auto;
+  font-size: 30px;
+  background-color: #864e1b;
+  font-family: var(--letra-btn);
+  font-weight: lighter;
+  border-radius: 11px;
+  padding: 2%;
+  
+}
+
+.text-margin{
+
+  margin-top: 2%;
+  display: inline-flex;
+  margin-left:15%;
+
+}
+
+/*---------------------------------Estilos Registro------------------------ */
+
+.hrWhite{
+  background-color:#fff;
+  color:#fff
+}
+
+.register-wrapper {
+  margin-top: 10%;
+  display: flex;
+  justify-content: center;
+  position: relative;
+}
+
+.form-register {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background-color: var(--main-color);
+  align-items: center;
+  width: 30%;
+  height: auto;
+  border-radius: 11px;
+}
+
+.form-register h1 {
+  color: #fff;
+  font-size: 2vw;
+}
+
+.form-register a {
+  color: #fff;
+  text-decoration: none;
+  margin-bottom: 15px;
+}
+
+.btnRegister {
+  padding: 10px 25px;
+  margin-top: 25px;
+  width: 40%;
+  margin-bottom: 1rem;
+  cursor: pointer;
+  background: var(--btn-color);
+  border-radius: 30px;
+  border: 0;
+  font-size: 2vh;
+  color: #fff;
+}

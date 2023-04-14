@@ -15,7 +15,6 @@ const App: React.FC = () => {
       <h1 style={{color: "white"}}>Hola</h1>
       <main>
         <Navbar />
-        <LoginBtn />
 
       </main>
     </div>

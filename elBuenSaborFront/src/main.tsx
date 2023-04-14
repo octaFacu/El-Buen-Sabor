@@ -12,7 +12,7 @@ const domain: string = process.env.REACT_APP_AUTH0_DOMAIN!;
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
-    <Auth0Provider domain={domain} clientId={clientID}> 
+    <Auth0Provider domain={"dev-elbuensabor.us.auth0.com"} clientId={"GFBGwZPPuFKMKUsTtrfkwAqG3BJCIe5l"}> 
       <App />
     </Auth0Provider>
   </React.StrictMode>,

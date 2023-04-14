@@ -12,6 +12,30 @@ const Navbar: React.FC = () => {
     return <h1>Loading...</h1>
   }
 
+console.log(isAuthenticated);
+
+  if(isAuthenticated){
+    return(
+      <header className="headerLogo">
+        <div className="logo" style={{display: "inline-flex", alignItems: "center"}}>
+          
+          {/*<input className="btnIngresoNav inputs" type="text" placeholder="Buscar producto" ><i className="material-icons" style={{color:"white"}} > search</i>*/}
+          {/*</input>*/}
+        </div>
+        <nav>
+          <i className="material-icons" style={{fontSize: "30px", marginTop: "5%", color:"white"}}> shopping_cart</i>
+          
+          
+          <><img src={user!.picture} alt="imagen de perfil" /><h3>{user!.name}</h3><LogoutBtn/></>
+
+          <LogoutBtn/>
+          
+        </nav>
+      </header>
+    )
+  }else{
+
+
 
     return(
       <header className="headerLogo">
@@ -22,11 +46,15 @@ const Navbar: React.FC = () => {
         </div>
         <nav>
           <i className="material-icons" style={{fontSize: "30px", marginTop: "5%", color:"white"}}> shopping_cart</i>
-          {isAuthenticated? <><img src={user!.picture} alt="imagen de perfil" /><h3>{user!.name}</h3><LogoutBtn/></>: <LoginBtn/>}
+          
+          
+          <LoginBtn/>
+          
           
         </nav>
       </header>
     )
+  }
 }
 
 export default Navbar;

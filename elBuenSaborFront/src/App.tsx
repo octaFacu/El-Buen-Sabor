@@ -12,7 +12,7 @@ const App: React.FC = () => {
 
   return (
     <div className="App" >
-      <h1 style={{color: "white"}}>Hola</h1>
+      <h1>Hola</h1>
       <main>
         <Navbar />
 

@@ -1,6 +1,16 @@
+import {useAuth0} from '@auth0/auth0-react'
+import LogoutBtn from './LogoutBtn';
+import LoginBtn from './LoginBtn';
 
 
 const Navbar: React.FC = () => {
+
+  const { user, isAuthenticated, isLoading } = useAuth0();
+
+
+  if(isLoading){
+    return <h1>Loading...</h1>
+  }
 
 
     return(
@@ -12,7 +22,8 @@ const Navbar: React.FC = () => {
         </div>
         <nav>
           <i className="material-icons" style={{fontSize: "30px", marginTop: "5%", color:"white"}}> shopping_cart</i>
-          <button className="btnIngresoNav">Ingresar</button>
+          {isAuthenticated? <><img src={user!.picture} alt="imagen de perfil" /><h3>{user!.name}</h3><LogoutBtn/></>: <LoginBtn/>}
+          
         </nav>
       </header>
     )

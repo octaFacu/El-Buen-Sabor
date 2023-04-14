@@ -1,21 +1,24 @@
 import { useState } from 'react'
 import Navbar from './components/Navbar'
-import {useAuth0} from '@auth0/auth0-react'
+import LoginBtn from './components/LoginBtn'
+
 
 import './css/App.css'
 
 
 const App: React.FC = () => {
 
-  const { loginWithRedirect } = useAuth0()
+  
 
   return (
-    
-    <main>
-      <Navbar />
-      <button onClick={() => loginWithRedirect()}>Login</button>
+    <div className="App" >
+      <h1 style={{color: "white"}}>Hola</h1>
+      <main>
+        <Navbar />
+        <LoginBtn />
 
-    </main>
+      </main>
+    </div>
   )
 }
 

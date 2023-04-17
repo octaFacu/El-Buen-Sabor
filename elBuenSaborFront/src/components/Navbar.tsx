@@ -28,7 +28,6 @@ console.log(isAuthenticated);
           
           <><img src={user!.picture} alt="imagen de perfil" /><h3>{user!.name}</h3><LogoutBtn/></>
 
-          <LogoutBtn/>
           
         </nav>
       </header>

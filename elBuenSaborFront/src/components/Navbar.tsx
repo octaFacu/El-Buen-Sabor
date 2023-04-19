@@ -16,20 +16,27 @@ console.log(isAuthenticated);
 
   if(isAuthenticated){
     return(
-      <header className="headerLogo">
+      <header className="headerLogo" style={{justifyContent: "space-around", flexDirection: "row"}}>
         <div className="logo" style={{display: "inline-flex", alignItems: "center"}}>
           
-          {/*<input className="btnIngresoNav inputs" type="text" placeholder="Buscar producto" ><i className="material-icons" style={{color:"white"}} > search</i>*/}
-          {/*</input>*/}
+          <input className="btnIngresoNav inputs" type="text" placeholder="Buscar producto" >
+          </input>
         </div>
-        <nav>
-          <i className="material-icons" style={{fontSize: "30px", marginTop: "5%", color:"white"}}> shopping_cart</i>
-          
-          
-          <><img src={user!.picture} alt="imagen de perfil" /><h3>{user!.name}</h3><LogoutBtn/></>
+        {/*<div style={{flexDirection: "row", justifyContent: "flex-end"}}>*/}
+         
+            <div >
+              <i className="material-icons" style={{fontSize: "30px", marginTop: "5%", color:"white"}}> shopping_cart</i>
+            </div>
+            <div>
+              <><img style={{borderRadius: "50%", maxWidth: "50%", maxHeight:"50%"}} src={user!.picture} alt="imagen de perfil" /></>
+            </div>
+            <div>
+              <h3>{user!.name}</h3>
+            </div>
+          <div><LogoutBtn/></div>
+        {/*</div>*/}
 
-          
-        </nav>
+
       </header>
     )
   }else{
@@ -40,8 +47,8 @@ console.log(isAuthenticated);
       <header className="headerLogo">
         <div className="logo" style={{display: "inline-flex", alignItems: "center"}}>
           
-          {/*<input className="btnIngresoNav inputs" type="text" placeholder="Buscar producto" ><i className="material-icons" style={{color:"white"}} > search</i>*/}
-          {/*</input>*/}
+        <input className="btnIngresoNav inputs" type="text" placeholder="Buscar producto" >
+          </input>
         </div>
         <nav>
           <i className="material-icons" style={{fontSize: "30px", marginTop: "5%", color:"white"}}> shopping_cart</i>

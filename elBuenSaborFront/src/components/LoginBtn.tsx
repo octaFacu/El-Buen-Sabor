@@ -1,4 +1,6 @@
 import {useAuth0} from '@auth0/auth0-react'
+import '../css/styles.css'
+import '../css/index.css'
 
 const LoginBtn: React.FC = () => {
 
@@ -7,7 +9,7 @@ const LoginBtn: React.FC = () => {
     
 
     return(
-        <button onClick={() => loginWithRedirect()}>Login</button>
+        <button className='btnIngresoNav' onClick={() => loginWithRedirect()}>Login</button>
     )
 
 }

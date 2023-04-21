@@ -9,7 +9,12 @@ const Navbar: React.FC = () => {
 
 
   if(isLoading){
-    return <h1>Loading...</h1>
+    return(
+
+      <header className="headerLogo" style={{justifyContent: "space-around", flexDirection: "row"}}>
+        <h1>Loading...</h1>
+      </header>
+    ) 
   }
 
 console.log(isAuthenticated);
@@ -18,7 +23,7 @@ console.log(isAuthenticated);
     return(
       <header className="headerLogo" style={{justifyContent: "space-around", flexDirection: "row"}}>
         <div className="logo" style={{display: "inline-flex", alignItems: "center"}}>
-          
+        <i className="material-icons" style={{fontSize: "30px", marginTop: "5%", color:"white", marginLeft: "3%"}}> search</i>
           <input className="btnIngresoNav inputs" type="text" placeholder="Buscar producto" >
           </input>
         </div>
@@ -26,6 +31,7 @@ console.log(isAuthenticated);
          
             <div >
               <i className="material-icons" style={{fontSize: "30px", marginTop: "5%", color:"white"}}> shopping_cart</i>
+              <i className="material-icons" style={{fontSize: "30px", marginTop: "5%", color:"white"}}> favorite</i>
             </div>
             <div>
               <><img style={{borderRadius: "50%", maxWidth: "50%", maxHeight:"50%"}} src={user!.picture} alt="imagen de perfil" /></>
@@ -47,6 +53,7 @@ console.log(isAuthenticated);
     return(
       <header className="headerLogo">
         <div className="logo" style={{display: "inline-flex", alignItems: "center"}}>
+        <i className="material-icons" style={{fontSize: "30px", marginTop: "5%", color:"white", marginLeft: "3%"}}> search</i>
           
         <input className="btnIngresoNav inputs" type="text" placeholder="Buscar producto" >
           </input>

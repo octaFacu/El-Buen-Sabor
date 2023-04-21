@@ -17,7 +17,6 @@ const App: React.FC = () => {
         <Navbar />
         <ImgLogo />
         <MenuCat />
-
       </main>
     </div>
   )

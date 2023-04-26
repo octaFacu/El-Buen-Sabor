@@ -3,71 +3,47 @@ import CateIngrCard from "./CateIngrCard";
 import CategIngrForm from "./CategIngrForm";
 import { useState, useEffect } from "react";
 
-import { rubros as rb } from "../../jsontest/data.json"
 import { Rubro } from "./Rubro";
+import { CategoriaIngredienteService } from "./CategoriaIngredienteService";
 
-interface PropsCategoriaIngrABM {}
+interface PropsCategoriaIngrABM { }
 
 // const CategoriaIngrABM: React.FunctionComponent<PropsCategoriaIngrABM> = () => {
-    const CategoriaIngrABM = () => {
+const CategoriaIngrABM = () => {
 
+    const categoriaIngredienteService = new CategoriaIngredienteService();
+
+    //Para la ventana modal del formulario
     const [estadoModal, setEstadoModal] = useState(false);
+
     const [rubros, setRubros] = useState<Rubro[]>([]);
     const [rubrosPadre, setRubrosPadre] = useState<Rubro[]>([]);
-    const [datos, setDatos] = useState({
-        nombreCard:'',
-        padreCard:'',
-        activoCard:''
+    const [datos, setDatos] = useState<Rubro>({
+        id: undefined,
+        denominacion: '',
+        categoriaPadre: undefined,
+        activo: true
     })
 
-    const getRubros = () => {
-
-         let listaRubro: Rubro[] = [];
-
-        for (let i = 0; i < rb.length; i++) {
-            let obj : Rubro 
-            obj = {
-                nombre: rb[i].nombre,
-                padre: rb[i].padre,
-                activo: rb[i].activo
-            } 
-
-            if(!(obj.nombre === "none")){
-                listaRubro.push(obj)
-            }
-
-        }
-
-        setRubros(listaRubro)
-    }
-
-    const getRubrosPadres = () => {
-
-        let listaRubro: Rubro[] = [];
-
-        for (let i = 0; i < rb.length; i++) {
-            let obj : Rubro 
-
-            if(rb[i].padre === ""){
-
-                obj = {
-                    nombre: rb[i].nombre || "none",
-                    padre: "",
-                    activo: rb[i].activo || false
-                } 
-    
-                listaRubro.push(obj)
-            }
-        }
-
-        setRubrosPadre(listaRubro)
-        
-    }
-
     useEffect(() => {
-        getRubros()
-        getRubrosPadres()
-    }, [])  
+        categoriaIngredienteService.getAll()
+            .then(data => {
+                // console.log(data);
+                setRubros(data)
+            })
+
+        categoriaIngredienteService.getAllPadres()
+            .then(data => {
+                // console.log(data);
+                setRubrosPadre(data)
+            })
+
+    }, []);
+
+    console.log("GetALL");
+    console.log(rubros);
+    console.log("GETALL PADRES");
+    console.log(rubrosPadre);
 
 
     return (
@@ -88,30 +64,32 @@ interface PropsCategoriaIngrABM {}
                         </thead>
                         <tbody>
                             {rubros.map(rub => (
-                                <CateIngrCard 
-                                key={Math.random()*100}
-                                nombre={rub.nombre}
-                                padre={rub.padre}
-                                activo={rub.activo}
-                                rubros={rubros}
-                                setRubros={setRubros}
+                                <CateIngrCard
+                                    key={Math.random() * 100}
+                                    id={rub.id}
+                                    denominacion={rub.denominacion}
+                                    padre={rub.categoriaPadre}
+                                    activo={rub.activo}
 
-                                estado={estadoModal}
-                                cambiarEstado={setEstadoModal}
+                                    rubros={rubros}
+                                    setRubros={setRubros}
 
-                                setDatos={setDatos}
+                                    estado={estadoModal}
+                                    cambiarEstado={setEstadoModal}
+
+                                    setDatos={setDatos}
                                 />
                             ))}
-                            
+
                         </tbody>
                     </table>
                 </div>
             </div>
-            <button className="btn btn-sm btn-primary" onClick={() =>{
-                setDatos({nombreCard: '', padreCard: '', activoCard: ''})
+            <button className="btn btn-sm btn-primary" onClick={() => {
+                setDatos({id: undefined, denominacion:"", categoriaPadre: undefined, activo: true })
                 // setDatos({nombre: '', padre: '', activo: true})
                 setEstadoModal(!estadoModal)
-                } }>Agregar Rubro</button>
+            }}>Agregar Rubro</button>
             <CategIngrForm
                 estado={estadoModal}
                 cambiarEstado={setEstadoModal}
@@ -148,8 +126,8 @@ interface PropsCategoriaIngrABM {}
 //             setRubros(rub)
 //         })
 //         console.log(rubros);
-        
-        
+
+
 
 //     } catch (err: any) {
 

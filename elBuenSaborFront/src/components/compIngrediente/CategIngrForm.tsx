@@ -15,22 +15,31 @@ interface CaracIngrFormProps {
 
 const CaracIngrForm: React.FunctionComponent<CaracIngrFormProps> = ({ estado, cambiarEstado, rubrosPadre, datos }) => {
 
+    const [id, setId] = useState('')
     const [nombre, setNombre] = useState('')
-    const [padre, setPadre] = useState('')
+    const [padre, setPadre] = useState({denominacion: '', id: undefined})
+    // const [padre, setPadre] = useState<Rubro>({
+    //     id: undefined,
+    //     denominacion: '',
+    //     categoriaPadre: undefined,
+    //     activo: true
+    // })
     const [activo, setActivo] = useState('')
 
-    // console.log(datos);
+    console.log(datos);
 
     useEffect(() => {
-        setNombre(datos.nombreCard);
-        setPadre(datos.padreCard);
+        setNombre(datos.denominacion);
+        setPadre(datos.categoriaPadre);
         setActivo(datos.activo);
-    }, [datos.nombreCard, datos.padreCard, datos.activoCard])
+        setId(datos.id);
+    }, [datos.id, datos.denominacion, datos.categoriaPadre, datos.activo])
 
+    console.log("info");
+    console.log(id);
     console.log(nombre);
     console.log(padre);
     console.log(activo);
-
 
     return (
         <>
@@ -55,8 +64,8 @@ const CaracIngrForm: React.FunctionComponent<CaracIngrFormProps> = ({ estado, ca
                                         : <option selected value="">No tiene rubro padre</option>)
                                         }
                                         {rubrosPadre.map(rubro => (
-                                            padre !== rubro.nombre 
-                                            && <option value={rubro.nombre}>{rubro.nombre}</option>
+                                            padre !== rubro.denominacion 
+                                            && <option value={rubro.denominacion }>{rubro.denominacion }</option>
                                         ))}
                                     </select>
                                 </div>

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import { Rubro } from "./Rubro";
 import "../../css/ventanaModal.css"
 import { PadreRubro } from "./PadreRubro";
+import { CategoriaIngredienteService } from "./CategoriaIngredienteService";
 
 interface CaracIngrFormProps {
 
@@ -15,6 +16,8 @@ interface CaracIngrFormProps {
 }
 
 const CaracIngrForm: React.FunctionComponent<CaracIngrFormProps> = ({ estado, cambiarEstado, rubrosPadre, datos }) => {
+
+    const categoriaIngredienteService = new CategoriaIngredienteService();
 
     const [id, setId] = useState('')
     const [nombre, setNombre] = useState('')
@@ -78,7 +81,17 @@ const CaracIngrForm: React.FunctionComponent<CaracIngrFormProps> = ({ estado, ca
                                     </select>
                                 </div>
                                 <button className="btn btn-danger" onClick={() => cambiarEstado(!estado)}>Cancelar</button>
-                                <button type="submit" className="btn btn-primary">Agregar</button>
+                                <button type="submit" className="btn btn-primary" onClick={() => {
+                                    if(datos.id){
+                                        console.log("me estoy editando")
+                                        console.log(datos)
+                                        console.log("EEEEEEEEEEEEEEEEEEEEEEEEE")
+                                    }else{
+                                        console.log("me estoy creando")
+                                        console.log(datos)
+                                    }
+                                    //categoriaIngredienteService.updateActivoRubro(datos)
+                                }}>Agregar</button>
                             </form>
                         </div>
                     </div>

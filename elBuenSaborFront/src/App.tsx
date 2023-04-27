@@ -9,20 +9,21 @@ import CategoriaIngrABM from './components/compIngrediente/CategoriaIngrABM'
 
 
 
+
 const App: React.FC = () => {
 
 
 
   return (
-    <div className="App" >
-      <main>
-        <Navbar />
-        {/* <ImgLogo />
-        <MenuCat /> */}
+      <div className="App" >
+        <main>
+          <Navbar />
+          {/* <ImgLogo />
+          <MenuCat /> */}
 
-        <CategoriaIngrABM />
-      </main>
-    </div>
+          <CategoriaIngrABM />
+        </main>
+      </div>
   )
 }
 

@@ -43,26 +43,23 @@ export  class CategoriaIngredienteService{
     }
 
     // async updateActivoRubro(datos: Rubro){
-    async updateActivoRubro() {
+    async updateActivoRubro(datos: Rubro) {
+
+        console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
+        console.log(datos);
+        console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
 
         try {
 
-            const datos2: any = {
-                id: 5,
-                activo: true,
-                denominacion: "Lacteos",
-                categoriaPadre: {
-                    id:1
-                }
-            }
+            
 
-            let res = await fetch(this.baseUrl + `/${datos2.id}`,
+            let res = await fetch(this.baseUrl + `/${datos.id}`,
                 {
                     method: 'PUT',
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify(datos2)
+                    body: JSON.stringify(datos)
                 })
 
             if (!res.ok) {

@@ -26,7 +26,11 @@ const CateIngrCard: React.FunctionComponent<CateIngrCardProps> = ({denominacion,
     const categoriaIngredienteService = new CategoriaIngredienteService();
 
     useEffect(() => {
-
+        if(datos.id){
+            categoriaIngredienteService.updateActivoRubro(datos)
+            
+        }
+        
     },[datos])
 
     return (
@@ -44,9 +48,15 @@ const CateIngrCard: React.FunctionComponent<CateIngrCardProps> = ({denominacion,
 
                 <button className={`btn btn-sm ${botonActivo ? "btn-danger" : "btn-success"}`} onClick={() => {
                     setbotonActivo(!botonActivo)
+                   if(padre){
                     setDatos({ id: id, denominacion: denominacion, categoriaPadre: {id: padre?.id, denominacion: padre?.denominacion, activo: padre?.activo}, activo: !activo })
-                    // categoriaIngredienteService.updateActivoRubro(datos)
-                    categoriaIngredienteService.updateActivoRubro()
+                   }else{
+                    setDatos({ id: id, denominacion: denominacion, activo: !activo })
+                   }
+                    
+                    console.log(datos)
+                    window.location.reload();
+                    
                 }}>{botonActivo ? "Desactivar" : "Activar"}</button>
 
                 {/* {botonActivo 

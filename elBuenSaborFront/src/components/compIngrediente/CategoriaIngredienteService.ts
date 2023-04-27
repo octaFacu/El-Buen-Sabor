@@ -1,7 +1,7 @@
 import { Rubro } from "./Rubro"
 
-export class CategoriaIngredienteService {
-
+export  class CategoriaIngredienteService{
+    
     baseUrl = "http://localhost:8080/categoria"
 
     //Trae todas categorias de ingrediente
@@ -76,7 +76,6 @@ export class CategoriaIngredienteService {
             console.log(`Error ${err.status}: ${err.statusText}`);
         }
     }
-
 
 
 }

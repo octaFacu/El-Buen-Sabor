@@ -45,9 +45,7 @@ export  class CategoriaIngredienteService{
     // async updateActivoRubro(datos: Rubro){
     async updateActivoRubro(datos: Rubro) {
 
-        console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
-        console.log(datos);
-        console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
+
 
         try {
 
@@ -56,6 +54,32 @@ export  class CategoriaIngredienteService{
             let res = await fetch(this.baseUrl + `/${datos.id}`,
                 {
                     method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(datos)
+                })
+
+            if (!res.ok) {
+                throw { status: res.status, statusText: res.statusText }
+            }
+
+            let jsonRes = await res.json()
+            return jsonRes
+
+        } catch (err: any) {
+            console.log(`Error ${err.status}: ${err.statusText}`);
+        }
+    }
+
+    async createRubro(datos: Rubro) {
+
+        try {
+
+
+            let res = await fetch(this.baseUrl,
+                {
+                    method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                     },

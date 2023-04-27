@@ -63,7 +63,7 @@ const CaracIngrForm: React.FunctionComponent<CaracIngrFormProps> = ({ estado, ca
                         <div className="">
                             <form onSubmit={(e) => {
                                 e.preventDefault()
-                                // cargarCategoria()
+                               
                             }}>
                                 <h3 className="mb-3">Agregar Rubro de Ingrediente</h3>
                                 <div className="mb-3">
@@ -96,13 +96,21 @@ const CaracIngrForm: React.FunctionComponent<CaracIngrFormProps> = ({ estado, ca
                                             setDatos({id: id, denominacion:nombre, activo: activo })
                                         }
 
+                                        categoriaIngredienteService.updateActivoRubro(datos)
+
                                     }else{
                                         console.log("me estoy creando")
-                                        console.log(datos)
+                                        //if(padreId){
+                                            // setDatos({denominacion:nombre, categoriaPadre: {id: padreId}, activo: activo })
+                                        // }else{
+                                            setDatos({denominacion:nombre, activo: activo })
+                                            console.log(datos + "aaaaaaaaaaaaaaaaaaaaaauyfudvshousjg")
+                                        // }
+                                        categoriaIngredienteService.createRubro(datos)
                                     }
-                                    categoriaIngredienteService.updateActivoRubro(datos)
+                                    
                                     cambiarEstado(!estado)
-                                    window.location.reload();
+                                    //window.location.reload();
                                 }}>Agregar</button>
                             </form>
                         </div>

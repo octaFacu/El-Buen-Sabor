@@ -52,6 +52,8 @@ const CaracIngrForm: React.FunctionComponent<CaracIngrFormProps> = ({ estado, ca
     console.log("Nombre:" + nombre);
     console.log("Padre: " + padre.denominacion);
     console.log(activo);
+    console.log();
+    
 
     return (
         <>
@@ -77,7 +79,7 @@ const CaracIngrForm: React.FunctionComponent<CaracIngrFormProps> = ({ estado, ca
                                         }
                                         {rubrosPadre.map(rubro => (
 
-                                            padre.denominacion !== rubro.denominacion
+                                            padre.denominacion !== rubro.denominacion && nombre !== rubro.denominacion
                                             && <option value={rubro.id?.toString()}>{rubro.denominacion}</option>
                                         ))}
                                     </select>

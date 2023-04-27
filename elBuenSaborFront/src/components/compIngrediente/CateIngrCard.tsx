@@ -44,30 +44,20 @@ const CateIngrCard: React.FunctionComponent<CateIngrCardProps> = ({denominacion,
                     setDatos({ id: id, denominacion: denominacion, categoriaPadre: {id: padre?.id, denominacion: padre?.denominacion, activo: padre?.activo}, activo: activo })
                     cambiarEstado(!estado)
                 }}>Editar</button>
-                {/* <button className="btn btn-sm btn-danger">Desactivar</button> */}
 
-                <button className={`btn btn-sm ${botonActivo ? "btn-danger" : "btn-success"}`} onClick={() => {
+                <button className={`btn btn-sm ${botonActivo ? "btn-danger" : "btn-success"}`} onClick={async() => {
                     setbotonActivo(!botonActivo)
                    if(padre){
-                    setDatos({ id: id, denominacion: denominacion, categoriaPadre: {id: padre?.id, denominacion: padre?.denominacion, activo: padre?.activo}, activo: !activo })
+                    await setDatos({ id: id, denominacion: denominacion, categoriaPadre: {id: padre?.id, denominacion: padre?.denominacion, activo: padre?.activo}, activo: !activo })
                    }else{
-                    setDatos({ id: id, denominacion: denominacion, activo: !activo })
+                    await setDatos({ id: id, denominacion: denominacion, activo: !activo })
                    }
-                    
+
                     console.log(datos)
                     window.location.reload();
                     
                 }}>{botonActivo ? "Desactivar" : "Activar"}</button>
 
-                {/* {botonActivo 
-                ? <button className="btn btn-sm btn-danger" onClick={() => {
-                    setbotonActivo(!botonActivo)
-
-                }}>Desactivar</button> 
-                : <button className="btn btn-sm btn-success" onClick={() => {
-                    setbotonActivo(!botonActivo)
-
-                    }}>Activar</button>} */}
                 
             </td>
         </tr>

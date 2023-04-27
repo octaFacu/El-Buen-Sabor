@@ -96,6 +96,7 @@ const CategoriaIngrABM = () => {
                 cambiarEstado={setEstadoModal}
                 rubrosPadre={rubrosPadre}
                 datos={datos}
+                setDatos={setDatos}
             />
         </div >
 

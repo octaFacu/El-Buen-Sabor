@@ -13,15 +13,17 @@ interface CaracIngrFormProps {
     rubrosPadre: Rubro[]
 
     datos?: any
+    setDatos: any
 }
 
-const CaracIngrForm: React.FunctionComponent<CaracIngrFormProps> = ({ estado, cambiarEstado, rubrosPadre, datos }) => {
+const CaracIngrForm: React.FunctionComponent<CaracIngrFormProps> = ({ estado, cambiarEstado, rubrosPadre, datos, setDatos }) => {
 
     const categoriaIngredienteService = new CategoriaIngredienteService();
 
     const [id, setId] = useState('')
     const [nombre, setNombre] = useState('')
     const [padre, setPadre] = useState<PadreRubro>({ id: undefined, denominacion: '', activo: true })
+    const [padreId, setPadreId] = useState('');
     const [activo, setActivo] = useState('')
 
     console.log("-----Estado datos-------");
@@ -68,29 +70,37 @@ const CaracIngrForm: React.FunctionComponent<CaracIngrFormProps> = ({ estado, ca
                                 </div>
                                 <div className="mb-3">
                                     <label htmlFor="rubro" className="form-label">Rubro padre</label>
-                                    <select className="form-select" id="rubro" name="rubro" >
+                                    <select className="form-select" id="rubro" name="rubro" onChange={e => setPadreId(e.target.value)}>
                                         {padre.denominacion === "" || padre.denominacion === undefined
                                         ? <option selected value="">No tiene rubro padre</option>
-                                        : <><option selected value={padre.denominacion}>{padre.denominacion}</option> <option value="">No tiene rubro padre</option> </>
+                                        : <><option selected value={padre.id?.toString()}>{padre.denominacion}</option> <option value="">No tiene rubro padre</option> </>
                                         }
                                         {rubrosPadre.map(rubro => (
 
                                             padre.denominacion !== rubro.denominacion
-                                            && <option value={rubro.denominacion}>{rubro.denominacion}</option>
+                                            && <option value={rubro.id?.toString()}>{rubro.denominacion}</option>
                                         ))}
                                     </select>
                                 </div>
                                 <button className="btn btn-danger" onClick={() => cambiarEstado(!estado)}>Cancelar</button>
                                 <button type="submit" className="btn btn-primary" onClick={() => {
+
+                                    //setDatos({id: id, denominacion:nombre, categoriaPadre: {id: undefined, denominacion: "", activo: true}, activo: activo })
                                     if(datos.id){
-                                        console.log("me estoy editando")
-                                        console.log(datos)
-                                        console.log("EEEEEEEEEEEEEEEEEEEEEEEEE")
+
+                                        if(padreId){
+                                            setDatos({id: id, denominacion:nombre, categoriaPadre: {id: padreId}, activo: activo })
+                                        }else{
+                                            setDatos({id: id, denominacion:nombre, activo: activo })
+                                        }
+
                                     }else{
                                         console.log("me estoy creando")
                                         console.log(datos)
                                     }
-                                    //categoriaIngredienteService.updateActivoRubro(datos)
+                                    categoriaIngredienteService.updateActivoRubro(datos)
+                                    cambiarEstado(!estado)
+                                    window.location.reload();
                                 }}>Agregar</button>
                             </form>
                         </div>

@@ -1,9 +1,11 @@
+import { PadreRubro } from "./PadreRubro";
+
+
 export class Rubro{
 
     id?: Number = 0
     denominacion: string = "";
-	// padre?: Rubro = {id:0 , denominacion:"", activo:true};
-    categoriaPadre?: Rubro = {id:0 , denominacion:"", activo:true};
+    categoriaPadre?: PadreRubro = {id:undefined , denominacion:"", activo:true};
     activo: boolean = true;
 
     constructor(id:Number, denominacion:string, categoriaPadre: Rubro, activo: boolean){

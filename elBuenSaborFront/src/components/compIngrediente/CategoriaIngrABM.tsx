@@ -77,6 +77,7 @@ const CategoriaIngrABM = () => {
                                     estado={estadoModal}
                                     cambiarEstado={setEstadoModal}
 
+                                    datos={datos}
                                     setDatos={setDatos}
                                 />
                             ))}
@@ -86,7 +87,7 @@ const CategoriaIngrABM = () => {
                 </div>
             </div>
             <button className="btn btn-sm btn-primary" onClick={() => {
-                setDatos({id: undefined, denominacion:"", categoriaPadre: undefined, activo: true })
+                setDatos({id: undefined, denominacion:"", categoriaPadre: {id: undefined, denominacion: "", activo: true}, activo: true })
                 // setDatos({nombre: '', padre: '', activo: true})
                 setEstadoModal(!estadoModal)
             }}>Agregar Rubro</button>
@@ -100,41 +101,5 @@ const CategoriaIngrABM = () => {
 
     );
 }
-
-
-
-
-// async function getCategoriaIngrediente () {
-
-//     let rubros: Rubro[];
-
-//     try {
-
-//         const res = await fetch("src/jsontest/data.json")
-
-//         if (!res.ok) {
-//             throw {
-//                 status: res.status,
-//                 statusText: res.statusText
-//             }
-//         }
-
-//         const json = await res.json()
-//         // console.log(json);
-//         rubros = json.rubros;
-//         rubros.map(rub => {
-//             setRubros(rub)
-//         })
-//         console.log(rubros);
-
-
-
-//     } catch (err: any) {
-
-//         console.log(`Error: ${err.status}: ${err.statusText}`);
-
-//     }
-
-// }
 
 export default CategoriaIngrABM;

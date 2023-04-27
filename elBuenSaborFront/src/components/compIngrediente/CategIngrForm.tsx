@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import { Rubro } from "./Rubro";
 import "../../css/ventanaModal.css"
+import { PadreRubro } from "./PadreRubro";
 
 interface CaracIngrFormProps {
 
@@ -10,22 +11,17 @@ interface CaracIngrFormProps {
 
     rubrosPadre: Rubro[]
 
-    datos?:any
+    datos?: any
 }
 
 const CaracIngrForm: React.FunctionComponent<CaracIngrFormProps> = ({ estado, cambiarEstado, rubrosPadre, datos }) => {
 
     const [id, setId] = useState('')
     const [nombre, setNombre] = useState('')
-    const [padre, setPadre] = useState({denominacion: '', id: undefined})
-    // const [padre, setPadre] = useState<Rubro>({
-    //     id: undefined,
-    //     denominacion: '',
-    //     categoriaPadre: undefined,
-    //     activo: true
-    // })
+    const [padre, setPadre] = useState<PadreRubro>({ id: undefined, denominacion: '', activo: true })
     const [activo, setActivo] = useState('')
 
+    console.log("-----Estado datos-------");
     console.log(datos);
 
     useEffect(() => {
@@ -35,10 +31,21 @@ const CaracIngrForm: React.FunctionComponent<CaracIngrFormProps> = ({ estado, ca
         setId(datos.id);
     }, [datos.id, datos.denominacion, datos.categoriaPadre, datos.activo])
 
-    console.log("info");
+
+    if (padre === undefined) {
+        return (
+            <>
+                {estado &&
+                    <h1>LOADING!</h1>
+                }
+            </>
+        )
+    }
+
+    console.log("-----info-------");
     console.log(id);
-    console.log(nombre);
-    console.log(padre);
+    console.log("Nombre:" + nombre);
+    console.log("Padre: " + padre.denominacion);
     console.log(activo);
 
     return (
@@ -58,14 +65,15 @@ const CaracIngrForm: React.FunctionComponent<CaracIngrFormProps> = ({ estado, ca
                                 </div>
                                 <div className="mb-3">
                                     <label htmlFor="rubro" className="form-label">Rubro padre</label>
-                                    <select className="form-select" id="rubro" name="rubro" onChange={e => setPadre(e.target.value)}>
-                                        {(padre !== '' 
-                                        ? <><option selected value={padre}>{padre}</option><option value="">No tiene rubro padre</option></>  
-                                        : <option selected value="">No tiene rubro padre</option>)
+                                    <select className="form-select" id="rubro" name="rubro" >
+                                        {padre.denominacion === "" || padre.denominacion === undefined
+                                        ? <option selected value="">No tiene rubro padre</option>
+                                        : <><option selected value={padre.denominacion}>{padre.denominacion}</option> <option value="">No tiene rubro padre</option> </>
                                         }
                                         {rubrosPadre.map(rubro => (
-                                            padre !== rubro.denominacion 
-                                            && <option value={rubro.denominacion }>{rubro.denominacion }</option>
+
+                                            padre.denominacion !== rubro.denominacion
+                                            && <option value={rubro.denominacion}>{rubro.denominacion}</option>
                                         ))}
                                     </select>
                                 </div>

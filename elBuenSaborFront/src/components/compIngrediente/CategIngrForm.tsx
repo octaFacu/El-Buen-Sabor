@@ -100,17 +100,20 @@ const CaracIngrForm: React.FunctionComponent<CaracIngrFormProps> = ({ estado, ca
 
                                     }else{
                                         console.log("me estoy creando")
-                                        //if(padreId){
-                                            // setDatos({denominacion:nombre, categoriaPadre: {id: padreId}, activo: activo })
-                                        // }else{
-                                            setDatos({denominacion:nombre, activo: activo })
-                                            console.log(datos + "aaaaaaaaaaaaaaaaaaaaaauyfudvshousjg")
-                                        // }
-                                        categoriaIngredienteService.createRubro(datos)
+                                        if(padreId){
+                                            console.log("TENGO PAPA Y ES ESTE: "+ padreId)
+                                            categoriaIngredienteService.createRubro({denominacion: nombre, categoriaPadre: {id: padreId}, activo: activo })
+                                            
+                                         }else{
+                                            console.log("ME ESTOY GUARDANDO SIN  MI VIEJO")
+                                            categoriaIngredienteService.createRubro({denominacion: nombre, activo: activo })
+                                            
+                                        }
+                                        
                                     }
                                     
                                     cambiarEstado(!estado)
-                                    //window.location.reload();
+                                    window.location.reload();
                                 }}>Agregar</button>
                             </form>
                         </div>

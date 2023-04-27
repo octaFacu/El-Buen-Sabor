@@ -48,7 +48,7 @@ const CategoriaIngrABM = () => {
 
     return (
 
-        <div className="container my-5">
+        <div className="container my-5 pb-4">
             <h1 className="text-center">Rubro de ingredientes</h1>
             <hr />
             <div className="row my-3">
@@ -86,7 +86,7 @@ const CategoriaIngrABM = () => {
                     </table>
                 </div>
             </div>
-            <button className="btn btn-sm btn-primary" onClick={() => {
+            <button className="btn btn-sm btn-primary " onClick={() => {
                 setDatos({id: undefined, denominacion:"", categoriaPadre: {id: undefined, denominacion: "", activo: true}, activo: true })
                 // setDatos({nombre: '', padre: '', activo: true})
                 setEstadoModal(!estadoModal)
@@ -98,7 +98,9 @@ const CategoriaIngrABM = () => {
                 datos={datos}
                 setDatos={setDatos}
             />
+            
         </div >
+        
 
     );
 }

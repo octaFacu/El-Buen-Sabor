@@ -72,7 +72,10 @@ export  class CategoriaIngredienteService{
         }
     }
 
-    async createRubro(datos: Rubro) {
+    async createRubro(datos: {}) {
+
+        console.log("IMPORTANTE")
+        console.log(datos)
 
         try {
 

@@ -59,8 +59,8 @@ const CaracIngrForm: React.FunctionComponent<CaracIngrFormProps> = ({ estado, ca
         <>
             {estado &&
                 <div className="overlay">
-                    <div className="container my-5 contenedorModal">
-                        <div className="">
+                    <div className="container my-5 contenedorModal" style={{borderRadius: "25px", backgroundColor: "#f99132", color: "white"}}>
+                        <div className="" style={{textAlign: "center"}}>
                             <form onSubmit={(e) => {
                                 e.preventDefault()
                                
@@ -68,11 +68,11 @@ const CaracIngrForm: React.FunctionComponent<CaracIngrFormProps> = ({ estado, ca
                                 <h3 className="mb-3">Agregar Rubro de Ingrediente</h3>
                                 <div className="mb-3">
                                     <label htmlFor="nombre" className="form-label">Nombre</label>
-                                    <input type="text" className="form-control" id="nombre" name="nombre" required value={nombre} onChange={e => setNombre(e.target.value)} />
+                                    <input style={{borderRadius: "25px", backgroundColor: "#FDA859", color: "white"}} type="text" className="form-control" id="nombre" name="nombre" required value={nombre} onChange={e => setNombre(e.target.value)} />
                                 </div>
                                 <div className="mb-3">
                                     <label htmlFor="rubro" className="form-label">Rubro padre</label>
-                                    <select className="form-select" id="rubro" name="rubro" onChange={e => setPadreId(e.target.value)}>
+                                    <select style={{borderRadius: "25px", backgroundColor: "#FDA859", color: "white"}} className="form-select" id="rubro" name="rubro" onChange={e => setPadreId(e.target.value)}>
                                         {padre.denominacion === "" || padre.denominacion === undefined
                                         ? <option selected value="">No tiene rubro padre</option>
                                         : <><option selected value={padre.id?.toString()}>{padre.denominacion}</option> <option value="">No tiene rubro padre</option> </>
@@ -84,8 +84,9 @@ const CaracIngrForm: React.FunctionComponent<CaracIngrFormProps> = ({ estado, ca
                                         ))}
                                     </select>
                                 </div>
-                                <button className="btn btn-danger" onClick={() => cambiarEstado(!estado)}>Cancelar</button>
-                                <button type="submit" className="btn btn-primary" onClick={() => {
+                                <button className="btn btn-danger mx-3" onClick={() => cambiarEstado(!estado)}><i className="material-icons" style={{fontSize: "30px", cursor:"pointer"}}>highlight_off</i></button>
+
+                                <button type="submit" className="btn" style={{backgroundColor: "#864e1b", color: "white"}} onClick={() => {
 
                                     //setDatos({id: id, denominacion:nombre, categoriaPadre: {id: undefined, denominacion: "", activo: true}, activo: activo })
                                     if(datos.id){
@@ -95,6 +96,7 @@ const CaracIngrForm: React.FunctionComponent<CaracIngrFormProps> = ({ estado, ca
                                         }else{
                                             setDatos({id: id, denominacion:nombre, activo: activo })
                                         }
+
 
                                         categoriaIngredienteService.updateActivoRubro(datos)
 
@@ -114,7 +116,7 @@ const CaracIngrForm: React.FunctionComponent<CaracIngrFormProps> = ({ estado, ca
                                     
                                     cambiarEstado(!estado)
                                     window.location.reload();
-                                }}>Agregar</button>
+                                }}> <i className="material-icons" style={{fontSize: "30px", cursor:"pointer"}}>check</i></button>
                             </form>
                         </div>
                     </div>

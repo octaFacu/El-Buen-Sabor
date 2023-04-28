@@ -47,21 +47,28 @@ const CategoriaIngrABM = () => {
 
 
     return (
-
-        <div className="container my-5 pb-4">
-            <h1 className="text-center">Rubro de ingredientes</h1>
-            <hr />
+        <div>
+        <div className="container my-5 pb-1 mb-3" style={{background: "#f99132", borderRadius: "25px"}}>
+            <div style={{background: "#864e1b", borderRadius: "25px"}}>
+            <div className="text-center py-2 px-3" style={{ display: "inline" }}>
+                <button className="btn btn-sm mt-5" style={{background: "#f99132", color: "white", borderRadius: "50px"}} onClick={() => {
+                    setDatos({id: undefined, denominacion:"", categoriaPadre: {id: undefined, denominacion: "", activo: true}, activo: true })
+                    setEstadoModal(!estadoModal)
+                }}><i className="material-icons" style={{fontSize: "30px", cursor:"pointer"}}>add</i></button>
+                <h1 style={{color: "white"}}> Rubro de ingredientes</h1>
+            </div></div>
+            
             <div className="row my-3">
 
                 <div className="">
                     <table className="table table-striped">
-                        <thead>
+                        {/* <thead>
                             <tr>
                                 <th>Nombre</th>
                                 <th>Padre</th>
                                 <th>Acciones</th>
                             </tr>
-                        </thead>
+                        </thead> */}
                         <tbody>
                             {rubros.map(rub => (
                                 <CateIngrCard
@@ -86,11 +93,7 @@ const CategoriaIngrABM = () => {
                     </table>
                 </div>
             </div>
-            <button className="btn btn-sm btn-primary " onClick={() => {
-                setDatos({id: undefined, denominacion:"", categoriaPadre: {id: undefined, denominacion: "", activo: true}, activo: true })
-                // setDatos({nombre: '', padre: '', activo: true})
-                setEstadoModal(!estadoModal)
-            }}>Agregar Rubro</button>
+            
             <CategIngrForm
                 estado={estadoModal}
                 cambiarEstado={setEstadoModal}
@@ -100,6 +103,8 @@ const CategoriaIngrABM = () => {
             />
             
         </div >
+        <br></br>
+        </div>
         
 
     );

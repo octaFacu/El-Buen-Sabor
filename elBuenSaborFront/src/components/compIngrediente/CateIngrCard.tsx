@@ -34,18 +34,19 @@ const CateIngrCard: React.FunctionComponent<CateIngrCardProps> = ({denominacion,
     },[datos])
 
     return (
-
-        <tr style={botonActivo ? {backgroundColor: '#659355'} : {backgroundColor: '#C34942'}}  >
+        
+        <tr className="mb-5" style={botonActivo ? {backgroundColor: '#659355', borderRadius: "25px"} : {backgroundColor: '#C34942', borderRadius: "25px"}}  >
             <td>{denominacion}</td>
             {padre ? (<td>{padre.denominacion}</td>) : <td>none</td>}
             <td>
-                <button className="btn mx-2 btn-sm btn-primary" onClick={
+                <button className="btn mx-2 btn-sm" style={{backgroundColor: "#864e1b"}} onClick={
                     () => {
                     setDatos({ id: id, denominacion: denominacion, categoriaPadre: {id: padre?.id, denominacion: padre?.denominacion, activo: padre?.activo}, activo: activo })
                     cambiarEstado(!estado)
-                }}>Editar</button>
+                }}><i className="material-icons" style={{fontSize: "30px", cursor:"pointer", color: "white"}}>create</i></button>
 
-                <button className={`btn btn-sm ${botonActivo ? "btn-danger" : "btn-success"}`} onClick={async() => {
+                {/* <button className={`btn btn-sm ${botonActivo ? "btn-danger" : "btn-success"}`} onClick={async() => { */}
+                <button className="btn btn-sm" style={{backgroundColor: "#864e1b", color: "white"}} onClick={async() => { 
                     setbotonActivo(!botonActivo)
                    if(padre){
                     await setDatos({ id: id, denominacion: denominacion, categoriaPadre: {id: padre?.id, denominacion: padre?.denominacion, activo: padre?.activo}, activo: !activo })
@@ -56,7 +57,7 @@ const CateIngrCard: React.FunctionComponent<CateIngrCardProps> = ({denominacion,
                     console.log(datos)
                     window.location.reload();
                     
-                }}>{botonActivo ? "Desactivar" : "Activar"}</button>
+                }}>{botonActivo ? <i className="material-icons" style={{fontSize: "30px", cursor:"pointer"}}>not_interested</i> : <i className="material-icons" style={{fontSize: "30px", cursor:"pointer"}}>check</i>}</button>
 
                 
             </td>

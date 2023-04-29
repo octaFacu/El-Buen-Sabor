@@ -71,6 +71,7 @@ const CategoriaIngrABM = () => {
                         </thead> */}
                         <tbody>
                             {rubros.map(rub => (
+                                
                                 <CateIngrCard
                                     key={Math.random() * 100}
                                     id={rub.id}
@@ -87,6 +88,8 @@ const CategoriaIngrABM = () => {
                                     datos={datos}
                                     setDatos={setDatos}
                                 />
+                               
+                                
                             ))}
 
                         </tbody>

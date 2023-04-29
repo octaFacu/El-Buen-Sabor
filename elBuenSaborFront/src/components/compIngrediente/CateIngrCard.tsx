@@ -36,6 +36,7 @@ const CateIngrCard: React.FunctionComponent<CateIngrCardProps> = ({denominacion,
     return (
         
         <tr className="mb-5" style={botonActivo ? {backgroundColor: '#659355', borderRadius: "25px"} : {backgroundColor: '#C34942', borderRadius: "25px"}}  >
+
             <td>{denominacion}</td>
             {padre ? (<td>{padre.denominacion}</td>) : <td>none</td>}
             <td>
@@ -61,6 +62,7 @@ const CateIngrCard: React.FunctionComponent<CateIngrCardProps> = ({denominacion,
 
                 
             </td>
+            
         </tr>
 
     );

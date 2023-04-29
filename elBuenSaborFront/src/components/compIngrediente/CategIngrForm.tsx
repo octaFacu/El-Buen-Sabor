@@ -23,7 +23,7 @@ const CaracIngrForm: React.FunctionComponent<CaracIngrFormProps> = ({ estado, ca
     const [id, setId] = useState('')
     const [nombre, setNombre] = useState('')
     const [padre, setPadre] = useState<PadreRubro>({ id: undefined, denominacion: '', activo: true })
-    const [padreId, setPadreId] = useState('');
+    const [padreGuardar, setPadreGuardar] = useState('');
     const [activo, setActivo] = useState('')
 
     console.log("-----Estado datos-------");
@@ -72,15 +72,15 @@ const CaracIngrForm: React.FunctionComponent<CaracIngrFormProps> = ({ estado, ca
                                 </div>
                                 <div className="mb-3">
                                     <label htmlFor="rubro" className="form-label">Rubro padre</label>
-                                    <select style={{borderRadius: "25px", backgroundColor: "#FDA859", color: "white"}} className="form-select" id="rubro" name="rubro" onChange={e => setPadreId(e.target.value)}>
+                                    <select style={{borderRadius: "25px", backgroundColor: "#FDA859", color: "white"}} className="form-select" id="rubro" name="rubro" onChange={e => setPadreGuardar(e.target.value)}>
                                         {padre.denominacion === "" || padre.denominacion === undefined
                                         ? <option selected value="">No tiene rubro padre</option>
-                                        : <><option selected value={padre.id?.toString()}>{padre.denominacion}</option> <option value="">No tiene rubro padre</option> </>
+                                        : <><option selected value={JSON.stringify(padre)}>{padre.denominacion}</option> <option value="">No tiene rubro padre</option> </>
                                         }
                                         {rubrosPadre.map(rubro => (
 
                                             padre.denominacion !== rubro.denominacion && nombre !== rubro.denominacion
-                                            && <option value={rubro.id?.toString()}>{rubro.denominacion}</option>
+                                            && <option value={JSON.stringify(rubro)}>{rubro.denominacion}</option>
                                         ))}
                                     </select>
                                 </div>
@@ -88,33 +88,46 @@ const CaracIngrForm: React.FunctionComponent<CaracIngrFormProps> = ({ estado, ca
 
                                 <button type="submit" className="btn" style={{backgroundColor: "#864e1b", color: "white"}} onClick={() => {
 
-                                    //setDatos({id: id, denominacion:nombre, categoriaPadre: {id: undefined, denominacion: "", activo: true}, activo: activo })
+                                   
                                     if(datos.id){
 
-                                        if(padreId){
-                                            setDatos({id: id, denominacion:nombre, categoriaPadre: {id: padreId}, activo: activo })
+                                        //Si hay un padre seleccionado
+                                        if(padreGuardar){
+
+
+                                            let padreAPersistir: PadreRubro = JSON.parse(padreGuardar);
+
+                                            //guardar los datos con un padre
+                                            setDatos({id: id, denominacion:nombre, categoriaPadre: { id: padreAPersistir.id, denominacion: padreAPersistir.denominacion, activo: padreAPersistir.activo }, activo: activo })
+                                            
                                         }else{
+                                            //guardar los datos sin un padre
                                             setDatos({id: id, denominacion:nombre, activo: activo })
                                         }
 
-
+                                        //pasar los datos guardados al metodo de update
                                         categoriaIngredienteService.updateActivoRubro(datos)
 
                                     }else{
-                                        console.log("me estoy creando")
-                                        if(padreId){
-                                            console.log("TENGO PAPA Y ES ESTE: "+ padreId)
-                                            categoriaIngredienteService.createRubro({denominacion: nombre, categoriaPadre: {id: padreId}, activo: activo })
+                                        // chequear si la nueva categoria tiene seleccionado un padre
+                                        if(padreGuardar){
+
+                                            //Pasar los datos del padre de string a json
+                                            let padreAPersistir: PadreRubro = JSON.parse(padreGuardar);
+
+                                            //Creacion de nueva categoria con un padre
+                                            categoriaIngredienteService.createRubro({denominacion: nombre, categoriaPadre: {id: padreAPersistir.id}, activo: activo })
                                             
                                          }else{
-                                            console.log("ME ESTOY GUARDANDO SIN  MI VIEJO")
+                                            //Creacion de nueva categoria sin un padre
                                             categoriaIngredienteService.createRubro({denominacion: nombre, activo: activo })
                                             
                                         }
                                         
                                     }
-                                    
-                                    cambiarEstado(!estado)
+                                    //Cambiar el estado para que se cierre el formulario
+                                    cambiarEstado(!estado);
+                                    //Actualizar la pagina
                                     window.location.reload();
                                 }}> <i className="material-icons" style={{fontSize: "30px", cursor:"pointer"}}>check</i></button>
                             </form>

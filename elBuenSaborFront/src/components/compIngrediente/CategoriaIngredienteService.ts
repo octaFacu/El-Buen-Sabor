@@ -42,15 +42,14 @@ export  class CategoriaIngredienteService{
         }
     }
 
-    // async updateActivoRubro(datos: Rubro){
+    // Metodo para hacer update a una Categoria
     async updateActivoRubro(datos: Rubro) {
 
 
 
         try {
 
-            
-
+            //Pasarle a la direccion con un put la info
             let res = await fetch(this.baseUrl + `/${datos.id}`,
                 {
                     method: 'PUT',

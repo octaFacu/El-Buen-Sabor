@@ -4,6 +4,8 @@ import LoginBtn from './components/LoginBtn'
 import ImgLogo from './components/ImgLogo'
 import MenuCat from './components/MenuCat'
 import CategoriaIngrABM from './components/compIngrediente/CategoriaIngrABM'
+import { ContextProvider } from './context/ContextProvider'
+
 
 
 
@@ -15,6 +17,7 @@ const App: React.FC = () => {
 
 
   return (
+  <ContextProvider>
       <div className="App" >
         <main>
           <Navbar />
@@ -24,6 +27,7 @@ const App: React.FC = () => {
           <CategoriaIngrABM />
         </main>
       </div>
+    </ContextProvider>
   )
 }
 

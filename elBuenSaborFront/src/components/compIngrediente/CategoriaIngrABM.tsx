@@ -2,14 +2,17 @@
 import CateIngrCard from "./CateIngrCard";
 import CategIngrForm from "./CategIngrForm";
 import { useState, useEffect } from "react";
+import { GlobalContext, useUnidadContext } from "../../context/GlobalContext";
+
 
 import { Rubro } from "./Rubro";
-import { CategoriaIngredienteService } from "./CategoriaIngredienteService";
+import { CategoriaIngredienteService } from "../../services/CategoriaIngredienteService";
 
 interface PropsCategoriaIngrABM { }
 
 // const CategoriaIngrABM: React.FunctionComponent<PropsCategoriaIngrABM> = () => {
 const CategoriaIngrABM = () => {
+    const { unidadesDeMedida } = useUnidadContext();
 
     const categoriaIngredienteService = new CategoriaIngredienteService();
 
@@ -48,6 +51,11 @@ const CategoriaIngrABM = () => {
 
     return (
         <div>
+            {/* <div>
+                {unidadesDeMedida.map((unidadDeMedida) => (
+                <div key={unidadDeMedida.id.toString()}>{unidadDeMedida.denominacion}</div>
+                ))}
+            </div> */}
         <div className="container my-5 pb-1 mb-3" style={{background: "#f99132", borderRadius: "25px"}}>
             <div style={{background: "#864e1b", borderRadius: "25px"}}>
             <div className="text-center py-2 px-3" style={{ display: "inline" }}>

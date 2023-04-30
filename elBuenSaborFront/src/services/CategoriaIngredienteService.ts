@@ -1,4 +1,4 @@
-import { Rubro } from "./Rubro"
+import { Rubro } from "../components/compIngrediente/Rubro"
 
 export  class CategoriaIngredienteService{
     

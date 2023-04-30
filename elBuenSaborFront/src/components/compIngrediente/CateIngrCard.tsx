@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import { Rubro } from "./Rubro";
 import { PadreRubro } from "./PadreRubro";
-import { CategoriaIngredienteService } from "./CategoriaIngredienteService";
+import { CategoriaIngredienteService } from "../../services/CategoriaIngredienteService";
 
 interface CateIngrCardProps {
 

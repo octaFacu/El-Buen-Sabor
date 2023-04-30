@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import { Rubro } from "./Rubro";
 import "../../css/ventanaModal.css"
 import { PadreRubro } from "./PadreRubro";
-import { CategoriaIngredienteService } from "./CategoriaIngredienteService";
+import { CategoriaIngredienteService } from "../../services/CategoriaIngredienteService";
 
 interface CaracIngrFormProps {
 

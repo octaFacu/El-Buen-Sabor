@@ -12,7 +12,8 @@ interface PropsCategoriaIngrABM { }
 
 // const CategoriaIngrABM: React.FunctionComponent<PropsCategoriaIngrABM> = () => {
 const CategoriaIngrABM = () => {
-    const { unidadesDeMedida } = useUnidadContext();
+    // const { unidadesDeMedida } = useUnidadContext();
+
 
     const categoriaIngredienteService = new CategoriaIngredienteService();
 
@@ -30,7 +31,7 @@ const CategoriaIngrABM = () => {
 
     useEffect(() => {
         // categoriaIngredienteService.getAll()
-        categoriaIngredienteService.getAllBasic("categoria")
+        categoriaIngredienteService.getAllBasic("categoriaIngrediente")
             .then(data => {
                 // console.log(data);
                 setRubros(data)
@@ -44,19 +45,25 @@ const CategoriaIngrABM = () => {
 
     }, []);
 
-    console.log("GetALL");
-    console.log(rubros);
-    console.log("GETALL PADRES");
-    console.log(rubrosPadre);
 
 
     return (
+        
+
         <div>
-            {/* <div>
-                {unidadesDeMedida.map((unidadDeMedida) => (
+
+        {/* <GlobalContext.Consumer>
+            {(context) => (
+            <div>
+                {context.unidadesDeMedida.map((unidadDeMedida) => (
                 <div key={unidadDeMedida.id.toString()}>{unidadDeMedida.denominacion}</div>
                 ))}
-            </div> */}
+            </div>
+            )}
+        </GlobalContext.Consumer> */}
+
+
+        
         <div className="container my-5 pb-1 mb-3" style={{background: "#f99132", borderRadius: "25px"}}>
             <div style={{background: "#864e1b", borderRadius: "25px"}}>
             <div className="text-center py-2 px-3" style={{ display: "inline" }}>
@@ -117,6 +124,7 @@ const CategoriaIngrABM = () => {
         </div >
         <br></br>
         </div>
+        
         
 
     );

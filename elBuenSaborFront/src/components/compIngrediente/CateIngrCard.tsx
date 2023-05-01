@@ -28,7 +28,7 @@ const CateIngrCard: React.FunctionComponent<CateIngrCardProps> = ({denominacion,
     useEffect(() => {
         if(datos.id){
             // categoriaIngredienteService.updateActivoRubro(datos)
-            categoriaIngredienteService.updateEntity("categoria", datos)
+            categoriaIngredienteService.updateEntity("categoriaIngrediente", datos)
             
         }
         

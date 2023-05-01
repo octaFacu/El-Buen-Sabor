@@ -2,7 +2,7 @@ import { Rubro } from "../components/compIngrediente/Rubro"
 
 export  class CategoriaIngredienteService{
     
-    baseUrl = "http://localhost:8080/categoria"
+    baseUrl = "http://localhost:8080/categoriaIngrediente"
 
     //Trae todas categorias de ingrediente
     async getAll() {

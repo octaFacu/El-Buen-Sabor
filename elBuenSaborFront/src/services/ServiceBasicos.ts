@@ -2,7 +2,7 @@ export class ServiceBasicos{
     
     baseUrl = "http://localhost:8080/"
 
-    //Trae todas categorias de ingrediente
+    //Trae todo
     async getAllBasic(urlEspecifico: String) {
 
         try {
@@ -20,7 +20,7 @@ export class ServiceBasicos{
             console.log(`Error ${err.status}: ${err.statusText}`);
         }
     }
-    // Metodo para hacer update a una Categoria
+    // Metodo para hacer update 
     async updateEntity(urlEspecifico: String, datos: any) {
 
 

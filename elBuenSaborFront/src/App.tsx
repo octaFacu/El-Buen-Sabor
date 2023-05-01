@@ -5,6 +5,8 @@ import ImgLogo from './components/ImgLogo'
 import MenuCat from './components/MenuCat'
 import CategoriaIngrABM from './components/compIngrediente/CategoriaIngrABM'
 import { ContextProvider } from './context/ContextProvider'
+import { BrowserRouter } from "react-router-dom"
+import { AppRoutes } from './routes/AppRoutes'
 
 
 
@@ -18,15 +20,17 @@ const App: React.FC = () => {
 
   return (
   <ContextProvider>
-      <div className="App" >
-        <main>
+    <BrowserRouter>
+      {/* <div className="App" >
+        <main> */}
           <Navbar />
           {/* <ImgLogo />
           <MenuCat /> */}
-
-          <CategoriaIngrABM />
-        </main>
-      </div>
+          <AppRoutes/>
+          {/* <CategoriaIngrABM /> */}
+        {/* </main>
+      </div> */}
+      </BrowserRouter>
     </ContextProvider>
   )
 }

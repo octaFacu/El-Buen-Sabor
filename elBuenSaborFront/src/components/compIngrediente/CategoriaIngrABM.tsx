@@ -29,7 +29,8 @@ const CategoriaIngrABM = () => {
     })
 
     useEffect(() => {
-        categoriaIngredienteService.getAll()
+        // categoriaIngredienteService.getAll()
+        categoriaIngredienteService.getAllBasic("categoria")
             .then(data => {
                 // console.log(data);
                 setRubros(data)
@@ -70,13 +71,13 @@ const CategoriaIngrABM = () => {
 
                 <div className="">
                     <table className="table table-striped">
-                        {/* <thead>
+                        <thead>
                             <tr>
                                 <th>Nombre</th>
                                 <th>Padre</th>
                                 <th>Acciones</th>
                             </tr>
-                        </thead> */}
+                        </thead>
                         <tbody>
                             {rubros.map(rub => (
                                 

@@ -1,6 +1,7 @@
 import {useAuth0} from '@auth0/auth0-react'
 import LogoutBtn from './LogoutBtn';
 import LoginBtn from './LoginBtn';
+import { NavLink } from 'react-router-dom';
 
 
 const Navbar: React.FC = () => {
@@ -66,7 +67,8 @@ console.log(isAuthenticated);
             <LoginBtn/>
           </div>
           
-          
+          {/* <NavLink to="/" >HOME</NavLink>
+          <NavLink to="/abm/rubroIngrediente" >ABM</NavLink> */}
           
         </nav>
       </header>

@@ -3,6 +3,7 @@ import { Rubro } from "./Rubro";
 import "../../css/ventanaModal.css"
 import { PadreRubro } from "./PadreRubro";
 import { CategoriaIngredienteService } from "../../services/CategoriaIngredienteService";
+import { ServiceBasicos } from "../../services/ServiceBasicos";
 
 interface CaracIngrFormProps {
 
@@ -19,6 +20,7 @@ interface CaracIngrFormProps {
 const CaracIngrForm: React.FunctionComponent<CaracIngrFormProps> = ({ estado, cambiarEstado, rubrosPadre, datos, setDatos }) => {
 
     const categoriaIngredienteService = new CategoriaIngredienteService();
+    const serviceBasicos = new ServiceBasicos()
 
     const [id, setId] = useState('')
     const [nombre, setNombre] = useState('')
@@ -106,7 +108,7 @@ const CaracIngrForm: React.FunctionComponent<CaracIngrFormProps> = ({ estado, ca
                                         }
 
                                         //pasar los datos guardados al metodo de update
-                                        categoriaIngredienteService.updateActivoRubro(datos)
+                                        categoriaIngredienteService.updateEntity("categoria", datos)
 
                                     }else{
                                         // chequear si la nueva categoria tiene seleccionado un padre
@@ -116,11 +118,12 @@ const CaracIngrForm: React.FunctionComponent<CaracIngrFormProps> = ({ estado, ca
                                             let padreAPersistir: PadreRubro = JSON.parse(padreGuardar);
 
                                             //Creacion de nueva categoria con un padre
-                                            categoriaIngredienteService.createRubro({denominacion: nombre, categoriaPadre: {id: padreAPersistir.id}, activo: activo })
+                                            // categoriaIngredienteService.createRubro({denominacion: nombre, categoriaPadre: {id: padreAPersistir.id}, activo: activo })
+                                            categoriaIngredienteService.createEntity("categoria" ,{denominacion: nombre, categoriaPadre: {id: padreAPersistir.id}, activo: activo })
                                             
                                          }else{
                                             //Creacion de nueva categoria sin un padre
-                                            categoriaIngredienteService.createRubro({denominacion: nombre, activo: activo })
+                                            categoriaIngredienteService.createEntity("categoria" ,{denominacion: nombre, activo: activo })
                                             
                                         }
                                         

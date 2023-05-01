@@ -27,7 +27,8 @@ const CateIngrCard: React.FunctionComponent<CateIngrCardProps> = ({denominacion,
 
     useEffect(() => {
         if(datos.id){
-            categoriaIngredienteService.updateActivoRubro(datos)
+            // categoriaIngredienteService.updateActivoRubro(datos)
+            categoriaIngredienteService.updateEntity("categoria", datos)
             
         }
         
@@ -58,7 +59,9 @@ const CateIngrCard: React.FunctionComponent<CateIngrCardProps> = ({denominacion,
                     console.log(datos)
                     window.location.reload();
                     
-                }}>{botonActivo ? <i className="material-icons" style={{fontSize: "30px", cursor:"pointer"}}>not_interested</i> : <i className="material-icons" style={{fontSize: "30px", cursor:"pointer"}}>check</i>}</button>
+                }}>{botonActivo 
+                ? <i className="material-icons" style={{fontSize: "30px", cursor:"pointer"}}>not_interested</i> 
+                : <i className="material-icons" style={{fontSize: "30px", cursor:"pointer"}}>check</i>}</button>
 
                 
             </td>

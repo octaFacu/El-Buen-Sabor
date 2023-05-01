@@ -1,6 +1,6 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom"
 import { LandingRoutes } from "./LandingRoutes"
-import { NotFound } from "../components/compIngrediente/NotFound"
+import { NotFound } from "../components/NotFound"
 import { AbmEjemploRoutes } from "../routes/AbmEjemploRoutes"
 
 

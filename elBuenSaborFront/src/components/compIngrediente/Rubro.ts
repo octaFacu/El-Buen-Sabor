@@ -5,13 +5,13 @@ export class Rubro{
 
     id?: Number = 0
     denominacion: string = "";
-    categoriaPadre?: PadreRubro = {id:undefined , denominacion:"", activo:true};
+    categoriaIngredientePadre?: PadreRubro = {id:undefined , denominacion:"", activo:true};
     activo: boolean = true;
 
-    constructor(id:Number, denominacion:string, categoriaPadre: Rubro, activo: boolean){
+    constructor(id:Number, denominacion:string, categoriaIngredientePadre: Rubro, activo: boolean){
         this.id = id
         this.denominacion = denominacion
-        this.categoriaPadre = categoriaPadre
+        this.categoriaIngredientePadre = categoriaIngredientePadre
         this.activo = activo
     }
 }

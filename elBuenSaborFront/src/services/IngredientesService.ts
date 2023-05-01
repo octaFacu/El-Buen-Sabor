@@ -1,16 +1,14 @@
-import { Rubro } from "../components/compIngrediente/Rubro"
-import { ServiceBasicos } from "./ServiceBasicos"
+import { ServiceBasicos } from "./ServiceBasicos";
 
-export class CategoriaIngredienteService extends ServiceBasicos{
-    
-    url = "http://localhost:8080/categoriaIngrediente"
+export class IngredientesService extends ServiceBasicos{
+    url = "http://localhost:8080/ingrediente";
 
     //Trae todas categorias de ingrediente que no tengan padre
-    async getAllPadres() {
+    async getByCategoriaId(categoriaid: Number) {
 
         try {
 
-            let res = await fetch(this.url + "/padres")
+            let res = await fetch(this.url + "/porCategoria/"+ categoriaid)
 
             if (!res.ok) {
                 throw { status: res.status, statusText: res.statusText }
@@ -23,6 +21,5 @@ export class CategoriaIngredienteService extends ServiceBasicos{
             console.log(`Error ${err.status}: ${err.statusText}`);
         }
     }
-
 
 }

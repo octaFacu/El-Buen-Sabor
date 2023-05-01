@@ -3,7 +3,7 @@ import Navbar from './components/Navbar'
 import LoginBtn from './components/LoginBtn'
 import ImgLogo from './components/ImgLogo'
 import MenuCat from './components/MenuCat'
-import CategoriaIngrABM from './components/compIngrediente/CategoriaIngrABM'
+import CategoriaIngrABM from './pages/CategoriaIngredienteABM'
 import { ContextProvider } from './context/ContextProvider'
 import { BrowserRouter } from "react-router-dom"
 import { AppRoutes } from './routes/AppRoutes'

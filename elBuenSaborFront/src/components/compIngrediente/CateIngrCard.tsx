@@ -43,7 +43,7 @@ const CateIngrCard: React.FunctionComponent<CateIngrCardProps> = ({denominacion,
             <td>
                 <button className="btn mx-2 btn-sm" style={{backgroundColor: "#864e1b"}} onClick={
                     () => {
-                    setDatos({ id: id, denominacion: denominacion, categoriaPadre: {id: padre?.id, denominacion: padre?.denominacion, activo: padre?.activo}, activo: activo })
+                    setDatos({ id: id, denominacion: denominacion, categoriaIngredientePadre: {id: padre?.id, denominacion: padre?.denominacion, activo: padre?.activo}, activo: activo })
                     cambiarEstado(!estado)
                 }}><i className="material-icons" style={{fontSize: "30px", cursor:"pointer", color: "white"}}>create</i></button>
 
@@ -51,7 +51,7 @@ const CateIngrCard: React.FunctionComponent<CateIngrCardProps> = ({denominacion,
                 <button className="btn btn-sm" style={{backgroundColor: "#864e1b", color: "white"}} onClick={async() => { 
                     setbotonActivo(!botonActivo)
                    if(padre){
-                    await setDatos({ id: id, denominacion: denominacion, categoriaPadre: {id: padre?.id, denominacion: padre?.denominacion, activo: padre?.activo}, activo: !activo })
+                    await setDatos({ id: id, denominacion: denominacion, categoriaIngredientePadre: {id: padre?.id, denominacion: padre?.denominacion, activo: padre?.activo}, activo: !activo })
                    }else{
                     await setDatos({ id: id, denominacion: denominacion, activo: !activo })
                    }

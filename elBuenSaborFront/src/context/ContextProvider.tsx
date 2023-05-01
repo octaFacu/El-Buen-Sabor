@@ -1,19 +1,25 @@
 import { useEffect, useState } from "react";
 import { ServiceBasicos } from "../services/ServiceBasicos";
 import { GlobalContext } from "./GlobalContext"
-import { unidadDeMedida } from "./interfaces/interfaces";
+import { Ingrediente, unidadDeMedida } from "./interfaces/interfaces";
+import { IngredientesService } from "../services/IngredientesService";
 
 
 
-
+//Declarar el tipo de las props del contexto
 interface props {
     children: JSX.Element | JSX.Element[]
 }
 
 export const ContextProvider = ({ children }: props) => {
+  //Declarar todas las constantes del valor
     const [unidadesDeMedida, setUnidadesDeMedida] = useState<unidadDeMedida[]>([]);
+    const [ingredientes, setIngredientes] = useState<Ingrediente[]>([]);
     const serviceBasicos = new ServiceBasicos();
+    const ingredientesService = new IngredientesService();
 
+
+    //GET ALL UNIDADES DE MEDIDA
     useEffect(() => {
       const fetchData = async () => {
         const data = await serviceBasicos.getAllBasic("unidadDeMedida");
@@ -21,9 +27,19 @@ export const ContextProvider = ({ children }: props) => {
       };
       fetchData();
     }, []);
+
+    //GET ALL INGREDIENTES
+    useEffect(() => {
+      const fetchDataIngredientes = async () => {
+        const data = await ingredientesService.getAllBasic("ingrediente");
+        setIngredientes(data);
+      };
+      fetchDataIngredientes();
+    }, []);
   
+    //Devolver el provider con los valores que vamos a llevar a otros componentes
     return (
-      <GlobalContext.Provider value={{ unidadesDeMedida, setUnidadesDeMedida }}>
+      <GlobalContext.Provider value={{ unidadesDeMedida, setUnidadesDeMedida, ingredientes, setIngredientes }}>
         {children}
       </GlobalContext.Provider>
     );

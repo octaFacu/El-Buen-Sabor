@@ -1,74 +1,31 @@
-
-import CateIngrCard from "./CateIngrCard";
-import CategIngrForm from "./CategIngrForm";
-import { useState, useEffect } from "react";
-import { GlobalContext, useUnidadContext } from "../../context/GlobalContext";
+import { GlobalContext } from "../context/GlobalContext"
+import { IngredientesService } from "../services/IngredientesService"
 
 
-import { Rubro } from "./Rubro";
-import { CategoriaIngredienteService } from "../../services/CategoriaIngredienteService";
 
-interface PropsCategoriaIngrABM { }
-
-// const CategoriaIngrABM: React.FunctionComponent<PropsCategoriaIngrABM> = () => {
-const CategoriaIngrABM = () => {
-    // const { unidadesDeMedida } = useUnidadContext();
-
-
-    const categoriaIngredienteService = new CategoriaIngredienteService();
-
-    //Para la ventana modal del formulario
-    const [estadoModal, setEstadoModal] = useState(false);
-
-    const [rubros, setRubros] = useState<Rubro[]>([]);
-    const [rubrosPadre, setRubrosPadre] = useState<Rubro[]>([]);
-    const [datos, setDatos] = useState<Rubro>({
-        id: undefined,
-        denominacion: '',
-        categoriaPadre: undefined,
-        activo: true
-    })
-
-    useEffect(() => {
-        // categoriaIngredienteService.getAll()
-        categoriaIngredienteService.getAllBasic("categoriaIngrediente")
-            .then(data => {
-                // console.log(data);
-                setRubros(data)
-            })
-
-        categoriaIngredienteService.getAllPadres()
-            .then(data => {
-                // console.log(data);
-                setRubrosPadre(data)
-            })
-
-    }, []);
-
+export const IngredientesABM = () => {
 
 
     return (
-        
-
         <div>
 
-        {/* <GlobalContext.Consumer>
+        <GlobalContext.Consumer>
             {(context) => (
             <div>
-                {context.unidadesDeMedida.map((unidadDeMedida) => (
-                <div key={unidadDeMedida.id.toString()}>{unidadDeMedida.denominacion}</div>
+                {context.ingredientes.map((ingrediente) => (
+                <div key={ingrediente.id.toString()}>{ingrediente.nombre} {ingrediente.precioCompra.toString()} {ingrediente.unidadmedida.denominacion} {ingrediente.categoriaIngrediente.denominacion}</div>
                 ))}
             </div>
             )}
-        </GlobalContext.Consumer> */}
+        </GlobalContext.Consumer>
 
 
         
-        <div className="container my-5 pb-1 mb-3" style={{background: "#f99132", borderRadius: "25px"}}>
+        {/* <div className="container my-5 pb-1 mb-3" style={{background: "#f99132", borderRadius: "25px"}}>
             <div style={{background: "#864e1b", borderRadius: "25px"}}>
             <div className="text-center py-2 px-3" style={{ display: "inline" }}>
                 <button className="btn btn-sm mt-5" style={{background: "#f99132", color: "white", borderRadius: "50px"}} onClick={() => {
-                    setDatos({id: undefined, denominacion:"", categoriaPadre: {id: undefined, denominacion: "", activo: true}, activo: true })
+                    setDatos({id: undefined, denominacion:"", categoriaIngredientePadre: {id: undefined, denominacion: "", activo: true}, activo: true })
                     setEstadoModal(!estadoModal)
                 }}><i className="material-icons" style={{fontSize: "30px", cursor:"pointer"}}>add</i></button>
                 <h1 style={{color: "white"}}> Rubro de ingredientes</h1>
@@ -92,7 +49,7 @@ const CategoriaIngrABM = () => {
                                     key={Math.random() * 100}
                                     id={rub.id}
                                     denominacion={rub.denominacion}
-                                    padre={rub.categoriaPadre}
+                                    padre={rub.categoriaIngredientePadre}
                                     activo={rub.activo}
 
                                     rubros={rubros}
@@ -122,12 +79,8 @@ const CategoriaIngrABM = () => {
             />
             
         </div >
-        <br></br>
+        <br></br> */}
         </div>
-        
-        
+    )
 
-    );
 }
-
-export default CategoriaIngrABM;

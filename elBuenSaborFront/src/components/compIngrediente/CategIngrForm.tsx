@@ -33,10 +33,10 @@ const CaracIngrForm: React.FunctionComponent<CaracIngrFormProps> = ({ estado, ca
 
     useEffect(() => {
         setNombre(datos.denominacion);
-        setPadre(datos.categoriaPadre);
+        setPadre(datos.categoriaIngredientePadre);
         setActivo(datos.activo);
         setId(datos.id);
-    }, [datos.id, datos.denominacion, datos.categoriaPadre, datos.activo])
+    }, [datos.id, datos.denominacion, datos.categoriaIngredientePadre, datos.activo])
 
 
     if (padre === undefined) {
@@ -100,7 +100,7 @@ const CaracIngrForm: React.FunctionComponent<CaracIngrFormProps> = ({ estado, ca
                                             let padreAPersistir: PadreRubro = JSON.parse(padreGuardar);
 
                                             //guardar los datos con un padre
-                                            setDatos({id: id, denominacion:nombre, categoriaPadre: { id: padreAPersistir.id, denominacion: padreAPersistir.denominacion, activo: padreAPersistir.activo }, activo: activo })
+                                            setDatos({id: id, denominacion:nombre, categoriaIngredientePadre: { id: padreAPersistir.id, denominacion: padreAPersistir.denominacion, activo: padreAPersistir.activo }, activo: activo })
                                             
                                         }else{
                                             //guardar los datos sin un padre
@@ -118,9 +118,10 @@ const CaracIngrForm: React.FunctionComponent<CaracIngrFormProps> = ({ estado, ca
                                             let padreAPersistir: PadreRubro = JSON.parse(padreGuardar);
 
                                             //Creacion de nueva categoria con un padre
+
                                             // categoriaIngredienteService.createRubro({denominacion: nombre, categoriaPadre: {id: padreAPersistir.id}, activo: activo })
-                                            categoriaIngredienteService.createEntity("categoriaIngrediente" ,{denominacion: nombre, categoriaPadre: {id: padreAPersistir.id}, activo: activo })
-                                            
+                                            categoriaIngredienteService.createEntity("categoriaIngrediente" ,{denominacion: nombre, categoriaIngredientePadre: {id: padreAPersistir.id}, activo: activo })
+
                                          }else{
                                             //Creacion de nueva categoria sin un padre
                                             categoriaIngredienteService.createEntity("categoriaIngrediente" ,{denominacion: nombre, activo: activo })

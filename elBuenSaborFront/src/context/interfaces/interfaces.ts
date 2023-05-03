@@ -3,11 +3,12 @@ import { Rubro } from "../../components/compIngrediente/Rubro"
 export type unidadDeMedida = {
     id: Number,
     denominacion: String,
-    padre_id: Number
+    unidadesParaPadre: Number,
+    padre?: unidadDeMedida
 }
 
 export type Ingrediente = {
-    id: Number,
+    id?: Number,
     activo: Boolean,
     nombre: String,
     precioCompra: Number,

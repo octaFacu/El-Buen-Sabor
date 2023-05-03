@@ -20,41 +20,75 @@ interface CaracIngrFormProps {
 const CaracIngrForm: React.FunctionComponent<CaracIngrFormProps> = ({ estado, cambiarEstado, rubrosPadre, datos, setDatos }) => {
 
     const categoriaIngredienteService = new CategoriaIngredienteService();
-    const serviceBasicos = new ServiceBasicos()
 
     const [id, setId] = useState('')
     const [nombre, setNombre] = useState('')
     const [padre, setPadre] = useState<PadreRubro>({ id: undefined, denominacion: '', activo: true })
     const [padreGuardar, setPadreGuardar] = useState('');
     const [activo, setActivo] = useState('')
+    const [esPadre, setEsPadre] = useState<Boolean>()
 
     console.log("-----Estado datos-------");
     console.log(datos);
 
+
+    //Setear toda la informacion de los datos que le pasamos al form
     useEffect(() => {
         setNombre(datos.denominacion);
         setPadre(datos.categoriaIngredientePadre);
         setActivo(datos.activo);
         setId(datos.id);
+        chequearSiPadre();
+
+
+        
+
+        
     }, [datos.id, datos.denominacion, datos.categoriaIngredientePadre, datos.activo])
 
+    const chequearSiPadre = async () => {
 
-    if (padre === undefined) {
-        return (
-            <>
-                {estado &&
-                    <h1>LOADING!</h1>
-                }
-            </>
-        )
+        return await categoriaIngredienteService.getAllPadresConHijos().then(data => {
+            //DICE QUE SON PADRE TODOS LOS QUE SON PADRE Y NO SON HIJOS
+            // console.log(data);
+            // console.log(datos.id)
+
+            const padreEncontrado: PadreRubro | undefined = data.find((obj: PadreRubro) => (obj.id?.toString() == datos.id));
+            if(padreEncontrado !== undefined){
+                setEsPadre(true);
+            }else{
+                setEsPadre(false);
+            }
+            
+                
+        });
+
+    }
+    
+    
+        
+
+    
+
+    if (padre === undefined || esPadre === undefined) {
+
+            return (
+                <>
+                    {estado &&
+                        <h1>LOADING!</h1>
+                    }
+                </>
+            )
     }
 
-    console.log("-----info-------");
-    console.log(id);
-    console.log("Nombre:" + nombre);
-    console.log("Padre: " + padre.denominacion);
-    console.log(activo);
-    console.log();
+    
+
+    // console.log("-----info-------");
+    // console.log(id);
+    // console.log("Nombre:" + nombre);
+    // console.log("Padre: " + padre.denominacion);
+    // console.log(activo);
+
     
 
     return (
@@ -72,6 +106,11 @@ const CaracIngrForm: React.FunctionComponent<CaracIngrFormProps> = ({ estado, ca
                                     <label htmlFor="nombre" className="form-label">Nombre</label>
                                     <input style={{borderRadius: "25px", backgroundColor: "#FDA859", color: "white"}} type="text" className="form-control" id="nombre" name="nombre" required value={nombre} onChange={e => setNombre(e.target.value)} />
                                 </div>
+
+                                
+                                { !esPadre &&
+                                
+
                                 <div className="mb-3">
                                     <label htmlFor="rubro" className="form-label">Rubro padre</label>
                                     <select style={{borderRadius: "25px", backgroundColor: "#FDA859", color: "white"}} className="form-select" id="rubro" name="rubro" onChange={e => setPadreGuardar(e.target.value)}>
@@ -85,7 +124,7 @@ const CaracIngrForm: React.FunctionComponent<CaracIngrFormProps> = ({ estado, ca
                                             && <option value={JSON.stringify(rubro)}>{rubro.denominacion}</option>
                                         ))}
                                     </select>
-                                </div>
+                                </div>}
                                 <button className="btn btn-danger mx-3" onClick={() => cambiarEstado(!estado)}><i className="material-icons" style={{fontSize: "30px", cursor:"pointer"}}>highlight_off</i></button>
 
                                 <button type="submit" className="btn" style={{backgroundColor: "#864e1b", color: "white"}} onClick={() => {

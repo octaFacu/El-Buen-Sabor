@@ -4,9 +4,9 @@ import CategIngrForm from "../components/compIngrediente/CategIngrForm";
 import { useState, useEffect } from "react";
 import { GlobalContext, useUnidadContext } from "../context/GlobalContext";
 
-
 import { Rubro } from "../components/compIngrediente/Rubro";
 import { CategoriaIngredienteService } from "../services/CategoriaIngredienteService";
+import "./pagesStyles/categoriaIngredienteABM.css"
 
 interface PropsCategoriaIngrABM { }
 
@@ -48,11 +48,11 @@ const CategoriaIngrABM = () => {
 
 
     return (
-        
+
 
         <div>
 
-        {/* <GlobalContext.Consumer>
+            {/* <GlobalContext.Consumer>
             {(context) => (
             <div>
                 {context.ingredientes.map((ingrediente) => (
@@ -63,69 +63,69 @@ const CategoriaIngrABM = () => {
         </GlobalContext.Consumer> */}
 
 
-        
-        <div className="container my-5 pb-1 mb-3" style={{background: "#f99132", borderRadius: "25px"}}>
-            <div style={{background: "#864e1b", borderRadius: "25px"}}>
-            <div className="text-center py-4 px-3" style={{ display: "flex" }}>
-                <button className="btn btn-sm " style={{background: "#f99132", color: "white", borderRadius: "50px"}} onClick={() => {
-                    setDatos({id: undefined, denominacion:"", categoriaIngredientePadre: {id: undefined, denominacion: "", activo: true}, activo: true })
-                    setEstadoModal(!estadoModal)
-                }}><i className="material-icons" style={{fontSize: "30px", cursor:"pointer"}}>add</i></button>
-                <h1 style={{margin: "auto", color: "white"}}> Rubro de ingredientes</h1>
-            </div></div>
-            
-            <div className="row my-3">
 
-                <div className="">
-                    <table className="table table-striped">
-                        <thead>
-                            <tr>
-                                <th>Nombre</th>
-                                <th>Padre</th>
-                                <th>Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {rubros.map(rub => (
-                                
-                                <CateIngrCard
-                                    key={Math.random() * 100}
-                                    id={rub.id}
-                                    denominacion={rub.denominacion}
-                                    padre={rub.categoriaIngredientePadre}
-                                    activo={rub.activo}
+            <div className="container my-5 pb-1 mb-3 " style={{ background: "#f99132", borderRadius: "25px" }}>
+                <div className="titleAndAddButton">
+                    <div className="text-center py-4 px-3 d-flex">
+                        <button className="btn btn-sm " style={{ background: "#f99132", color: "white", borderRadius: "50px" }} onClick={() => {
+                            setDatos({ id: undefined, denominacion: "", categoriaIngredientePadre: { id: undefined, denominacion: "", activo: true }, activo: true })
+                            setEstadoModal(!estadoModal)
+                        }}><i className="material-icons" style={{ fontSize: "30px", cursor: "pointer" }}>add</i></button>
+                        <h1 style={{ margin: "auto", color: "white" }}> Rubro de ingredientes</h1>
+                    </div></div>
 
-                                    rubros={rubros}
-                                    setRubros={setRubros}
+                <div className="row my-3 mx-2">
 
-                                    estado={estadoModal}
-                                    cambiarEstado={setEstadoModal}
+                    <div className="">
+                        <table className="table" style={{ borderSpacing: "5px" }}>
+                            <thead>
+                                <tr>
+                                    <th>Nombre</th>
+                                    <th>Padre</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {rubros.map(rub => (
 
-                                    datos={datos}
-                                    setDatos={setDatos}
-                                />
-                               
-                                
-                            ))}
+                                    <CateIngrCard
+                                        key={Math.random() * 100}
+                                        id={rub.id}
+                                        denominacion={rub.denominacion}
+                                        padre={rub.categoriaIngredientePadre}
+                                        activo={rub.activo}
 
-                        </tbody>
-                    </table>
+                                        rubros={rubros}
+                                        setRubros={setRubros}
+
+                                        estado={estadoModal}
+                                        cambiarEstado={setEstadoModal}
+
+                                        datos={datos}
+                                        setDatos={setDatos}
+                                    />
+
+
+                                ))}
+
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
-            </div>
-            
-            <CategIngrForm
-                estado={estadoModal}
-                cambiarEstado={setEstadoModal}
-                rubrosPadre={rubrosPadre}
-                datos={datos}
-                setDatos={setDatos}
-            />
-            
-        </div >
-        <br></br>
+
+                <CategIngrForm
+                    estado={estadoModal}
+                    cambiarEstado={setEstadoModal}
+                    rubrosPadre={rubrosPadre}
+                    datos={datos}
+                    setDatos={setDatos}
+                />
+
+            </div >
+            <br></br>
         </div>
-        
-        
+
+
 
     );
 }

@@ -1,0 +1,10 @@
+.container{
+    --bs-gutter-x: !important;
+
+}
+
+.titleAndAddButton{
+    background: #864e1b;
+    border-top-right-radius: 25px;
+    border-top-left-radius: 25px;
+}

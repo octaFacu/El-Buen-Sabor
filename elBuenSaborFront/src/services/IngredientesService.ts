@@ -3,6 +3,10 @@ import { ServiceBasicos } from "./ServiceBasicos";
 export class IngredientesService extends ServiceBasicos{
     url = "http://localhost:8080/ingrediente";
 
+    constructor() {
+        super("ingrediente");
+      }
+
     //Trae todas categorias de ingrediente que no tengan padre
     async getByCategoriaId(categoriaid: Number) {
 

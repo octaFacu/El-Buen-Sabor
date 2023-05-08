@@ -41,6 +41,7 @@ const IngredienteCard: React.FunctionComponent<IngrCardProps> = ({denominacion, 
             <td>{denominacion}</td>
             <td>{categoria.denominacion}</td>
             <td>
+                <button className="btn mx-2 btn-sm" style={{backgroundColor: "#864e1b"}} ><i className="material-icons" style={{fontSize: "30px", cursor:"pointer", color: "white"}}>remove_red_eye</i></button>
                 <button className="btn mx-2 btn-sm" style={{backgroundColor: "#864e1b"}} 
                 // onClick={
                     // () => {

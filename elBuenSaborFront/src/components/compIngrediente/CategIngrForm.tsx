@@ -147,7 +147,7 @@ const CaracIngrForm: React.FunctionComponent<CaracIngrFormProps> = ({ estado, ca
                                         }
 
                                         //pasar los datos guardados al metodo de update
-                                        categoriaIngredienteService.updateEntity("categoriaIngrediente", datos)
+                                        categoriaIngredienteService.updateEntity(datos)
 
                                     }else{
                                         // chequear si la nueva categoria tiene seleccionado un padre
@@ -159,11 +159,11 @@ const CaracIngrForm: React.FunctionComponent<CaracIngrFormProps> = ({ estado, ca
                                             //Creacion de nueva categoria con un padre
 
                                             // categoriaIngredienteService.createRubro({denominacion: nombre, categoriaPadre: {id: padreAPersistir.id}, activo: activo })
-                                            categoriaIngredienteService.createEntity("categoriaIngrediente" ,{denominacion: nombre, categoriaIngredientePadre: {id: padreAPersistir.id}, activo: activo })
+                                            categoriaIngredienteService.createEntity({denominacion: nombre, categoriaIngredientePadre: {id: padreAPersistir.id}, activo: activo })
 
                                          }else{
                                             //Creacion de nueva categoria sin un padre
-                                            categoriaIngredienteService.createEntity("categoriaIngrediente" ,{denominacion: nombre, activo: activo })
+                                            categoriaIngredienteService.createEntity({denominacion: nombre, activo: activo })
                                             
                                         }
                                         

@@ -32,7 +32,7 @@ const CategoriaIngrABM = () => {
 
     useEffect(() => {
         // categoriaIngredienteService.getAll()
-        categoriaIngredienteService.getAllBasic("categoriaIngrediente")
+        categoriaIngredienteService.getAllBasic()
             .then(data => {
                 // console.log(data);
                 setRubros(data)

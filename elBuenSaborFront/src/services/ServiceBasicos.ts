@@ -2,12 +2,28 @@ export class ServiceBasicos{
     
     baseUrl = "http://localhost:8080/"
 
+    private _urlEspecifico: string;
+
+    constructor(urlEspecifico: string) {
+        this._urlEspecifico = urlEspecifico;
+      }
+    
+      get urlEspecifico(): string {
+        return this._urlEspecifico;
+      }
+    
+      set urlEspecifico(value: string) {
+        this._urlEspecifico = value;
+      }
+    
+
     //Trae todo
-    async getAllBasic(urlEspecifico: String) {
+    // async getAllBasic(urlEspecifico: String) {
+        async getAllBasic() {
 
         try {
 
-            let res = await fetch((this.baseUrl+urlEspecifico))
+            let res = await fetch((this.baseUrl+this._urlEspecifico))
 
             if (!res.ok) {
                 throw { status: res.status, statusText: res.statusText }
@@ -21,14 +37,15 @@ export class ServiceBasicos{
         }
     }
     // Metodo para hacer update 
-    async updateEntity(urlEspecifico: String, datos: any) {
+    // async updateEntity(urlEspecifico: String, datos: any) {
+        async updateEntity(datos: any) {
 
 
 
         try {
 
             //Pasarle a la direccion con un put la info
-            let res = await fetch(this.baseUrl + urlEspecifico + `/${datos.id}`,
+            let res = await fetch(this.baseUrl + this._urlEspecifico + `/${datos.id}`,
                 {
                     method: 'PUT',
                     headers: {
@@ -49,12 +66,12 @@ export class ServiceBasicos{
         }
     }
 
-    async createEntity(urlEspecifico: String, datos: {}) {
-
+    // async createEntity(urlEspecifico: String, datos: {}) {
+        async createEntity(datos: {}) {
         try {
 
 
-            let res = await fetch(this.baseUrl+urlEspecifico,
+            let res = await fetch(this.baseUrl+this._urlEspecifico,
                 {
                     method: 'POST',
                     headers: {
@@ -74,4 +91,6 @@ export class ServiceBasicos{
             console.log(`Error ${err.status}: ${err.statusText}`);
         }
     }
+
+    
 }

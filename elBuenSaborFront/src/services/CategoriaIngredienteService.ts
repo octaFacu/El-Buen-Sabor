@@ -5,6 +5,10 @@ export class CategoriaIngredienteService extends ServiceBasicos{
     
     url = "http://localhost:8080/categoriaIngrediente"
 
+    constructor() {
+        super("categoriaIngrediente");
+      }
+
     //Trae todas categorias de ingrediente que no tengan padre
     async getAllPadres() {
 

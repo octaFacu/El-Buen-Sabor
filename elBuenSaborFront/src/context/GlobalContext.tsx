@@ -13,7 +13,7 @@ export interface UnidadContextInteface{
 
 }
 
-const serviceBasicos = new ServiceBasicos();
+// const serviceBasicos = new ServiceBasicos();
 
 export const GlobalContext = createContext<UnidadContextInteface>({
     //unidadesDeMedida: await  serviceBasicos.getAll("unidadDeMedida").then(data => {return data})

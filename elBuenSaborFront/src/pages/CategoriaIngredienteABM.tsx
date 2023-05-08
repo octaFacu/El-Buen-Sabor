@@ -7,6 +7,7 @@ import { GlobalContext, useUnidadContext } from "../context/GlobalContext";
 import { Rubro } from "../components/compIngrediente/Rubro";
 import { CategoriaIngredienteService } from "../services/CategoriaIngredienteService";
 import "./pagesStyles/categoriaIngredienteABM.css"
+import { ListaCartasABM } from "../components/genericos/ListaCartasABM";
 
 interface PropsCategoriaIngrABM { }
 
@@ -49,83 +50,62 @@ const CategoriaIngrABM = () => {
 
     return (
 
+        <ListaCartasABM 
+        titulo="Rubro de ingredientes"
+        estado={estadoModal}
+        setEstadoModal={setEstadoModal}
+        setDatos={setDatos}
+        >
 
-        // <div>
 
-            {/* <GlobalContext.Consumer>
-            {(context) => (
-            <div>
-                {context.ingredientes.map((ingrediente) => (
-                <div key={ingrediente.id.toString()}>{ingrediente.nombre} {ingrediente.precioCompra.toString()} {ingrediente.unidadmedida.denominacion} {ingrediente.categoriaIngrediente.denominacion}</div>
-                ))}
+            <div className="row my-3 mx-2">
+
+                <div className="">
+                    <table className="table" style={{ borderSpacing: "5px" }}>
+                        <thead>
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Padre</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {rubros.map(rub => (
+
+                                <CateIngrCard
+                                    key={Math.random() * 100}
+                                    id={rub.id}
+                                    denominacion={rub.denominacion}
+                                    padre={rub.categoriaIngredientePadre}
+                                    activo={rub.activo}
+
+                                    rubros={rubros}
+                                    setRubros={setRubros}
+
+                                    estado={estadoModal}
+                                    cambiarEstado={setEstadoModal}
+
+                                    datos={datos}
+                                    setDatos={setDatos}
+                                />
+
+
+                            ))}
+
+                        </tbody>
+                    </table>
+                </div>
             </div>
-            )}
-        </GlobalContext.Consumer> */}
 
+            <CategIngrForm
+                estado={estadoModal}
+                cambiarEstado={setEstadoModal}
+                rubrosPadre={rubrosPadre}
+                datos={datos}
+                setDatos={setDatos}
+            />
 
-
-        //     <div className="container my-5 pb-1 mb-3 " style={{ background: "#f99132", borderRadius: "25px" }}>
-        //         <div className="titleAndAddButton">
-        //             <div className="text-center py-4 px-3 d-flex">
-        //                 <button className="btn btn-sm " style={{ background: "#f99132", color: "white", borderRadius: "50px" }} onClick={() => {
-        //                     setDatos({ id: undefined, denominacion: "", categoriaIngredientePadre: { id: undefined, denominacion: "", activo: true }, activo: true })
-        //                     setEstadoModal(!estadoModal)
-        //                 }}><i className="material-icons" style={{ fontSize: "30px", cursor: "pointer" }}>add</i></button>
-        //                 <h1 style={{ margin: "auto", color: "white" }}> Rubro de ingredientes</h1>
-        //             </div></div>
-
-        //         <div className="row my-3 mx-2">
-
-        //             <div className="">
-        //                 <table className="table" style={{ borderSpacing: "5px" }}>
-        //                     <thead>
-        //                         <tr>
-        //                             <th>Nombre</th>
-        //                             <th>Padre</th>
-        //                             <th>Acciones</th>
-        //                         </tr>
-        //                     </thead>
-        //                     <tbody>
-        //                         {rubros.map(rub => (
-
-        //                             <CateIngrCard
-        //                                 key={Math.random() * 100}
-        //                                 id={rub.id}
-        //                                 denominacion={rub.denominacion}
-        //                                 padre={rub.categoriaIngredientePadre}
-        //                                 activo={rub.activo}
-
-        //                                 rubros={rubros}
-        //                                 setRubros={setRubros}
-
-        //                                 estado={estadoModal}
-        //                                 cambiarEstado={setEstadoModal}
-
-        //                                 datos={datos}
-        //                                 setDatos={setDatos}
-        //                             />
-
-
-        //                         ))}
-
-        //                     </tbody>
-        //                 </table>
-        //             </div>
-        //         </div>
-
-        //         <CategIngrForm
-        //             estado={estadoModal}
-        //             cambiarEstado={setEstadoModal}
-        //             rubrosPadre={rubrosPadre}
-        //             datos={datos}
-        //             setDatos={setDatos}
-        //         />
-
-        //     </div >
-        //     <br></br>
-        // </div>
-
-
+        </ListaCartasABM>
 
     );
 }

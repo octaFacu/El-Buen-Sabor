@@ -50,7 +50,7 @@ const CategoriaIngrABM = () => {
     return (
 
 
-        <div>
+        // <div>
 
             {/* <GlobalContext.Consumer>
             {(context) => (
@@ -64,66 +64,66 @@ const CategoriaIngrABM = () => {
 
 
 
-            <div className="container my-5 pb-1 mb-3 " style={{ background: "#f99132", borderRadius: "25px" }}>
-                <div className="titleAndAddButton">
-                    <div className="text-center py-4 px-3 d-flex">
-                        <button className="btn btn-sm " style={{ background: "#f99132", color: "white", borderRadius: "50px" }} onClick={() => {
-                            setDatos({ id: undefined, denominacion: "", categoriaIngredientePadre: { id: undefined, denominacion: "", activo: true }, activo: true })
-                            setEstadoModal(!estadoModal)
-                        }}><i className="material-icons" style={{ fontSize: "30px", cursor: "pointer" }}>add</i></button>
-                        <h1 style={{ margin: "auto", color: "white" }}> Rubro de ingredientes</h1>
-                    </div></div>
+        //     <div className="container my-5 pb-1 mb-3 " style={{ background: "#f99132", borderRadius: "25px" }}>
+        //         <div className="titleAndAddButton">
+        //             <div className="text-center py-4 px-3 d-flex">
+        //                 <button className="btn btn-sm " style={{ background: "#f99132", color: "white", borderRadius: "50px" }} onClick={() => {
+        //                     setDatos({ id: undefined, denominacion: "", categoriaIngredientePadre: { id: undefined, denominacion: "", activo: true }, activo: true })
+        //                     setEstadoModal(!estadoModal)
+        //                 }}><i className="material-icons" style={{ fontSize: "30px", cursor: "pointer" }}>add</i></button>
+        //                 <h1 style={{ margin: "auto", color: "white" }}> Rubro de ingredientes</h1>
+        //             </div></div>
 
-                <div className="row my-3 mx-2">
+        //         <div className="row my-3 mx-2">
 
-                    <div className="">
-                        <table className="table" style={{ borderSpacing: "5px" }}>
-                            <thead>
-                                <tr>
-                                    <th>Nombre</th>
-                                    <th>Padre</th>
-                                    <th>Acciones</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {rubros.map(rub => (
+        //             <div className="">
+        //                 <table className="table" style={{ borderSpacing: "5px" }}>
+        //                     <thead>
+        //                         <tr>
+        //                             <th>Nombre</th>
+        //                             <th>Padre</th>
+        //                             <th>Acciones</th>
+        //                         </tr>
+        //                     </thead>
+        //                     <tbody>
+        //                         {rubros.map(rub => (
 
-                                    <CateIngrCard
-                                        key={Math.random() * 100}
-                                        id={rub.id}
-                                        denominacion={rub.denominacion}
-                                        padre={rub.categoriaIngredientePadre}
-                                        activo={rub.activo}
+        //                             <CateIngrCard
+        //                                 key={Math.random() * 100}
+        //                                 id={rub.id}
+        //                                 denominacion={rub.denominacion}
+        //                                 padre={rub.categoriaIngredientePadre}
+        //                                 activo={rub.activo}
 
-                                        rubros={rubros}
-                                        setRubros={setRubros}
+        //                                 rubros={rubros}
+        //                                 setRubros={setRubros}
 
-                                        estado={estadoModal}
-                                        cambiarEstado={setEstadoModal}
+        //                                 estado={estadoModal}
+        //                                 cambiarEstado={setEstadoModal}
 
-                                        datos={datos}
-                                        setDatos={setDatos}
-                                    />
+        //                                 datos={datos}
+        //                                 setDatos={setDatos}
+        //                             />
 
 
-                                ))}
+        //                         ))}
 
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
+        //                     </tbody>
+        //                 </table>
+        //             </div>
+        //         </div>
 
-                <CategIngrForm
-                    estado={estadoModal}
-                    cambiarEstado={setEstadoModal}
-                    rubrosPadre={rubrosPadre}
-                    datos={datos}
-                    setDatos={setDatos}
-                />
+        //         <CategIngrForm
+        //             estado={estadoModal}
+        //             cambiarEstado={setEstadoModal}
+        //             rubrosPadre={rubrosPadre}
+        //             datos={datos}
+        //             setDatos={setDatos}
+        //         />
 
-            </div >
-            <br></br>
-        </div>
+        //     </div >
+        //     <br></br>
+        // </div>
 
 
 

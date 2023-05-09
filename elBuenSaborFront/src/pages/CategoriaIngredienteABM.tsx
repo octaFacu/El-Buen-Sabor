@@ -46,7 +46,9 @@ const CategoriaIngrABM = () => {
 
     }, []);
 
-
+    function recetDatos() {
+        setDatos({ id: undefined, denominacion: "", categoriaIngredientePadre: { id: undefined, denominacion: "", activo: true }, activo: true })
+    }
 
     return (
 
@@ -54,7 +56,7 @@ const CategoriaIngrABM = () => {
         titulo="Rubro de ingredientes"
         estado={estadoModal}
         setEstadoModal={setEstadoModal}
-        setDatos={setDatos}
+        recetDatos={recetDatos}
         >
 
 

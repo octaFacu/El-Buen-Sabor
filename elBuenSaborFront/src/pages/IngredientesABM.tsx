@@ -1,9 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { GlobalContext, useUnidadContext } from "../context/GlobalContext"
 import { IngredientesService } from "../services/IngredientesService"
 import { Ingrediente } from "../context/interfaces/interfaces";
 import { Rubro } from "../components/compIngrediente/Rubro";
 import IngredienteCard from "../components/componentesIngredienteABM/IngredienteCard";
+import ModalVistaDetalle from "../components/componentesIngredienteABM/ModalVistaDetalle";
+import { ListaCartasABM } from "../components/genericos/ListaCartasABM";
 
 
 
@@ -13,6 +15,7 @@ export const IngredientesABM = () => {
 
     //Para la ventana modal del formulario
     const [estadoModal, setEstadoModal] = useState(false);
+    const [estadoModalVista, setEstadoModalVista] = useState(false);
     const [datos, setDatos] = useState<Ingrediente>({
         id: 0,
         activo: true,
@@ -25,32 +28,38 @@ export const IngredientesABM = () => {
         categoriaIngrediente: {id: 0, denominacion: '', activo: true}
     })
 
+    
+
+    if(ingredientes.length === 0){
+        return <div style={{textAlign: "center"}}>
+            Loading...
+        </div>
+    }
+
+    
+
 
     return (
         <div>
 
-        {/* <GlobalContext.Consumer>
-            {(context) => (
-            <div>
-                {context.ingredientes.map((ingrediente) => (
-                <div key={ingrediente.id.toString()}>{ingrediente.nombre} {ingrediente.precioCompra.toString()} {ingrediente.unidadmedida.denominacion} {ingrediente.categoriaIngrediente.denominacion}</div>
-                ))}
-            </div>
-            )}
-        </GlobalContext.Consumer> */}
+            {/* <GlobalContext.Consumer>
+                {(context) => (
+                <div>
+                    {context.ingredientes.map((ingrediente) => (
+                    <div key={ingrediente.id.toString()}>{ingrediente.nombre} {ingrediente.precioCompra.toString()} {ingrediente.unidadmedida.denominacion} {ingrediente.categoriaIngrediente.denominacion}</div>
+                    ))}
+                </div>
+                )}
+            </GlobalContext.Consumer> */}
 
 
         
-        <div className="container my-5 pb-1 mb-3" style={{background: "#f99132", borderRadius: "25px"}}>
-            <div style={{background: "#864e1b", borderRadius: "25px"}}>
-            <div className="text-center py-2 px-3" style={{ display: "inline" }}>
-                <button className="btn btn-sm mt-5" style={{background: "#f99132", color: "white", borderRadius: "50px"}} 
-                // onClick={() => {
-                //     setDatos({id: undefined, nombre:"", categoriaIngredientePadre: {id: undefined, denominacion: "", activo: true}, activo: true })
-                //     setEstadoModal(!estadoModal)}}
-                    ><i className="material-icons" style={{fontSize: "30px", cursor:"pointer"}}>add</i></button>
-                <h1 style={{color: "white"}}> Ingredientes</h1>
-            </div></div>
+        <ListaCartasABM 
+        titulo="Ingredientes"
+        estado={estadoModal}
+        setEstadoModal={setEstadoModal}
+        setDatos={setDatos}
+        >
             
             <div className="row my-3">
 
@@ -68,16 +77,15 @@ export const IngredientesABM = () => {
                                 
                                 <IngredienteCard
                                     key={Math.random() * 100}
-                                    id={ing.id}
-                                    denominacion={ing.nombre}
-                                    categoria={ing.categoriaIngrediente}
-                                    activo={ing.activo}
+                                    ingrediente={ing}
 
                                     // rubros={rubros}
                                     // setRubros={setRubros}
 
                                     estado={estadoModal}
                                     cambiarEstado={setEstadoModal}
+                                    estadoVista={estadoModalVista}
+                                    cambiarEstadoVista={setEstadoModalVista}
 
                                     datos={datos}
                                     setDatos={setDatos}
@@ -90,7 +98,7 @@ export const IngredientesABM = () => {
                     </table>
                 </div>
             </div>
-             
+            </ListaCartasABM>
             {/* <CategIngrForm
                 estado={estadoModal}
                 cambiarEstado={setEstadoModal}
@@ -98,10 +106,10 @@ export const IngredientesABM = () => {
                 datos={datos}
                 setDatos={setDatos}
             /> */}
-            
-        </div >
-        <br></br>
-        </div>
+            <ModalVistaDetalle ingrediente= {datos} estadoVista={estadoModalVista} cambiarEstadoVista={setEstadoModalVista}/>
+
+            </div >
+        
     )
 
 }

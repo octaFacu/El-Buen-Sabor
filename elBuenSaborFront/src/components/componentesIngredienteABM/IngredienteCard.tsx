@@ -9,20 +9,21 @@ interface IngrCardProps {
     estado:boolean,
     cambiarEstado: any
 
+    estadoVista:boolean,
+    cambiarEstadoVista: any,
 
-    id?: Number
-    denominacion: String
-    activo: Boolean
+
+    ingrediente: Ingrediente
 
     datos: Ingrediente
     setDatos: any
 
-    categoria: Rubro
+    
 }
 
-const IngredienteCard: React.FunctionComponent<IngrCardProps> = ({denominacion, categoria, activo, id, cambiarEstado, estado, setDatos, datos }) => {
+const IngredienteCard: React.FunctionComponent<IngrCardProps> = ({ingrediente, cambiarEstado, estado, cambiarEstadoVista, estadoVista, setDatos, datos }) => {
     
-    const [botonActivo, setbotonActivo] = useState<Boolean>(activo)
+    const [botonActivo, setbotonActivo] = useState<Boolean>(ingrediente.activo)
 
 
     // useEffect(() => {
@@ -38,10 +39,16 @@ const IngredienteCard: React.FunctionComponent<IngrCardProps> = ({denominacion, 
         
         <tr className="mb-5" style={botonActivo ? {backgroundColor: '#659355', borderRadius: "25px"} : {backgroundColor: '#C34942', borderRadius: "25px"}}  >
 
-            <td>{denominacion}</td>
-            <td>{categoria.denominacion}</td>
+            <td>{ingrediente.nombre}</td>
+            <td>{ingrediente.categoriaIngrediente.denominacion}</td>
             <td>
-                <button className="btn mx-2 btn-sm" style={{backgroundColor: "#864e1b"}} ><i className="material-icons" style={{fontSize: "30px", cursor:"pointer", color: "white"}}>remove_red_eye</i></button>
+                <button className="btn mx-2 btn-sm" style={{backgroundColor: "#864e1b"}}
+                onClick={
+                      async () => {
+                      await setDatos({ ingrediente })
+                      console.log("DATOS: "+datos.nombre)
+                      cambiarEstadoVista(!estado)}} >
+                    <i className="material-icons" style={{fontSize: "30px", cursor:"pointer", color: "white"}}>remove_red_eye</i></button>
                 <button className="btn mx-2 btn-sm" style={{backgroundColor: "#864e1b"}} 
                 // onClick={
                     // () => {

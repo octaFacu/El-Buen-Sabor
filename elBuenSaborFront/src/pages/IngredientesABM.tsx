@@ -28,6 +28,22 @@ export const IngredientesABM = () => {
         categoriaIngrediente: {id: 0, denominacion: '', activo: true}
     })
 
+    function resetDatos() {
+        setDatos({ id: 0,
+            activo: true,
+            nombre: '',
+            precioCompra: 0,
+            stockActual: 0,
+            stockMaximo: 0,
+            stockMinimo: 0,
+            unidadmedida: {id: 0, denominacion: '', unidadesParaPadre: 0, padre: {id: 0, denominacion: '', unidadesParaPadre: 0}},
+            categoriaIngrediente: {id: 0, denominacion: '', activo: true} })
+    }
+
+    function sendDatos(ingrediente: Ingrediente){
+        console.log("ME VOY A SETEAR: "+ingrediente.nombre)
+        setDatos(ingrediente);
+    }
     
 
     if(ingredientes.length === 0){
@@ -35,6 +51,8 @@ export const IngredientesABM = () => {
             Loading...
         </div>
     }
+
+    
 
     
 
@@ -58,7 +76,7 @@ export const IngredientesABM = () => {
         titulo="Ingredientes"
         estado={estadoModal}
         setEstadoModal={setEstadoModal}
-        setDatos={setDatos}
+        recetDatos={resetDatos}
         >
             
             <div className="row my-3">
@@ -88,7 +106,7 @@ export const IngredientesABM = () => {
                                     cambiarEstadoVista={setEstadoModalVista}
 
                                     datos={datos}
-                                    setDatos={setDatos}
+                                    setearDatos={sendDatos}
                                 />
                                
                                 

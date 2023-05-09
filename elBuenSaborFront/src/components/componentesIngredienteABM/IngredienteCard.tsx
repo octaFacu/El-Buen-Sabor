@@ -16,12 +16,12 @@ interface IngrCardProps {
     ingrediente: Ingrediente
 
     datos: Ingrediente
-    setDatos: any
+    setearDatos: any
 
     
 }
 
-const IngredienteCard: React.FunctionComponent<IngrCardProps> = ({ingrediente, cambiarEstado, estado, cambiarEstadoVista, estadoVista, setDatos, datos }) => {
+const IngredienteCard: React.FunctionComponent<IngrCardProps> = ({ingrediente, cambiarEstado, estado, cambiarEstadoVista, estadoVista, setearDatos, datos }) => {
     
     const [botonActivo, setbotonActivo] = useState<Boolean>(ingrediente.activo)
 
@@ -44,9 +44,10 @@ const IngredienteCard: React.FunctionComponent<IngrCardProps> = ({ingrediente, c
             <td>
                 <button className="btn mx-2 btn-sm" style={{backgroundColor: "#864e1b"}}
                 onClick={
-                      async () => {
-                      await setDatos({ ingrediente })
-                      console.log("DATOS: "+datos.nombre)
+                      () => {
+                        
+                     setearDatos(ingrediente)
+                      
                       cambiarEstadoVista(!estado)}} >
                     <i className="material-icons" style={{fontSize: "30px", cursor:"pointer", color: "white"}}>remove_red_eye</i></button>
                 <button className="btn mx-2 btn-sm" style={{backgroundColor: "#864e1b"}} 

@@ -8,8 +8,6 @@ interface ModalVistaDetalleProps{
 
  const ModalVistaDetalle: React.FunctionComponent<ModalVistaDetalleProps> = ({ ingrediente, estadoVista, cambiarEstadoVista }) => {
 
-console.log("INGREDIENTE QUE LE ESTAMOS PASANDO: "+ingrediente.nombre);
-
     return(
         <div>
             {estadoVista &&

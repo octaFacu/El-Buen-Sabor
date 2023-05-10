@@ -6,6 +6,7 @@ import { Rubro } from "../components/compIngrediente/Rubro";
 import IngredienteCard from "../components/componentesIngredienteABM/IngredienteCard";
 import ModalVistaDetalle from "../components/componentesIngredienteABM/ModalVistaDetalle";
 import { ListaCartasABM } from "../components/genericos/ListaCartasABM";
+import IngredienteForm from "../components/componentesIngredienteABM/IngredienteForm";
 
 
 
@@ -41,7 +42,6 @@ export const IngredientesABM = () => {
     }
 
     function sendDatos(ingrediente: Ingrediente){
-        console.log("ME VOY A SETEAR: "+ingrediente.nombre)
         setDatos(ingrediente);
     }
     
@@ -117,13 +117,13 @@ export const IngredientesABM = () => {
                 </div>
             </div>
             </ListaCartasABM>
-            {/* <CategIngrForm
+            <IngredienteForm
                 estado={estadoModal}
                 cambiarEstado={setEstadoModal}
-                rubrosPadre={rubrosPadre}
+
                 datos={datos}
                 setDatos={setDatos}
-            /> */}
+            /> 
             <ModalVistaDetalle ingrediente= {datos} estadoVista={estadoModalVista} cambiarEstadoVista={setEstadoModalVista}/>
 
             </div >

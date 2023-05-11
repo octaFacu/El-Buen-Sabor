@@ -1,0 +1,36 @@
+.btn.modal-usuario{
+    border-radius: 30px !important;
+    background-color: #864E1B;    
+}
+.modal-content{
+    background-color: #F99132 !important;
+}
+
+.form-control{
+    background-color: #FDA859 !important;
+}
+
+.bold{
+    font-weight: bold
+}
+
+.parrafo{
+    margin-top: 10px;
+}
+
+.altura{
+    width: 25vh;
+}
+.close{
+    background-color: #F99132;
+    border: none;
+}
+.modal-footer {
+    border: none !important;
+}
+
+.btn.eliminar{
+    border-radius: 11px !important;
+    background-color: #864E1B !important;   
+    width: 6vh;
+}

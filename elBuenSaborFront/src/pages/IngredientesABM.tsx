@@ -7,16 +7,20 @@ import IngredienteCard from "../components/componentesIngredienteABM/Ingrediente
 import ModalVistaDetalle from "../components/componentesIngredienteABM/ModalVistaDetalle";
 import { ListaCartasABM } from "../components/genericos/ListaCartasABM";
 import IngredienteForm from "../components/componentesIngredienteABM/IngredienteForm";
+import { CategoriaIngredienteService } from "../services/CategoriaIngredienteService";
 
 
 
 export const IngredientesABM = () => {
 
     const { unidadesDeMedida, ingredientes } = useUnidadContext();
+    const categoriaIngredienteService = new CategoriaIngredienteService();
+
 
     //Para la ventana modal del formulario
     const [estadoModal, setEstadoModal] = useState(false);
     const [estadoModalVista, setEstadoModalVista] = useState(false);
+    const [categorias, setCategorias] = useState<Rubro[]>([]);
     const [datos, setDatos] = useState<Ingrediente>({
         id: 0,
         activo: true,
@@ -28,6 +32,18 @@ export const IngredientesABM = () => {
         unidadmedida: {id: 0, denominacion: '', unidadesParaPadre: 0, padre: {id: 0, denominacion: '', unidadesParaPadre: 0}},
         categoriaIngrediente: {id: 0, denominacion: '', activo: true}
     })
+
+    useEffect(() => {
+       
+        categoriaIngredienteService.getAllBasic()
+            .then(data => {
+                console.log("CARGANDO CATEGORIAS "+ data);
+                setCategorias(data)
+            })
+        
+    }, [])
+
+
 
     function resetDatos() {
         setDatos({ id: 0,
@@ -123,6 +139,8 @@ export const IngredientesABM = () => {
 
                 datos={datos}
                 setDatos={setDatos}
+
+                categorias={categorias}
             /> 
             <ModalVistaDetalle ingrediente= {datos} estadoVista={estadoModalVista} cambiarEstadoVista={setEstadoModalVista}/>
 

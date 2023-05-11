@@ -3,7 +3,7 @@ import { Rubro } from "../../components/compIngrediente/Rubro"
 export type unidadDeMedida = {
     id: Number,
     denominacion: String,
-    unidadesParaPadre: Number,
+    unidadesParaPadre?: Number,
     padre?: unidadDeMedida
 }
 

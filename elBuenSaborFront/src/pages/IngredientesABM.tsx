@@ -101,8 +101,10 @@ export const IngredientesABM = () => {
                     <table className="table table-striped">
                         <thead>
                             <tr>
+                                <th></th>
                                 <th>Nombre</th>
                                 <th>Categoria</th>
+                                <th></th>
                                 <th>Acciones</th>
                             </tr>
                         </thead>
@@ -143,7 +145,7 @@ export const IngredientesABM = () => {
                 categorias={categorias}
             /> 
             <ModalVistaDetalle ingrediente= {datos} estadoVista={estadoModalVista} cambiarEstadoVista={setEstadoModalVista}/>
-
+            <br></br>
             </div >
         
     )

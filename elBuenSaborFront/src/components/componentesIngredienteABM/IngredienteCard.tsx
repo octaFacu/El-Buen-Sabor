@@ -40,9 +40,10 @@ const IngredienteCard: React.FunctionComponent<IngrCardProps> = ({ingrediente, c
     return (
         
         <tr className="mb-5" style={botonActivo ? {backgroundColor: '#659355', borderRadius: "25px"} : {backgroundColor: '#C34942', borderRadius: "25px"}}  >
-
+            <td></td>
             <td>{ingrediente.nombre}</td>
             <td>{ingrediente.categoriaIngrediente.denominacion}</td>
+            <td></td>
             <td>
                 <button className="btn mx-2 btn-sm" style={{backgroundColor: "#864e1b"}}
                 onClick={
@@ -70,7 +71,7 @@ const IngredienteCard: React.FunctionComponent<IngrCardProps> = ({ingrediente, c
                    
                     await ingredientesService.updateEntity(ingredienteNuevo);
 
-                    console.log(datos)
+                    //console.log(ingredienteNuevo);
                     // window.location.reload();
                     }}
                     >{botonActivo 

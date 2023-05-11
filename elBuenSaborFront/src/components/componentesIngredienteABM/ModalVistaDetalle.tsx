@@ -12,21 +12,25 @@ interface ModalVistaDetalleProps{
         <div>
             {estadoVista &&
                 <div className="overlay" onClick={() => cambiarEstadoVista(!estadoVista)}>
-                <div className="container my-5 contenedorModal" style={{borderRadius: "25px", backgroundColor: "#f99132", color: "white"}} onClick={e => e.stopPropagation()}>
+                <div className="container my-5 contenedorModal" style={{borderRadius: "25px", backgroundColor: "#f99132", color: "white", maxWidth: "50%"}} onClick={e => e.stopPropagation()}>
                     <div className="" style={{textAlign: "center"}}>
-
-                        <h1>{ingrediente.nombre}</h1>
-                        <h2>{ingrediente.precioCompra.toString()}</h2>
-                        <h2>Stock Actual: {ingrediente.stockActual.toString()}</h2>
-                        <h2>Stock Minimo: {ingrediente.stockMinimo.toString()}</h2>
-                        <h2>Stock Maximo: {ingrediente.stockMaximo.toString()}</h2>
+                        <div className="rounded container pb-2 pt-4" style={{textAlign: "center", backgroundColor: "#864e1b", maxWidth: "30%"}}>
+                            <h1>{ingrediente.nombre}</h1>
+                        </div>
+                        <hr style={{marginRight: "2%", marginLeft: "2%"}}></hr>
+                        <h3>$ {ingrediente.precioCompra.toString()}</h3>
+                        <h3>Stock Actual: {ingrediente.stockActual.toString()}</h3>
+                        <h3>Stock Minimo: {ingrediente.stockMinimo.toString()}</h3>
+                        <h3>Stock Maximo: {ingrediente.stockMaximo.toString()}</h3>
                         <br></br>
-                        <h2>Unidad de Medida: {ingrediente.unidadmedida.denominacion}</h2>
-                        <h2>Categoria: {ingrediente.categoriaIngrediente.denominacion}</h2>
+                        <hr style={{marginRight: "2%", marginLeft: "2%"}}></hr>
+                        <h3>Unidad de Medida: {ingrediente.unidadmedida.denominacion}</h3>
+                        <h3>Categoria: {ingrediente.categoriaIngrediente.denominacion}</h3>
 
                     </div>
                     </div>
                     </div>
+                
             }
         </div>
     )

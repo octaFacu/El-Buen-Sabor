@@ -121,7 +121,7 @@ const CaracIngrForm: React.FunctionComponent<CaracIngrFormProps> = ({ estado, ca
                                         {rubrosPadre.map(rubro => (
 
                                             padre.denominacion !== rubro.denominacion && nombre !== rubro.denominacion
-                                            && <option value={JSON.stringify(rubro)}>{rubro.denominacion}</option>
+                                            && rubro.id! < parseInt(id) && <option value={JSON.stringify(rubro)}>{rubro.denominacion}</option>
                                         ))}
                                     </select>
                                 </div>}

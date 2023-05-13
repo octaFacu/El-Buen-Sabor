@@ -5,6 +5,7 @@ import { Ingrediente } from "../context/interfaces/interfaces";
 import { Rubro } from "../components/compIngrediente/Rubro";
 import IngredienteCard from "../components/componentesIngredienteABM/IngredienteCard";
 import ModalVistaDetalle from "../components/componentesIngredienteABM/ModalVistaDetalle";
+import ModalCompra from "../components/componentesIngredienteABM/ModalCompra";
 import { ListaCartasABM } from "../components/genericos/ListaCartasABM";
 import IngredienteForm from "../components/componentesIngredienteABM/IngredienteForm";
 import { CategoriaIngredienteService } from "../services/CategoriaIngredienteService";
@@ -20,6 +21,7 @@ export const IngredientesABM = () => {
     //Para la ventana modal del formulario
     const [estadoModal, setEstadoModal] = useState(false);
     const [estadoModalVista, setEstadoModalVista] = useState(false);
+    const [estadoModalCompra, setEstadoModalCompra] = useState(false);
     const [categorias, setCategorias] = useState<Rubro[]>([]);
     const [datos, setDatos] = useState<Ingrediente>({
         id: 0,
@@ -106,6 +108,8 @@ export const IngredientesABM = () => {
                                 <th>Categoria</th>
                                 <th></th>
                                 <th>Acciones</th>
+                                <th></th>
+                                <th></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -122,6 +126,11 @@ export const IngredientesABM = () => {
                                     cambiarEstado={setEstadoModal}
                                     estadoVista={estadoModalVista}
                                     cambiarEstadoVista={setEstadoModalVista}
+
+
+                                    estadoCompra={estadoModalCompra}
+                                    cambiarEstadoCompra={setEstadoModalCompra}
+                                    
 
                                     datos={datos}
                                     setearDatos={sendDatos}
@@ -145,6 +154,7 @@ export const IngredientesABM = () => {
                 categorias={categorias}
             /> 
             <ModalVistaDetalle ingrediente= {datos} estadoVista={estadoModalVista} cambiarEstadoVista={setEstadoModalVista}/>
+            <ModalCompra ingrediente= {datos} estadoCompra={estadoModalCompra} cambiarEstadoCompra={setEstadoModalCompra}/>
             <br></br>
             </div >
         

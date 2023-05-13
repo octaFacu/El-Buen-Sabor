@@ -13,6 +13,9 @@ interface IngrCardProps {
     estadoVista:boolean,
     cambiarEstadoVista: any,
 
+    estadoCompra:boolean,
+    cambiarEstadoCompra: any,
+
 
     ingrediente: Ingrediente
 
@@ -22,7 +25,7 @@ interface IngrCardProps {
     
 }
 
-const IngredienteCard: React.FunctionComponent<IngrCardProps> = ({ingrediente, cambiarEstado, estado, cambiarEstadoVista, estadoVista, setearDatos, datos }) => {
+const IngredienteCard: React.FunctionComponent<IngrCardProps> = ({ingrediente, cambiarEstado, estado, cambiarEstadoVista, estadoVista, cambiarEstadoCompra, estadoCompra, setearDatos, datos }) => {
     
     const [botonActivo, setbotonActivo] = useState<Boolean>(ingrediente.activo)
 
@@ -80,6 +83,13 @@ const IngredienteCard: React.FunctionComponent<IngrCardProps> = ({ingrediente, c
 
                 
             </td>
+            <td></td>
+            <td ><button className="btn mx-2 btn-sm" style={{backgroundColor: "#864e1b"}} 
+                onClick={
+                     () => {
+                     setearDatos(ingrediente)
+                     cambiarEstadoCompra(!estadoCompra)}}
+                ><i className="material-icons" style={{fontSize: "30px", cursor:"pointer", color: "white"}}>add_shopping_cart</i></button></td>
             
         </tr>
 

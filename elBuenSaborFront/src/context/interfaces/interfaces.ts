@@ -12,7 +12,7 @@ export type Ingrediente = {
     activo: Boolean,
     nombre: String,
     precioCompra: Number,
-    stockActual: Number,
+    stockActual: number,
     stockMaximo: Number,
     stockMinimo: Number,
     unidadmedida: unidadDeMedida,

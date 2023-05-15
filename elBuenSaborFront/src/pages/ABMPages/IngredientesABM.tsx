@@ -1,14 +1,14 @@
 import { useEffect, useState } from "react";
-import { GlobalContext, useUnidadContext } from "../context/GlobalContext"
-import { IngredientesService } from "../services/IngredientesService"
-import { Ingrediente } from "../context/interfaces/interfaces";
-import { Rubro } from "../components/compIngrediente/Rubro";
-import IngredienteCard from "../components/componentesIngredienteABM/IngredienteCard";
-import ModalVistaDetalle from "../components/componentesIngredienteABM/ModalVistaDetalle";
-import ModalCompra from "../components/componentesIngredienteABM/ModalCompra";
-import { ListaCartasABM } from "../components/genericos/ListaCartasABM";
-import IngredienteForm from "../components/componentesIngredienteABM/IngredienteForm";
-import { CategoriaIngredienteService } from "../services/CategoriaIngredienteService";
+import { GlobalContext, useUnidadContext } from "../../context/GlobalContext"
+import { IngredientesService } from "../../services/IngredientesService"
+import { Ingrediente } from "../../context/interfaces/interfaces";
+import { Rubro } from "../../components/compIngrediente/Rubro";
+import IngredienteCard from "../../components/componentesIngredienteABM/IngredienteCard";
+import ModalVistaDetalle from "../../components/componentesIngredienteABM/ModalVistaDetalle";
+import ModalCompra from "../../components/componentesIngredienteABM/ModalCompra";
+import { ListaCartasABM } from "../../components/genericos/ListaCartasABM";
+import IngredienteForm from "../../components/componentesIngredienteABM/IngredienteForm";
+import { CategoriaIngredienteService } from "../../services/CategoriaIngredienteService";
 
 
 

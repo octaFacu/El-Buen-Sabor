@@ -1,53 +1,41 @@
+import React, { useEffect, useState } from 'react'
+import { CategoriaProductoService } from '../../services/CategoriaProductoService';
+import { CategoriaProducto } from '../../context/interfaces/interfaces';
+import CategProductoCard from '../../components/componentesCatProductos/CategProductoCard';
+import CategProductoForm from '../../components/componentesCatProductos/CategProductoForm';
+import { ListaCartasABM } from '../../components/genericos/ListaCartasABM';
 
-import CateIngrCard from "../components/compIngrediente/CateIngrCard";
-import CategIngrForm from "../components/compIngrediente/CategIngrForm";
-import { useState, useEffect } from "react";
-import { GlobalContext, useUnidadContext } from "../context/GlobalContext";
 
-import { Rubro } from "../components/compIngrediente/Rubro";
-import { CategoriaIngredienteService } from "../services/CategoriaIngredienteService";
-import "./pagesStyles/categoriaIngredienteABM.css"
-import { ListaCartasABM } from "../components/genericos/ListaCartasABM";
+export const CategoriaProductosABM = () => {
 
-interface PropsCategoriaIngrABM { }
-
-// const CategoriaIngrABM: React.FunctionComponent<PropsCategoriaIngrABM> = () => {
-const CategoriaIngrABM = () => {
+    
     // const { unidadesDeMedida } = useUnidadContext();
 
 
-    const categoriaIngredienteService = new CategoriaIngredienteService();
+    const categoriaProductoService = new CategoriaProductoService();
 
     //Para la ventana modal del formulario
     const [estadoModal, setEstadoModal] = useState(false);
 
-    const [rubros, setRubros] = useState<Rubro[]>([]);
-    const [rubrosPadre, setRubrosPadre] = useState<Rubro[]>([]);
-    const [datos, setDatos] = useState<Rubro>({
+    const [rubros, setRubros] = useState<CategoriaProducto[]>([]);
+    const [datos, setDatos] = useState<CategoriaProducto>({
         id: undefined,
         denominacion: '',
-        categoriaIngredientePadre: undefined,
         activo: true
     })
 
     useEffect(() => {
         // categoriaIngredienteService.getAll()
-        categoriaIngredienteService.getAllBasic()
+        categoriaProductoService.getAllBasic()
             .then(data => {
                 // console.log(data);
                 setRubros(data)
             })
 
-        categoriaIngredienteService.getAllPadres()
-            .then(data => {
-                // console.log(data);
-                setRubrosPadre(data)
-            })
-
     }, []);
 
     function recetDatos() {
-        setDatos({ id: undefined, denominacion: "", categoriaIngredientePadre: { id: undefined, denominacion: "", activo: true }, activo: true })
+        setDatos({ id: undefined, denominacion: "", activo: true })
     }
 
     return (
@@ -67,22 +55,17 @@ const CategoriaIngrABM = () => {
                         <thead>
                             <tr>
                                 <th>Nombre</th>
-                                <th>Padre</th>
                                 <th>Acciones</th>
                             </tr>
                         </thead>
                         <tbody>
                             {rubros.map(rub => (
 
-                                <CateIngrCard
+                                <CategProductoCard
                                     key={Math.random() * 100}
                                     id={rub.id}
                                     denominacion={rub.denominacion}
-                                    padre={rub.categoriaIngredientePadre}
                                     activo={rub.activo}
-
-                                    rubros={rubros}
-                                    setRubros={setRubros}
 
                                     estado={estadoModal}
                                     cambiarEstado={setEstadoModal}
@@ -99,10 +82,9 @@ const CategoriaIngrABM = () => {
                 </div>
             </div>
 
-            <CategIngrForm
+            <CategProductoForm 
                 estado={estadoModal}
                 cambiarEstado={setEstadoModal}
-                rubrosPadre={rubrosPadre}
                 datos={datos}
                 setDatos={setDatos}
             />
@@ -112,4 +94,5 @@ const CategoriaIngrABM = () => {
     );
 }
 
-export default CategoriaIngrABM;
+export default CategoriaProductosABM;
+

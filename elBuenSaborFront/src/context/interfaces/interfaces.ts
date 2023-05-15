@@ -9,13 +9,19 @@ export type unidadDeMedida = {
 
 export type Ingrediente = {
     id?: Number,
-    activo: Boolean,
-    nombre: String,
+    activo: boolean,
+    nombre: string,
     precioCompra: Number,
     stockActual: number,
     stockMaximo: Number,
     stockMinimo: Number,
     unidadmedida: unidadDeMedida,
     categoriaIngrediente: Rubro
+}
+
+export type CategoriaProducto = {
+    id?: number,
+    activo: boolean,
+    denominacion: string
 }
 

@@ -6,6 +6,7 @@ import { GlobalContext } from '../context/GlobalContext'
 import { ContextProvider } from '../context/ContextProvider'
 import { IngredientesABM } from '../pages/ABMPages/IngredientesABM'
 import { CategoriaProductosABM } from '../pages/ABMPages/CategoriaProductosABM'
+import { ProductosABM } from '../pages/ABMPages/ProductosAMB'
 
 export const AbmEjemploRoutes = () => {
   return (
@@ -14,6 +15,7 @@ export const AbmEjemploRoutes = () => {
           <Route path="/categoriaIngredientes" element={<CategoriaIngrABM/>}/>
           <Route path="/ingredientes" element={<IngredientesABM/>}/>
           <Route path="/categoriaProductos" element={<CategoriaProductosABM/>}/>
+          <Route path="/productos" element={<ProductosABM/>}/>
 
           
       </Routes>

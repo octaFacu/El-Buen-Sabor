@@ -6,6 +6,7 @@ import { CategoriaIngredienteService } from "../../services/CategoriaIngrediente
 import { ServiceBasicos } from "../../services/ServiceBasicos";
 import { CategoriaProductoService } from "../../services/CategoriaProductoService";
 
+
 interface CategProductoFormProps {
 
     //De categoriaIngrABM, cambio su estado

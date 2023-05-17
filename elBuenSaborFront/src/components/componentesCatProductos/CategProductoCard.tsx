@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react"
 import "../../pages/pagesStyles/categoriaIngredienteABM.css"
-import { CategoriaIngredienteService } from "../../services/CategoriaIngredienteService";
 import { CategoriaProducto } from "../../context/interfaces/interfaces";
 import { CategoriaProductoService } from "../../services/CategoriaProductoService";
 

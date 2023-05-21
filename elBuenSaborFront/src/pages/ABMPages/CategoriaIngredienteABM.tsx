@@ -7,6 +7,7 @@ import { GlobalContext, useUnidadContext } from "../../context/GlobalContext";
 import { Rubro } from "../../components/compIngrediente/Rubro";
 import { CategoriaIngredienteService } from "../../services/CategoriaIngredienteService";
 import { ListaCartasABM } from "../../components/genericos/ListaCartasABM";
+import Paginacion from "../../components/genericos/Paginacion";
 
 interface PropsCategoriaIngrABM { }
 
@@ -29,12 +30,18 @@ const CategoriaIngrABM = () => {
         activo: true
     })
 
+    //Para paginacion
+    const [page, setPage] = useState<number>(0)
+    const [size, setSize] = useState<number>(5)
+    const [totalPages, setTotalPages] = useState<number>()
+
     useEffect(() => {
         // categoriaIngredienteService.getAll()
-        categoriaIngredienteService.getAllBasic()
+        categoriaIngredienteService.getPaged(page, size)
             .then(data => {
                 // console.log(data);
-                setRubros(data)
+                setRubros(data.content)
+                setTotalPages(data.totalPages)
             })
 
         categoriaIngredienteService.getAllPadres()
@@ -43,7 +50,7 @@ const CategoriaIngrABM = () => {
                 setRubrosPadre(data)
             })
 
-    }, []);
+    }, [page]);
 
     function recetDatos() {
         setDatos({ id: undefined, denominacion: "", categoriaIngredientePadre: { id: undefined, denominacion: "", activo: true }, activo: true })
@@ -51,11 +58,11 @@ const CategoriaIngrABM = () => {
 
     return (
 
-        <ListaCartasABM 
-        titulo="Rubro de ingredientes"
-        estado={estadoModal}
-        setEstadoModal={setEstadoModal}
-        recetDatos={recetDatos}
+        <ListaCartasABM
+            titulo="Rubro de ingredientes"
+            estado={estadoModal}
+            setEstadoModal={setEstadoModal}
+            recetDatos={recetDatos}
         >
 
 
@@ -97,6 +104,14 @@ const CategoriaIngrABM = () => {
                     </table>
                 </div>
             </div>
+
+            <Paginacion
+                page={page}
+                size={size}
+                totalPages={totalPages!}
+                setPage={setPage}
+
+            />
 
             <CategIngrForm
                 estado={estadoModal}

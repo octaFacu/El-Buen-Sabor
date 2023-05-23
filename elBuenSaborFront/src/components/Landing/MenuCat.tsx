@@ -1,15 +1,44 @@
+import { useEffect, useState } from "react";
+import { CategoriaProducto } from "../../context/interfaces/interfaces";
+import { CategoriaProductoService } from "../../services/CategoriaProductoService";
 
 const MenuCat: React.FC = () => {
 
+  const categoriaProductoService = new CategoriaProductoService();
+  const [categorias, setCategorias] = useState<CategoriaProducto[]>([]);
+
+  useEffect(() => {
+    // categoriaIngredienteService.getAll()
+    categoriaProductoService.getAllBasic()
+        .then(data => {
+            // console.log(data);
+            setCategorias(data)
+        })
+
+}, []);
 
     return(
         <div>
-        <div className="menuCat">
+        {/* <div className="menuCat">
             <div><button className="btnPag"><i className="material-icons" style={{fontSize: "30px"}}> keyboard_arrow_left</i></button></div>
             <div style={{fontSize: "24px"}}><a><i className="material-icons" > local_dining</i> Hamburguesas</a></div>
             <div style={{fontSize: "24px"}}><a><i className="material-icons"> local_dining</i> Pizza </a></div>
             <div style={{fontSize: "24px"}}><a><i className="material-icons"> local_dining</i> Lomos</a></div>
             <div style={{fontSize: "24px"}}><a><i className="material-icons"> local_dining</i> Bebidas</a></div>
+            <div style={{fontSize: "24px"}}><button className="btnPag"><i className="material-icons" style={{fontSize: "30px"}}> keyboard_arrow_right</i></button></div>
+        </div> */}
+
+
+        <div className="menuCat">
+            <div><button className="btnPag"><i className="material-icons" style={{fontSize: "30px"}}> keyboard_arrow_left</i></button></div>
+
+            {
+              categorias.map(cat => 
+                <div style={{fontSize: "24px"}}><a><i className="material-icons" > local_dining</i> {cat.denominacion}</a></div>
+                )
+            }
+            
+            
             <div style={{fontSize: "24px"}}><button className="btnPag"><i className="material-icons" style={{fontSize: "30px"}}> keyboard_arrow_right</i></button></div>
         </div>
 

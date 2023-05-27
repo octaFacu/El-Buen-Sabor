@@ -1,5 +1,5 @@
 .select-dropdown {
-    /* Add your desired styles here */
+    background-color: #864e1b;
     width: 200px;
     padding: 10px;
     border: 1px solid #ccc;
@@ -16,7 +16,7 @@
   
   .select-dropdown select:focus {
     outline: none;
-    border-color: #0066cc;
-    box-shadow: 0 0 0 2px rgba(0, 102, 204, 0.3);
+    border-color: #000000;
+    box-shadow: 0 0 0 2px rgba(250, 165, 18, 0.3);
   }
   

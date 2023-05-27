@@ -1,4 +1,7 @@
+import { useEffect, useState } from "react";
 import Producto from "../../context/interfaces/Producto";
+import { IngredienteDeProducto } from "../../context/interfaces/interfaces";
+import { ProductoService } from "../../services/ProductoService";
 import './Dropdown.css';
 
 interface ModalVistaDetalleProps{
@@ -8,6 +11,14 @@ interface ModalVistaDetalleProps{
 }
 
  const ModalVistaDetalleProd: React.FunctionComponent<ModalVistaDetalleProps> = ({ producto, estadoVista, cambiarEstadoVista }) => {
+
+    const prodService = new ProductoService();
+     const [ingredientes, setIngredientes] = useState<IngredienteDeProducto[]>([]); ;
+
+    useEffect(() => {
+        prodService.getIngredientes(producto.id!).then((data) => setIngredientes(data));
+    })
+    
 
     return(
         <div>
@@ -23,7 +34,6 @@ interface ModalVistaDetalleProps{
                         <h4>$ {producto.precioTotal.toString()}</h4>
                         <h4>Costo: ${producto.costoTotal.toString()}</h4>
                         <h4>Descripcion:</h4> <p>{producto.descripcion}</p>
-                        <br></br>
                         {/* <hr style={{marginRight: "2%", marginLeft: "2%"}}></hr>
                         <h3>Unidad de Medida: {ingrediente.unidadmedida.denominacion}</h3>
                         <h3>Categoria: {ingrediente.categoriaIngrediente.denominacion}</h3> */}
@@ -34,15 +44,15 @@ interface ModalVistaDetalleProps{
                             <h4>Receta: </h4><p>{producto.receta}</p>
 
                             {/* {producto.ingredientes!.length > 0 && producto.ingredientes != undefined && */}
-                            {producto.ingredientes != undefined &&
+                            {ingredientes.length != 0 &&
                             <div>
                             <h4>Ingredientes:</h4>
 
                             <select className="select-dropdown">
-                            {producto.ingredientes!.map((ingrediente) => (
+                            {ingredientes!.map((ingrediente) => (
                                 
-                                <option value={ingrediente.id?.toString()}>
-                                {ingrediente.nombre}
+                                <option value={ingrediente.ingrediente.id?.toString()}>
+                                {ingrediente.ingrediente.nombre} | {ingrediente.cantidad.toString()} {ingrediente.unidadmedida.denominacion}s
                                 </option>
                             ))}
                             </select>

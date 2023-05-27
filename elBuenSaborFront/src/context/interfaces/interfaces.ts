@@ -1,4 +1,5 @@
 import { Rubro } from "../../components/compIngrediente/Rubro"
+import Producto from "./Producto"
 
 export type unidadDeMedida = {
     id: Number,
@@ -25,4 +26,12 @@ export type CategoriaProducto = {
     denominacion: string
 }
 
+export type IngredienteDeProducto = {
+    id?: Number,
+    cantidad: Number,
+    producto: Producto,
+    ingrediente: Ingrediente,
+    unidadmedida: unidadDeMedida
+    
+}
 

@@ -28,6 +28,13 @@ const CaracIngrForm: React.FunctionComponent<CaracIngrFormProps> = ({ estado, ca
     const [activo, setActivo] = useState('')
     const [esPadre, setEsPadre] = useState<Boolean>()
 
+    var creando: boolean;
+    if(!datos.id){
+        creando = true;
+    }else{
+        creando = false;
+    }
+
     console.log("-----Estado datos-------");
     console.log(datos);
 
@@ -119,10 +126,10 @@ const CaracIngrForm: React.FunctionComponent<CaracIngrFormProps> = ({ estado, ca
                                         : <><option selected value={JSON.stringify(padre)}>{padre.denominacion}</option> <option value="">No tiene rubro padre</option> </>
                                         }
                                         {rubrosPadre.map(rubro => (
-
+                                            
                                             padre.denominacion !== rubro.denominacion && nombre !== rubro.denominacion
-                                            && rubro.id! < parseInt(id) && <option value={JSON.stringify(rubro)}>{rubro.denominacion}</option>
-                                        ))}
+                                            && (rubro.id! < parseInt(id) || creando === true) && <option value={JSON.stringify(rubro)}>{rubro.denominacion}</option>
+                                            ))}
                                     </select>
                                 </div>}
                                 <button className="btn btn-danger mx-3" onClick={() => cambiarEstado(!estado)}><i className="material-icons" style={{fontSize: "30px", cursor:"pointer"}}>highlight_off</i></button>

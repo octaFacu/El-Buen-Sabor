@@ -1,5 +1,6 @@
 import { FunctionComponent } from "react";
 import "./stylesGenericos/Paginacion.css"
+import "./stylesGenericos/sass-vars-overr.scss";
 
 interface PaginacionProps {
     page: number
@@ -32,14 +33,14 @@ const Paginacion: FunctionComponent<PaginacionProps> = ({ page, setPage, totalPa
     }
 
     return (
-        <ul className="pagination">
+        <ul className="pagination ctr mb-2">
             <li className={`page-item ${page === 0 ? "disabled" : "pointer"}`}>
                 <a className="page-link" onClick={() => setPage(page - 1)}>Anterior</a>
             </li>
 
             {renderItems()}
 
-            <li className={`page-item ${currentPage === totalPages ? "disabled" : "pointer"}`}>
+            <li className={`page-item colorActivo ${currentPage === totalPages ? "disabled" : "pointer"}`}>
                 <a className="page-link" onClick={() => setPage(page + 1)}>Siguiente</a>
             </li>
         </ul>

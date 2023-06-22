@@ -1,4 +1,4 @@
-import { ServiceBasicos } from "./ServiceBasicos";
+import { ServiceBasicos } from "../../../../../Programación - S4/Laboratorio de Computación IV/importante/parcialN1-LabIV/src/services/ServiceBasicos";
 
 export class ProductoService extends ServiceBasicos{
     

@@ -52,7 +52,7 @@ interface ModalVistaDetalleProps{
                             {ingredientes!.map((ingrediente) => (
                                 
                                 <option value={ingrediente.ingrediente.id?.toString()}>
-                                {ingrediente.ingrediente.nombre} | {ingrediente.cantidad.toString()} {ingrediente.unidadmedida.denominacion}s
+                                {ingrediente.ingrediente.nombre} | {ingrediente.cantidad.toString()} {ingrediente.unidadmedida.denominacion}
                                 </option>
                             ))}
                             </select>

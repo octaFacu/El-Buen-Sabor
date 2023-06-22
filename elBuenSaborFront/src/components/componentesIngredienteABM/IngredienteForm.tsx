@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react"
 import "../../css/ventanaModal.css"
 import { CategoriaIngredienteService } from "../../services/CategoriaIngredienteService";
-import { ServiceBasicos } from "../../services/ServiceBasicos";
+import { ServiceBasicos } from "../../../../../../Programación - S4/Laboratorio de Computación IV/importante/parcialN1-LabIV/src/services/ServiceBasicos";
 import { Ingrediente, unidadDeMedida } from "../../context/interfaces/interfaces";
 import { IngredientesService } from "../../services/IngredientesService";
 import { Rubro } from "../compIngrediente/Rubro";

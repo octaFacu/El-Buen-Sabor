@@ -1,5 +1,5 @@
 import { Rubro } from "../components/compIngrediente/Rubro"
-import { ServiceBasicos } from "./ServiceBasicos"
+import { ServiceBasicos } from "../../../../../Programación - S4/Laboratorio de Computación IV/importante/parcialN1-LabIV/src/services/ServiceBasicos"
 
 export class CategoriaIngredienteService extends ServiceBasicos{
     

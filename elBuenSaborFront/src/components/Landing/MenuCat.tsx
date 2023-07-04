@@ -64,7 +64,7 @@ const MenuCat: React.FC = () => {
           <div className="centerTitle">
             
             <hr style={{marginRight: "2%", marginLeft: "2%"}}></hr>
-            <div style={{textAlign: "center"}}><h3 style={{color: "#864e1b"}}>HAMBURGUESAS</h3></div>
+            <div className="mt-3" style={{textAlign: "center"}}><h3 style={{color: "#864e1b"}}>HAMBURGUESAS</h3></div>
             <hr style={{marginRight: "2%", marginLeft: "2%"}}></hr>
           </div>
           

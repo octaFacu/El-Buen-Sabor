@@ -1,6 +1,5 @@
 import { Dispatch, SetStateAction, createContext, useContext } from "react";
 import { unidadDeMedida, Ingrediente } from "./interfaces/interfaces";
-import { ServiceBasicos } from "../../../../../Programación - S4/Laboratorio de Computación IV/importante/parcialN1-LabIV/src/services/ServiceBasicos";
 
 //Interface de que es lo que va a contener este contexto
 export interface UnidadContextInteface{

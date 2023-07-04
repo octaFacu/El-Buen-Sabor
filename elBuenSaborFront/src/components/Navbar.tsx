@@ -1,12 +1,13 @@
 import {useAuth0} from '@auth0/auth0-react'
 import LogoutBtn from './LogoutBtn';
 import LoginBtn from './LoginBtn';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 
 
 const Navbar: React.FC = () => {
 
   const { user, isAuthenticated, isLoading } = useAuth0();
+  const navigate = useNavigate();
 
 
   if(isLoading){
@@ -40,7 +41,9 @@ console.log(isAuthenticated);
 
             </div>
             <div>
-              <><img style={{borderRadius: "50%", maxWidth: "60%", maxHeight:"60%", cursor:"pointer"}} src={user!.picture} alt="imagen de perfil" /></>
+              <><img onClick={()=> {
+                navigate("/usuarios/");
+              }} style={{borderRadius: "50%", maxWidth: "60%", maxHeight:"60%", cursor:"pointer"}} src={user!.picture} alt="imagen de perfil" /></>
             </div>
           <div><LogoutBtn/></div>
         {/*</div>*/}

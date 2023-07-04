@@ -30,7 +30,9 @@ export default function InformacionAdicionalPostRegistro() {
               <label htmlFor="telefono" className="form-label">Teléfono</label>
               <input type="tel" className="form-control inputsControlador" id="telefono" placeholder="Ingrese su teléfono" />
             </div>
-            <button type="submit" className="btn  btnFormContinuacion">Enviar</button>
+            <button type="submit" className="btn  btnFormContinuacion" onClick={() => {
+              navigate("/")
+            }}>Enviar</button>
           </form>
         </div>
       </div>

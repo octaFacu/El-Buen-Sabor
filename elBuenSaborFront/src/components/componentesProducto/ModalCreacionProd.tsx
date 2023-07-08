@@ -7,32 +7,31 @@ import { ProductoService } from "../../services/ProductoService";
 import Producto from "../../context/interfaces/Producto";
 import GrupoBotones from "../genericos/GrupoBotones";
 
-interface IngredienteFormProps {
+interface ProdFormProps {
 
     //De categoriaIngrABM, cambio su estado
-    /*estado: boolean,
-    cambiarEstado: any
+    estado: boolean,
+    cambiarEstado: (estado: boolean) => void,
 
-    datos?: Ingrediente
-    setDatos: any
+    /*datos?: Ingrediente
+    setDatos: any*/
 
-    categorias: Rubro[]*/
+    categorias: Rubro[];
 }
 
-const ModalCreacionProd: React.FunctionComponent<IngredienteFormProps> = (/*{ estado, cambiarEstado, datos, setDatos, categorias}*/) => {
+const ModalCreacionProd: React.FC<ProdFormProps> = ({ estado, cambiarEstado, categorias }) => {
 
     const productoService = new ProductoService();
     // const serviceBasicos = new ServiceBasicos("unidadmedida");
   
-    const estado = true;
 
     let Productonuevo: Producto;
-    /*const [unidadElegida, setUnidadElegida] = useState<String>();
-    const [categoriaElegida, setCategoriaElegida] = useState<String>();*/
+    /*const [unidadElegida, setUnidadElegida] = useState<String>();*/
+    /*const [categoriaElegida, setCategoriaElegida] = useState<String>();*/
 
     const [productoSelect, setProductoSelect] = useState<Producto>( new Producto());
     
-    /*const { unidadesDeMedida } = useContext(GlobalContext);*/
+    /*const { categoria } = useContext(GlobalContext);*/
 
     const handleSelectChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         
@@ -46,11 +45,11 @@ const ModalCreacionProd: React.FunctionComponent<IngredienteFormProps> = (/*{ es
             setIngredienteSelect(datos!);
         }
         
-    }, [datos])
+    }, [datos])*/
 
     
 
-    if (datos === undefined || categorias === undefined) {
+    if (/*datos === undefined ||*/ categorias === undefined) {
 
             return (
                 <>
@@ -59,23 +58,25 @@ const ModalCreacionProd: React.FunctionComponent<IngredienteFormProps> = (/*{ es
                     }
                 </>
             )
-    // }else if(categorias === undefined){
-    //     return(
-    //         estado &&
-    //         <div>
-    //             <div className="overlay">
-    //                 <div className="container my-5 contenedorModal" style={{borderRadius: "25px", backgroundColor: "#f99132", color: "white"}}>
-    //                     <div className="" style={{textAlign: "center"}}>
+    }else if(categorias === undefined){
+        return(
+            <>
+            {estado &&
+            <div>
+                <div className="overlay">
+                    <div className="container my-5 contenedorModal" style={{borderRadius: "25px", backgroundColor: "#f99132", color: "white"}}>
+                        <div className="" style={{textAlign: "center"}}>
 
-    //                         <h1>¡DEBE CREAR CATEGORIAS PRIMERO!</h1>
+                            <h1>¡DEBE CREAR CATEGORIAS PRIMERO!</h1>
 
-    //                     </div>
-    //                 </div>
-    //             </div>
-    //         </div>
-    //     )
+                        </div>
+                    </div>
+                </div>
+            </div>}
+            </>
+        )
     }
-    else{
+    /*else{
         Ingredientenuevo = datos;
         
     }*/
@@ -106,11 +107,11 @@ const ModalCreacionProd: React.FunctionComponent<IngredienteFormProps> = (/*{ es
                                     <div style={{display: "flex"}}>
                                         <div className="mb-3">
                                             <label htmlFor="stockActual" className="form-label">Costo Total</label>
-                                            <input type="number" style={{borderRadius: "25px", backgroundColor: "#FDA859", color: "white"}} className="form-control" id="precioCompra" name="precioCompra" required value={productoSelect.costoTotal.toString()}/>
+                                            <input type="number" style={{borderRadius: "25px", backgroundColor: "#FDA859", color: "white"}} className="form-control me-2" id="precioCompra" name="precioCompra" required value={productoSelect.costoTotal.toString()}/>
                                         </div>
                                         <div className="mb-3">
                                             <label htmlFor="stockActual" className="form-label">Precio Total</label>
-                                            <input type="number" style={{borderRadius: "25px", backgroundColor: "#FDA859", color: "white"}}  className="form-control" id="stockActual" name="stockActual" required value={productoSelect.precioTotal.toString()}/>
+                                            <input type="number" style={{borderRadius: "25px", backgroundColor: "#FDA859", color: "white"}}  className="form-control ms-2" id="stockActual" name="stockActual" required value={productoSelect.precioTotal.toString()}/>
                                         </div>
                                     </div>
                                     </div>
@@ -120,12 +121,12 @@ const ModalCreacionProd: React.FunctionComponent<IngredienteFormProps> = (/*{ es
                                     <div className="text-center" style={{display: "flex"}}>
                                         <div className="mb-3">
                                             <label htmlFor="stockMinimo" className="form-label">Descripcion</label>
-                                            <textarea style={{borderRadius: "25px", backgroundColor: "#FDA859", color: "white"}} className="form-control" id="stockMin" name="stockMin"/>
+                                            <textarea style={{borderRadius: "25px", backgroundColor: "#FDA859", color: "white"}} className="form-control me-2" id="stockMin" name="stockMin"/>
                                         </div>
                                         <div className="mb-3">
                                             {/* Poner disabled si esManufacturado false */}
                                             <label htmlFor="stockMaximo" className="form-label">Receta</label>
-                                            <textarea style={{borderRadius: "25px", backgroundColor: "#FDA859", color: "white"}} className="form-control" id="stockMax" name="stockMax" />
+                                            <textarea style={{borderRadius: "25px", backgroundColor: "#FDA859", color: "white"}} className="form-control ms-2" id="stockMax" name="stockMax" />
                                         </div>
                                     </div>
                                     </div>
@@ -153,20 +154,20 @@ const ModalCreacionProd: React.FunctionComponent<IngredienteFormProps> = (/*{ es
                                 
                                 
                                 
-                                    {/* <div className="container" style={{display: "flex", justifyContent: "space-evenly"}}>
+                                     <div className="container" style={{display: "flex", justifyContent: "space-evenly"}}>
                                 <div className="mb-4" style={{display: "flex", maxWidth: "70%", maxHeight: "40%", alignItems: "center", justifyContent: "center" }}>
-                                    <label htmlFor="rubro" className="form-label">Unidad de Medida</label>
-                                    <select style={{borderRadius: "25px", backgroundColor: "#FDA859", color: "white"}} className="form-select" id="unidades" name="unidades" onChange={e =>{  setUnidadElegida(e.target.value); Ingredientenuevo.unidadmedida = JSON.parse(unidadElegida!.valueOf());}}>
-                                    <option selected value={JSON.stringify(datos.unidadmedida)}>{datos.unidadmedida.denominacion}</option>
-                                        {unidadesDeMedida.map(unidadM => (
+                                    <label htmlFor="rubro" className="form-label">Categoria</label>
+                                    <select style={{borderRadius: "25px", backgroundColor: "#FDA859", color: "white"}} className="form-select" id="categorias" name="categorias" /*onChange={e =>{  setUnidadElegida(e.target.value); Ingredientenuevo.unidadmedida = JSON.parse(unidadElegida!.valueOf());}}*/>
+                                    <option /*selected value={JSON.stringify(Productonuevo.categoriaProducto)}*/>{/*Productonuevo.categoriaProducto.denominacion*/}</option>
+                                        {categorias.map(cat => (
 
-                                            unidadM.denominacion !== datos.unidadmedida.denominacion &&
-                                            <option value={JSON.stringify(unidadM)}>{unidadM.denominacion}</option>
+                                            /*cat.denominacion !== Productonuevo.categoriaProducto.denominacion &&*/
+                                            <option value={JSON.stringify(cat)}>{cat.denominacion}</option>
                                         ))}
                                     </select>
 
                                 </div> 
-                                </div> */}
+                                </div> 
 
 
 
@@ -211,6 +212,7 @@ const ModalCreacionProd: React.FunctionComponent<IngredienteFormProps> = (/*{ es
         </>
 
     );
+
 }
 
 export default ModalCreacionProd;

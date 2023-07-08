@@ -17,16 +17,24 @@ const GrupoBotones: React.FC = () => {
   return (
     <div>
       <button
+        className={`btn ${isButton1Selected ? 'btn-success' : 'btn-outline-success'}`}
         onClick={handleButton1Click}
-        style={{ fontWeight: isButton1Selected ? 'bold' : 'normal' }}
+        style={{
+          fontWeight: isButton1Selected ? 'bold' : 'normal',
+          border: isButton1Selected ? '2px solid white' : 'none',
+        }}
       >
-        Button 1
+        Si
       </button>
       <button
+        className={`btn ${isButton2Selected ? 'btn-danger' : 'btn-outline-danger'}`}
         onClick={handleButton2Click}
-        style={{ fontWeight: isButton2Selected ? 'bold' : 'normal' }}
+        style={{
+          fontWeight: isButton2Selected ? 'bold' : 'normal',
+          border: isButton2Selected ? '2px solid white' : 'none',
+        }}
       >
-        Button 2
+        No
       </button>
     </div>
   );

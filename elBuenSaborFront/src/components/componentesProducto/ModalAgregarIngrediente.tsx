@@ -16,10 +16,10 @@ interface ProdFormProps {
     /*datos?: Ingrediente
     setDatos: any*/
 
-    categorias: Rubro[];
+    //categorias: Rubro[];
 }
 
-const ModalCreacionProd: React.FC<ProdFormProps> = ({ estado, cambiarEstado, categorias }) => {
+const ModalAgregarIngrediente: React.FC<ProdFormProps> = ({ estado, cambiarEstado }) => {
 
     const productoService = new ProductoService();
     // const serviceBasicos = new ServiceBasicos("unidadmedida");
@@ -231,4 +231,4 @@ const ModalCreacionProd: React.FC<ProdFormProps> = ({ estado, cambiarEstado, cat
 
 }
 
-export default ModalCreacionProd;
+export default ModalAgregarIngrediente;

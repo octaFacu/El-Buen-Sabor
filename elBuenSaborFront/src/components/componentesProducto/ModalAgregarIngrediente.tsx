@@ -6,86 +6,61 @@ import { GlobalContext } from "../../context/GlobalContext";
 import { ProductoService } from "../../services/ProductoService";
 import Producto from "../../context/interfaces/Producto";
 import GrupoBotones from "../genericos/GrupoBotones";
+import IngredienteDeProducto from "../../context/interfaces/IngredienteDeProducto";
+import { IngredientesService } from "../../services/IngredientesService";
+import { ServiceBasicos } from "../../services/ServiceBasicos";
 
 interface ProdFormProps {
 
     //De categoriaIngrABM, cambio su estado
     estado: boolean,
     cambiarEstado: (estado: boolean) => void,
+    producto: Producto,
 
-    /*datos?: Ingrediente
+    /*datos?: IngredienteDeProducto
     setDatos: any*/
 
-    //categorias: Rubro[];
 }
 
-const ModalAgregarIngrediente: React.FC<ProdFormProps> = ({ estado, cambiarEstado }) => {
+const ModalAgregarIngrediente: React.FC<ProdFormProps> = ({ estado, cambiarEstado, producto }) => {
 
-    const productoService = new ProductoService();
-    // const serviceBasicos = new ServiceBasicos("unidadmedida");
+    const ingredienteService = new IngredientesService();
+    const serviceMedida = new ServiceBasicos("unidadmedida");
   
 
-    let Productonuevo: Producto = new Producto();
-    /*const [unidadElegida, setUnidadElegida] = useState<String>();*/
-    /*const [categoriaElegida, setCategoriaElegida] = useState<String>();*/
-
-    const [productoSelect, setProductoSelect] = useState<Producto>( new Producto());
+    let Ingredientenuevo: IngredienteDeProducto = new IngredienteDeProducto();
+    let ingredientes: Ingrediente[] = [];
+    let medidas: unidadDeMedida[] = [];
+    const [ingredienteSelect, setIngredienteSelect] = useState<IngredienteDeProducto>( new IngredienteDeProducto());
     
-    /*const { categoria } = useContext(GlobalContext);*/
+
 
     const handleSelectChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         
-        Productonuevo.denominacion =(event.target.value)
+        //Ingredientenuevo.denominacion =(event.target.value)
 
-        setProductoSelect({ ...productoSelect, denominacion: (event.target.value) });
+        setIngredienteSelect({ ...ingredienteSelect, cantidad: parseFloat(event.target.value) });
     }
 
-    /*useEffect(() => {
-        if(datos !== undefined){
+    useEffect(() => {
+        /*if(datos !== undefined){
             setIngredienteSelect(datos!);
+        }*/
+        const getMedidasYIngredientes = async () => {
+
+            medidas = await serviceMedida.getAllBasic();
+
+            ingredientes = await ingredienteService.getAllBasic();
         }
         
-    }, [datos])*/
-
-    
-
-    if (/*datos === undefined ||*/ categorias === undefined) {
-
-            return (
-                <>
-                    {estado &&
-                        <h1>LOADING!</h1>
-                    }
-                </>
-            )
-    }else if(categorias === undefined){
-        return(
-            <>
-            {estado &&
-            <div>
-                <div className="overlay">
-                    <div className="container my-5 contenedorModal" style={{borderRadius: "25px", backgroundColor: "#f99132", color: "white"}}>
-                        <div className="" style={{textAlign: "center"}}>
-
-                            <h1>¡DEBE CREAR CATEGORIAS PRIMERO!</h1>
-
-                        </div>
-                    </div>
-                </div>
-            </div>}
-            </>
-        )
-    }
-    /*else{
-        Ingredientenuevo = datos;
         
-    }*/
+    }, [])
 
     
 
     return (
         <>
-            {estado && productoSelect !== undefined &&
+            {estado && ingredienteSelect !== undefined &&
                 <div className="overlay">
                     <div className="container my-5 contenedorModal" style={{borderRadius: "25px", backgroundColor: "#f99132", color: "white", maxWidth: "50%"}}>
                         <div className="" style={{textAlign: "center", alignContent: "center"}}>
@@ -93,98 +68,57 @@ const ModalAgregarIngrediente: React.FC<ProdFormProps> = ({ estado, cambiarEstad
                                 e.preventDefault()
                                
                             }}>
-                                <h3 className="mb-3">Nuevo Producto</h3>
+                                <h3 className="mb-3">Añadir nuevo Ingrediente al Producto</h3>
                                 
-                                <div className="container" style={{display: "flex", justifyContent: "space-evenly"}}>
-                                    <div className="mb-3" style={{maxWidth: "50%"}}>
-                                        <label htmlFor="nombre" className="form-label">Nombre</label>
-                                        <input style={{borderRadius: "25px", backgroundColor: "#FDA859", color: "white"}} type="text" className="form-control" id="nombre" name="nombre" required value={productoSelect.denominacion.toString()} onChange={
-                                            handleSelectChange
-                                        }  />
-                                    </div>
-                                    </div>
+                                
                                     <div className="container" style={{display: "flex", justifyContent: "space-evenly"}}>
                                     <div style={{display: "flex"}}>
                                         <div className="mb-3">
-                                            <label htmlFor="stockActual" className="form-label">Costo Total</label>
-                                            <input type="number" style={{borderRadius: "25px", backgroundColor: "#FDA859", color: "white"}} className="form-control me-2" id="precioCompra" name="precioCompra" required value={productoSelect.costoTotal.toString()}/>
-                                        </div>
-                                        <div className="mb-3">
-                                            <label htmlFor="stockActual" className="form-label">Precio Total</label>
-                                            <input type="number" style={{borderRadius: "25px", backgroundColor: "#FDA859", color: "white"}}  className="form-control ms-2" id="stockActual" name="stockActual" required value={productoSelect.precioTotal.toString()}/>
+                                            <label htmlFor="stockActual" className="form-label">Cantidad</label>
+                                            <input type="number" style={{borderRadius: "25px", backgroundColor: "#FDA859", color: "white"}} className="form-control me-2" id="Cantidad" name="Cantidad" required value={ingredienteSelect.cantidad.toString()}/>
                                         </div>
                                     </div>
                                     </div>
                                     
 
-                                    <div className="container" style={{display: "flex", justifyContent: "space-evenly"}}>
-                                    <div className="text-center" style={{display: "flex"}}>
-                                        <div className="mb-3">
-                                            <label htmlFor="stockMinimo" className="form-label">Descripcion</label>
-                                            <textarea style={{borderRadius: "25px", backgroundColor: "#FDA859", color: "white"}} className="form-control me-2" id="stockMin" name="stockMin"/>
-                                        </div>
-                                        <div className="mb-3">
-                                            {/* Poner disabled si esManufacturado false */}
-                                            <label htmlFor="stockMaximo" className="form-label">Receta</label>
-                                            <textarea style={{borderRadius: "25px", backgroundColor: "#FDA859", color: "white"}} className="form-control ms-2" id="stockMax" name="stockMax" />
-                                        </div>
-                                    </div>
-                                    </div>
-
-                                     <div className="container" style={{display: "flex", justifyContent: "space-evenly"}}>
-                                    <div className="text-center" style={{display: "flex"}}>
-                                        <div className="mb-3">
-                                            {/* Poner disabled si esManufacturado false */}
-                                            <label htmlFor="stockMinimo" className="form-label">Tiempo de Preparacion</label>
-                                            <input id="settime" type="time" step="1" style={{borderRadius: "25px", backgroundColor: "#FDA859", color: "white"}} className="form-control" required value={productoSelect.tiempoCocina!.toString()}/> 
-                                           </div>
-                                        <div className="mb-3">
-                                            <label htmlFor="stockMaximo" className="form-label">¿Es manufacturado?</label>
-                                            <GrupoBotones></GrupoBotones>
-                                        </div>
-
-                                        <div className="mb-3">
-                                            <label htmlFor="stockActual" className="form-label">Inserte Link de su Imagen</label>
-                                            <input type="text" style={{borderRadius: "25px", backgroundColor: "#FDA859", color: "white"}}  className="form-control" id="precio" name="precio" required value={productoSelect.imagen.toString()}/>
-                                        </div>
-                                    </div>
-                                    </div>
                                 
 
                                 
                                 
                                 
-                                     <div className="container" style={{display: "flex", justifyContent: "space-evenly"}}>
-                                <div className="mb-4" style={{display: "flex", maxWidth: "70%", maxHeight: "40%", alignItems: "center", justifyContent: "center" }}>
-                                    <label htmlFor="rubro" className="form-label">Categoria</label>
-                                    <select style={{borderRadius: "25px", backgroundColor: "#FDA859", color: "white"}} className="form-select" id="categorias" name="categorias" /*onChange={e =>{  setUnidadElegida(e.target.value); Ingredientenuevo.unidadmedida = JSON.parse(unidadElegida!.valueOf());}}*/>
-                                    <option /*selected value={JSON.stringify(Productonuevo.categoriaProducto)}*/>{/*Productonuevo.categoriaProducto.denominacion*/}</option>
-                                        {categorias.map(cat => (
-
-                                            /*cat.denominacion !== Productonuevo.categoriaProducto.denominacion &&*/
-                                            <option value={JSON.stringify(cat)}>{cat.denominacion}</option>
-                                        ))}
-                                    </select>
-
-                                </div> 
-                                </div> 
+                                    
 
 
                                 <div className="container" style={{display: "flex", justifyContent: "space-evenly"}}>
                                 <div className="mb-4" style={{display: "flex", maxWidth: "70%", maxHeight: "40%", alignItems: "center", justifyContent: "center" }}>
-                                    <label htmlFor="rubro" className="form-label">Ingredientes</label>
-                                    <select style={{borderRadius: "25px", backgroundColor: "#FDA859", color: "white"}} className="form-select" id="ingredientes" name="categorias" /*onChange={e =>{  setUnidadElegida(e.target.value); Ingredientenuevo.unidadmedida = JSON.parse(unidadElegida!.valueOf());}}*/>
+                                    <label htmlFor="rubro" className="form-label">Ingrediente</label>
+                                    <select style={{borderRadius: "25px", backgroundColor: "#FDA859", color: "white"}} className="form-select" id="ingredientes" name="ingredientes" /*onChange={e =>{  setUnidadElegida(e.target.value); Ingredientenuevo.unidadmedida = JSON.parse(unidadElegida!.valueOf());}}*/>
                                     <option /*selected value={JSON.stringify(Productonuevo.categoriaProducto)}*/>{/*Productonuevo.categoriaProducto.denominacion*/}</option>
-                                        {Productonuevo.ingredientes?.length != 0 && Productonuevo.ingredientes!.map(ing => (
-
-                                            /*cat.denominacion !== Productonuevo.categoriaProducto.denominacion &&*/
-                                            <option value={JSON.stringify(ing)}>{ing.nombre}<button className="btn btn-danger">X</button></option>
+                                        { ingredientes!.map(ing => (
+                                            // TODO: ing es de clase diferente que ingredientes, comparar nombres
+                                            !(producto.ingredientes!.find(ing)) &&
+                                            <option value={JSON.stringify(ing)}>{ing.nombre}</option>
                                         ))}
                                     </select>
 
+                                </div>
                                 </div> 
-                                <button className="btn btn-success">Agregar Ingrediente</button>
+
+                                <div className="container" style={{display: "flex", justifyContent: "space-evenly"}}>
+                                <div className="mb-4" style={{display: "flex", maxWidth: "70%", maxHeight: "40%", alignItems: "center", justifyContent: "center" }}>
+                                    <label htmlFor="rubro" className="form-label">Ingrediente</label>
+                                    <select style={{borderRadius: "25px", backgroundColor: "#FDA859", color: "white"}} className="form-select" id="medidas" name="medidas" /*onChange={e =>{  setUnidadElegida(e.target.value); Ingredientenuevo.unidadmedida = JSON.parse(unidadElegida!.valueOf());}}*/>
+                                    <option /*selected value={JSON.stringify(Productonuevo.categoriaProducto)}*/>{/*Productonuevo.categoriaProducto.denominacion*/}</option>
+                                        { medidas!.map(med => (
+
+                                            <option value={JSON.stringify(med)}>{med.denominacion}</option>
+                                        ))}
+                                    </select>
+
+                                </div>
                                 </div> 
+
+                                
 
 
 

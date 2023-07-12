@@ -6,6 +6,7 @@ import ProductoCard from "../../components/componentesProducto/ProductoCard";
 import { ListaCartasABM } from "../../components/genericos/ListaCartasABM";
 import { Producto } from "../../context/interfaces/Producto";
 import ModalVistaDetalleProd from "../../components/componentesProducto/ModalVistaDetalleProd";
+import ModalCreacionProd from "../../components/componentesProducto/ModalCreacionProd";
 
 export const ProductosABM = () => {
 
@@ -124,15 +125,15 @@ export const ProductosABM = () => {
                 </div>
             </div>
             </ListaCartasABM>
-            {/* <IngredienteForm
+            <ModalCreacionProd
                 estado={estadoModal}
                 cambiarEstado={setEstadoModal}
 
-                datos={datos}
-                setDatos={setDatos}
+                /*datos={datos}
+                setDatos={setDatos}*/
 
                 categorias={categorias}
-            /> */}
+            />
             <ModalVistaDetalleProd producto= {datos} estadoVista={estadoModalVista} cambiarEstadoVista={setEstadoModalVista}/> 
             <br></br>
             </div >

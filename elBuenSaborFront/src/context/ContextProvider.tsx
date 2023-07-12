@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import { ServiceBasicos } from "../services/ServiceBasicos";
 import { GlobalContext } from "./GlobalContext"
 import { Ingrediente, unidadDeMedida } from "./interfaces/interfaces";
 import { IngredientesService } from "../services/IngredientesService";
+import { ServiceBasicos } from "../services/ServiceBasicos";
 
 
 

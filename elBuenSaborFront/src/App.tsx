@@ -7,6 +7,7 @@ import CategoriaIngrABM from './pages/ABMPages/CategoriaIngredienteABM'
 import { ContextProvider } from './context/ContextProvider'
 import { BrowserRouter } from "react-router-dom"
 import { AppRoutes } from './routes/AppRoutes'
+import FloatingBtn from './components/navigation/FloatingBtn'
 
 
 const App: React.FC = () => {
@@ -18,7 +19,14 @@ const App: React.FC = () => {
           <Navbar />
 
           <AppRoutes/>
+<<<<<<< HEAD
 
+=======
+          <FloatingBtn></FloatingBtn>
+          {/* <CategoriaIngrABM /> */}
+        {/* </main>
+      </div> */}
+>>>>>>> 8f56efb679a37fd390b13ee8b2cfa3fd738d400d
       </BrowserRouter>
     </ContextProvider>
   )

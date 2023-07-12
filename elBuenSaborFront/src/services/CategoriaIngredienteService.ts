@@ -1,5 +1,5 @@
 import { Rubro } from "../components/compIngrediente/Rubro"
-import { ServiceBasicos } from "./ServiceBasicos"
+import { ServiceBasicos } from "./ServiceBasicos";
 
 export class CategoriaIngredienteService extends ServiceBasicos{
     

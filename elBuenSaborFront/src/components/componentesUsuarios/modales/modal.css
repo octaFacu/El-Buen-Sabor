@@ -30,7 +30,16 @@
 }
 
 .btn.eliminar{
-    border-radius: 11px !important;
+    border-radius: 30px !important;
     background-color: #864E1B !important;   
-    width: 6vh;
+    width: 10vh;
+}
+.eliminar:hover{
+    background-color:  #fda859 !important;
+}
+
+.btn.enviar{
+    border-radius: 30px ;
+    background-color: #864E1B ;   
+    width: 40vh;
 }

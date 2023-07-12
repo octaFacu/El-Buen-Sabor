@@ -1,0 +1,35 @@
+.btnFormContinuacion{
+    background-color: #864e1b !important;
+    border-radius: 100px !important;
+    color: white !important;
+    width: 60% !important;
+    margin-top: 1rem !important;
+}
+
+.cardFormularioConitnuacion {
+    background-color: #fda859;
+    max-width: 600px;
+    margin: 0 auto;
+    text-align: center;
+    padding: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    height: 50vh; 
+  }
+  
+.inputsControlador{
+    border-radius: 30px !important;
+    text-align: center;
+    color: white !important;
+}
+
+.cardFormularioConitnuacion h1 {
+    font-family: "Alfa Slab One", cursive; /* Fuente para el título */
+  }
+  
+  .cardFormularioConitnuacion button {
+    font-family: "ABeeZee", sans-serif; /* Fuente para los botones */
+  }
+  
+  .cardFormularioConitnuacion input {
+    font-family: "Varela Round", sans-serif; /* Fuente para los inputs */
+  }

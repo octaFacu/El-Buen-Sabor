@@ -53,6 +53,7 @@ const ModalAgregarIngrediente: React.FC<ProdFormProps> = ({ estado, cambiarEstad
             ingredientes = await ingredienteService.getAllBasic();
         }
         
+        getMedidasYIngredientes();
         
     }, [])
 
@@ -94,11 +95,11 @@ const ModalAgregarIngrediente: React.FC<ProdFormProps> = ({ estado, cambiarEstad
                                     <label htmlFor="rubro" className="form-label">Ingrediente</label>
                                     <select style={{borderRadius: "25px", backgroundColor: "#FDA859", color: "white"}} className="form-select" id="ingredientes" name="ingredientes" /*onChange={e =>{  setUnidadElegida(e.target.value); Ingredientenuevo.unidadmedida = JSON.parse(unidadElegida!.valueOf());}}*/>
                                     <option /*selected value={JSON.stringify(Productonuevo.categoriaProducto)}*/>{/*Productonuevo.categoriaProducto.denominacion*/}</option>
-                                        { ingredientes!.map(ing => (
+                                        {/* { ingredientes!.map(ing => (
                                             // TODO: ing es de clase diferente que ingredientes, comparar nombres
                                             !(producto.ingredientes!.find(ing)) &&
                                             <option value={JSON.stringify(ing)}>{ing.nombre}</option>
-                                        ))}
+                                        ))} */}
                                     </select>
 
                                 </div>

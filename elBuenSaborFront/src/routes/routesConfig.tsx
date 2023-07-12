@@ -1,4 +1,4 @@
-import { Landing } from '../components/Landing/Landing';
+import { Landing } from '../pages/LandingPages/Landing';
 import InformacionUsuario from '../pages/UsuariosPages/InformacionUsuario';
 import CategoriaIngrABM from '../pages/ABMPages/CategoriaIngredienteABM';
 import { IngredientesABM } from '../pages/ABMPages/IngredientesABM';

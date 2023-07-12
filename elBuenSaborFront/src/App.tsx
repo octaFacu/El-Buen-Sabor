@@ -10,28 +10,23 @@ import { AppRoutes } from './routes/AppRoutes'
 import FloatingBtn from './components/navigation/FloatingBtn'
 
 
-
-
-
-
-
 const App: React.FC = () => {
-
-
 
   return (
   <ContextProvider>
     <BrowserRouter>
-      {/* <div className="App" >
-        <main> */}
+
           <Navbar />
-          {/* <ImgLogo />
-          <MenuCat /> */}
+
           <AppRoutes/>
+<<<<<<< HEAD
+
+=======
           <FloatingBtn></FloatingBtn>
           {/* <CategoriaIngrABM /> */}
         {/* </main>
       </div> */}
+>>>>>>> 8f56efb679a37fd390b13ee8b2cfa3fd738d400d
       </BrowserRouter>
     </ContextProvider>
   )

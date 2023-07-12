@@ -4,24 +4,24 @@ import { CategoriaProductoService } from "../../services/CategoriaProductoServic
 
 const MenuCat: React.FC = () => {
 
-  const categoriaProductoService = new CategoriaProductoService();
-  const [categorias, setCategorias] = useState<CategoriaProducto[]>([]);
+//   const categoriaProductoService = new CategoriaProductoService();
+//   const [categorias, setCategorias] = useState<CategoriaProducto[]>([]);
 
-  useEffect(() => {
-    // categoriaIngredienteService.getAll()
-    categoriaProductoService.getAllBasic()
-        .then(data => {
-            // console.log(data);
-            setCategorias(data)
-        })
+//   useEffect(() => {
+//     // categoriaIngredienteService.getAll()
+//     categoriaProductoService.getAllBasic()
+//         .then(data => {
+//             // console.log(data);
+//             setCategorias(data)
+//         })
 
-}, []);
+// }, []);
 
     return(
         <div>
 
 
-        <div className="menuCat">
+        {/* <div className="menuCat">
             <div><button className="btnPag"><i className="material-icons" style={{fontSize: "30px"}}> keyboard_arrow_left</i></button></div>
 
             {
@@ -32,7 +32,7 @@ const MenuCat: React.FC = () => {
             
             
             <div style={{fontSize: "24px"}}><button className="btnPag"><i className="material-icons" style={{fontSize: "30px"}}> keyboard_arrow_right</i></button></div>
-        </div>
+        </div> */}
 
 
 

@@ -1,0 +1,56 @@
+{
+  "ingredientes": [
+    {
+      "nombre": "Harina",
+      "rubro": "Seco",
+      "activo": true
+    },
+    {
+      "nombre": "Huevos",
+      "rubro": "Refrigerado",
+      "activo": true
+    },
+    {
+      "nombre": "Leche",
+      "rubro": "Refrigerado",
+      "activo": false
+    },
+    {
+      "nombre": "Azúcar",
+      "rubro": "Seco",
+      "activo": true
+    }
+  ],
+  "rubros": [
+    {
+      "nombre": "Seco",
+      "padre": "",
+      "activo": true
+    },
+    {
+      "nombre": "Refrigerado",
+      "padre": "",
+      "activo": true
+    },
+    {
+      "nombre": "Fresco",
+      "padre": "",
+      "activo": false
+    },
+    {
+      "nombre": "Congelado",
+      "padre": "",
+      "activo": true
+    },
+    {
+      "nombre": "Crudo",
+      "padre": "",
+      "activo": true
+    },
+    {
+      "nombre": "Lacteo",
+      "padre": "Refrigerado",
+      "activo": true
+    }
+  ]
+}

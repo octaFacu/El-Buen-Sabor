@@ -9,7 +9,14 @@ const LoginBtn: React.FC = () => {
     
 
     return(
-        <button className='btnIngresoNav' onClick={() => loginWithRedirect()}>Login</button>
+        <button className='btnIngresoNav'   onClick={() =>
+            loginWithRedirect({
+              authorizationParams: {
+                screen_hint: 'signup',
+                redirect_uri: 'http://localhost:5173/informacionAdicional',
+              },
+            })
+          }>Login</button>
     )
 
 }

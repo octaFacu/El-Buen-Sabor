@@ -1,0 +1,16 @@
+.direccion-container {
+    margin-bottom: 10px;
+  }
+  
+  .ubicacion {
+    margin-right: 5px;
+  }
+  
+  .direccion-texto {
+    text-align: center; 
+    font-size: large;
+    margin-left: 10%;
+  }
+  .btn-margen{
+    margin: 0.625em;
+  }

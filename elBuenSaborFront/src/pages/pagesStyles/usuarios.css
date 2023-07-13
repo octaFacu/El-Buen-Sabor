@@ -1,0 +1,55 @@
+
+.card{
+  border-radius: 11px !important;
+  margin-left: 5vh;
+  margin-top: 10vh;
+  background-color: #F99132 !important;
+  color: white;
+}
+
+.linea-separadora {
+  border-top: 1px solid white;
+  margin: 10px 0;
+}
+
+
+.btn{
+  font-size: 1.2rem !important; 
+}
+.btn-color {
+  background-color: #864E1B !important;
+  border-color: #864E1B !important;
+}
+
+.btn:hover {
+  background-color: #FDA859 !important;
+}
+
+.my-3{
+  border: 2px solid white;
+}
+
+.direccion{
+  margin-top: 5px;
+}
+
+.btn.agregar{
+  border-radius: 30px;
+  width: 300px;
+}
+
+.ubicacion{
+  font-size: 36px;
+}
+.icono {
+  font-size: 30px;
+  margin-right: 25px;
+}
+
+.mr{
+  margin-right: 35px;
+}
+
+.bold{
+  font-weight: bold;
+}

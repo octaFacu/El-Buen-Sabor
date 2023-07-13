@@ -13,11 +13,11 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
-  <React.StrictMode>
+  // <React.StrictMode>
     <Auth0Provider domain={import.meta.env.VITE_AUTH0_DOMAIN! as string} clientId={import.meta.env.VITE_AUTH0_CLIENT_ID! as string} authorizationParams={{
       redirect_uri: window.location.origin
     }}> 
       <App />
     </Auth0Provider>
-  </React.StrictMode>,
+  // </React.StrictMode>,
 )

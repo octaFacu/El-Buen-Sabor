@@ -22,7 +22,6 @@ export const Landing = () => {
         console.log(categorias);
       })
 
-
   }, []);
 
   //Traigo las categorias

@@ -183,7 +183,8 @@ body {
   margin-left: 5%;
 }
 
-.menuCat {
+/*LO MUDE A CarruselCategorias.css
+ .menuCat {
   background-color: #fda859;
   color: white;
   width: 90%;
@@ -201,7 +202,7 @@ body {
   flex-direction: row;
   justify-content: space-around;
   align-items: center;
-}
+} */
 
 .btnPag {
   border-radius: 100px;

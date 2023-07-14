@@ -1,8 +1,28 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
-const GrupoBotones: React.FC = () => {
+interface BotonesProps {
+
+  //De categoriaIngrABM, cambio su estado
+  estado: boolean,
+  cambiarEstado: (estado: boolean) => void,
+
+}
+
+const GrupoBotones: React.FC<BotonesProps> = ({ estado, cambiarEstado}) => {
   const [isButton1Selected, setButton1Selected] = useState(true);
   const [isButton2Selected, setButton2Selected] = useState(false);
+
+  useEffect(() => {
+
+    if(estado === true) {
+      setButton1Selected(true);
+      setButton2Selected(false);
+
+    }else{
+
+    }
+
+  }, [estado]);
 
   const handleButton1Click = () => {
     setButton1Selected(true);

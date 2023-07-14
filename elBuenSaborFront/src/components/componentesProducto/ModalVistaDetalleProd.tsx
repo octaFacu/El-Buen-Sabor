@@ -14,6 +14,8 @@ interface ModalVistaDetalleProps{
 
     const prodService = new ProductoService();
      const [ingredientes, setIngredientes] = useState<IngredienteDeProducto[]>([]); ;
+     const [unidadElegida, setUnidadElegida] = useState<String>();
+    const [categoriaElegida, setCategoriaElegida] = useState<String>();
 
     useEffect(() => {
         prodService.getIngredientes(producto.id!).then((data) => setIngredientes(data));

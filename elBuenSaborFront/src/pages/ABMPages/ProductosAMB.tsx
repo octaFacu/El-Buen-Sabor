@@ -129,7 +129,7 @@ export const ProductosABM = () => {
                 estado={estadoModal}
                 cambiarEstado={setEstadoModal}
 
-                /*datos={datos}
+                /*producto={datos}
                 setDatos={setDatos}*/
 
                 categorias={categorias}

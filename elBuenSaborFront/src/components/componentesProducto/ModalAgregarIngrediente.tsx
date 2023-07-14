@@ -17,12 +17,12 @@ interface ProdFormProps {
     cambiarEstado: (estado: boolean) => void,
     producto: Producto,
 
-    /*datos?: IngredienteDeProducto
-    setDatos: any*/
+    datos: IngredienteDeProducto
+    setDatos: any
 
 }
 
-const ModalAgregarIngrediente: React.FC<ProdFormProps> = ({ estado, cambiarEstado, producto }) => {
+const ModalAgregarIngrediente: React.FC<ProdFormProps> = ({ estado, cambiarEstado, producto, datos, setDatos }) => {
 
     const ingredienteService = new IngredientesService();
     const serviceMedida = new ServiceBasicos("unidadmedida");
@@ -31,7 +31,8 @@ const ModalAgregarIngrediente: React.FC<ProdFormProps> = ({ estado, cambiarEstad
     let Ingredientenuevo: IngredienteDeProducto = new IngredienteDeProducto();
     let ingredientes: Ingrediente[] = [];
     let medidas: unidadDeMedida[] = [];
-    const [ingredienteSelect, setIngredienteSelect] = useState<IngredienteDeProducto>( new IngredienteDeProducto());
+    const [ingredienteSelect, setIngredienteSelect] = useState<Ingrediente>();
+    const [medidaSelect, setMedidaSelect] = useState<unidadDeMedida>();
     
 
 
@@ -39,7 +40,7 @@ const ModalAgregarIngrediente: React.FC<ProdFormProps> = ({ estado, cambiarEstad
         
         //Ingredientenuevo.denominacion =(event.target.value)
 
-        setIngredienteSelect({ ...ingredienteSelect, cantidad: parseFloat(event.target.value) });
+        setDatos({ ...datos, cantidad: parseFloat(event.target.value) });
     }
 
     useEffect(() => {
@@ -54,6 +55,9 @@ const ModalAgregarIngrediente: React.FC<ProdFormProps> = ({ estado, cambiarEstad
         }
         
         getMedidasYIngredientes();
+
+        setIngredienteSelect(datos.ingrediente);
+        setMedidaSelect(datos.unidadMedida);
         
     }, [])
 
@@ -76,7 +80,7 @@ const ModalAgregarIngrediente: React.FC<ProdFormProps> = ({ estado, cambiarEstad
                                     <div style={{display: "flex"}}>
                                         <div className="mb-3">
                                             <label htmlFor="stockActual" className="form-label">Cantidad</label>
-                                            <input type="number" style={{borderRadius: "25px", backgroundColor: "#FDA859", color: "white"}} className="form-control me-2" id="Cantidad" name="Cantidad" required value={ingredienteSelect.cantidad.toString()}/>
+                                            <input type="number" style={{borderRadius: "25px", backgroundColor: "#FDA859", color: "white"}} className="form-control me-2" id="Cantidad" name="Cantidad" required value={datos.cantidad.toString()} onChange={e => handleSelectChange(e)}/>
                                         </div>
                                     </div>
                                     </div>
@@ -94,12 +98,12 @@ const ModalAgregarIngrediente: React.FC<ProdFormProps> = ({ estado, cambiarEstad
                                 <div className="mb-4" style={{display: "flex", maxWidth: "70%", maxHeight: "40%", alignItems: "center", justifyContent: "center" }}>
                                     <label htmlFor="rubro" className="form-label">Ingrediente</label>
                                     <select style={{borderRadius: "25px", backgroundColor: "#FDA859", color: "white"}} className="form-select" id="ingredientes" name="ingredientes" /*onChange={e =>{  setUnidadElegida(e.target.value); Ingredientenuevo.unidadmedida = JSON.parse(unidadElegida!.valueOf());}}*/>
-                                    <option /*selected value={JSON.stringify(Productonuevo.categoriaProducto)}*/>{/*Productonuevo.categoriaProducto.denominacion*/}</option>
-                                        {/* { ingredientes!.map(ing => (
+                                    <option selected value={datos.ingrediente.id!.toString()}>{ingredienteSelect.nombre}</option>
+                                        { ingredientes!.map(ing => (
                                             // TODO: ing es de clase diferente que ingredientes, comparar nombres
-                                            !(producto.ingredientes!.find(ing)) &&
-                                            <option value={JSON.stringify(ing)}>{ing.nombre}</option>
-                                        ))} */}
+                                            !(producto.ingredientes!.find(ingredienteSelect)) &&
+                                            <option value={ing.id!.toString()}>{ing.nombre}</option>
+                                        ))}
                                     </select>
 
                                 </div>
@@ -109,7 +113,7 @@ const ModalAgregarIngrediente: React.FC<ProdFormProps> = ({ estado, cambiarEstad
                                 <div className="mb-4" style={{display: "flex", maxWidth: "70%", maxHeight: "40%", alignItems: "center", justifyContent: "center" }}>
                                     <label htmlFor="rubro" className="form-label">Ingrediente</label>
                                     <select style={{borderRadius: "25px", backgroundColor: "#FDA859", color: "white"}} className="form-select" id="medidas" name="medidas" /*onChange={e =>{  setUnidadElegida(e.target.value); Ingredientenuevo.unidadmedida = JSON.parse(unidadElegida!.valueOf());}}*/>
-                                    <option /*selected value={JSON.stringify(Productonuevo.categoriaProducto)}*/>{/*Productonuevo.categoriaProducto.denominacion*/}</option>
+                                    <option selected value={datos.unidadMedida.toString()}>{medidaSelect!.denominacion}</option>
                                         { medidas!.map(med => (
 
                                             <option value={JSON.stringify(med)}>{med.denominacion}</option>

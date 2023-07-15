@@ -1,11 +1,14 @@
 import { useContext, useEffect, useState } from "react"
 import "../../css/ventanaModal.css"
-import { Ingrediente, IngredienteDeProducto, unidadDeMedida } from "../../context/interfaces/interfaces";
+import { Ingrediente, unidadDeMedida } from "../../context/interfaces/interfaces";
 import { Rubro } from "../compIngrediente/Rubro";
 import { GlobalContext } from "../../context/GlobalContext";
 import { ProductoService } from "../../services/ProductoService";
 import Producto from "../../context/interfaces/Producto";
 import GrupoBotones from "../genericos/GrupoBotones";
+import IngredienteDeProducto from "../../context/interfaces/IngredienteDeProducto";
+import ModalAgregarIngrediente from "./ModalAgregarIngrediente";
+
 
 interface ProdFormProps {
 
@@ -26,9 +29,9 @@ const ModalCreacionProd: React.FC<ProdFormProps> = ({ estado, cambiarEstado, cat
   
 
     let Productonuevo: Producto = new Producto();
-    /*const [unidadElegida, setUnidadElegida] = useState<String>();*/
+    const [modalIngr, setModalIngr] = useState<boolean>(false);
     const [categoriaElegida, setCategoriaElegida] = useState<String>();
-    const [ingredientesProducto, setIngredientesProducto] = useState<IngredienteDeProducto[]>();
+    const [ingredientesProducto, setIngredientesProducto] = useState<IngredienteDeProducto[]>([]);
     const [nuevoIngredienteProd, setNuevoIngredienteProd] = useState<IngredienteDeProducto>();
 
     const [productoSelect, setProductoSelect] = useState<Producto>( new Producto());
@@ -49,6 +52,33 @@ const ModalCreacionProd: React.FC<ProdFormProps> = ({ estado, cambiarEstado, cat
         }
         
     }, [datos])*/
+
+
+    const crearProducto = async () => {
+        await productoService.createEntity(Productonuevo);
+
+        for(var ing of ingredientesProducto!){ 
+
+            await productoService.saveIngredienteProd(ing);
+
+        }
+        
+    }
+
+    const updateProducto = async () => {
+        await productoService.updateEntity(Productonuevo);
+
+        for(var ing of ingredientesProducto!){ 
+
+            await productoService.saveIngredienteProd(ing);
+
+        }
+        
+    }
+    const handleFormSubmit = () => {
+        setModalIngr(true);
+        return false; // Prevent the default form submission behavior
+      };
 
     
 
@@ -89,6 +119,7 @@ const ModalCreacionProd: React.FC<ProdFormProps> = ({ estado, cambiarEstado, cat
     return (
         <>
             {estado && productoSelect !== undefined &&
+
                 <div className="overlay">
                     <div className="container my-5 contenedorModal" style={{borderRadius: "25px", backgroundColor: "#f99132", color: "white", maxWidth: "50%"}}>
                         <div className="" style={{textAlign: "center", alignContent: "center"}}>
@@ -157,7 +188,7 @@ const ModalCreacionProd: React.FC<ProdFormProps> = ({ estado, cambiarEstado, cat
 
                                         <div className="mb-3">
                                             <label htmlFor="stockActual" className="form-label">Inserte Link de su Imagen</label>
-                                            <input type="text" style={{borderRadius: "25px", backgroundColor: "#FDA859", color: "white"}}  className="form-control" id="precio" name="precio" required value={productoSelect.imagen.toString()} onChange={e => {Productonuevo.imagen =(e.target.value); setProductoSelect({ ...productoSelect, imagen: (e.target.value) })}}/>
+                                            <input type="text" style={{borderRadius: "25px", backgroundColor: "#FDA859", color: "white"}}  className="form-control" name="precio" required value={productoSelect.imagen.toString()} onChange={e => {Productonuevo.imagen =(e.target.value); setProductoSelect({ ...productoSelect, imagen: (e.target.value) })}}/>
                                         </div>
                                     </div>
                                     </div>
@@ -169,7 +200,7 @@ const ModalCreacionProd: React.FC<ProdFormProps> = ({ estado, cambiarEstado, cat
                                      <div className="container" style={{display: "flex", justifyContent: "space-evenly"}}>
                                 <div className="mb-4" style={{display: "flex", maxWidth: "70%", maxHeight: "40%", alignItems: "center", justifyContent: "center" }}>
                                     <label htmlFor="rubro" className="form-label">Categoria</label>
-                                    <select style={{borderRadius: "25px", backgroundColor: "#FDA859", color: "white"}} className="form-select" id="categorias" name="categorias" onChange={e =>{  setCategoriaElegida(e.target.value); Productonuevo.categoriaProducto = JSON.parse(categoriaElegida!.valueOf());}}>
+                                    <select style={{borderRadius: "25px", backgroundColor: "#FDA859", color: "white"}} className="form-select" name="categorias" onChange={e =>{  setCategoriaElegida(e.target.value); Productonuevo.categoriaProducto = JSON.parse(categoriaElegida!.valueOf());}}>
                                     <option selected value={JSON.stringify(Productonuevo.categoriaProducto)}>{Productonuevo.categoriaProducto.denominacion}</option>
                                         {categorias.map(cat => (
 
@@ -182,13 +213,7 @@ const ModalCreacionProd: React.FC<ProdFormProps> = ({ estado, cambiarEstado, cat
                                 </div> 
 
 
-                                <div className="container" style={{display: "flex", justifyContent: "space-evenly"}}>
-                                <div className="mb-4" style={{display: "flex", maxWidth: "70%", maxHeight: "40%", alignItems: "center", justifyContent: "center" }}>
-                                    
-                                    <button className="btn btn-success">Agregar Ingrediente</button>
-                                </div> 
                                 
-                                </div> 
 
 
 
@@ -198,7 +223,7 @@ const ModalCreacionProd: React.FC<ProdFormProps> = ({ estado, cambiarEstado, cat
                                 <button type="submit" className="btn" style={{backgroundColor: "#864e1b", color: "white"}} onClick={() => {
 
 
-                                   if(categoriaElegida !== undefined || Productonuevo.categoriaProducto.id !== 0){
+                                   if(categoriaElegida !== undefined && Productonuevo.categoriaProducto.id !== 0 && ingredientesProducto?.length > 0){
 
                                         if(categoriaElegida !== undefined){
                                             Productonuevo.categoriaProducto = JSON.parse(categoriaElegida!.valueOf());
@@ -208,11 +233,12 @@ const ModalCreacionProd: React.FC<ProdFormProps> = ({ estado, cambiarEstado, cat
                                         if(Productonuevo.id !== 0){
 
                                             //pasar los datos guardados al metodo de update
-                                            productoService.updateEntity(Productonuevo);
+                                            updateProducto();
+                                            
                                             cambiarEstado(!estado);
 
                                         }else{
-                                            productoService.createEntity(Productonuevo);
+                                            crearProducto();
                                             cambiarEstado(!estado);
                                             window.location.reload();
                                             
@@ -221,10 +247,21 @@ const ModalCreacionProd: React.FC<ProdFormProps> = ({ estado, cambiarEstado, cat
                                 }
                                 }}> <i className="material-icons" style={{fontSize: "30px", cursor:"pointer"}}>check</i></button>
                             </form>
+
+                            <div className="container" style={{display: "flex", justifyContent: "space-evenly"}}>
+                                <div className="mt-4" style={{display: "flex", maxWidth: "70%", maxHeight: "40%", alignItems: "center", justifyContent: "center" }}>
+                                    
+                                    <button className="btn btn-success" onClick={() => handleFormSubmit()}>Agregar Ingrediente</button>
+                                </div> 
+                                
+                                </div> 
                         </div>
                     </div>
                 </div>
             }
+            <ModalAgregarIngrediente producto= {Productonuevo} estado={modalIngr}
+             cambiarEstado={setModalIngr} ingredientesList={ingredientesProducto}
+              setIngredientesList={setIngredientesProducto}/> 
         </>
 
     );

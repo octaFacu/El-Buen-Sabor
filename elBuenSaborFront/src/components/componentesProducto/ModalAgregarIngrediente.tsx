@@ -17,20 +17,25 @@ interface ProdFormProps {
     cambiarEstado: (estado: boolean) => void,
     producto: Producto,
 
-    datos: IngredienteDeProducto
-    setDatos: any
+    ingredientesList: IngredienteDeProducto[],
+    setIngredientesList: any
 
 }
 
-const ModalAgregarIngrediente: React.FC<ProdFormProps> = ({ estado, cambiarEstado, producto, datos, setDatos }) => {
+const ModalAgregarIngrediente: React.FC<ProdFormProps> = ({ estado, cambiarEstado, producto, ingredientesList, setIngredientesList }) => {
 
-    const ingredienteService = new IngredientesService();
+    const productoService = new ProductoService();
+    const ingredienteService = new IngredientesService()
     const serviceMedida = new ServiceBasicos("unidadmedida");
   
 
-    let Ingredientenuevo: IngredienteDeProducto = new IngredienteDeProducto();
+    //let Ingredientenuevo: IngredienteDeProducto = new IngredienteDeProducto();
+    const [Ingredientenuevo, setIngredienteNuevo] = useState<IngredienteDeProducto>(new IngredienteDeProducto());
+
     let ingredientes: Ingrediente[] = [];
     let medidas: unidadDeMedida[] = [];
+
+
     const [ingredienteSelect, setIngredienteSelect] = useState<Ingrediente>();
     const [medidaSelect, setMedidaSelect] = useState<unidadDeMedida>();
     
@@ -40,7 +45,7 @@ const ModalAgregarIngrediente: React.FC<ProdFormProps> = ({ estado, cambiarEstad
         
         //Ingredientenuevo.denominacion =(event.target.value)
 
-        setDatos({ ...datos, cantidad: parseFloat(event.target.value) });
+        setIngredienteNuevo({ ...Ingredientenuevo, cantidad: parseFloat(event.target.value) });
     }
 
     useEffect(() => {
@@ -56,10 +61,10 @@ const ModalAgregarIngrediente: React.FC<ProdFormProps> = ({ estado, cambiarEstad
         
         getMedidasYIngredientes();
 
-        setIngredienteSelect(datos.ingrediente);
-        setMedidaSelect(datos.unidadMedida);
         
     }, [])
+
+    //setIngredienteNuevo(...Ingredientenuevo, producto: producto);
 
     
 
@@ -80,29 +85,20 @@ const ModalAgregarIngrediente: React.FC<ProdFormProps> = ({ estado, cambiarEstad
                                     <div style={{display: "flex"}}>
                                         <div className="mb-3">
                                             <label htmlFor="stockActual" className="form-label">Cantidad</label>
-                                            <input type="number" style={{borderRadius: "25px", backgroundColor: "#FDA859", color: "white"}} className="form-control me-2" id="Cantidad" name="Cantidad" required value={datos.cantidad.toString()} onChange={e => handleSelectChange(e)}/>
+                                            <input type="number" style={{borderRadius: "25px", backgroundColor: "#FDA859", color: "white"}} className="form-control me-2" id="Cantidad" name="Cantidad" required value={Ingredientenuevo.cantidad.toString()} onChange={e => handleSelectChange(e)}/>
                                         </div>
                                     </div>
                                     </div>
                                     
-
-                                
-
-                                
-                                
-                                
                                     
 
 
                                 <div className="container" style={{display: "flex", justifyContent: "space-evenly"}}>
                                 <div className="mb-4" style={{display: "flex", maxWidth: "70%", maxHeight: "40%", alignItems: "center", justifyContent: "center" }}>
                                     <label htmlFor="rubro" className="form-label">Ingrediente</label>
-                                    <select style={{borderRadius: "25px", backgroundColor: "#FDA859", color: "white"}} className="form-select" id="ingredientes" name="ingredientes" /*onChange={e =>{  setUnidadElegida(e.target.value); Ingredientenuevo.unidadmedida = JSON.parse(unidadElegida!.valueOf());}}*/>
-                                    <option selected value={datos.ingrediente.id!.toString()}>{ingredienteSelect.nombre}</option>
+                                    <select style={{borderRadius: "25px", backgroundColor: "#FDA859", color: "white"}} className="form-select" id="ingredientes" name="ingredientes" onChange={e =>{  setIngredienteSelect(JSON.parse(e.target.value)); Ingredientenuevo.ingrediente = ingredienteSelect.id!;}}>
                                         { ingredientes!.map(ing => (
-                                            // TODO: ing es de clase diferente que ingredientes, comparar nombres
-                                            !(producto.ingredientes!.find(ingredienteSelect)) &&
-                                            <option value={ing.id!.toString()}>{ing.nombre}</option>
+                                            <option value={JSON.stringify(ing)}>{ing.nombre}</option>
                                         ))}
                                     </select>
 
@@ -112,8 +108,7 @@ const ModalAgregarIngrediente: React.FC<ProdFormProps> = ({ estado, cambiarEstad
                                 <div className="container" style={{display: "flex", justifyContent: "space-evenly"}}>
                                 <div className="mb-4" style={{display: "flex", maxWidth: "70%", maxHeight: "40%", alignItems: "center", justifyContent: "center" }}>
                                     <label htmlFor="rubro" className="form-label">Ingrediente</label>
-                                    <select style={{borderRadius: "25px", backgroundColor: "#FDA859", color: "white"}} className="form-select" id="medidas" name="medidas" /*onChange={e =>{  setUnidadElegida(e.target.value); Ingredientenuevo.unidadmedida = JSON.parse(unidadElegida!.valueOf());}}*/>
-                                    <option selected value={datos.unidadMedida.toString()}>{medidaSelect!.denominacion}</option>
+                                    <select style={{borderRadius: "25px", backgroundColor: "#FDA859", color: "white"}} className="form-select" id="medidas" name="medidas" onChange={e =>{  setMedidaSelect(JSON.parse(e.target.value)); Ingredientenuevo.unidadMedida = medidaSelect!.id;}}>
                                         { medidas!.map(med => (
 
                                             <option value={JSON.stringify(med)}>{med.denominacion}</option>
@@ -128,41 +123,32 @@ const ModalAgregarIngrediente: React.FC<ProdFormProps> = ({ estado, cambiarEstad
 
 
 
-                                {/* <button className="btn btn-danger mx-3" onClick={() => cambiarEstado(!estado)}><i className="material-icons" style={{fontSize: "30px", cursor:"pointer"}}>highlight_off</i></button>
+                                 <button className="btn btn-danger mx-3" onClick={() => cambiarEstado(!estado)}><i className="material-icons" style={{fontSize: "30px", cursor:"pointer"}}>highlight_off</i></button>
 
                                 <button type="submit" className="btn" style={{backgroundColor: "#864e1b", color: "white"}} onClick={() => {
 
 
-                                   if((categoriaElegida !== undefined || unidadElegida !== undefined) || (Ingredientenuevo.categoriaIngrediente.id !== 0 || Ingredientenuevo.unidadmedida.id !== 0)){
+                                   if(ingredienteSelect.id !== 0 || medidaSelect!.id !== 0 || Ingredientenuevo.cantidad !== 0){
 
-                                        if(categoriaElegida !== undefined){
-                                            Ingredientenuevo.categoriaIngrediente = JSON.parse(categoriaElegida!.valueOf());
-                                        }
-                                        if(unidadElegida !== undefined){
-                                            Ingredientenuevo.unidadmedida = JSON.parse(unidadElegida!.valueOf());
-                                        }
-                                    
-                                    
+                                        
+                                        //No queremos guardar los ingredientes directamente por el trigger que los borra al hacer update
+                                            //productoService.saveIngredienteProd(Ingredientenuevo);
 
-                                        if(Ingredientenuevo.id !== 0){
+                                            setIngredientesList([...ingredientesList, Ingredientenuevo]);
 
-                                            //pasar los datos guardados al metodo de update
-                                            ingredientesService.updateEntity(Ingredientenuevo);
-                                            cambiarEstado(!estado);
-
-                                        }else{
-                                            ingredientesService.createEntity(Ingredientenuevo);
                                             cambiarEstado(!estado);
                                             window.location.reload();
                                             
-                                        }
+                                        
  
                                 }
-                                }}> <i className="material-icons" style={{fontSize: "30px", cursor:"pointer"}}>check</i></button> */}
+                                }}> <i className="material-icons" style={{fontSize: "30px", cursor:"pointer"}}>check</i></button> 
                             </form>
                         </div>
                     </div>
+                    
                 </div>
+                
             }
         </>
 

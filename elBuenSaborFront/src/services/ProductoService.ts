@@ -1,3 +1,4 @@
+import IngredienteDeProducto from "../context/interfaces/IngredienteDeProducto";
 import { ServiceBasicos } from "./ServiceBasicos";
 
 
@@ -29,23 +30,16 @@ export class ProductoService extends ServiceBasicos{
   }
 
 
-    async saveIngredienteProd(productoid: number, ingredienteid:number, medidaid: number, cantidad: number){
+    async saveIngredienteProd(ingredienteProd: IngredienteDeProducto){
         try{
-            const data = {
-                // JSON data object
-                idIngrediente: ingredienteid,
-                idProducto: productoid,
-                idMedida: medidaid,
-                cantidad: cantidad
-                
-              };
+
               
               const requestOptions = {
                 method: 'POST',
                 headers: {
                   'Content-Type': 'application/json'
                 },
-                body: JSON.stringify(data),
+                body: JSON.stringify(ingredienteProd)
               };
               
 

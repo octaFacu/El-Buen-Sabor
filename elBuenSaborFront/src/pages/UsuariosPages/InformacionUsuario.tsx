@@ -61,7 +61,7 @@ export default function InformacionUsuario() {
       case 3:
         return <MisPedidosComponent />;
       case 4:
-        return <MisFavoritosComponent />;
+        return <MisFavoritosComponent  usuario={usuario}/>;
       default:
         return null;
     }

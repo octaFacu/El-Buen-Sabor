@@ -49,3 +49,9 @@ export interface Direccion {
   pisoDpto: string;
   usuario: Usuario;
 }
+
+export interface proyeccionProductoFavorito{
+  id: number;
+  imagen: string;
+  denominacion: string;
+}

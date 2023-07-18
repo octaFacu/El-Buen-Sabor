@@ -19,14 +19,11 @@ const App: React.FC = () => {
           <Navbar />
 
           <AppRoutes/>
-<<<<<<< HEAD
 
-=======
           <FloatingBtn></FloatingBtn>
           {/* <CategoriaIngrABM /> */}
         {/* </main>
       </div> */}
->>>>>>> 8f56efb679a37fd390b13ee8b2cfa3fd738d400d
       </BrowserRouter>
     </ContextProvider>
   )

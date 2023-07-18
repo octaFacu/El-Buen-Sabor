@@ -6,11 +6,16 @@ import CategoriaProductosABM from '../pages/ABMPages/CategoriaProductosABM';
 import { ProductosABM } from '../pages/ABMPages/ProductosAMB';
 import { NotFound } from '../components/NotFound';
 import InformacionAdicionalPostRegistro from '../pages/UsuariosPages/InformacionAdicionalPostRegistro';
+import ModalDescripcion from '../components/Landing/modalDescripcion/ModalDescripcion';
 
 export const routesConfig = [
     {
         path: '/',
         component: Landing,
+    },
+    {
+        path: '/detalleProducto/:id',
+        component: ModalDescripcion,
     },
     {
         path: '/usuarios',

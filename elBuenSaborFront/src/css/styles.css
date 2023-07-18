@@ -183,27 +183,6 @@ body {
   margin-left: 5%;
 }
 
-/*LO MUDE A CarruselCategorias.css
- .menuCat {
-  background-color: #fda859;
-  color: white;
-  width: 90%;
-  margin-left: 5%;
-  margin-right: 5%;
-  margin-top: 2%;
-  margin-bottom: 2%;
-  display: flex;
-  justify-content: center;
-  font-family: var(--letra-titulo);
-  border-radius: 30px;
-  padding-top: 2%;
-  padding-bottom: 2%;
-  display: inline-flex;
-  flex-direction: row;
-  justify-content: space-around;
-  align-items: center;
-} */
-
 .btnPag {
   border-radius: 100px;
   background-color: #864e1b;
@@ -213,13 +192,13 @@ body {
 }
 
 .containerMain {
-  width: 90%;
+  /* width: 90%;
   margin-left: 5%;
   margin-right: 5%;
   display: flex;
-  justify-content: center;
+  justify-content: center; */
   font-family: var(--letra-titulo);
-  flex-direction: column;
+  /* flex-direction: column; */
   
   
 }
@@ -467,8 +446,8 @@ hr {
   border-radius: 11px;
   background-color: #f99132;
   display: flex;
-  justify-content: center;
-  display: inline-flex;
+  /* justify-content: center; */
+  /* display: inline-flex; */
   flex-direction: column;
 
 }

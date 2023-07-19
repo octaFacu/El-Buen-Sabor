@@ -1,12 +1,24 @@
 import { FC } from "react";
 import "./ListCard.css"
 import ProductCard from "../card/ProductCard";
+import Producto from "../../../context/interfaces/Producto";
 
 interface ListCardProps {
 
+    categoria: string
+    productos: Producto[]
+
 }
 
-const ListCard: FC<ListCardProps> = () => {
+const ListCard: FC<ListCardProps> = ({categoria, productos}) => {
+
+    if(productos.length === 0){
+        console.log("LOGGGGGGGGG");
+        return(
+            <h1>CARGANDO LISTA</h1>
+        );
+    }
+
     return (
 
 
@@ -40,7 +52,7 @@ const ListCard: FC<ListCardProps> = () => {
                 <div className="centerTitle">
 
                     <hr style={{ marginRight: "2%", marginLeft: "2%" }}></hr>
-                    <div className="mt-3" style={{ textAlign: "center" }}><h3 style={{ color: "#864e1b" }}>HAMBURGUESAS</h3></div>
+                    <div className="mt-3" style={{ textAlign: "center" }}><h3 style={{ color: "#864e1b" }}>{categoria}</h3></div>
                     <hr style={{ marginRight: "2%", marginLeft: "2%" }}></hr>
                 </div>
 
@@ -48,11 +60,9 @@ const ListCard: FC<ListCardProps> = () => {
                 {/* <div className="containerCards"> */}
 
                 <div className="row">
-                    <ProductCard />
-                    <ProductCard />
-                    <ProductCard />
-                    <ProductCard />
-                    <ProductCard />
+                    {productos.map((producto, index) => (
+                        <ProductCard key={index} producto={producto}/>
+                    ))}
                     
                 </div>
                 {/* </div> */}

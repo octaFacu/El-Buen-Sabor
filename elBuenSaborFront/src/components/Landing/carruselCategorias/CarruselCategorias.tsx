@@ -50,7 +50,7 @@ const CarruselCategorias: FC<CarruselCategoriasProps> = (props: CarruselCategori
         setNextIndex(fixIndex(activeIndex + 1 ,categorias.length));
         console.log(activeIndex);
 
-    }, [categorias,activeIndex])
+    }, [activeIndex])
 
     return (
 
@@ -84,8 +84,6 @@ const CarruselCategorias: FC<CarruselCategoriasProps> = (props: CarruselCategori
                     <button id={`${nextIndex}`} onClick={() => handleFilter(categorias[nextIndex])}><i className="material-icons" > local_dining</i> {categorias[nextIndex].denominacion} </button>
                 </div>
             </div>
-
-
 
             {/* Boton ir a la derecha */}
             <div style={{ fontSize: "24px" }}>

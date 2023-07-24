@@ -74,12 +74,10 @@ const ModalInformacion: React.FC<ModalProps> = ({ cerrarModal }) => {
       <div className="modal-dialog d-flex align-items-center justify-content-center modal-dialog-centered modal-lg">
         <div className="modal-content">
           <div className="modal-header text-center">
-            <h3
-              className="modal-title text-center text-white bold"
-              style={{ textAlign: "center", margin: "0 auto" }}
-            >
-              Información Personal
-            </h3>
+            <h3 className="modal-title text-center text-white bold ">Información Personal</h3>
+            <button type="button" className="close" onClick={cerrarModal}>
+              <span>&times;</span>
+            </button>
           </div>
           <div className="modal-body">
             <form>

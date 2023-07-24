@@ -20,14 +20,11 @@ export default function MisFavoritosComponent({ usuario }: Props) {
   const servicioCliente = new ClienteService();
 
   const traerFavorito = async () => {
-    try {
-      const prod = await servicioFavorito.getFavoritosDeUsuario(
+     const prod = await servicioFavorito.getFavoritosDeUsuario(
         await servicioCliente.getIdCliente(usuario.id)
       );
       setProductos(prod);
-    } catch (error) {
-      console.error(error);
-    }
+    
   };
 
   useEffect(() => {
@@ -65,7 +62,7 @@ export default function MisFavoritosComponent({ usuario }: Props) {
                 <button
                   onMouseEnter={() => setHoverCartIcon(producto.id)}
                   onMouseLeave={() => setHoverCartIcon(null)}
-                  onClick={() => console.log("volver a comprar")}
+                  onClick={() => console.log(productos)}
                 >
                   <i
                     className={`material-icons mx-2 iconos ${

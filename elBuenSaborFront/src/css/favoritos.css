@@ -21,3 +21,8 @@
 .iconos.brillo {
     box-shadow: 0 10px 10px rgba(255, 255, 255, 1);
 }
+
+
+.espacio-pedidos > .card {
+    margin-bottom: -2.5rem; 
+  }

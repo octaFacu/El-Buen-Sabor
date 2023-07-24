@@ -4,7 +4,7 @@ import ModalConfirmacion from "./modales/ModalConfirmacion";
 import { DireccionService } from "../../services/DireccionService";
 import "../../css/direccionesUsuario.css";
 import { ServiceBasicos } from "../../services/ServiceBasicos";
-import {Usuario, Direccion} from "../../context/interfaces/interfaces"
+import { Usuario, Direccion } from "../../context/interfaces/interfaces";
 
 interface Props {
   usuario: Usuario;
@@ -20,7 +20,7 @@ export default function MisDireccionesComponents({ usuario }: Props) {
     calle: "",
     nroCasa: 0,
     pisoDpto: "",
-    usuario: usuario
+    usuario: usuario,
   });
   const servicioDireccion = new ServiceBasicos("direccion");
 
@@ -31,7 +31,7 @@ export default function MisDireccionesComponents({ usuario }: Props) {
       calle: "",
       nroCasa: 0,
       pisoDpto: "",
-      usuario: usuario
+      usuario: usuario,
     });
     setModo("agregar");
   };
@@ -78,20 +78,20 @@ export default function MisDireccionesComponents({ usuario }: Props) {
   const confirmarEliminar = async (id: number) => {
     setModalConfirmacion(false);
     try {
-      await servicioDireccion.deleteEntity(id)
+      await servicioDireccion.deleteEntity(id);
     } catch (error) {
       console.log(error);
-      console.log("sadsd")
     }
   };
-
   return (
     <div className="card">
       <div className="card-body">
         <h1 className="card-title text-center">Direcciones</h1>
-        {direcciones?.map((dir) => (
+        {direcciones?.map((dir, index) => (
           <div
-            className="direccion-container d-flex align-items-center justify-content-between"
+            className={`direccion-container d-flex align-items-center justify-content-between ${
+              index !== direcciones.length - 1 ? "border-bottom pb-2 mb-2" : ""
+            }`}
             key={dir.idDireccion}
           >
             <div className="d-flex align-items-center">
@@ -106,11 +106,7 @@ export default function MisDireccionesComponents({ usuario }: Props) {
                 <p>{dir.calle + " " + dir.pisoDpto}</p>
               ) : (
                 <p>
-                  {dir.calle +
-                    " " +
-                    dir.nroCasa +
-                    " piso: " +
-                    dir.pisoDpto}
+                  {dir.calle + " " + dir.nroCasa + " piso: " + dir.pisoDpto}
                 </p>
               )}
             </div>
@@ -140,7 +136,11 @@ export default function MisDireccionesComponents({ usuario }: Props) {
         </button>
       </div>
       {modalEdicion && (
-        <ModalEdicionDireccion cerrarModal={cerrarModal} modo={modo} direccion={direccion} />
+        <ModalEdicionDireccion
+          cerrarModal={cerrarModal}
+          modo={modo}
+          direccion={direccion}
+        />
       )}
       {modalConfirmacion && (
         <ModalConfirmacion

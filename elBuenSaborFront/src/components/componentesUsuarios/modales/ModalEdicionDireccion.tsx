@@ -51,6 +51,9 @@ const ModalEdicionDireccion: React.FC<ModalProps> = ({
             >
               {modo === "agregar" ? "Agregar dirección" : "Editar dirección"}
             </h3>
+            <button type="button" className="close" onClick={cerrarModal}>
+              <span>&times;</span>
+            </button>
           </div>
           <div className="modal-body">
             <p className="text-white parrafo bold text-center">Calle:</p>

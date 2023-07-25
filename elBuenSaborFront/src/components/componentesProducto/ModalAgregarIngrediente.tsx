@@ -15,62 +15,91 @@ interface ProdFormProps {
     //De categoriaIngrABM, cambio su estado
     estado: boolean,
     cambiarEstado: (estado: boolean) => void,
-    producto: Producto,
+    cambiarEstadoFormProd: any,
 
     ingredientesList: IngredienteDeProducto[],
     setIngredientesList: any
 
 }
 
-const ModalAgregarIngrediente: React.FC<ProdFormProps> = ({ estado, cambiarEstado, producto, ingredientesList, setIngredientesList }) => {
+const ModalAgregarIngrediente: React.FC<ProdFormProps> = ({ estado, cambiarEstado, ingredientesList, setIngredientesList, cambiarEstadoFormProd }) => {
 
-    const productoService = new ProductoService();
     const ingredienteService = new IngredientesService()
-    const serviceMedida = new ServiceBasicos("unidadmedida");
+    const serviceMedida = new ServiceBasicos("unidadDeMedida");
   
-
-    //let Ingredientenuevo: IngredienteDeProducto = new IngredienteDeProducto();
     const [Ingredientenuevo, setIngredienteNuevo] = useState<IngredienteDeProducto>(new IngredienteDeProducto());
 
-    let ingredientes: Ingrediente[] = [];
-    let medidas: unidadDeMedida[] = [];
+    const [ingredientes, setIngredientes] = useState<Ingrediente[]>([]);
+    const [medidas, setMedidas] = useState<unidadDeMedida[]>([]);
 
 
-    const [ingredienteSelect, setIngredienteSelect] = useState<Ingrediente>();
+
+
+    const [ingredienteSelect, setIngredienteSelect] = useState<Ingrediente>({
+        nombre: "",
+        activo: true,
+        precioCompra: 0,
+        stockActual: 0,
+        stockMaximo: 0,
+        stockMinimo: 0,
+        unidadmedida: {id: 0, denominacion: ""},
+        categoriaIngrediente: {id: 0, denominacion: "", activo: true}
+
+
+    });
     const [medidaSelect, setMedidaSelect] = useState<unidadDeMedida>();
     
 
 
     const handleSelectChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        
-        //Ingredientenuevo.denominacion =(event.target.value)
 
         setIngredienteNuevo({ ...Ingredientenuevo, cantidad: parseFloat(event.target.value) });
     }
 
+    const getMedidasYIngredientes = async () => {
+
+        setMedidas(await serviceMedida.getAllBasic());
+
+        setIngredientes(await ingredienteService.getAllBasic()); 
+    }
+
     useEffect(() => {
-        /*if(datos !== undefined){
-            setIngredienteSelect(datos!);
-        }*/
-        const getMedidasYIngredientes = async () => {
 
-            medidas = await serviceMedida.getAllBasic();
+        getMedidasYIngredientes(); 
 
-            ingredientes = await ingredienteService.getAllBasic();
-        }
-        
-        getMedidasYIngredientes();
-
-        
     }, [])
 
-    //setIngredienteNuevo(...Ingredientenuevo, producto: producto);
+    useEffect(() => {
+        if (ingredientes.length > 0) {
+          setIngredienteSelect(ingredientes[0]);
+        }
+    
+        if (medidas.length > 0) {
+          setMedidaSelect(medidas[0]);
+        }
+      }, [ingredientes, medidas]);
 
+    
+
+    if(estado && (ingredientes.length == 0 || medidas.length == 0)){
+
+        return(
+            <div>
+                <div className="overlay">
+                    <div className="container my-5 contenedorModal" style={{borderRadius: "25px", backgroundColor: "#f99132", color: "white", maxWidth: "50%"}}>
+                        <div className="" style={{textAlign: "center", alignContent: "center"}}>
+                            <h3>Cargando...</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        )
+    }
     
 
     return (
         <>
-            {estado && ingredienteSelect !== undefined &&
+            {estado && ingredientes.length !== 0 && medidas.length !== 0 &&
                 <div className="overlay">
                     <div className="container my-5 contenedorModal" style={{borderRadius: "25px", backgroundColor: "#f99132", color: "white", maxWidth: "50%"}}>
                         <div className="" style={{textAlign: "center", alignContent: "center"}}>
@@ -85,7 +114,7 @@ const ModalAgregarIngrediente: React.FC<ProdFormProps> = ({ estado, cambiarEstad
                                     <div style={{display: "flex"}}>
                                         <div className="mb-3">
                                             <label htmlFor="stockActual" className="form-label">Cantidad</label>
-                                            <input type="number" style={{borderRadius: "25px", backgroundColor: "#FDA859", color: "white"}} className="form-control me-2" id="Cantidad" name="Cantidad" required value={Ingredientenuevo.cantidad.toString()} onChange={e => handleSelectChange(e)}/>
+                                            <input type="number" min="0" style={{borderRadius: "25px", backgroundColor: "#FDA859", color: "white"}} className="form-control me-2" id="Cantidad" name="Cantidad" required value={Ingredientenuevo.cantidad.toString()} onChange={e => handleSelectChange(e)}/>
                                         </div>
                                     </div>
                                     </div>
@@ -107,7 +136,7 @@ const ModalAgregarIngrediente: React.FC<ProdFormProps> = ({ estado, cambiarEstad
 
                                 <div className="container" style={{display: "flex", justifyContent: "space-evenly"}}>
                                 <div className="mb-4" style={{display: "flex", maxWidth: "70%", maxHeight: "40%", alignItems: "center", justifyContent: "center" }}>
-                                    <label htmlFor="rubro" className="form-label">Ingrediente</label>
+                                    <label htmlFor="rubro" className="form-label">Unidad de Medida</label>
                                     <select style={{borderRadius: "25px", backgroundColor: "#FDA859", color: "white"}} className="form-select" id="medidas" name="medidas" onChange={e =>{  setMedidaSelect(JSON.parse(e.target.value)); Ingredientenuevo.unidadMedida = medidaSelect!.id;}}>
                                         { medidas!.map(med => (
 
@@ -123,23 +152,24 @@ const ModalAgregarIngrediente: React.FC<ProdFormProps> = ({ estado, cambiarEstad
 
 
 
-                                 <button className="btn btn-danger mx-3" onClick={() => cambiarEstado(!estado)}><i className="material-icons" style={{fontSize: "30px", cursor:"pointer"}}>highlight_off</i></button>
+                                 <button className="btn btn-danger mx-3" onClick={() => {cambiarEstado(!estado);
+                                                                                            cambiarEstadoFormProd(true);}}>
+                                    <i className="material-icons" style={{fontSize: "30px", cursor:"pointer"}}>highlight_off</i></button>
 
                                 <button type="submit" className="btn" style={{backgroundColor: "#864e1b", color: "white"}} onClick={() => {
 
 
                                    if(ingredienteSelect.id !== 0 || medidaSelect!.id !== 0 || Ingredientenuevo.cantidad !== 0){
+                                            
 
-                                        
-                                        //No queremos guardar los ingredientes directamente por el trigger que los borra al hacer update
-                                            //productoService.saveIngredienteProd(Ingredientenuevo);
+                                            Ingredientenuevo.ingrediente = ingredienteSelect.id!;
+                                            Ingredientenuevo.unidadMedida = medidaSelect!.id!;
 
                                             setIngredientesList([...ingredientesList, Ingredientenuevo]);
 
                                             cambiarEstado(!estado);
-                                            window.location.reload();
-                                            
-                                        
+                                            cambiarEstadoFormProd(true);
+                                                                               
  
                                 }
                                 }}> <i className="material-icons" style={{fontSize: "30px", cursor:"pointer"}}>check</i></button> 

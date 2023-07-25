@@ -604,3 +604,18 @@ hr {
   color: #fff;
 }
 
+.modaloverflow{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.childmodaloverflow{
+  max-width: 99%; 
+  max-height: 99%; 
+  overflow: auto; 
+  padding: 20px;
+}
+

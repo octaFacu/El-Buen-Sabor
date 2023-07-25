@@ -1,5 +1,3 @@
-import Producto from "./Producto";
-import { Ingrediente, unidadDeMedida } from "./interfaces";
 
 export class IngredienteDeProducto{
     id?: number = 0;

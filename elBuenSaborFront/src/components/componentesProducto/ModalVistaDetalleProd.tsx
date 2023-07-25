@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import Producto from "../../context/interfaces/Producto";
-import { IngredienteDeProducto } from "../../context/interfaces/interfaces";
+import { IngredienteDeProducto } from "../../context/interfaces/IngredienteDeProducto";
 import { ProductoService } from "../../services/ProductoService";
 import './Dropdown.css';
+import TablaIngredientesMostrar from "./TablaIngredientesMostrar";
 
 interface ModalVistaDetalleProps{
     producto: Producto,
@@ -17,9 +18,39 @@ interface ModalVistaDetalleProps{
      const [unidadElegida, setUnidadElegida] = useState<String>();
     const [categoriaElegida, setCategoriaElegida] = useState<String>();
 
+    const getIngredientes = async() => {
+        await prodService.getIngredientes(producto.id!).then((data) => setIngredientes(castIngredientesIds(data)));
+        
+        
+    }
+
+    const castIngredientesIds = (ingredientes: any[]): IngredienteDeProducto[] =>{
+        const castIngredientes: IngredienteDeProducto[] = [];
+
+        for(let i=0; i<ingredientes.length; i++) {
+
+            console.log(JSON.stringify(ingredientes[i]));
+            
+
+            let nuevoIng: IngredienteDeProducto = new IngredienteDeProducto();
+
+            nuevoIng.cantidad = ingredientes[i].cantidad;
+            nuevoIng.id = ingredientes[i].id;
+            nuevoIng.ingrediente = ingredientes[i].ingrediente.id;
+            nuevoIng.producto = ingredientes[i].producto.id;
+            nuevoIng.unidadMedida = ingredientes[i].unidadmedida.id;
+
+
+            castIngredientes.push(nuevoIng);
+        }
+
+        return(castIngredientes);
+    }
+
     useEffect(() => {
-        prodService.getIngredientes(producto.id!).then((data) => setIngredientes(data));
-    })
+        getIngredientes();
+    }, [producto]);
+    
     
 
     return(
@@ -36,28 +67,20 @@ interface ModalVistaDetalleProps{
                         <h4>$ {producto.precioTotal.toString()}</h4>
                         <h4>Costo: ${producto.costoTotal.toString()}</h4>
                         <h4>Descripcion:</h4> <p>{producto.descripcion}</p>
-                        {/* <hr style={{marginRight: "2%", marginLeft: "2%"}}></hr>
-                        <h3>Unidad de Medida: {ingrediente.unidadmedida.denominacion}</h3>
-                        <h3>Categoria: {ingrediente.categoriaIngrediente.denominacion}</h3> */}
+
                         { producto.esManufacturado &&
                         <div>
                             <hr style={{marginRight: "2%", marginLeft: "2%"}}></hr>
                             <h4>Tiempo de Preparación: {producto.tiempoCocina}</h4>
                             <h4>Receta: </h4><p>{producto.receta}</p>
 
+                            <hr style={{marginRight: "2%", marginLeft: "2%"}}></hr>
                             {/* {producto.ingredientes!.length > 0 && producto.ingredientes != undefined && */}
                             {ingredientes.length != 0 &&
                             <div>
                             <h4>Ingredientes:</h4>
-
-                            <select className="select-dropdown">
-                            {ingredientes!.map((ingrediente) => (
-                                
-                                <option value={ingrediente.ingrediente.id?.toString()}>
-                                {ingrediente.ingrediente.nombre} | {ingrediente.cantidad.toString()} {ingrediente.unidadmedida.denominacion}
-                                </option>
-                            ))}
-                            </select>
+                                <TablaIngredientesMostrar ingredientesProd={ingredientes} edicion={false}></TablaIngredientesMostrar>
+                            
                             </div>}
 
                         </div>

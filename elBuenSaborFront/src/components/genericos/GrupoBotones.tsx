@@ -19,19 +19,26 @@ const GrupoBotones: React.FC<BotonesProps> = ({ estado, cambiarEstado}) => {
       setButton2Selected(false);
 
     }else{
-
+      setButton1Selected(false);
+      setButton2Selected(true);
     }
+    console.log(estado);
+    
 
   }, [estado]);
 
   const handleButton1Click = () => {
     setButton1Selected(true);
     setButton2Selected(false);
+
+    cambiarEstado(true);
   };
 
   const handleButton2Click = () => {
     setButton1Selected(false);
     setButton2Selected(true);
+
+    cambiarEstado(false);
   };
 
   return (

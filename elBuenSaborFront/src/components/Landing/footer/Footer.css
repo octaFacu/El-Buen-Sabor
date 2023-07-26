@@ -1,0 +1,25 @@
+.bg-footer {
+  background-color: var(--main-color);
+}
+
+.social-logo {
+  max-width: 25px; /* Ajusta el valor según el tamaño máximo que desees */
+  height: auto; /* Para mantener la proporción de aspecto de la imagen */
+}
+
+.social-link {
+  text-decoration: none;
+  color: white;
+}
+
+.social-link:hover {
+  color: black;
+}
+
+/* Media query para pantallas con ancho máximo de 767px */
+@media (max-width: 767px) {
+  .col-md-4 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+}

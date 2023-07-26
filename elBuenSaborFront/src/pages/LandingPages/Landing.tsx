@@ -8,6 +8,7 @@ import { CategoriaProductoService } from "../../services/CategoriaProductoServic
 import ListCard from '../../components/Landing/listCard/ListCard'
 import Producto from '../../context/interfaces/Producto';
 import PageLoader from '../../components/pageLoader/PageLoader';
+import Footer from '../../components/Landing/footer/Footer'
 
 export const Landing = () => {
 
@@ -114,6 +115,8 @@ export const Landing = () => {
         {isLoading && <h1>Cargando más productos...</h1>}
 
       </div>
+
+      <Footer />
 
     </>
   )

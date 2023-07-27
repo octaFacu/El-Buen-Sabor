@@ -7,7 +7,7 @@
   --input-text: #fda859;
   --btn-color: #864e1b;
   --green-color: #659355;
-  --red-color: #C34942;
+  --red-color: #c34942;
   margin: 0;
   padding: 0;
 }
@@ -22,10 +22,9 @@ body {
   /* margin: 0;
     width:100%;
     height:100%; */
-    /* top:0px;
+  /* top:0px;
     left:0px;
     z-index:1000; */
-
 }
 
 /* nav bar */
@@ -41,7 +40,6 @@ body {
   /* position: fixed;
   top: 0;
   width: 100%; */
-
 }
 
 .headerLogo .logo img {
@@ -59,8 +57,6 @@ body {
   color: #ffff;
 }
 
-
-
 /************************* Estilos de login ************************/
 
 .login-wrapper {
@@ -69,9 +65,9 @@ body {
   position: relative;
 }
 
-.loginLinkRegister{
-    text-decoration: none;
-    color: #fff;
+.loginLinkRegister {
+  text-decoration: none;
+  color: #fff;
 }
 
 .conteinerLogin {
@@ -106,8 +102,8 @@ body {
   margin-top: 15px;
 }
 
-.inputs::placeholder{
-    color: #fff;
+.inputs::placeholder {
+  color: #fff;
 }
 
 .btnLogin {
@@ -122,61 +118,57 @@ body {
   border: 0;
 }
 
-
 /* Estilos boton de google */
 
- 
-  .actions .btn-google{
-   margin-bottom: 30px;
-    padding: 10px 35px;
-    background-color: #fff;
-    cursor: pointer;
-    color: #000;
-    border-radius: 30px;
-    margin-top: 10px;
-    border: 0;
-    font-family: var(--letra-inputs);
-    font-weight: bold;
-  }
+.actions .btn-google {
+  margin-bottom: 30px;
+  padding: 10px 35px;
+  background-color: #fff;
+  cursor: pointer;
+  color: #000;
+  border-radius: 30px;
+  margin-top: 10px;
+  border: 0;
+  font-family: var(--letra-inputs);
+  font-weight: bold;
+}
 
-  .actions .btn-google .icon img{
-    display: inline-block;
-    vertical-align: middle;
-    width: 20px;
-    height: 20px;
-    object-fit: contain;
-    
-    margin-right: 5px;
-  }
+.actions .btn-google .icon img {
+  display: inline-block;
+  vertical-align: middle;
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+
+  margin-right: 5px;
+}
 
 /*------------------------------------------ MAIN PAGE ---------------------------------------------*/
-  .imgContainer{
-    object-fit: contain;
-    
-  }
-
-.imgMain{
-    margin: 0;
-    width: 100%;
-    height: 30%;
-    position: absolute;
-    left: 0px;
-    right: 0px;
-    
-  }
-
-  .logoMain {
-    position:relative;
-    width: 40%;
-    height: 20%;
-
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    padding: 5px;
+.imgContainer {
+  object-fit: contain;
 }
-  
-.inputColor{
+
+.imgMain {
+  margin: 0;
+  width: 100%;
+  height: 30%;
+  position: absolute;
+  left: 0px;
+  right: 0px;
+}
+
+.logoMain {
+  position: relative;
+  width: 40%;
+  height: 20%;
+
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 5px;
+}
+
+.inputColor {
   font-family: var(--letra-inputs);
   background-color: #fda859;
   color: white;
@@ -199,8 +191,6 @@ body {
   justify-content: center; */
   font-family: var(--letra-titulo);
   /* flex-direction: column; */
-  
-  
 }
 
 .containerCards {
@@ -213,8 +203,7 @@ body {
 
 /****************** Estilos carrito ******************/
 
-
-.btnBack{
+.btnBack {
   width: 5rem;
   height: 5rem;
   background-color: var(--main-color);
@@ -224,27 +213,25 @@ body {
   cursor: pointer;
 }
 
-.cartSection{
+.cartSection {
   border-radius: 10px;
 }
 
-.cartTitle{
-  border-radius:10px 10px 0px 0px;
+.cartTitle {
+  border-radius: 10px 10px 0px 0px;
 }
 
-.btnBack img{
+.btnBack img {
   width: 55%;
-  
 }
 
-.cartSection{
+.cartSection {
   background-color: var(--main-color);
   width: 80%;
   margin: auto;
-  
 }
 
-.cartTitle{
+.cartTitle {
   display: flex;
   justify-content: center;
 
@@ -252,10 +239,9 @@ body {
   height: 4rem;
   font-family: var(--letra-titulo);
   color: #fff;
-  
 }
 
-.cartCard{
+.cartCard {
   display: flex;
   align-items: center;
 
@@ -269,17 +255,16 @@ body {
   min-height: 110px;
 }
 
-.cartCard img{
+.cartCard img {
   border-radius: 10px;
 
   width: 20%;
   max-height: 140px;
   object-fit: cover;
-
 }
 
 /* Centrado de contenido eje Y*/
-.textCont{
+.textCont {
   text-align: center;
   color: #fff;
   font-size: 1.1rem;
@@ -287,17 +272,17 @@ body {
 }
 /*  */
 
-.cardName{
+.cardName {
   width: 20%;
   font-family: var(--letra-titulo);
 }
 
-.unitPrice{
+.unitPrice {
   width: 10%;
   font-family: var(--letra-inputs);
 }
 
-.cardCount{
+.cardCount {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -306,7 +291,7 @@ body {
   border-radius: 10px;
 }
 
-.cardCount button{
+.cardCount button {
   background-color: var(--btn-color);
   width: 20%;
   height: 2rem;
@@ -318,11 +303,11 @@ body {
   cursor: pointer;
 }
 
-.equal{
+.equal {
   width: 5%;
 }
 
-.cardAmount{
+.cardAmount {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -333,11 +318,11 @@ body {
   border-radius: 10px;
 }
 
-.deleteCard{
+.deleteCard {
   width: 20%;
 }
 
-.deleteCard button{
+.deleteCard button {
   background-color: var(--red-color);
   border: 0;
   border-radius: 10px;
@@ -349,8 +334,7 @@ body {
   cursor: pointer;
 }
 
-
-.confirmCart{
+.confirmCart {
   display: flex;
   justify-content: space-around;
 
@@ -360,7 +344,7 @@ body {
   padding-bottom: 1rem;
 }
 
-.confirmCart button{
+.confirmCart button {
   width: 25%;
   height: 3rem;
   background-color: var(--green-color);
@@ -372,7 +356,7 @@ body {
   font-size: 1.1rem;
 }
 
-.cartTotalAmount{
+.cartTotalAmount {
   display: flex;
   color: #fff;
   align-items: center;
@@ -380,7 +364,7 @@ body {
   font-size: 1.1rem;
 }
 
-.totalAmount{
+.totalAmount {
   display: flex;
   align-items: center;
 
@@ -393,7 +377,6 @@ body {
   align-items: center;
 }
 
-
 .cardNew {
   background-color: #f99132;
   border-radius: 11px;
@@ -405,15 +388,6 @@ body {
   position: relative;
 }
 
-.imgCard {
-  border-radius: 11px;
-  margin-left: 2%;
-  margin-right :2%;
-  margin-top: 2%;
-  margin-bottom: 2%;
-  max-width: 90%
-}
-
 .bottom-left {
   margin-left: 2%;
   position: absolute;
@@ -423,55 +397,30 @@ body {
   font-size: 23px;
 }
 
-.centerTitle{
-  display: inline-flex;
-  flex-direction: row;
-  justify-content: space-evenly;
-  align-items: baseline;
-}
-
 hr {
   border: 0;
-  clear:both;
-  display:block;
-  width: 90%;               
+  clear: both;
+  display: block;
+  width: 90%;
   height: 3px;
   margin-top: 2%;
   border: 2px;
-  background-color:#864e1b;
-  color:#864e1b
+  background-color: #864e1b;
+  color: #864e1b;
 }
 
-.container-cat{
+.container-cat {
   border-radius: 11px;
   background-color: #f99132;
   display: flex;
   /* justify-content: center; */
   /* display: inline-flex; */
   flex-direction: column;
-
 }
 
 .colorMain {
   background-color: var(--input-text);
   position: relative;
-}
-
-.secondary-text{
-  color: white;
-  font-family: var(--letra-btn);
-  font-weight: lighter;
-}
-
-.margin-text{
-  margin-left: 2%;
-  margin-bottom: 2%;
-}
-
-.shopping {
-  position:absolute;
-  bottom:3%;
-  right: 3%;
 }
 
 /*------------------------------------------ DETAILS PAGE ---------------------------------------------*/
@@ -498,14 +447,13 @@ hr {
   left: 10px;
   text-size-adjust: auto;
   font-size: 30px;
-  
 }
 
-.card-text{
+.card-text {
   margin-left: 3%;
 }
 
-.container-text{
+.container-text {
   display: flex;
   justify-content: space-between;
   flex-direction: column;
@@ -524,22 +472,19 @@ hr {
   font-weight: lighter;
   border-radius: 11px;
   padding: 2%;
-  
 }
 
-.text-margin{
-
+.text-margin {
   margin-top: 2%;
   display: inline-flex;
-  margin-left:15%;
-
+  margin-left: 15%;
 }
 
 /*---------------------------------Estilos Registro------------------------ */
 
-.hrWhite{
-  background-color:#fff;
-  color:#fff
+.hrWhite {
+  background-color: #fff;
+  color: #fff;
 }
 
 .register-wrapper {
@@ -583,4 +528,3 @@ hr {
   font-size: 2vh;
   color: #fff;
 }
-

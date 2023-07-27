@@ -8,33 +8,30 @@ interface ProductCardProps {
     producto: Producto
 }
 
-const ProductCard: FC<ProductCardProps> = ({producto}) => {
+const ProductCard: FC<ProductCardProps> = ({ producto }) => {
 
-    
+
 
     return (
 
-        // <div className="cardNew colorMain">
-        //     <img className="imgCard" src="../src/assets/hamburguesa-simple.jpg" alt="Hamburguesa simple" style={{ width: "100%" }}></img>
-
-        //     <div className="centerTitle margin-text">
-        //         <div style={{ marginLeft: "2%" }}>Hamburguesa #1 </div>
-        //         <div className="secondary-text">$700</div>
-        //         <div className="shopping"> <i className="material-icons" style={{ fontSize: "30px", marginTop: "5%" }}> add_shopping_cart</i></div>
-        //     </div>
-
-        // </div>
-
-
         <div className="col-sm-6 col-md-4" >
             <div className="card mb-3">
-                <div className="card-body">
+                {/* <div className="card-body"> */}
+                <div>
 
-                    <img className="imgCard" src={producto.imagen} alt="Hamburguesa simple" style={{ width: "100%" }}></img>
+                    <img className="imgCard" src={producto.imagen} alt="Hamburguesa simple"></img>
                     <div className="centerTitle margin-text">
-                        <div style={{ marginLeft: "2%" }}>{producto.denominacion}</div>
-                        <div className="secondary-text">${producto.precioTotal}</div>
-                        <div className="shopping"> <i className="material-icons" style={{ fontSize: "30px", marginTop: "5%" }}> add_shopping_cart</i></div>
+                        <div style={{ marginLeft: "2%" }}>
+                            <div>
+                                <span>{producto.denominacion}</span>
+                            </div>
+                            <div className="secondary-text">
+                                <span>${producto.precioTotal}</span>
+                            </div>
+                        </div>
+                        <div className="shopping">
+                            <i className="material-icons cart-icon"> add_shopping_cart</i>
+                        </div>
                     </div>
 
                 </div>

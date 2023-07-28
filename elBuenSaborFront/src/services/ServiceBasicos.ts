@@ -133,4 +133,22 @@ export class ServiceBasicos {
       console.log(`Error ${err.status}: ${err.statusText}`);
     }
   }
+
+  //Metodo para activar o desactivar los objetos de manera logica
+
+  async softDelete(id: number):Promise<void> {
+   try{
+    let res = await fetch(this.baseUrl+this._urlEspecifico+"/soft/"+id ,{
+      method: 'PATCH',
+    })
+    
+    if (!res.ok) {
+      throw { status: res.status, statusText: res.statusText };
+    }
+
+   }catch (err: any) {
+    console.log(`Error ${err.status}: ${err.statusText}`);
+  }
+  }
+
 }

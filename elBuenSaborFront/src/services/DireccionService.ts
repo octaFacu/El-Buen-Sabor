@@ -1,3 +1,4 @@
+import { Direccion, ExcepcionesVerificaUsuario } from "../context/interfaces/interfaces";
 import { ServiceBasicos } from "./ServiceBasicos";
 
 export class DireccionService extends ServiceBasicos {
@@ -6,7 +7,7 @@ export class DireccionService extends ServiceBasicos {
   constructor() {
     super("direccion");
   }
-
+  
   async updateEntity(datos: any) {
     try {
       let res = await fetch(
@@ -43,6 +44,32 @@ export class DireccionService extends ServiceBasicos {
       return jsonRes;
     } catch (err: any) {
       console.log(`Error ${err.status}: ${err.statusText}`);
+    }
+  }
+  // verificamos si el usuario a crear ya existe en la bd si no existe lo creamos. y si existe verificamos si esta en false. lo cambiamos a true. si esta en true tiramos excepcion
+  async verificarYCrearDireccion(usuarioId: string, direccion: Direccion): Promise<string> {
+    try {
+      const response = await fetch(this.url + "/verificar-crear-direccion/" + usuarioId, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(direccion),
+      });
+  
+      if (!response.ok) {
+        if (response.status === 400) {
+          // Si es el error de dirección existente y activa, lanzamos nuestro error personalizado
+          const errorResponse: ExcepcionesVerificaUsuario = await response.json();
+          throw errorResponse;
+        }
+      }
+      
+      const data: string = await response.text();
+      return data;
+    } catch (error: any) {
+      // este catch es por si hay cualquier otro tipo de error
+      throw error;
     }
   }
 }

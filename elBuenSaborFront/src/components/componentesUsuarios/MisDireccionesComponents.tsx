@@ -21,6 +21,7 @@ export default function MisDireccionesComponents({ usuario }: Props) {
     nroCasa: 0,
     pisoDpto: "",
     usuario: usuario,
+    activo: true
   });
   const servicioDireccion = new ServiceBasicos("direccion");
 
@@ -32,6 +33,7 @@ export default function MisDireccionesComponents({ usuario }: Props) {
       nroCasa: 0,
       pisoDpto: "",
       usuario: usuario,
+      activo: true
     });
     setModo("agregar");
   };
@@ -78,19 +80,22 @@ export default function MisDireccionesComponents({ usuario }: Props) {
   const confirmarEliminar = async (id: number) => {
     setModalConfirmacion(false);
     try {
-      await servicioDireccion.deleteEntity(id);
+      await servicioDireccion.softDelete(id);
     } catch (error) {
       console.log(error);
     }
   };
+
+  const direccionesActivas = direcciones?.filter((dir) => dir.activo);
+  
   return (
     <div className="card">
       <div className="card-body">
         <h1 className="card-title text-center">Direcciones</h1>
-        {direcciones?.map((dir, index) => (
+        {direccionesActivas?.map((dir, index) => (
           <div
             className={`direccion-container d-flex align-items-center justify-content-between ${
-              index !== direcciones.length - 1 ? "border-bottom pb-2 mb-2" : ""
+              index !== direccionesActivas.length - 1 ? "border-bottom pb-2 mb-2" : ""
             }`}
             key={dir.idDireccion}
           >
@@ -151,4 +156,4 @@ export default function MisDireccionesComponents({ usuario }: Props) {
       )}
     </div>
   );
-}
+};

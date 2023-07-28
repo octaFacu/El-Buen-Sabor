@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { ServiceBasicos } from "../../../services/ServiceBasicos";
 import { DireccionService } from "../../../services/DireccionService";
-import { Direccion } from "../../../context/interfaces/interfaces";
+import { Direccion, ExcepcionesVerificaUsuario } from "../../../context/interfaces/interfaces";
 
 interface ModalProps {
   cerrarModal: () => void;
@@ -19,26 +19,37 @@ const ModalEdicionDireccion: React.FC<ModalProps> = ({
   const handleSubmit = async () => {
     const servicioDireccion = new DireccionService();
     try {
-      if(modo === "editar"){
-        await servicioDireccion.updateEntity(direc)
-        cerrarModal()
-      }else{
-        await servicioDireccion.createEntity(direc)
-        cerrarModal()
+      if (modo === "editar") {
+        await servicioDireccion.updateEntity(direc);
+        cerrarModal();
+      } else {
+        const usuarioId = direc.usuario.id;
+        await servicioDireccion.verificarYCrearDireccion(usuarioId, direc);
+        cerrarModal();
       }
-    } catch (error) {
+    } catch (error: any) {
       console.log(error);
+      if (isExcepcionesVerificaUsuario(error)) {
+        // Es un error de tipo ExcepcionesVerificaUsuario y es por eso que podemos utilizar la interfaz para mostrar el mensaje
+        alert(error.msj);
+      }
     }
   };
 
   useEffect(() => {
     setDirec(direccion);
-  },[direccion]);
+  }, [direccion]);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = event.target;
     setDirec((prevDireccion) => ({ ...prevDireccion, [id]: value }));
   };
+
+  // Función para comprobar que el error es del tipo ExcepcionesVerificaUsuario
+  function isExcepcionesVerificaUsuario(error: any): error is ExcepcionesVerificaUsuario {
+    // aca retornamos el mensaje
+    return error.msj;
+  }
 
   return (
     <div className="modal" style={{ display: "block" }}>

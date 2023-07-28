@@ -71,7 +71,7 @@ const CarruselCategorias: FC<CarruselCategoriasProps> = (props: CarruselCategori
 
             {/* Contenido */}
 
-            <div className="d-flex ">
+            <div className="cat">
                 <div>
                     <button id={`${prevIndex}`} onClick={() => handleFilter(categorias[prevIndex])}><i className="material-icons" > local_dining</i> {categorias[prevIndex].denominacion} </button>
                 </div>

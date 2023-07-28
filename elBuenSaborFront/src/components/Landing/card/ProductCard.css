@@ -44,9 +44,9 @@
   font-size: 30px;
 }
 
+/* Cuando la pantalla tenga una anchura de 767px o menos */
 @media (max-width: 767px) {
-}
-
-.col-md-4 {
-  text-align: none !important;
+  .col-md-4 {
+    text-align: left !important;
+  }
 }

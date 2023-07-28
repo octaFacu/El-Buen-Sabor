@@ -21,13 +21,14 @@ export const Landing = () => {
   const categoriaProductoService = new CategoriaProductoService()
 
   const fetchDataCategorias = async () => {
-    const data = await categoriaProductoService.getAllBasic();
+    // const data = await categoriaProductoService.getAllBasic();
+    const data = await categoriaProductoService.getAllActive();
     await setCategorias(data);
   };
 
   useEffect(() => {
     fetchDataCategorias()
-  })
+  }, [])
 
   //--------------------
 

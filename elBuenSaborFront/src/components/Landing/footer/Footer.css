@@ -19,7 +19,7 @@
 /* Media query para pantallas con ancho máximo de 767px */
 @media (max-width: 767px) {
   .col-md-4 {
-    text-align: center;
+    text-align: center !important;
     margin-bottom: 20px;
   }
 }

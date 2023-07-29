@@ -1,4 +1,5 @@
 import IngredienteDeProducto from "../context/interfaces/IngredienteDeProducto";
+import Producto from "../context/interfaces/Producto";
 import { ServiceBasicos } from "./ServiceBasicos";
 
 
@@ -31,6 +32,8 @@ export class ProductoService extends ServiceBasicos{
 
 
     async saveIngredienteProd(ingredienteProd: IngredienteDeProducto){
+
+      
         try{
 
               
@@ -43,7 +46,7 @@ export class ProductoService extends ServiceBasicos{
               };
               
 
-            let res = await fetch(this.url + "/ingredienteProd/save", requestOptions);
+            let res = await fetch("http://localhost:8080" + "/ingredienteProd/save", requestOptions);
 
           if (!res.ok) {
               throw { status: res.status, statusText: res.statusText }
@@ -94,8 +97,21 @@ export class ProductoService extends ServiceBasicos{
 
 
     async crearEntity(datos: {}, ing: IngredienteDeProducto[]) {
+
+      const nuevoProducto = new Producto();
+      //Asignar los datos que se traen en un nuevo producto
+      Object.assign(nuevoProducto, datos);
+
+      //Si el producto no es manufacturado setear vacios los campos no correpondientes
+      if(nuevoProducto.esManufacturado === false) { 
+        nuevoProducto.receta = '';
+        nuevoProducto.tiempoCocina = undefined;
+        
+      }
+
       try {
-        let res = await fetch(this.url+"/saveTime", {
+        console.log(JSON.stringify(nuevoProducto));
+        let res = await fetch(this.url, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -109,10 +125,12 @@ export class ProductoService extends ServiceBasicos{
   
         let jsonRes = await res.json();
 
-        for(var ingr of ing){
-          ingr.producto = jsonRes.id;
-          await this.saveIngredienteProd(ingr)
-        }
+        if(nuevoProducto.esManufacturado === true){
+          for(var ingr of ing){
+            ingr.producto = jsonRes.id;
+            await this.saveIngredienteProd(ingr)
+          }
+        } 
 
         return jsonRes;
       } catch (err: any) {

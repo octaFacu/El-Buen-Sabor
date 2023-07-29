@@ -49,7 +49,7 @@ interface ModalVistaDetalleProps{
 
     useEffect(() => {
         getIngredientes();
-    }, [producto]);
+    }, [producto, ingredientes]);
     
     
 
@@ -76,12 +76,12 @@ interface ModalVistaDetalleProps{
 
                             <hr style={{marginRight: "2%", marginLeft: "2%"}}></hr>
                             {/* {producto.ingredientes!.length > 0 && producto.ingredientes != undefined && */}
-                            {ingredientes.length != 0 &&
+                            
                             <div>
                             <h4>Ingredientes:</h4>
                                 <TablaIngredientesMostrar ingredientesProd={ingredientes} edicion={false}></TablaIngredientesMostrar>
                             
-                            </div>}
+                            </div>
 
                         </div>
 

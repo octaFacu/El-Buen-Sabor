@@ -54,8 +54,11 @@ const ProductoCard: React.FunctionComponent<ProductoCardProps> = ({producto, cam
                 <button className="btn mx-2 btn-sm" style={{backgroundColor: "#864e1b"}} 
                 onClick={
                     () => {
-                    setearDatos(producto)
-                    cambiarEstado(!estado)}}
+                    setearDatos(producto);
+                    cambiarEstado(!estado);
+                        
+                
+                }}
                     ><i className="material-icons" style={{fontSize: "30px", cursor:"pointer", color: "white"}}>create</i></button>
 
                 {/* <button className={`btn btn-sm ${botonActivo ? "btn-danger" : "btn-success"}`} onClick={async() => { */}

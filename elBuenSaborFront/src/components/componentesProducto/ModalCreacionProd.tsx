@@ -1,6 +1,5 @@
 import { useContext, useEffect, useState } from "react"
 import "../../css/ventanaModal.css"
-import { Ingrediente, unidadDeMedida } from "../../context/interfaces/interfaces";
 import { Rubro } from "../compIngrediente/Rubro";
 import { GlobalContext } from "../../context/GlobalContext";
 import { ProductoService } from "../../services/ProductoService";
@@ -19,11 +18,12 @@ interface ProdFormProps {
 
     datos?: Producto,
     //setDatos: any,
+    ingredientesParam?: IngredienteDeProducto[],
 
     categorias: Rubro[];
 }
 
-const ModalCreacionProd: React.FC<ProdFormProps> = ({ estado, cambiarEstado, categorias, datos }) => {
+const ModalCreacionProd: React.FC<ProdFormProps> = ({ estado, cambiarEstado, categorias, datos, ingredientesParam }) => {
 
     const productoService = new ProductoService();
     // const serviceBasicos = new ServiceBasicos("unidadmedida");
@@ -49,14 +49,17 @@ const ModalCreacionProd: React.FC<ProdFormProps> = ({ estado, cambiarEstado, cat
 
     useEffect(() => {
         if(datos !== undefined){
-            Productonuevo = datos!;
+            setProductoSelect(datos!);
+            
+            //setIngredientesProducto(ingredientesParam!);
             getIngredientes();
+            setBotonManufacturado(productoSelect.esManufacturado);
         }
         
     }, [datos])
 
     const getIngredientes = async() => {
-        await productoService.getIngredientes(Productonuevo.id!).then((data) => setIngredientesProducto(castIngredientesIds(data)));
+        await productoService.getIngredientes(productoSelect.id!).then((data) => setIngredientesProducto(castIngredientesIds(data)));
         
     }
 
@@ -263,11 +266,18 @@ const ModalCreacionProd: React.FC<ProdFormProps> = ({ estado, cambiarEstado, cat
 
                                 <button className="btn btn-danger mx-3" onClick={() => cambiarEstado(!estado)}><i className="material-icons" style={{fontSize: "30px", cursor:"pointer"}}>highlight_off</i></button>
 
-                                <button type="submit" className="btn" style={{backgroundColor: "#864e1b", color: "white"}} onClick={() => {
+                                <button type="submit" className="btn" style={{backgroundColor: "#864e1b", color: "white"}} onClick={(event) => {
 
+                                    event.preventDefault();
 
-                                   if(categoriaElegida !== undefined && Productonuevo.categoriaProducto.id !== 0 && ingredientesProducto?.length > 0){
+                                    productoSelect.esManufacturado = botonManufacturado;
+                                    
+                                    
 
+                                   if(categoriaElegida !== undefined && productoSelect.categoriaProducto.id !== 0 && (ingredientesProducto?.length > 0 || productoSelect.esManufacturado == false)){
+                                    console.log("Entro en la primera condicion")
+                                    if((productoSelect.receta != '' && productoSelect.tiempoCocina != '') || productoSelect.esManufacturado == false){
+                                        console.log("Entro en la segunda condicion")
                                         if(categoriaElegida !== undefined){
                                             Productonuevo.categoriaProducto = JSON.parse(categoriaElegida!.valueOf());
                                         }
@@ -282,24 +292,26 @@ const ModalCreacionProd: React.FC<ProdFormProps> = ({ estado, cambiarEstado, cat
                                         }else{
 
                                             crearProducto();
-                                            //cambiarEstado(!estado);
-                                            //window.location.reload();
+                                            cambiarEstado(!estado);
+                                            window.location.reload();
                                             
                                         }
  
-                                }
+                                    }}
                                 }}> <i className="material-icons" style={{fontSize: "30px", cursor:"pointer"}}>check</i></button>
                             </form>
-                                
+                            {   botonManufacturado &&
+                            <div>
                                 <TablaIngredientesMostrar ingredientesProd={ingredientesProducto} edicion={true}></TablaIngredientesMostrar>
-
+                            
                             <div className="container" style={{display: "flex", justifyContent: "space-evenly"}}>
                                 <div className="mt-4" style={{display: "flex", maxWidth: "70%", maxHeight: "40%", alignItems: "center", justifyContent: "center" }}>
                                     
                                     <button className="btn btn-success" onClick={() => handleFormSubmit()}>Agregar Ingrediente</button>
                                 </div> 
                                 
-                                </div> 
+                                </div>
+                                </div> }
                         </div>
                     </div>
                 </div>

@@ -1,0 +1,28 @@
+.overlayModalProduct{
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, .5);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.contenedorModalProduct{
+    width: 40%;
+    min-height: 100px;
+    max-width: 700px;
+    background-color: #fff;
+    position: relative;
+    border-radius: 5px;
+    /* box-shadow: ; */
+    padding: 1rem;
+}
+
+.imgModalProduct{
+    width: 100%;
+    /* max-width: 600px; */
+}

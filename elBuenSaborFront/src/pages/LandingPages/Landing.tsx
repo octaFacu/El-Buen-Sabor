@@ -9,6 +9,7 @@ import ListCard from '../../components/Landing/listCard/ListCard'
 import Producto from '../../context/interfaces/Producto';
 import PageLoader from '../../components/pageLoader/PageLoader';
 import Footer from '../../components/Landing/footer/Footer'
+import DetalleProducto from '../../components/Landing/detalleProducto/DetalleProducto'
 
 export const Landing = () => {
 
@@ -32,14 +33,25 @@ export const Landing = () => {
 
   //--------------------
 
+  //Ventana modal para detalle producto
+  const [modalDetalleProducto, setModalDetalleProducto] = useState<boolean>(false)
+  const [productoSeleccionado, setProductoSeleccionado] = useState<Producto>()
+
+  useEffect(() => {
+    console.log("cambio estado de modal");
+    
+  },[modalDetalleProducto])
+
+  //--------------------
+
   //scroll infinito
   const [productos, setProductos] = useState<Producto[][]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [pageNumber, setPageNumber] = useState<number>(1);
 
-  // Obtención de productos desde una API 
+  // Obtención de productos desde la API 
   const fetchProducts = async (filter: number | string): Promise<Producto[]> => {
-    // Hacer una llamada a la API para obtener los productos de la página solicitada
+    
     const response = await fetch(`http://localhost:8080/producto/filtroCategoria?filter=${filter}`);
     const data = await response.json();
     return data;
@@ -54,7 +66,6 @@ export const Landing = () => {
       setIsLoading(true);
       fetchProducts(pageNumber).then((data) => {
         setProductos((arreglosActuales) => [...arreglosActuales, data]);
-        // setProducts([data]);
         setIsLoading(false);
 
       });
@@ -109,6 +120,8 @@ export const Landing = () => {
             <ListCard
               categoria={categorias[index].denominacion}
               productos={productList}
+              setModalDetalleProducto={setModalDetalleProducto}
+              setProductoSeleccionado={setProductoSeleccionado}
             />
           </div>
         ))}
@@ -118,6 +131,13 @@ export const Landing = () => {
       </div>
 
       <Footer />
+
+      {/* Modal */}
+      <DetalleProducto 
+        modalDetalleProducto={modalDetalleProducto}
+        setModalDetalleProducto={setModalDetalleProducto}
+        producto={productoSeleccionado}
+      />
 
     </>
   )

@@ -17,8 +17,14 @@
 }
 
 /* Media query para pantallas con ancho máximo de 767px */
+/* ARREGLAAAAAAAAAAR */
 @media (max-width: 767px) {
-  .col-md-4 {
+  /* .col-md-4 {
+    text-align: center !important;
+    margin-bottom: 20px;
+  } */
+
+  .responsiveFooter{
     text-align: center !important;
     margin-bottom: 20px;
   }

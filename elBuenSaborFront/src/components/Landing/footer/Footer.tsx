@@ -12,9 +12,9 @@ const Footer: FC<FooterProps> = () => {
     return (
         <footer className="bg-footer text-light py-5 mt-4">
             <div className="container">
-                <div className="row d-flex">
+                <div className="row d-flex ">
                     {/* Sección 1: Siguenos */}
-                    <div className="col-md-4">
+                    <div className="col-md-4 responsiveFooter">
                         <h5>Síguenos</h5>
                         <ul className="list-unstyled ">
                             <li>
@@ -32,12 +32,12 @@ const Footer: FC<FooterProps> = () => {
                         </ul>
                     </div>
                     {/* Sección 2: Donde estamos */}
-                    <div className="col-md-4">
+                    <div className="col-md-4 responsiveFooter">
                         <h5>Donde estamos</h5>
                         <p>Dirección del local</p>
                     </div>
                     {/* Sección 3: Contactanos */}
-                    <div className="col-md-4">
+                    <div className="col-md-4 responsiveFooter">
                         <h5>Contáctanos</h5>
                         <p>Número de teléfono: (123) 456-7890</p>
                         <p>Email: ejemplo@gmail.com</p>

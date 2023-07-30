@@ -8,9 +8,11 @@ interface ListCardProps {
     categoria: string
     productos: Producto[]
 
+    setProductoSeleccionado: (producto: Producto) => void;
+    setModalDetalleProducto: (modal: boolean) => void;
 }
 
-const ListCard: FC<ListCardProps> = ({categoria, productos}) => {
+const ListCard: FC<ListCardProps> = ({categoria, productos, setModalDetalleProducto, setProductoSeleccionado}) => {
 
     if(productos.length === 0){
         console.log("LOGGGGGGGGG");
@@ -56,12 +58,16 @@ const ListCard: FC<ListCardProps> = ({categoria, productos}) => {
                     <hr style={{ marginRight: "2%", marginLeft: "2%" }}></hr>
                 </div>
 
-
                 {/* <div className="containerCards"> */}
 
-                <div className="row">
+                <div className="row rowEdit">
                     {productos.map((producto, index) => (
-                        <ProductCard key={index} producto={producto}/>
+                        <ProductCard 
+                        key={index} 
+                        producto={producto}
+                        setProductoSeleccionado={setProductoSeleccionado}
+                        setModalDetalleProducto={setModalDetalleProducto}
+                        />
                     ))}
                     
                 </div>

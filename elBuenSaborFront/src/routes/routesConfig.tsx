@@ -6,17 +6,18 @@ import CategoriaProductosABM from '../pages/ABMPages/CategoriaProductosABM';
 import { ProductosABM } from '../pages/ABMPages/ProductosAMB';
 import { NotFound } from '../components/NotFound';
 import InformacionAdicionalPostRegistro from '../pages/UsuariosPages/InformacionAdicionalPostRegistro';
-import ModalDescripcion from '../components/Landing/modalDescripcion/ModalDescripcion';
+import DetalleProducto from '../components/Landing/detalleProducto/DetalleProducto';
 
 export const routesConfig = [
     {
         path: '/',
         component: Landing,
     },
-    {
-        path: '/detalleProducto/:id',
-        component: ModalDescripcion,
-    },
+    // {
+    //     path: '/detalleProducto/:id',
+    //     path: '/detalleProducto',
+    //     component: DetalleProducto,
+    // },
     {
         path: '/usuarios',
         component: InformacionUsuario,

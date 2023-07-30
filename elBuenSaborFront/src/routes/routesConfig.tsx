@@ -13,11 +13,6 @@ export const routesConfig = [
         path: '/',
         component: Landing,
     },
-    // {
-    //     path: '/detalleProducto/:id',
-    //     path: '/detalleProducto',
-    //     component: DetalleProducto,
-    // },
     {
         path: '/usuarios',
         component: InformacionUsuario,

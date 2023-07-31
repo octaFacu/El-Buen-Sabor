@@ -18,12 +18,12 @@ const ModalEdicionDireccion: React.FC<ModalProps> = ({
 
   const handleSubmit = async () => {
     const servicioDireccion = new DireccionService();
+    const usuarioId = direc.usuario.id;
     try {
       if (modo === "editar") {
-        await servicioDireccion.updateEntity(direc);
+        await servicioDireccion.updateDireccion(usuarioId,direc);
         cerrarModal();
       } else {
-        const usuarioId = direc.usuario.id;
         await servicioDireccion.verificarYCrearDireccion(usuarioId, direc);
         cerrarModal();
       }

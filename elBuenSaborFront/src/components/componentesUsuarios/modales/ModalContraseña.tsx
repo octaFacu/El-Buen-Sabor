@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
-import "./modal.css"
+import "./modal.css";
 interface ModalProps {
   cerrarModal: () => void;
 }
@@ -27,12 +27,12 @@ const ModalContraseña: React.FC<ModalProps> = ({ cerrarModal }) => {
       },
       body: JSON.stringify(data),
     })
-      .then((response) =>{
-        response.text()
-        setEnvio(true)
-        setTimeout(()=>{
-          cerrarModal()
-        },2500)
+      .then((response) => {
+        response.text();
+        setEnvio(true);
+        setTimeout(() => {
+          cerrarModal();
+        }, 2500);
       })
       .catch((error) => {
         console.error(error);
@@ -42,23 +42,28 @@ const ModalContraseña: React.FC<ModalProps> = ({ cerrarModal }) => {
   return (
     <div className="modal" style={{ display: "block" }}>
       <div className="modal-dialog modal-dialog-centered">
-        <div className="modal-content ">
+        <div className="modal-content">
           <div className="modal-header">
             <h5 className="modal-title text-white">Cambiar contraseña</h5>
-            <button type="button" className="close" onClick={cerrarModal}>
+            <button type="button" className="close altura" onClick={cerrarModal}>
               <span>&times;</span>
             </button>
           </div>
-          <div className="modal-body">
+          <div className="contedorBotonesContraseña">
             {!envio ? (
-              <button className="btn text-white enviar" onClick={cambioContraseña} >
+              <button
+                className="btn text-white enviar"
+                onClick={cambioContraseña}
+              >
                 Enviar mail para cambio de contraseña
               </button>
             ) : (
-              <div className="text-white">Revise su mail para cambiar la contraseña</div>
+              <div className="text-white">
+                Revise su mail para cambiar la contraseña
+              </div>
             )}
           </div>
-          <div className="modal-footer">
+          <div className="modal-footer d-flex justify-content-center">
             <button
               type="button"
               className="btn text-white eliminar"

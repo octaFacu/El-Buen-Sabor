@@ -33,9 +33,17 @@ export default function InformacionAdicionalPostRegistro() {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const servicioUsuarios = new ServiceBasicos("usuario");
+    const servicioCliente = new ServiceBasicos("cliente");
+
     try {
-      await servicioUsuarios.createEntity(usuario);
-      navigate("/");
+      const usuarioGuardado = await servicioUsuarios.createEntity(usuario);  
+      const cliente = {
+        ...usuario,
+        usuario: usuarioGuardado,
+      };
+  
+      await servicioCliente.createEntity(cliente);
+       navigate("/");
     } catch (error) {
       console.error(error);
     }

@@ -33,6 +33,8 @@ export class ProductoService extends ServiceBasicos{
 
     async saveIngredienteProd(ingredienteProd: IngredienteDeProducto){
 
+      console.log("Ingrediente pasado al servicio: "+JSON.stringify(ingredienteProd));
+
       
         try{
 
@@ -127,7 +129,7 @@ export class ProductoService extends ServiceBasicos{
 
         if(nuevoProducto.esManufacturado === true){
           for(var ingr of ing){
-            ingr.producto = jsonRes.id;
+            ingr.idProducto = jsonRes.id;
             await this.saveIngredienteProd(ingr)
           }
         } 

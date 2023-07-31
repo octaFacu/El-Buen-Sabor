@@ -50,6 +50,11 @@ const ModalCreacionProd: React.FC<ProdFormProps> = ({ estado, cambiarEstado, cat
     useEffect(() => {
         if(datos !== undefined){
             setProductoSelect(datos!);
+
+            if(datos.esManufacturado === true){
+                setSelectedTime(datos.tiempoCocina!);
+            }
+            
             
             //setIngredientesProducto(ingredientesParam!);
             getIngredientes();
@@ -77,9 +82,9 @@ const ModalCreacionProd: React.FC<ProdFormProps> = ({ estado, cambiarEstado, cat
 
             nuevoIng.cantidad = ingredientes[i].cantidad;
             nuevoIng.id = ingredientes[i].id;
-            nuevoIng.ingrediente = ingredientes[i].ingrediente.id;
-            nuevoIng.producto = ingredientes[i].producto.id;
-            nuevoIng.unidadMedida = ingredientes[i].unidadmedida.id;
+            nuevoIng.idIngrediente = ingredientes[i].ingrediente.id;
+            nuevoIng.idProducto = ingredientes[i].producto.id;
+            nuevoIng.idMedida = ingredientes[i].unidadmedida.id;
 
 
             castIngredientes.push(nuevoIng);
@@ -91,12 +96,14 @@ const ModalCreacionProd: React.FC<ProdFormProps> = ({ estado, cambiarEstado, cat
 
 
     const crearProducto = async () => {
-        /*if(Productonuevo.esManufacturado){
-            productoSelect.tiempoCocina = convertTimeToNumber(selectedTime);
-        }*/
 
-        console.log(JSON.stringify(productoSelect));
-        console.log(productoSelect.tiempoCocina);
+
+        // console.log(JSON.stringify(productoSelect));
+        // console.log(productoSelect.tiempoCocina);
+
+        ingredientesProducto.forEach((ing) => {
+            console.log(JSON.stringify(ing)); // This will log each number in the array
+          });
 
         await productoService.crearEntity(productoSelect, ingredientesProducto);
         
@@ -276,6 +283,8 @@ const ModalCreacionProd: React.FC<ProdFormProps> = ({ estado, cambiarEstado, cat
 
                                    if(categoriaElegida !== undefined && productoSelect.categoriaProducto.id !== 0 && (ingredientesProducto?.length > 0 || productoSelect.esManufacturado == false)){
                                     console.log("Entro en la primera condicion")
+                                    // setProductoSelect({...productoSelect, tiempoCocina: selectedTime});
+
                                     if((productoSelect.receta != '' && productoSelect.tiempoCocina != '') || productoSelect.esManufacturado == false){
                                         console.log("Entro en la segunda condicion")
                                         if(categoriaElegida !== undefined){
@@ -287,22 +296,22 @@ const ModalCreacionProd: React.FC<ProdFormProps> = ({ estado, cambiarEstado, cat
 
                                             //pasar los datos guardados al metodo de update
                                             updateProducto();
-                                            cambiarEstado(!estado);
+                                            // cambiarEstado(!estado);
 
                                         }else{
 
                                             crearProducto();
-                                            cambiarEstado(!estado);
-                                            window.location.reload();
+                                            // cambiarEstado(!estado);
+                                            // window.location.reload();
                                             
                                         }
  
                                     }}
                                 }}> <i className="material-icons" style={{fontSize: "30px", cursor:"pointer"}}>check</i></button>
                             </form>
-                            {   botonManufacturado &&
+                            {   botonManufacturado && (ingredientesProducto.length != 0 || productoSelect.id == 0) &&
                             <div>
-                                <TablaIngredientesMostrar ingredientesProd={ingredientesProducto} edicion={true}></TablaIngredientesMostrar>
+                                <TablaIngredientesMostrar ingredientesProd={ingredientesProducto} setIngredientesProd={setIngredientesProducto} edicion={true}></TablaIngredientesMostrar>
                             
                             <div className="container" style={{display: "flex", justifyContent: "space-evenly"}}>
                                 <div className="mt-4" style={{display: "flex", maxWidth: "70%", maxHeight: "40%", alignItems: "center", justifyContent: "center" }}>

@@ -19,7 +19,7 @@ export class Producto{
         this.activo = true;
         this.denominacion = '';
         this.esManufacturado = true;
-        this.tiempoCocina = '';
+        this.tiempoCocina = '00:00:00';
         this.descripcion = '';
         this.receta = '';
         this.costoTotal = 0;

@@ -5,12 +5,14 @@ import { ServiceBasicos } from '../../services/ServiceBasicos';
 
 interface TablaIngredientesProdProps {
   ingredientesProd: IngredienteDeProducto[];
+  setIngredientesProd?: any;
   edicion: boolean;
 }
 
-const TablaIngredientesMostrar: React.FC<TablaIngredientesProdProps> = ({ ingredientesProd, edicion }) => {
+const TablaIngredientesMostrar: React.FC<TablaIngredientesProdProps> = ({ ingredientesProd, setIngredientesProd, edicion }) => {
 
     const ingredienteService = new IngredientesService();
+    const [isLoading, setIsLoading] = useState(true);
     const medidas = new ServiceBasicos("unidadDeMedida");
     const [ingNombre, setIngNombre] = useState<string[]>([]);
   const [medidaNombre, setMedidaNombre] = useState<string[]>([]);
@@ -24,11 +26,11 @@ const TablaIngredientesMostrar: React.FC<TablaIngredientesProdProps> = ({ ingred
             // const medidaData = await medidas.getOne(ing.unidadMedida);
             // setMedidaNombre((prevMedidaNombre) => [...prevMedidaNombre, medidaData.denominacion]);
 
-            ingredienteService.getOne(ing.ingrediente as number).then((ingredienteData) => {
+            ingredienteService.getOne(ing.idIngrediente as number).then((ingredienteData) => {
                 setIngNombre((prevIngNombre) => [...prevIngNombre, ingredienteData.nombre]);
               });
           
-              medidas.getOne(ing.unidadMedida as number).then((medidaData) => {
+              medidas.getOne(ing.idMedida as number).then((medidaData) => {
                 setMedidaNombre((prevMedidaNombre) => [...prevMedidaNombre, medidaData.denominacion]);
               });
 
@@ -40,6 +42,10 @@ const TablaIngredientesMostrar: React.FC<TablaIngredientesProdProps> = ({ ingred
 
       useEffect(() => {
         // Fetch data when the component mounts or when ingredienteProdList changes
+        if (ingredientesProd.length > 0) {
+          setIsLoading(false);
+        }
+
             ingredientesProd.forEach((ingredienteProd) => {
                 console.log("ingrediente: ");
                 console.log(JSON.stringify(ingredienteProd));
@@ -50,6 +56,18 @@ const TablaIngredientesMostrar: React.FC<TablaIngredientesProdProps> = ({ ingred
         });
       }, [ingredientesProd]);
 
+      const handleRemoveIngredient = (index: number) => {
+
+        const updatedIngredientesProd = [...ingredientesProd];
+
+        updatedIngredientesProd.splice(index, 1);
+
+        setIngredientesProd(updatedIngredientesProd);
+      };
+
+      
+
+
       if((ingredientesProd.length === 0 || ingNombre.length === 0 || medidaNombre.length === 0) && edicion == false){
         return(
             <div>
@@ -57,6 +75,7 @@ const TablaIngredientesMostrar: React.FC<TablaIngredientesProdProps> = ({ ingred
             </div>
         )
       }
+
     
   return (
     <div className="container" style={{ padding: '10px' }}>
@@ -74,7 +93,11 @@ const TablaIngredientesMostrar: React.FC<TablaIngredientesProdProps> = ({ ingred
             <td>{ingNombre[index]}</td>
             <td>{ing.cantidad} {medidaNombre[index]}s</td>
             {edicion && <td>
-              <button className="btn btn-danger">
+              <button className="btn btn-danger" onClick={
+                ()=>{
+                  handleRemoveIngredient(index);
+                }
+              }>
                 <i className="material-icons" style={{ fontSize: '30px', cursor: 'pointer' }}>
                   not_interested
                 </i>

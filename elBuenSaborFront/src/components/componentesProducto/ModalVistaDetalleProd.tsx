@@ -36,9 +36,9 @@ interface ModalVistaDetalleProps{
 
             nuevoIng.cantidad = ingredientes[i].cantidad;
             nuevoIng.id = ingredientes[i].id;
-            nuevoIng.ingrediente = ingredientes[i].ingrediente.id;
-            nuevoIng.producto = ingredientes[i].producto.id;
-            nuevoIng.unidadMedida = ingredientes[i].unidadmedida.id;
+            nuevoIng.idIngrediente = ingredientes[i].ingrediente.id;
+            nuevoIng.idProducto = ingredientes[i].producto.id;
+            nuevoIng.idMedida = ingredientes[i].unidadmedida.id;
 
 
             castIngredientes.push(nuevoIng);
@@ -75,13 +75,14 @@ interface ModalVistaDetalleProps{
                             <h4>Receta: </h4><p>{producto.receta}</p>
 
                             <hr style={{marginRight: "2%", marginLeft: "2%"}}></hr>
-                            {/* {producto.ingredientes!.length > 0 && producto.ingredientes != undefined && */}
+                            {ingredientes!.length > 0  &&
                             
                             <div>
                             <h4>Ingredientes:</h4>
                                 <TablaIngredientesMostrar ingredientesProd={ingredientes} edicion={false}></TablaIngredientesMostrar>
                             
                             </div>
+                        }
 
                         </div>
 

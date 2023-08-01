@@ -1,3 +1,4 @@
+/* Estilos de la ventana modal */
 .overlayModalProduct{
     width: 100vw;
     height: 100vh;
@@ -14,15 +15,75 @@
 .contenedorModalProduct{
     width: 40%;
     min-height: 100px;
-    max-width: 700px;
-    background-color: #fff;
+    max-width: 650px;
+    background-color: var(--main-color);
+    color: white;
+
     position: relative;
     border-radius: 5px;
     /* box-shadow: ; */
     padding: 1rem;
 }
-
+/* --------------------------- */
+/* Estilos para la imagen del producto */
 .imgModalProduct{
     width: 100%;
+    border-radius: 5px;
     /* max-width: 600px; */
 }
+/* ---------------------------- */
+/* Estilos para el precio del producto */
+.productPrice{
+    background-color: var(--btn-color);
+    padding: 7px;
+    border-radius: 10px;
+}
+/* ---------------------------- */
+/* Donde se coloca el nombre del producto */
+.product-name{
+    display: flex;
+    justify-content: center;
+    width: 80%;
+    text-align: center;
+}
+
+.product-name h2{
+    font-family: var(--letra-titulo);
+}
+/* ---------------------------- */
+/* Boton para cerrar la ventana modal */
+.btn-container{
+    width: 10%;
+}
+
+.btn-go-back{
+    background-color: var(--btn-color) !important;
+}
+.btn-go-back:hover{
+    background-color: var(--btn-color-light) !important;
+}
+/* ---------------------------- */
+/* Boton de agregar al carrito */
+.btn-add-cart{
+    background-color: var(--green-color) !important;
+    color: white !important; 
+    align-items: end;
+}
+
+.btn-add-cart:hover{
+    background-color: var(--green-color-light) !important;
+}
+
+.cart-icon{
+    margin-left: 5px;
+}
+/* ---------------------------- */
+/* Boton de agregar a favoritos */
+.btn-fav{
+    background-color: rgba(0, 0, 0, 0);
+    margin: 10px;
+}
+.btn-fav-icon{
+    width: 35px;
+}
+/* ---------------------------- */

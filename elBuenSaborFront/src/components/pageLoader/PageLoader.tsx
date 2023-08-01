@@ -1,6 +1,6 @@
 import React from 'react';
 import './PageLoader.css';
-import gifLoader from '../../assets/DuckLoader.gif'; // aca
+import gifLoader from '../../assets/DuckLoader.gif'; 
 
 interface PageLoader {
 

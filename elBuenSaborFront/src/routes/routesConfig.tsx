@@ -6,6 +6,9 @@ import CategoriaProductosABM from '../pages/ABMPages/CategoriaProductosABM';
 import { ProductosABM } from '../pages/ABMPages/ProductosAMB';
 import { NotFound } from '../components/NotFound';
 import InformacionAdicionalPostRegistro from '../pages/UsuariosPages/InformacionAdicionalPostRegistro';
+import { Component } from 'react';
+import PaginaPrincipalAdministrador from '../pages/AdminPages/PaginaPrincipalAdministrador';
+import RankingClientes from '../pages/AdminPages/EstadisticasPages/RankingClientes';
 
 export const routesConfig = [
     {
@@ -35,6 +38,14 @@ export const routesConfig = [
     {
         path: '/abm/productos',
         component: ProductosABM,
+    },
+    {
+        path: '/admin',
+        component: PaginaPrincipalAdministrador,
+    },
+    {
+        path: '/admin/estadisticas/rankingCliente',
+        component: RankingClientes,
     },
     {
         path: '*',

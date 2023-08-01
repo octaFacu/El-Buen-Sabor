@@ -1,0 +1,49 @@
+.contenedor-tituloEstadistica{
+    border-radius: 11px;
+    background: #864E1B;
+    margin: -0.25rem -0.05rem 0 -0.05rem;
+    padding-top: 0.25rem;
+}
+
+.ancho-card{
+ width: 75rem;
+}
+.btn-administrar{
+    background-color: #864E1B !important;
+    border-radius: 30px !important;
+}
+
+.btn-separador button {
+    margin-top: 1.5rem;
+    height: 2.5rem;
+}
+
+.btn-AñadirPadding{
+    padding: 0 6.5rem;
+    margin-bottom: 2.25rem;
+    height: 4rem;
+}
+
+.btn-administrar:hover {
+    background-color: #FDA859 !important;
+}
+
+.card-generica{
+    border-radius: 11px !important;
+    margin-left: 5vh;
+    margin-top: 10vh;
+    background-color: #F99132 !important;
+    color: white;
+}
+
+.card-cliente{
+    background-color: #FDA859 !important;
+    border-radius: 30px !important;
+    margin: 1.5rem;
+}
+
+.btn-historial{
+ border-radius: 11px !important;
+ background-color: #864E1B !important;
+ width: 5rem;
+}

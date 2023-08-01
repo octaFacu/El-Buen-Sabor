@@ -47,7 +47,7 @@ export default function MisPedidosComponent({ usuario }: Props) {
   return (
     <div className="text-center" style={{ marginTop: "6rem" }}>
       <h2 className="bold">Pedidos Anteriores</h2>
-      <div className="card-container espacio-pedidos "> 
+      <div className="card-container espacio-pedidos card-generica "> 
         {pedidos?.map((pedido) => (
           <div className="card" key={pedido.pedido_id} onClick={()=>(abrirModall(pedido.pedido_id))}> {/* Pasamos el pedido_id al abrir el modal */}
             <div className="card-body">

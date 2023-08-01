@@ -89,7 +89,7 @@ export default function MisDireccionesComponents({ usuario }: Props) {
   const direccionesActivas = direcciones?.filter((dir) => dir.activo);
   
   return (
-    <div className="card">
+    <div className="card card-generica">
       <div className="card-body">
         <h1 className="card-title text-center">Direcciones</h1>
         {direccionesActivas?.map((dir, index) => (

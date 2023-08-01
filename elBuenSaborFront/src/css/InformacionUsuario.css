@@ -33,3 +33,12 @@
   .cardFormularioConitnuacion input {
     font-family: "Varela Round", sans-serif; /* Fuente para los inputs */
   }
+
+  .card-generica{
+    border-radius: 11px !important;
+    margin-left: 5vh;
+    margin-top: 10vh;
+    background-color: #F99132 !important;
+    color: white;
+  }
+  

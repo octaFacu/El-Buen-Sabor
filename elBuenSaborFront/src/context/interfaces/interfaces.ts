@@ -48,4 +48,16 @@ export interface Direccion {
   nroCasa: number;
   pisoDpto: string;
   usuario: Usuario;
+  activo: boolean
+}
+
+export interface proyeccionProductoFavorito{
+  id: number;
+  imagen: string;
+  denominacion: string;
+}
+
+export interface ExcepcionesVerificaUsuario{
+  errorStatus: number,
+  msj: string
 }

@@ -13,7 +13,9 @@
 .bold{
     font-weight: bold
 }
-
+.modal-header {
+  margin-top: 1rem;
+}
 .parrafo{
     margin-top: 10px;
 }
@@ -42,4 +44,84 @@
     border-radius: 30px ;
     background-color: #864E1B ;   
     width: 40vh;
+}
+
+.close {
+    position: absolute;
+    bottom: 0px; 
+    right: 10px;
+    font-size: 1.5rem;
+    background-color: transparent;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+  }
+  
+
+  .modal-header {
+    position: relative;
+    text-align: center;
+  }
+  
+  .modal-title {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    margin: 0;
+    top: 1px; 
+  }
+  
+  .modal-body {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .pedido-item {
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+    border-bottom: 1px solid white;
+  }
+  
+  .pedido-item img {
+    width: 50px;
+    height: 50px;
+    margin-right: 1rem;
+  }
+  
+  .denominacion {
+    font-weight: bold;
+  }
+  
+  .pedido-item-derecho {
+    margin-left: 1rem;
+  }
+  
+  .contenedor-derecho {
+    display: flex;
+  }
+  
+  .texto-blanco {
+    color: white;
+    font-weight: bold;
+  }
+  
+  .btn.modal-pedido {
+    border-radius: 30px;
+    background-color: #864E1B;
+    color: white;
+    width: 15vh;
+    margin: 3vh 3vh 3vh 3vh;
+  }
+  
+  .modal-pedido:hover {
+    color: white !important;
+  }
+.contedorBotonesContraseña{
+  padding-top: 1rem;
+}
+
+.centrado{
+  padding: 1.5rem 1.5rem;
 }

@@ -59,9 +59,9 @@ export default function InformacionUsuario() {
       case 2:
         return <MisDireccionesComponents usuario={usuario}/>;
       case 3:
-        return <MisPedidosComponent />;
+        return <MisPedidosComponent  usuario={usuario}/>;
       case 4:
-        return <MisFavoritosComponent />;
+        return <MisFavoritosComponent  usuario={usuario}/>;
       default:
         return null;
     }
@@ -76,7 +76,6 @@ export default function InformacionUsuario() {
         <div className="card d-flex flex-column align-items-center h-100 principal w-75">
           <img style={{ width: "200px", height: "200px" }}
            src={user?.picture} alt="Descripción de la imagen" className="card-img-top  rounded-circle card-img-custom mt-5" />
-
           <div className="card-body text-center  d-flex flex-column align-items-center w-100">
             <h5 className="card-title">{usuario.nombre}</h5>
             <p className="card-text">{user?.email}</p>

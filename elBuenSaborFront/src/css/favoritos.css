@@ -1,0 +1,28 @@
+.img-flex{
+    flex: 1;
+    width: 100%;
+    max-width: 150px;
+    height: auto;
+}
+
+.denominacion-flex{
+    flex: 2;
+}
+
+.iconos{
+    font-size: 2em;
+    color: white;
+    cursor: pointer;
+}
+.espacioEntreCards{
+    margin-bottom: -2rem
+}
+
+.iconos.brillo {
+    box-shadow: 0 10px 10px rgba(255, 255, 255, 1);
+}
+
+
+.espacio-pedidos > .card {
+    margin-bottom: -2.5rem; 
+  }

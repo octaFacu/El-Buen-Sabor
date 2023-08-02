@@ -47,17 +47,19 @@ export class ServiceBasicos {
       console.log(`Error ${err.status}: ${err.statusText}`);
     }
   }
-
   async deleteEntity(id: number | string) {
     try {
       const res = await fetch(this.baseUrl + this._urlEspecifico + `/${id}`, {
         method: "DELETE",
       });
+  
+      if (!res.ok) {
+        throw new Error(`Error ${res.status}: ${res.statusText}`);
+      }
 
-      const jsonRes = await res.json();
-      return jsonRes;
     } catch (err: any) {
-      console.log(`Error ${err.status}: ${err.statusText}`);
+      console.log(`Error: ${err.message}`);
+      throw err; 
     }
   }
 
@@ -131,4 +133,22 @@ export class ServiceBasicos {
       console.log(`Error ${err.status}: ${err.statusText}`);
     }
   }
+
+  //Metodo para activar o desactivar los objetos de manera logica
+
+  async softDelete(id: number):Promise<void> {
+   try{
+    let res = await fetch(this.baseUrl+this._urlEspecifico+"/soft/"+id ,{
+      method: 'PATCH',
+    })
+    
+    if (!res.ok) {
+      throw { status: res.status, statusText: res.statusText };
+    }
+
+   }catch (err: any) {
+    console.log(`Error ${err.status}: ${err.statusText}`);
+  }
+  }
+
 }

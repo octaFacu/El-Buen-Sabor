@@ -18,7 +18,6 @@ const App: React.FC = () => {
           <Navbar />
 
           <AppRoutes/>
-          
           <FloatingBtn></FloatingBtn>
           {/* <CategoriaIngrABM /> */}
         {/* </main>

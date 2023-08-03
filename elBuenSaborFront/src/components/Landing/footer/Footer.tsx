@@ -10,7 +10,7 @@ interface FooterProps {
 
 const Footer: FC<FooterProps> = () => {
     return (
-        <footer className="bg-footer text-light py-5 mt-4">
+        <footer className="bg-footer text-light py-5 ">
             <div className="container">
                 <div className="row d-flex ">
                     {/* Sección 1: Siguenos */}

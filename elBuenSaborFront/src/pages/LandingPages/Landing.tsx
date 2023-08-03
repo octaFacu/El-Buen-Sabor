@@ -5,27 +5,48 @@ import CarruselCategorias from '../../components/Landing/carruselCategorias/Carr
 
 import { CategoriaProducto } from '../../context/interfaces/interfaces'
 import { CategoriaProductoService } from "../../services/CategoriaProductoService";
+import { ProductoService } from "../../services/ProductoService";
 import ListCard from '../../components/Landing/listCard/ListCard'
 import Producto from '../../context/interfaces/Producto';
 import PageLoader from '../../components/pageLoader/PageLoader';
 import Footer from '../../components/Landing/footer/Footer'
 import DetalleProducto from '../../components/Landing/detalleProducto/DetalleProducto'
+import ListLoader from '../../components/Landing/listLoader/ListLoader'
+import { setTimeout } from 'timers/promises'
 
 export const Landing = () => {
 
-  //Para carrusel de categorias
+  //PARA CARRUSEL DE CATEGORIAS
   // const { categorias } = useUnidadContext();
   const [categorias, setCategorias] = useState<CategoriaProducto[]>([])
-  const [categoriaSeleccionada, setCategoriaSeleccionada] = useState<CategoriaProducto>()
+  const [categoriaSeleccionada, setCategoriaSeleccionada] = useState<CategoriaProducto | null>(null)
+  const [productosPorCategoria, setProductosPorCategoria] = useState<Producto[]>([])
   const [decremento, setDecremento] = useState<number>(1)
 
   const categoriaProductoService = new CategoriaProductoService()
+  const productoService = new ProductoService()
 
+  //Trae los productos filtrados por categoria
+  const fetchProductosXCategoria = async () => {
+    const data = await productoService.getProductoXCategoria(categoriaSeleccionada?.id!)
+    await setProductosPorCategoria(data);
+  }
+
+  //Trae las categorias activas 
   const fetchDataCategorias = async () => {
-    // const data = await categoriaProductoService.getAllBasic();
     const data = await categoriaProductoService.getAllActive();
     await setCategorias(data);
   };
+
+  useEffect(() => {
+
+    if(categoriaSeleccionada != null){
+      fetchProductosXCategoria()
+    }
+    setProductos([])
+    setPageNumber(1)
+
+  }, [categoriaSeleccionada])
 
   useEffect(() => {
     fetchDataCategorias()
@@ -39,19 +60,19 @@ export const Landing = () => {
 
   useEffect(() => {
     console.log("cambio estado de modal");
-    
-  },[modalDetalleProducto])
+
+  }, [modalDetalleProducto])
 
   //--------------------
 
-  //scroll infinito
+  //SCROLL INFINITO
   const [productos, setProductos] = useState<Producto[][]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [pageNumber, setPageNumber] = useState<number>(1);
 
   // Obtención de productos desde la API 
   const fetchProducts = async (filter: number | string): Promise<Producto[]> => {
-    
+
     const response = await fetch(`http://localhost:8080/producto/filtroCategoria?filter=${filter}`);
     const data = await response.json();
     return data;
@@ -60,16 +81,19 @@ export const Landing = () => {
   // Cargar los productos iniciales cuando el componente se monte
   useEffect(() => {
 
-    if (pageNumber <= categorias.length + decremento) {
-      setDecremento(0);
+    if (categoriaSeleccionada === null) {
+      if (pageNumber <= categorias.length + decremento) {
+        setDecremento(0);
 
-      setIsLoading(true);
-      fetchProducts(pageNumber).then((data) => {
-        setProductos((arreglosActuales) => [...arreglosActuales, data]);
-        setIsLoading(false);
+        setIsLoading(true);
+        fetchProducts(pageNumber).then((data) => {
+          setProductos((arreglosActuales) => [...arreglosActuales, data]);
+          setIsLoading(false);
 
-      });
+        });
+      }
     }
+
 
   }, [pageNumber]);
 
@@ -96,9 +120,44 @@ export const Landing = () => {
 
   //-------------------
 
-
+  //Loader
   if (categorias.length === 0) {
     return <PageLoader />
+  }
+
+  if (categoriaSeleccionada) {
+    return (
+      <>
+        <div className="container containerMain">
+
+          <button onClick={() => setCategoriaSeleccionada(null)}>Volver al inicio</button>
+
+          <CarruselCategorias
+            categorias={categorias}
+            setCategoriaSeleccionada={setCategoriaSeleccionada}
+          />
+
+            <div>
+              <ListCard
+                categoria={categoriaSeleccionada.denominacion}
+                productos={productosPorCategoria}
+                setModalDetalleProducto={setModalDetalleProducto}
+                setProductoSeleccionado={setProductoSeleccionado}
+              />
+            </div>
+
+        </div>
+
+        <Footer />
+
+        {/* Modal */}
+        <DetalleProducto
+          modalDetalleProducto={modalDetalleProducto}
+          setModalDetalleProducto={setModalDetalleProducto}
+          producto={productoSeleccionado}
+        />
+      </>
+    )
   }
 
   return (
@@ -115,8 +174,6 @@ export const Landing = () => {
 
         {productos.map((productList, index) => (
           <div key={index}>
-            {/* <h1>{pageNumber}</h1> */}
-            {/* <h1>{index}</h1> */}
             <ListCard
               categoria={categorias[index].denominacion}
               productos={productList}
@@ -126,14 +183,14 @@ export const Landing = () => {
           </div>
         ))}
 
-        {isLoading && <h1>Cargando más productos...</h1>}
+        {isLoading && <ListLoader />}
 
       </div>
 
       <Footer />
 
       {/* Modal */}
-      <DetalleProducto 
+      <DetalleProducto
         modalDetalleProducto={modalDetalleProducto}
         setModalDetalleProducto={setModalDetalleProducto}
         producto={productoSeleccionado}

@@ -1,0 +1,14 @@
+/* Estilos para el contenedor del loader */
+.list-loader-container {
+  margin-top: 5rem;
+  display: flex;
+  justify-content: center;
+  height: 200px;
+  /* align-items: center; */
+}
+
+/* Estilos para la imagen GIF */
+.list-loader-gif {
+  width: 45px;
+  height: 45px;
+}

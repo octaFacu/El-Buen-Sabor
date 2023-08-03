@@ -65,7 +65,7 @@ const CarruselCategorias: FC<CarruselCategoriasProps> = (props: CarruselCategori
                 <button
                     className="btnPag"
                     onClick={() => handleSlideChange((activeIndex - 1 + categorias.length) % categorias.length)}>
-                    <i className="material-icons" style={{ fontSize: "30px" }}> keyboard_arrow_left</i>
+                    <i className="material-icons arrow-size"> keyboard_arrow_left</i>
                 </button>
             </div>
 
@@ -90,7 +90,7 @@ const CarruselCategorias: FC<CarruselCategoriasProps> = (props: CarruselCategori
                 <button
                     className="btnPag"
                     onClick={() => handleSlideChange((activeIndex + 1) % categorias.length)}>
-                    <i className="material-icons" style={{ fontSize: "30px" }}> keyboard_arrow_right</i>
+                    <i className="material-icons arrow-size"> keyboard_arrow_right</i>
                 </button>
             </div>
 

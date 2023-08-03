@@ -2,6 +2,7 @@ import { FC } from "react";
 import "./ListCard.css"
 import ProductCard from "../card/ProductCard";
 import Producto from "../../../context/interfaces/Producto";
+import ListLoader from "../listLoader/ListLoader";
 
 interface ListCardProps {
 
@@ -17,7 +18,7 @@ const ListCard: FC<ListCardProps> = ({categoria, productos, setModalDetalleProdu
     if(productos.length === 0){
         console.log("LOGGGGGGGGG");
         return(
-            <h1>CARGANDO LISTA</h1>
+            <ListLoader />
         );
     }
 

@@ -19,6 +19,8 @@ const ProductCard: FC<ProductCardProps> = ({ producto, setProductoSeleccionado, 
                 <div className="card cardEdit mb-3" onClick={() => {
                     setModalDetalleProducto(true);
                     setProductoSeleccionado(producto);
+                    console.log(producto);
+                    
                 }}>
                     {/* <div className="card-body"> */}
                     <div>

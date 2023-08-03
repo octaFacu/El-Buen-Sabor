@@ -12,7 +12,6 @@ import PageLoader from '../../components/pageLoader/PageLoader';
 import Footer from '../../components/Landing/footer/Footer'
 import DetalleProducto from '../../components/Landing/detalleProducto/DetalleProducto'
 import ListLoader from '../../components/Landing/listLoader/ListLoader'
-import { setTimeout } from 'timers/promises'
 
 export const Landing = () => {
 
@@ -40,11 +39,9 @@ export const Landing = () => {
 
   useEffect(() => {
 
-    if(categoriaSeleccionada != null){
+    if (categoriaSeleccionada != null) {
       fetchProductosXCategoria()
     }
-    setProductos([])
-    setPageNumber(1)
 
   }, [categoriaSeleccionada])
 
@@ -81,7 +78,9 @@ export const Landing = () => {
   // Cargar los productos iniciales cuando el componente se monte
   useEffect(() => {
 
+    //Esta validacion sirve para cuando muestre la busqueda por categoria, que no se haga la peticion del el scroll infinito
     if (categoriaSeleccionada === null) {
+
       if (pageNumber <= categorias.length + decremento) {
         setDecremento(0);
 
@@ -93,9 +92,10 @@ export const Landing = () => {
         });
       }
     }
+    
+    
 
-
-  }, [pageNumber]);
+  }, [pageNumber, categoriaSeleccionada ]);
 
   // Función para cargar más productos cuando el usuario scrollee hacia abajo
   const handleScroll = () => {
@@ -130,21 +130,27 @@ export const Landing = () => {
       <>
         <div className="container containerMain">
 
-          <button onClick={() => setCategoriaSeleccionada(null)}>Volver al inicio</button>
+          <button onClick={() => {
+            setCategoriaSeleccionada(null)
+            setProductos([])
+            setPageNumber(1)
+            setDecremento(1)
+          }}>Volver al inicio</button>
+          {/* <button onClick={() => window.location.reload()}>Volver al inicio</button> */}
 
           <CarruselCategorias
             categorias={categorias}
             setCategoriaSeleccionada={setCategoriaSeleccionada}
           />
 
-            <div>
-              <ListCard
-                categoria={categoriaSeleccionada.denominacion}
-                productos={productosPorCategoria}
-                setModalDetalleProducto={setModalDetalleProducto}
-                setProductoSeleccionado={setProductoSeleccionado}
-              />
-            </div>
+          <div>
+            <ListCard
+              categoria={categoriaSeleccionada.denominacion}
+              productos={productosPorCategoria}
+              setModalDetalleProducto={setModalDetalleProducto}
+              setProductoSeleccionado={setProductoSeleccionado}
+            />
+          </div>
 
         </div>
 

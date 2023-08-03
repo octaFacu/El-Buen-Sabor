@@ -26,14 +26,6 @@ const ProductoCard: React.FunctionComponent<ProductoCardProps> = ({producto, cam
 
     const productoService = new ProductoService();
 
-    // useEffect(() => {
-    //     if(datos.id){
-    //         // categoriaIngredienteService.updateActivoRubro(datos)
-    //         categoriaIngredienteService.updateEntity("categoriaIngrediente", datos)
-            
-    //     }
-        
-    // },[datos])
 
     return (
         
@@ -48,7 +40,6 @@ const ProductoCard: React.FunctionComponent<ProductoCardProps> = ({producto, cam
                       () => {
                         
                      setearDatos(producto)
-                      
                       cambiarEstadoVista(!estado)}} >
                     <i className="material-icons" style={{fontSize: "30px", cursor:"pointer", color: "white"}}>remove_red_eye</i></button>
                 <button className="btn mx-2 btn-sm" style={{backgroundColor: "#864e1b"}} 
@@ -68,12 +59,9 @@ const ProductoCard: React.FunctionComponent<ProductoCardProps> = ({producto, cam
                    
                     let productoNuevo: Producto = producto;
                     productoNuevo.activo = !(producto.activo);
-                    // await setearDatos(ingredienteNuevo)
                    
-                    await productoService.updateEntity(productoNuevo);
+                    await productoService.actualizarEntityActivo(productoNuevo);
 
-                    //console.log(ingredienteNuevo);
-                    // window.location.reload();
                     }}
                     >{botonActivo 
                 ? <i className="material-icons" style={{fontSize: "30px", cursor:"pointer"}}>not_interested</i> 

@@ -15,10 +15,10 @@ interface ModalVistaDetalleProps{
 
     const prodService = new ProductoService();
      const [ingredientes, setIngredientes] = useState<IngredienteDeProducto[]>([]); ;
-     const [unidadElegida, setUnidadElegida] = useState<String>();
-    const [categoriaElegida, setCategoriaElegida] = useState<String>();
+
 
     const getIngredientes = async() => {
+        setIngredientes([]);
         await prodService.getIngredientes(producto.id!).then((data) => setIngredientes(castIngredientesIds(data)));
         
         
@@ -43,13 +43,32 @@ interface ModalVistaDetalleProps{
 
             castIngredientes.push(nuevoIng);
         }
-
+        console.log("Los ingredientes han sido cargados!");
         return(castIngredientes);
     }
 
     useEffect(() => {
-        getIngredientes();
-    }, [producto, ingredientes]);
+        /*if(ingredientes.length > 0){
+            if(ingredientes[0].idProducto !== producto.id){
+                getIngredientes();
+                console.log("Han cambiado los ingredientes");
+            }
+        }else{*/
+            getIngredientes();
+            console.log("Han cambiado los ingredientes...");
+        //}
+        
+    }, [producto, estadoVista]);
+
+    useEffect(() => {
+        if(ingredientes.length > 0){
+            //if(!estadoVista && ingredientes[0].idProducto !== producto.id){
+                setIngredientes([]);
+            //}
+        }
+
+        
+    }, [estadoVista]);
     
     
 
@@ -79,7 +98,7 @@ interface ModalVistaDetalleProps{
                             
                             <div>
                             <h4>Ingredientes:</h4>
-                                <TablaIngredientesMostrar ingredientesProd={ingredientes} edicion={false}></TablaIngredientesMostrar>
+                                <TablaIngredientesMostrar productoId={producto.id!} ingredientesProd={ingredientes} edicion={false}></TablaIngredientesMostrar>
                             
                             </div>
                         }

@@ -47,23 +47,32 @@ const ModalCreacionProd: React.FC<ProdFormProps> = ({ estado, cambiarEstado, cat
         setProductoSelect({ ...productoSelect, denominacion: (event.target.value) });
     }
 
-    useEffect(() => {
+    const cargarDatos = async () =>{
         if(datos !== undefined){
-            setProductoSelect(datos!);
+                    await setProductoSelect(datos!);
+                    console.log("Producto cargado para edicion");
 
-            if(datos.esManufacturado === true){
-                setSelectedTime(datos.tiempoCocina!);
-            }
-            
-            
-            //setIngredientesProducto(ingredientesParam!);
-            getIngredientes();
-            setBotonManufacturado(productoSelect.esManufacturado);
-        }
+                    if(datos.esManufacturado === true){
+                        setSelectedTime(datos.tiempoCocina!);
+                    }
+                    setBotonManufacturado(productoSelect.esManufacturado);
+                    
+                    //setIngredientesProducto(ingredientesParam!);
+                    
+                    await getIngredientes();
+                    
+                }
+    }
+
+    useEffect(() => {
+
+        cargarDatos();
         
-    }, [datos])
+        
+    }, [datos, estado])
 
     const getIngredientes = async() => {
+        console.log("EL PRODUCTO QUE ESTAMOS TRAYENDO LOS QUERIDOS AMIGOS INGREDIENTES ES: "+productoSelect.denominacion)
         await productoService.getIngredientes(productoSelect.id!).then((data) => setIngredientesProducto(castIngredientesIds(data)));
         
     }
@@ -106,6 +115,7 @@ const ModalCreacionProd: React.FC<ProdFormProps> = ({ estado, cambiarEstado, cat
           });
 
         await productoService.crearEntity(productoSelect, ingredientesProducto);
+        setIngredientesProducto([]);
         
         
     }
@@ -120,6 +130,7 @@ const ModalCreacionProd: React.FC<ProdFormProps> = ({ estado, cambiarEstado, cat
         
 
         await productoService.actualizarEntity(productoSelect, ingredientesProducto);
+        setIngredientesProducto([]);
         
     }
     const handleFormSubmit = () => {
@@ -271,7 +282,9 @@ const ModalCreacionProd: React.FC<ProdFormProps> = ({ estado, cambiarEstado, cat
 
 
 
-                                <button className="btn btn-danger mx-3" onClick={() => cambiarEstado(!estado)}><i className="material-icons" style={{fontSize: "30px", cursor:"pointer"}}>highlight_off</i></button>
+                                <button className="btn btn-danger mx-3" onClick={() =>{
+
+                                setIngredientesProducto([]); cambiarEstado(!estado) }}><i className="material-icons" style={{fontSize: "30px", cursor:"pointer"}}>highlight_off</i></button>
 
                                 <button type="submit" className="btn" style={{backgroundColor: "#864e1b", color: "white"}} onClick={(event) => {
 
@@ -296,20 +309,22 @@ const ModalCreacionProd: React.FC<ProdFormProps> = ({ estado, cambiarEstado, cat
 
                                             //pasar los datos guardados al metodo de update
                                             updateProducto();
-                                            // cambiarEstado(!estado);
+                                             cambiarEstado(!estado);
+                                             window.location.reload();
 
                                         }else{
 
                                             crearProducto();
-                                            // cambiarEstado(!estado);
-                                            // window.location.reload();
+                                             cambiarEstado(!estado);
+                                             window.location.reload();
+
                                             
                                         }
  
                                     }}
                                 }}> <i className="material-icons" style={{fontSize: "30px", cursor:"pointer"}}>check</i></button>
                             </form>
-                            {   botonManufacturado && (ingredientesProducto.length != 0 || productoSelect.id == 0) &&
+                            {   botonManufacturado /*&& (ingredientesProducto.length != 0 || productoSelect.id == 0)*/ &&
                             <div>
                                 <TablaIngredientesMostrar ingredientesProd={ingredientesProducto} setIngredientesProd={setIngredientesProducto} edicion={true}></TablaIngredientesMostrar>
                             

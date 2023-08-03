@@ -140,4 +140,40 @@ export class ProductoService extends ServiceBasicos{
       }
     }
 
-    }
+  
+
+
+    async actualizarEntityActivo(datos: any) {
+
+      var ingredientes = await this.getIngredientes(datos.id);
+
+      try {
+        //Pasarle a la direccion con un put la info
+        let res = await fetch(
+          this.baseUrl + this.url + `/${datos.id}`,
+          {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(datos),
+          }
+        );
+  
+        if (!res.ok) {
+          throw { status: res.status, statusText: res.statusText };
+        }
+  
+        let jsonRes = await res.json();
+
+        for(var ingr of ingredientes){
+          await this.saveIngredienteProd(ingr)
+        }
+
+        
+
+        return jsonRes;
+      } catch (err: any) {
+        console.log(`Error ${err.status}: ${err.statusText}`);
+      }
+    }  }

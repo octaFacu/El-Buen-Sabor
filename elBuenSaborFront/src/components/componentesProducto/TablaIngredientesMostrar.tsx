@@ -7,9 +7,11 @@ interface TablaIngredientesProdProps {
   ingredientesProd: IngredienteDeProducto[];
   setIngredientesProd?: any;
   edicion: boolean;
+  productoId?: number;
+
 }
 
-const TablaIngredientesMostrar: React.FC<TablaIngredientesProdProps> = ({ ingredientesProd, setIngredientesProd, edicion }) => {
+const TablaIngredientesMostrar: React.FC<TablaIngredientesProdProps> = ({ ingredientesProd, setIngredientesProd, edicion, productoId }) => {
 
     const ingredienteService = new IngredientesService();
     const [isLoading, setIsLoading] = useState(true);
@@ -42,6 +44,9 @@ const TablaIngredientesMostrar: React.FC<TablaIngredientesProdProps> = ({ ingred
 
       useEffect(() => {
         // Fetch data when the component mounts or when ingredienteProdList changes
+        setIngNombre([]);
+        setMedidaNombre([]);
+        
         if (ingredientesProd.length > 0) {
           setIsLoading(false);
         }
@@ -53,7 +58,13 @@ const TablaIngredientesMostrar: React.FC<TablaIngredientesProdProps> = ({ ingred
              if(ingredientesProd.length > 0) {
                  getNamesMembers(ingredienteProd);
              }
+
+            //  if(productoId !== ingredienteProd.idProducto){
+            //     setIngredientesProd([]);
+            //  }
         });
+
+
       }, [ingredientesProd]);
 
       const handleRemoveIngredient = (index: number) => {

@@ -25,22 +25,32 @@ body {
 
 /* nav bar */
 
-.headerLogo {
-  background-color: var(--main-color);
+.searchBar {
+  height: 50px;
   display: flex;
-  /* position: sticky; */
-  justify-content: space-between;
   align-items: center;
-  height: 80px;
-
-  /* position: fixed;
-  top: 0;
-  width: 100%; */
+  background-color: var(--input-text);
+  border-radius: 30px;
+  padding: 10px;
+  margin-left: 10px;
 }
 
-.headerLogo .logo img {
-  height: 70px;
-  width: auto;
+.inputSearchBar {
+  background-color: var(--input-text);
+  border: 0;
+  width: 100%;
+  margin-left: 5px;
+  cursor: text;
+  text-align: left;
+}
+
+.inputSearchBar::placeholder {
+  color: white;
+}
+
+/* Estilos cuando el input se encuentra en estado :focus (clickeado) */
+.inputSearchBar:focus {
+  outline: none;
 }
 
 .btnIngresoNav {
@@ -51,6 +61,19 @@ body {
   margin-right: 3rem;
   cursor: pointer;
   color: #ffff;
+}
+
+.headerLogo {
+  background-color: var(--main-color);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 80px;
+}
+
+.headerLogo .logo img {
+  height: 70px;
+  width: auto;
 }
 
 /************************* Estilos de login ************************/

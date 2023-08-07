@@ -9,6 +9,8 @@ import InformacionAdicionalPostRegistro from '../pages/UsuariosPages/Informacion
 import { Component } from 'react';
 import PaginaPrincipalAdministrador from '../pages/AdminPages/PaginaPrincipalAdministrador';
 import RankingClientes from '../pages/AdminPages/EstadisticasPages/RankingClientes';
+import HistorialClienteAdmin from '../pages/AdminPages/EstadisticasPages/ClientesRanking/HistorialClienteAdmin';
+
 
 export const routesConfig = [
     {
@@ -46,6 +48,10 @@ export const routesConfig = [
     {
         path: '/admin/estadisticas/rankingCliente',
         component: RankingClientes,
+    },
+    {
+        path: '/admin/estadisticas/rankingCliente/HistorialCliente/:clienteId',
+        component: HistorialClienteAdmin,
     },
     {
         path: '*',

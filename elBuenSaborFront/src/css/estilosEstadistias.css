@@ -1,49 +1,117 @@
-.contenedor-tituloEstadistica{
-    border-radius: 11px;
-    background: #864E1B;
-    margin: -0.25rem -0.05rem 0 -0.05rem;
-    padding-top: 0.25rem;
+.contenedor-tituloEstadistica {
+  border-radius: 11px;
+  background: #864e1b;
+  margin: -0.25rem -0.05rem 0 -0.05rem;
+  padding-top: 0.25rem;
 }
 
-.ancho-card{
- width: 75rem;
+.ancho-card {
+  width: 75rem;
 }
-.btn-administrar{
-    background-color: #864E1B !important;
-    border-radius: 30px !important;
+.btn-administrar {
+  background-color: #864e1b !important;
+  border-radius: 30px !important;
 }
 
 .btn-separador button {
-    margin-top: 1.5rem;
-    height: 2.5rem;
+  margin-top: 1.5rem;
+  height: 2.5rem;
 }
 
-.btn-AñadirPadding{
-    padding: 0 6.5rem;
-    margin-bottom: 2.25rem;
-    height: 4rem;
+.btn-AñadirPadding {
+  padding: 0 6.5rem;
+  margin-bottom: 2.25rem;
+  height: 4rem;
 }
 
 .btn-administrar:hover {
-    background-color: #FDA859 !important;
+  background-color: #fda859 !important;
 }
 
-.card-generica{
-    border-radius: 11px !important;
-    margin-left: 5vh;
-    margin-top: 10vh;
-    background-color: #F99132 !important;
-    color: white;
+.card-generica {
+  border-radius: 11px !important;
+  margin-left: 5vh;
+  margin-top: 10vh;
+  background-color: #f99132 !important;
+  color: white;
 }
 
-.card-cliente{
-    background-color: #FDA859 !important;
-    border-radius: 30px !important;
-    margin: 1.5rem;
+.card-cliente {
+  background-color: #fda859 !important;
+  border-radius: 30px !important;
+  margin: 1.5rem;
+  box-shadow: 0px 4px 4px 0px rgb(0, 0, 0, 0.25);
 }
 
-.btn-historial{
- border-radius: 11px !important;
- background-color: #864E1B !important;
- width: 5rem;
+.btn-historial {
+  border-radius: 11px !important;
+  background-color: #864e1b !important;
+  width: 5rem;
+}
+
+.btn-historial:hover {
+  background-color: #f99132 !important;
+}
+
+.btn-excel {
+  background-color: #659355 !important;
+  border-radius: 11px !important;
+  margin: 1rem 3rem 1.5rem 1rem !important;
+  width: 10rem;
+}
+
+.btn-atras {
+  border-radius: 11px !important;
+  background-color: #864e1b !important;
+  margin: 1rem 1rem 1.5rem 3rem !important;
+  width: 10rem;
+}
+
+.btn-excel:hover {
+  box-shadow: 0 0 8px rgba(255, 255, 255, 1);
+}
+
+.btn-atras:hover {
+  box-shadow: 0 0 8px rgba(255, 255, 255, 1);
+}
+
+.cliente-drop {
+  padding-right: 2rem;
+}
+
+.btn-dropCliente{
+  border: none !important; 
+  outline: none;
+}
+
+.item-drop-cliente {
+  color: white !important;
+}
+
+.drop-menu-cliente {
+  background-color: #f99132 !important;
+  cursor: pointer
+}
+
+.item-drop-cliente:hover {
+  background-color: #864e1b !important;
+}
+
+.cliente-check{
+  padding-right: 1.25rem;
+}
+
+.form-check-input.custom-switch[type="checkbox"] {
+  background-color: #f99132; 
+  border-color:  #864e1b;
+}
+
+.form-check-input.custom-switch[type="checkbox"]:checked {
+  background-color:#864e1b; 
+  border-color: #f99132;
+}
+
+.form-check-input.custom-switch[type="checkbox"]:focus {
+  outline: none; 
+  box-shadow: none;
 }

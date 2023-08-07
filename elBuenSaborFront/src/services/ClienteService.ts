@@ -1,4 +1,5 @@
-import { PageProyeccionHistorialPedido } from "../context/interfaces/Proyecciones/ProyeccionHistorialPedidoCliente";
+import { PageProyeccionHistorialPedido, ProyeccionHistorialPedido } from "../context/interfaces/Proyecciones/ProyeccionHistorialPedidoCliente";
+import { ProyeccionPedidoUsuario } from "../context/interfaces/Proyecciones/ProyeccionPedidoUsuario";
 import { ExcepcionesVerificaUsuario } from "../context/interfaces/interfaces";
 import { ServiceBasicos } from "./ServiceBasicos";
 export class ClienteService extends ServiceBasicos {
@@ -24,7 +25,26 @@ export class ClienteService extends ServiceBasicos {
     }
   }
 
-  async getRankingClientes(page: number = 0, size: number = 3):  Promise<PageProyeccionHistorialPedido> {
+
+  async getPedidosUsuario(clienteId: number, page: number = 0, size: number = 1): Promise<PageProyeccionHistorialPedido<ProyeccionPedidoUsuario>> {
+    try {
+      const parametros = `?page=${page}&size=${size}`;
+      const res = await fetch(`${this.url}/historialPedidos/${clienteId}${parametros}`);
+
+      if (!res.ok) {
+        const respuesta: ExcepcionesVerificaUsuario = await res.json();
+        throw respuesta;
+      }
+
+      const jsonRes = await res.json();
+      return jsonRes;
+    } catch (err: any) {
+      return err;
+    }
+  }
+
+
+  async getRankingClientes(page: number = 0, size: number = 3):  Promise<PageProyeccionHistorialPedido<ProyeccionHistorialPedido>> {
     try {
       const parametros = `?page=${page}&size=${size}`;
       const res = await fetch(`${this.url}/totalPedidos${parametros}`);
@@ -36,7 +56,6 @@ export class ClienteService extends ServiceBasicos {
       const jsonRes = await res.json();
       return jsonRes;
     } catch (err: any) {
-      console.log(`Error ${err.errorStatus}: ${err.msj}`);
       return err;
     }
   }

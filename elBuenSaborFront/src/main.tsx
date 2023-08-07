@@ -4,7 +4,7 @@ import App from './App'
 import './css/index.css'
 import { Auth0Provider } from '@auth0/auth0-react'
 import 'bootstrap/dist/css/bootstrap.min.css';
-
+import 'bootstrap/dist/js/bootstrap.bundle.js'
 
 
 

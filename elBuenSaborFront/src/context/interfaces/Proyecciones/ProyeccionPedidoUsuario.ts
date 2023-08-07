@@ -3,6 +3,7 @@ export interface ProyeccionPedidoUsuario{
     total_pedidos: number;
     fecha_pedido: Date;
     precio_total: number;
+    es_envio: boolean;
 }
 
 export interface ProyeccionProductosPedido{

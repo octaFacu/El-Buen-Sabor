@@ -125,3 +125,11 @@
 .centrado{
   padding: 1.5rem 1.5rem;
 }
+
+.card-generica {
+  border-radius: 11px !important;
+  margin-left: 5vh;
+  margin-top: 10vh;
+  background-color: #f99132 !important;
+  color: white;
+}

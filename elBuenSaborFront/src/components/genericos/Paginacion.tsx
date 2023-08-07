@@ -21,10 +21,13 @@ const Paginacion: FunctionComponent<PaginacionProps> = ({ page, setPage, totalPa
         for (let i = 0; i < totalPages; i++) {
             renderedItems.push(
 
-                <li key={i} className={`page-item ${page === i && "active"}`} aria-current="page">
-                    <a className="page-link" href="#" onClick={() => setPage(i)}>{i + 1}</a>
-                </li>
+                /*    <li key={i} className={`page-item ${page === i && "active"}`} aria-current="page">
+                       <a className="page-link" href="#" onClick={() => setPage(i)}>{i + 1}</a>
+                   </li> */
 
+                <li key={i} className={`page-item ${page === i && "active"}`} aria-current="page">
+                    <a className="page-link" onClick={() => setPage(i)}>{i + 1}</a>
+                </li>
             );
         }
 

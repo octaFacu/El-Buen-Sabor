@@ -32,7 +32,7 @@ const CategoriaIngrABM = () => {
 
     //Para paginacion
     const [page, setPage] = useState<number>(0)
-    const [size, setSize] = useState<number>(5)
+    const [size, setSize] = useState<number>(1)
     const [totalPages, setTotalPages] = useState<number>()
 
     useEffect(() => {

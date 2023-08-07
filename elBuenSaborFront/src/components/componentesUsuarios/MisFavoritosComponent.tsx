@@ -2,10 +2,12 @@ import { useEffect, useState } from "react";
 import {
   Usuario,
   proyeccionProductoFavorito,
-} from "../../context/interfaces/interfaces";
+} 
+from "../../context/interfaces/interfaces";
 import { FavoritoService } from "../../services/FavoritoService";
 import { ClienteService } from "../../services/ClienteService";
 import "../../css/favoritos.css";
+import "../../css/estilosEstadistias.css"
 
 interface Props {
   usuario: Usuario;

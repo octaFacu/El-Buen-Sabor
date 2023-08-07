@@ -1,12 +1,12 @@
 import { useContext, useEffect, useState } from "react"
 import "../../css/ventanaModal.css"
-import { Ingrediente, unidadDeMedida } from "../../context/interfaces/interfaces";
+import { Ingrediente, unidadDeMedida } from "../../context/models/interfaces";
 import { Rubro } from "../compIngrediente/Rubro";
 import { GlobalContext } from "../../context/GlobalContext";
 import { ProductoService } from "../../services/ProductoService";
-import Producto from "../../context/interfaces/Producto";
+import Producto from "../../context/models/Producto";
 import GrupoBotones from "../genericos/GrupoBotones";
-import IngredienteDeProducto from "../../context/interfaces/IngredienteDeProducto";
+import IngredienteDeProducto from "../../context/models/IngredienteDeProducto";
 import { IngredientesService } from "../../services/IngredientesService";
 import { ServiceBasicos } from "../../services/ServiceBasicos";
 
@@ -18,11 +18,13 @@ interface ProdFormProps {
     cambiarEstadoFormProd: any,
 
     ingredientesList: IngredienteDeProducto[],
-    setIngredientesList: any
+    setIngredientesList: any,
+
+    productoId?: number
 
 }
 
-const ModalAgregarIngrediente: React.FC<ProdFormProps> = ({ estado, cambiarEstado, ingredientesList, setIngredientesList, cambiarEstadoFormProd }) => {
+const ModalAgregarIngrediente: React.FC<ProdFormProps> = ({ estado, cambiarEstado, ingredientesList, setIngredientesList, cambiarEstadoFormProd, productoId }) => {
 
     const ingredienteService = new IngredientesService()
     const serviceMedida = new ServiceBasicos("unidadDeMedida");
@@ -169,6 +171,10 @@ const ModalAgregarIngrediente: React.FC<ProdFormProps> = ({ estado, cambiarEstad
 
                                             Ingredientenuevo.idIngrediente = ingredienteSelect.id!;
                                             Ingredientenuevo.idMedida = medidaSelect!.id!;
+
+                                            if(productoId != undefined){
+                                                Ingredientenuevo.idProducto = productoId;
+                                            }
 
                                             setIngredientesList([...ingredientesList, Ingredientenuevo]);
                                             

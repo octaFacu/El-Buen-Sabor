@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import IngredienteDeProducto from '../../context/interfaces/IngredienteDeProducto';
+import IngredienteDeProducto from '../../context/models/IngredienteDeProducto';
 import { IngredientesService } from '../../services/IngredientesService';
 import { ServiceBasicos } from '../../services/ServiceBasicos';
 

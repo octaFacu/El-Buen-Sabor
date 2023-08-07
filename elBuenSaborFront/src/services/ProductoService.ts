@@ -1,5 +1,5 @@
-import IngredienteDeProducto from "../context/interfaces/IngredienteDeProducto";
-import Producto from "../context/interfaces/Producto";
+import IngredienteDeProducto from "../context/models/IngredienteDeProducto";
+import Producto from "../context/models/Producto";
 import { ServiceBasicos } from "./ServiceBasicos";
 
 
@@ -86,6 +86,8 @@ export class ProductoService extends ServiceBasicos{
         let jsonRes = await res.json();
 
         for(var ingr of ing){
+          console.log("Ingrediente a guardar: " + JSON.stringify(ingr))
+          ingr.idProducto = datos.id;
           await this.saveIngredienteProd(ingr)
         }
 
@@ -128,7 +130,11 @@ export class ProductoService extends ServiceBasicos{
         let jsonRes = await res.json();
 
         if(nuevoProducto.esManufacturado === true){
+
+          console.log("nuevos ingredientes: ")
+
           for(var ingr of ing){
+            console.log(ingr.idIngrediente);
             ingr.idProducto = jsonRes.id;
             await this.saveIngredienteProd(ingr)
           }

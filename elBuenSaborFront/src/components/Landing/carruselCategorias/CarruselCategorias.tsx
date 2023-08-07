@@ -1,6 +1,6 @@
 import { FC } from "react";
 import "./CarruselCategorias.css"
-import { CategoriaProducto } from '../../../context/interfaces/interfaces'
+import { CategoriaProducto } from '../../../context/models/interfaces'
 
 interface CarruselCategoriasProps {
 

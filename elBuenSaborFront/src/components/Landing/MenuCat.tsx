@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { CategoriaProducto } from "../../context/interfaces/interfaces";
+import { CategoriaProducto } from "../../context/models/interfaces";
 import { CategoriaProductoService } from "../../services/CategoriaProductoService";
 
 const MenuCat: React.FC = () => {

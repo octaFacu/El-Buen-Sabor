@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Ingrediente } from "../../context/interfaces/interfaces"
+import { Ingrediente } from "../../context/models/interfaces"
 import { IngredientesService } from "../../services/IngredientesService";
 
 interface ModalCompraProps {

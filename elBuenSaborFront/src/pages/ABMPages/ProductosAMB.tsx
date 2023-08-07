@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import { CategoriaProducto} from "../../context/interfaces/interfaces";
+import { CategoriaProducto} from "../../context/models/interfaces";
 import { ProductoService } from "../../services/ProductoService";
 import { CategoriaProductoService } from "../../services/CategoriaProductoService";
 import ProductoCard from "../../components/componentesProducto/ProductoCard";
 import { ListaCartasABM } from "../../components/genericos/ListaCartasABM";
-import { Producto } from "../../context/interfaces/Producto";
+import { Producto } from "../../context/models/Producto";
 import ModalVistaDetalleProd from "../../components/componentesProducto/ModalVistaDetalleProd";
 import ModalCreacionProd from "../../components/componentesProducto/ModalCreacionProd";
 

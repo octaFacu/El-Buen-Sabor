@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { GlobalContext, useUnidadContext } from "../../context/GlobalContext"
 import { IngredientesService } from "../../services/IngredientesService"
-import { Ingrediente } from "../../context/interfaces/interfaces";
+import { Ingrediente } from "../../context/models/interfaces";
 import { Rubro } from "../../components/compIngrediente/Rubro";
 import IngredienteCard from "../../components/componentesIngredienteABM/IngredienteCard";
 import ModalVistaDetalle from "../../components/componentesIngredienteABM/ModalVistaDetalle";

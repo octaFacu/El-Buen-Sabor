@@ -3,9 +3,9 @@ import "../../css/ventanaModal.css"
 import { Rubro } from "../compIngrediente/Rubro";
 import { GlobalContext } from "../../context/GlobalContext";
 import { ProductoService } from "../../services/ProductoService";
-import Producto from "../../context/interfaces/Producto";
+import Producto from "../../context/models/Producto";
 import GrupoBotones from "../genericos/GrupoBotones";
-import IngredienteDeProducto from "../../context/interfaces/IngredienteDeProducto";
+import IngredienteDeProducto from "../../context/models/IngredienteDeProducto";
 import ModalAgregarIngrediente from "./ModalAgregarIngrediente";
 import TablaIngredientesMostrar from "./TablaIngredientesMostrar";
 
@@ -17,13 +17,11 @@ interface ProdFormProps {
     cambiarEstado: (estado: boolean) => void,
 
     datos?: Producto,
-    //setDatos: any,
-    ingredientesParam?: IngredienteDeProducto[],
 
     categorias: Rubro[];
 }
 
-const ModalCreacionProd: React.FC<ProdFormProps> = ({ estado, cambiarEstado, categorias, datos, ingredientesParam }) => {
+const ModalCreacionProd: React.FC<ProdFormProps> = ({ estado, cambiarEstado, categorias, datos}) => {
 
     const productoService = new ProductoService();
     // const serviceBasicos = new ServiceBasicos("unidadmedida");
@@ -34,6 +32,7 @@ const ModalCreacionProd: React.FC<ProdFormProps> = ({ estado, cambiarEstado, cat
     const [selectedTime, setSelectedTime] = useState<string>('');
     const [categoriaElegida, setCategoriaElegida] = useState<String>();
     const [ingredientesProducto, setIngredientesProducto] = useState<IngredienteDeProducto[]>([]);
+    const [ingredientesGuardados, setIngredientesGuardados] = useState<boolean>(false);
 
     const [productoSelect, setProductoSelect] = useState<Producto>( new Producto());
     const [botonManufacturado, setBotonManufacturado] = useState<boolean>(true);
@@ -49,31 +48,45 @@ const ModalCreacionProd: React.FC<ProdFormProps> = ({ estado, cambiarEstado, cat
 
     const cargarDatos = async () =>{
         if(datos !== undefined){
+                    console.log("Antes de guardar los datos: "+productoSelect.denominacion);
+
                     await setProductoSelect(datos!);
-                    console.log("Producto cargado para edicion");
+                    console.log("Despues de guardar los datos: "+productoSelect.denominacion);
+                    console.log("los datos: "+datos.denominacion);
 
                     if(datos.esManufacturado === true){
                         setSelectedTime(datos.tiempoCocina!);
                     }
-                    setBotonManufacturado(productoSelect.esManufacturado);
+                    
                     
                     //setIngredientesProducto(ingredientesParam!);
                     
-                    await getIngredientes();
+                    
                     
                 }
     }
 
     useEffect(() => {
 
-        cargarDatos();
-        
-        
+        if(estado){
+            cargarDatos();
+        }
+
     }, [datos, estado])
 
+    useEffect(() => {
+        setBotonManufacturado(productoSelect.esManufacturado);
+        setCategoriaElegida(productoSelect.categoriaProducto.toString());
+
+        if(!ingredientesGuardados){
+            getIngredientes();
+        }
+        
+    }, [productoSelect])
+
     const getIngredientes = async() => {
-        console.log("EL PRODUCTO QUE ESTAMOS TRAYENDO LOS QUERIDOS AMIGOS INGREDIENTES ES: "+productoSelect.denominacion)
         await productoService.getIngredientes(productoSelect.id!).then((data) => setIngredientesProducto(castIngredientesIds(data)));
+        setIngredientesGuardados(true);
         
     }
 
@@ -102,6 +115,16 @@ const ModalCreacionProd: React.FC<ProdFormProps> = ({ estado, cambiarEstado, cat
         return(castIngredientes);
     }
 
+    const handleCancelling = async () => {
+        await setIngredientesProducto([]);
+        console.log("Ingredientes que deberian haber sido eliminador: ");
+        ingredientesProducto.forEach(ing => {
+            console.log(ing);
+        });
+        
+        cambiarEstado(!estado);
+        setIngredientesGuardados(false);
+    }
 
 
     const crearProducto = async () => {
@@ -116,21 +139,16 @@ const ModalCreacionProd: React.FC<ProdFormProps> = ({ estado, cambiarEstado, cat
 
         await productoService.crearEntity(productoSelect, ingredientesProducto);
         setIngredientesProducto([]);
+        setIngredientesGuardados(false);
         
         
     }
 
     const updateProducto = async () => {
-        /*if(Productonuevo.esManufacturado){
-            Productonuevo.tiempoCocina = convertTimeToNumber(selectedTime);
-        }*/
-
-        console.log(JSON.stringify(Productonuevo));
-        
-        
 
         await productoService.actualizarEntity(productoSelect, ingredientesProducto);
         setIngredientesProducto([]);
+        setIngredientesGuardados(false);
         
     }
     const handleFormSubmit = () => {
@@ -283,8 +301,9 @@ const ModalCreacionProd: React.FC<ProdFormProps> = ({ estado, cambiarEstado, cat
 
 
                                 <button className="btn btn-danger mx-3" onClick={() =>{
-
-                                setIngredientesProducto([]); cambiarEstado(!estado) }}><i className="material-icons" style={{fontSize: "30px", cursor:"pointer"}}>highlight_off</i></button>
+                                    setIngredientesProducto([]);
+                                    handleCancelling();
+                                 }}><i className="material-icons" style={{fontSize: "30px", cursor:"pointer"}}>highlight_off</i></button>
 
                                 <button type="submit" className="btn" style={{backgroundColor: "#864e1b", color: "white"}} onClick={(event) => {
 
@@ -299,18 +318,23 @@ const ModalCreacionProd: React.FC<ProdFormProps> = ({ estado, cambiarEstado, cat
                                     // setProductoSelect({...productoSelect, tiempoCocina: selectedTime});
 
                                     if((productoSelect.receta != '' && productoSelect.tiempoCocina != '') || productoSelect.esManufacturado == false){
+                                        
+                                        var prodId = productoSelect.id;
+                                        //console.log("ID DEL PRODUCTO "+ productoSelect.id);
                                         console.log("Entro en la segunda condicion")
                                         if(categoriaElegida !== undefined){
                                             Productonuevo.categoriaProducto = JSON.parse(categoriaElegida!.valueOf());
                                         }
                                                       
+                                        console.log("hola");
 
-                                        if(Productonuevo.id !== 0){
+                                        if(prodId !== 0){
 
+                                            console.log("Entro a actualizar el producto");
                                             //pasar los datos guardados al metodo de update
                                             updateProducto();
-                                             cambiarEstado(!estado);
-                                             window.location.reload();
+                                            //cambiarEstado(!estado);
+                                            //window.location.reload();
 
                                         }else{
 
@@ -320,13 +344,20 @@ const ModalCreacionProd: React.FC<ProdFormProps> = ({ estado, cambiarEstado, cat
 
                                             
                                         }
+                                        setIngredientesProducto([]);
  
                                     }}
                                 }}> <i className="material-icons" style={{fontSize: "30px", cursor:"pointer"}}>check</i></button>
                             </form>
                             {   botonManufacturado /*&& (ingredientesProducto.length != 0 || productoSelect.id == 0)*/ &&
                             <div>
-                                <TablaIngredientesMostrar ingredientesProd={ingredientesProducto} setIngredientesProd={setIngredientesProducto} edicion={true}></TablaIngredientesMostrar>
+                                {   datos == undefined &&
+                                    <TablaIngredientesMostrar ingredientesProd={ingredientesProducto} setIngredientesProd={setIngredientesProducto} edicion={true}/>
+                                }
+                                {
+                                    datos != undefined &&
+                                    <TablaIngredientesMostrar productoId={productoSelect.id!} ingredientesProd={ingredientesProducto} setIngredientesProd={setIngredientesProducto} edicion={true}/>
+                                }
                             
                             <div className="container" style={{display: "flex", justifyContent: "space-evenly"}}>
                                 <div className="mt-4" style={{display: "flex", maxWidth: "70%", maxHeight: "40%", alignItems: "center", justifyContent: "center" }}>

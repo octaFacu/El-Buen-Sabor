@@ -42,3 +42,8 @@ export interface Direccion {
   pisoDpto: string;
   usuario: Usuario;
 }
+
+export interface Cliente{
+  id: number;
+  usuario: Usuario;
+}

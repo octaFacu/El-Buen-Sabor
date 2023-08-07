@@ -4,7 +4,7 @@ import ModalConfirmacion from "./modales/ModalConfirmacion";
 import { DireccionService } from "../../services/DireccionService";
 import "../../css/direccionesUsuario.css";
 import { ServiceBasicos } from "../../services/ServiceBasicos";
-import {Usuario, Direccion} from "../../context/interfaces/interfaces"
+import {Usuario, Direccion} from "../../context/models/interfaces"
 
 interface Props {
   usuario: Usuario;

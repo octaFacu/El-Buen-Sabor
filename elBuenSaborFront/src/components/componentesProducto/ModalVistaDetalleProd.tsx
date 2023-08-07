@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import Producto from "../../context/interfaces/Producto";
-import { IngredienteDeProducto } from "../../context/interfaces/IngredienteDeProducto";
+import Producto from "../../context/models/Producto";
+import { IngredienteDeProducto } from "../../context/models/IngredienteDeProducto";
 import { ProductoService } from "../../services/ProductoService";
 import './Dropdown.css';
 import TablaIngredientesMostrar from "./TablaIngredientesMostrar";

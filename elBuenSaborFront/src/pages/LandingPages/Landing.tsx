@@ -19,27 +19,37 @@ export const Landing = () => {
   const productoService = new ProductoService()
 
   //PARA BUSQUEDA POR FILTRO
-  const { busquedaXNombre } = useUnidadContext();
+  const { busquedaXNombre, setBusquedaXNombre } = useUnidadContext();
   const [productosPorFiltro, setProductosPorFiltro] = useState<Producto[]>([])
 
-    //Trae los productos filtrados por filtro
-    const fetchProductosXFiltroPaginado = async () => {
-      const data = await productoService.getProductoXFiltroPaginado(busquedaXNombre)
-      await setProductosPorCategoria(data);
-    }
+  //Trae los productos filtrados por filtro
+  const fetchProductosXFiltroPaginado = async () => {
+    const data = await productoService.getProductoXFiltroPaginado(busquedaXNombre)
 
+    if (data === undefined) {
+      await setProductosPorFiltro(data);
+    } else {
+      await setProductosPorFiltro(data.content);
+    }
+  }
+  //AGREGAR PAGINACION
   useEffect(() => {
-    if(busquedaXNombre != ""){
 
-      //SEGUIR ACAAAAAAAAAAA!!
-      console.log("REENDERIZO BUSQUEDA");
-      
+    if (busquedaXNombre != "") {
+
+      if (categoriaSeleccionada) {
+        setCategoriaSeleccionada(null)
+      }
+
+      fetchProductosXFiltroPaginado();
+      //Cambio el valor para que cuando vuelva al inicio se reendericen los productos 
+      setPageNumber(0)
     }
 
-  },[busquedaXNombre])
+  }, [busquedaXNombre])
+  //------------------------------
 
   //PARA CARRUSEL DE CATEGORIAS
-  // const { categorias } = useUnidadContext();
   const [categorias, setCategorias] = useState<CategoriaProducto[]>([])
   const [categoriaSeleccionada, setCategoriaSeleccionada] = useState<CategoriaProducto | null>(null)
   const [productosPorCategoria, setProductosPorCategoria] = useState<Producto[]>([])
@@ -60,8 +70,14 @@ export const Landing = () => {
   useEffect(() => {
 
     if (categoriaSeleccionada != null) {
+
+      if (busquedaXNombre) {
+        setBusquedaXNombre("")
+      }
+
       fetchProductosXCategoria()
     }
+
 
   }, [categoriaSeleccionada])
 
@@ -99,7 +115,7 @@ export const Landing = () => {
   useEffect(() => {
 
     //Esta validacion sirve para cuando muestre la busqueda por categoria, que no se haga la peticion del el scroll infinito
-    if (categoriaSeleccionada === null) {
+    if (categoriaSeleccionada === null && busquedaXNombre === "") {
 
       if (pageNumber <= categorias.length + decremento) {
         setDecremento(0);
@@ -113,7 +129,7 @@ export const Landing = () => {
       }
     }
 
-  }, [pageNumber, categoriaSeleccionada ]);
+  }, [pageNumber, categoriaSeleccionada]);
 
   // Función para cargar más productos cuando el usuario scrollee hacia abajo
   const handleScroll = () => {
@@ -138,21 +154,26 @@ export const Landing = () => {
 
   //-------------------
 
+  const recetLanding = () => {
+    setBusquedaXNombre("")
+    setCategoriaSeleccionada(null)
+    setProductos([])
+    setPageNumber(1)
+    setDecremento(1)
+  }
+
   //Loader
   if (categorias.length === 0) {
     return <PageLoader />
   }
 
-  if (categoriaSeleccionada) {
+  if (categoriaSeleccionada || busquedaXNombre) {
     return (
       <>
         <div className="container containerMain">
 
           <button onClick={() => {
-            setCategoriaSeleccionada(null)
-            setProductos([])
-            setPageNumber(1)
-            setDecremento(1)
+            recetLanding()
           }}>Volver al inicio</button>
 
           <CarruselCategorias
@@ -160,14 +181,27 @@ export const Landing = () => {
             setCategoriaSeleccionada={setCategoriaSeleccionada}
           />
 
-          <div>
-            <ListCard
-              categoria={categoriaSeleccionada.denominacion}
-              productos={productosPorCategoria}
-              setModalDetalleProducto={setModalDetalleProducto}
-              setProductoSeleccionado={setProductoSeleccionado}
-            />
-          </div>
+          {categoriaSeleccionada &&
+            <div>
+              <ListCard
+                categoria={categoriaSeleccionada.denominacion}
+                productos={productosPorCategoria}
+                setModalDetalleProducto={setModalDetalleProducto}
+                setProductoSeleccionado={setProductoSeleccionado}
+              />
+            </div>
+          }
+
+          {busquedaXNombre &&
+            <div>
+              <ListCard
+                categoria={"Resultados para: " + busquedaXNombre}
+                productos={productosPorFiltro}
+                setModalDetalleProducto={setModalDetalleProducto}
+                setProductoSeleccionado={setProductoSeleccionado}
+              />
+            </div>
+          }
 
         </div>
 

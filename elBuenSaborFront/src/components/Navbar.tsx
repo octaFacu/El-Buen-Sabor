@@ -17,6 +17,7 @@ const Navbar: React.FC = () => {
 
   const filterHandler = () => {
     setBusquedaXNombre(filterText);
+    setFilterText("");
   }
 
   if (isLoading) {
@@ -39,12 +40,12 @@ const Navbar: React.FC = () => {
             <img src={logoSimple} alt="logo" />
           </NavLink>
 
-          <form onSubmit={(e) => {e.preventDefault()}}>
+          <form onSubmit={(e) => { e.preventDefault() }}>
             <div className='searchBar'>
               <button onClick={filterHandler} className='mt-2'>
                 <i className="material-icons" style={{ fontSize: "30px", color: "white" }}> search</i>
               </button>
-              <input className="inputSearchBar" type="text" placeholder="Buscar producto" onChange={e => setFilterText(e.target.value)}></input>
+              <input className="inputSearchBar" type="text" placeholder="Buscar producto" value={filterText} onChange={e => setFilterText(e.target.value)}></input>
             </div>
           </form>
 
@@ -83,12 +84,12 @@ const Navbar: React.FC = () => {
             <img src={logoSimple} alt="logo" />
           </NavLink>
 
-          <form onSubmit={(e) => {e.preventDefault()}}>
+          <form onSubmit={(e) => { e.preventDefault() }}>
             <div className='searchBar'>
               <button onClick={filterHandler} className='mt-2'>
                 <i className="material-icons" style={{ fontSize: "30px", color: "white" }}> search</i>
               </button>
-              <input required className="inputSearchBar" type="text" placeholder="Buscar producto" onChange={e => setFilterText(e.target.value)}></input>
+              <input required className="inputSearchBar" type="text" placeholder="Buscar producto" value={filterText} onChange={e => setFilterText(e.target.value)}></input>
             </div>
           </form>
 

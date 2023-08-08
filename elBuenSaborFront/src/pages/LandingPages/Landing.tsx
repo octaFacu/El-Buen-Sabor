@@ -15,15 +15,35 @@ import ListLoader from '../../components/Landing/listLoader/ListLoader'
 
 export const Landing = () => {
 
+  const categoriaProductoService = new CategoriaProductoService()
+  const productoService = new ProductoService()
+
+  //PARA BUSQUEDA POR FILTRO
+  const { busquedaXNombre } = useUnidadContext();
+  const [productosPorFiltro, setProductosPorFiltro] = useState<Producto[]>([])
+
+    //Trae los productos filtrados por filtro
+    const fetchProductosXFiltroPaginado = async () => {
+      const data = await productoService.getProductoXFiltroPaginado(busquedaXNombre)
+      await setProductosPorCategoria(data);
+    }
+
+  useEffect(() => {
+    if(busquedaXNombre != ""){
+
+      //SEGUIR ACAAAAAAAAAAA!!
+      console.log("REENDERIZO BUSQUEDA");
+      
+    }
+
+  },[busquedaXNombre])
+
   //PARA CARRUSEL DE CATEGORIAS
   // const { categorias } = useUnidadContext();
   const [categorias, setCategorias] = useState<CategoriaProducto[]>([])
   const [categoriaSeleccionada, setCategoriaSeleccionada] = useState<CategoriaProducto | null>(null)
   const [productosPorCategoria, setProductosPorCategoria] = useState<Producto[]>([])
   const [decremento, setDecremento] = useState<number>(1)
-
-  const categoriaProductoService = new CategoriaProductoService()
-  const productoService = new ProductoService()
 
   //Trae los productos filtrados por categoria
   const fetchProductosXCategoria = async () => {
@@ -92,8 +112,6 @@ export const Landing = () => {
         });
       }
     }
-    
-    
 
   }, [pageNumber, categoriaSeleccionada ]);
 
@@ -136,7 +154,6 @@ export const Landing = () => {
             setPageNumber(1)
             setDecremento(1)
           }}>Volver al inicio</button>
-          {/* <button onClick={() => window.location.reload()}>Volver al inicio</button> */}
 
           <CarruselCategorias
             categorias={categorias}

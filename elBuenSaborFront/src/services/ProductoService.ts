@@ -77,4 +77,19 @@ export class ProductoService extends ServiceBasicos {
       console.log(`Error ${err.status}: ${err.statusText}`);
     }
   }
+
+  async getProductoXFiltroPaginado(text: string, page: number = 0, size: number = 6) {
+    try {
+      let res = await fetch(this.url + "/filtroPaginado" + "?filter=" + text + "&page=" + page + "&size=" + size);
+
+      if (!res.ok) {
+        throw { status: res.status, statusText: res.statusText };
+      }
+
+      let jsonRes = await res.json();
+      return jsonRes;
+    } catch (err: any) {
+      console.log(`Error ${err.status}: ${err.statusText}`);
+    }
+  }
 }

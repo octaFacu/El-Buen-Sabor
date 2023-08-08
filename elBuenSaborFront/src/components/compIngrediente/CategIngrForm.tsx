@@ -3,7 +3,6 @@ import { Rubro } from "./Rubro";
 import "../../css/ventanaModal.css"
 import { PadreRubro } from "./PadreRubro";
 import { CategoriaIngredienteService } from "../../services/CategoriaIngredienteService";
-import { ServiceBasicos } from "../../../../../../Programación - S4/Laboratorio de Computación IV/importante/parcialN1-LabIV/src/services/ServiceBasicos";
 
 interface CaracIngrFormProps {
 

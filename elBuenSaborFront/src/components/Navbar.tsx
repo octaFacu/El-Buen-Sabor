@@ -3,6 +3,8 @@ import LogoutBtn from './LogoutBtn';
 import LoginBtn from './LoginBtn';
 import { NavLink, useNavigate } from 'react-router-dom';
 import logoSimple from "../assets/logoSimple.png";
+import { useUnidadContext } from '../context/GlobalContext';
+import { useState } from 'react';
 
 
 const Navbar: React.FC = () => {
@@ -10,6 +12,12 @@ const Navbar: React.FC = () => {
   const { user, isAuthenticated, isLoading } = useAuth0();
   const navigate = useNavigate();
 
+  const { setBusquedaXNombre } = useUnidadContext();
+  const [filterText, setFilterText] = useState<string>("");
+
+  const filterHandler = () => {
+    setBusquedaXNombre(filterText);
+  }
 
   if (isLoading) {
     return (
@@ -31,9 +39,15 @@ const Navbar: React.FC = () => {
             <img src={logoSimple} alt="logo" />
           </NavLink>
 
-          <i className="ml-3 mt-3 material-icons" style={{ fontSize: "30px", color: "white", cursor: "pointer" }}> search</i>
-          <input className="btnIngresoNav inputs" type="text" placeholder="Buscar producto" >
-          </input>
+          <form onSubmit={(e) => {e.preventDefault()}}>
+            <div className='searchBar'>
+              <button onClick={filterHandler} className='mt-2'>
+                <i className="material-icons" style={{ fontSize: "30px", color: "white" }}> search</i>
+              </button>
+              <input className="inputSearchBar" type="text" placeholder="Buscar producto" onChange={e => setFilterText(e.target.value)}></input>
+            </div>
+          </form>
+
         </div>
         {/*<div style={{flexDirection: "row", justifyContent: "flex-end"}}>*/}
 
@@ -65,14 +79,18 @@ const Navbar: React.FC = () => {
       <header className="headerLogo">
         <div className="logo mx-3 mt-2" style={{ display: "inline-flex", alignItems: "center" }}>
 
-          <NavLink to="/" >
+          <NavLink to="/" onClick={() => window.location.reload()}>
             <img src={logoSimple} alt="logo" />
           </NavLink>
 
-          <div className='searchBar'>
-            <i className="material-icons" style={{ fontSize: "30px", color: "white" }}> search</i>
-            <input className="inputSearchBar" type="text" placeholder="Buscar producto" ></input>
-          </div>
+          <form onSubmit={(e) => {e.preventDefault()}}>
+            <div className='searchBar'>
+              <button onClick={filterHandler} className='mt-2'>
+                <i className="material-icons" style={{ fontSize: "30px", color: "white" }}> search</i>
+              </button>
+              <input required className="inputSearchBar" type="text" placeholder="Buscar producto" onChange={e => setFilterText(e.target.value)}></input>
+            </div>
+          </form>
 
         </div>
 

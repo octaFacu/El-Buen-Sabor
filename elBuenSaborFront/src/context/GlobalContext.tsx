@@ -10,8 +10,8 @@ export interface UnidadContextInteface{
     ingredientes: Ingrediente[],
     setIngredientes: Dispatch<SetStateAction<Ingrediente[]>>
 
-    // categorias: CategoriaProducto[],
-    // setCategorias: Dispatch<SetStateAction<CategoriaProducto[]>>
+    busquedaXNombre: string,
+    setBusquedaXNombre: Dispatch<SetStateAction<string>>
 
 }
 
@@ -23,8 +23,8 @@ export const GlobalContext = createContext<UnidadContextInteface>({
     setUnidadesDeMedida: () => {},
     ingredientes: [],
     setIngredientes: () => {},
-    // categorias: [],
-    // setCategorias: () => {}
+    busquedaXNombre: "",
+    setBusquedaXNombre: () => {}
 
 
 });

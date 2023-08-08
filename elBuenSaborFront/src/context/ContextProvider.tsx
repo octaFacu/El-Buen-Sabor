@@ -1,10 +1,8 @@
 import { useEffect, useState } from "react";
 import { GlobalContext } from "./GlobalContext"
-import { CategoriaProducto, Ingrediente, unidadDeMedida } from "./interfaces/interfaces";
+import { Ingrediente, unidadDeMedida } from "./interfaces/interfaces";
 import { IngredientesService } from "../services/IngredientesService";
 import { ServiceBasicos } from "../services/ServiceBasicos";
-import { CategoriaProductoService } from "../services/CategoriaProductoService";
-
 
 
 //Declarar el tipo de las props del contexto
@@ -16,11 +14,12 @@ export const ContextProvider = ({ children }: props) => {
   //Declarar todas las constantes del valor
   const [unidadesDeMedida, setUnidadesDeMedida] = useState<unidadDeMedida[]>([]);
   const [ingredientes, setIngredientes] = useState<Ingrediente[]>([]);
-  // const [categorias, setCategorias] = useState<CategoriaProducto[]>([]);
+
+  //Para el filtro de busqueda de productos en el navbar
+  const [busquedaXNombre, setBusquedaXNombre] = useState<string>("");
 
   const serviceBasicos = new ServiceBasicos("unidadDeMedida");
   const ingredientesService = new IngredientesService();
-  // const categoriaProductoService = new CategoriaProductoService()
 
   const fetchData = async () => {
     const data = await serviceBasicos.getAllBasic();
@@ -32,27 +31,19 @@ export const ContextProvider = ({ children }: props) => {
     setIngredientes(data);
   };
 
-  // const fetchDataCategorias = async () => {
-  //   const data = await categoriaProductoService.getAllBasic();
-  //   setCategorias(data);
-  // };
-
   useEffect(() => {
 
-      //GET ALL UNIDADES DE MEDIDA
-      fetchData();
+    //GET ALL UNIDADES DE MEDIDA
+    fetchData();
 
-      //GET ALL INGREDIENTES
-      fetchDataIngredientes();
-
-      //GET ALL CATEGORIAS PRODUCTO
-      // fetchDataCategorias();
+    //GET ALL INGREDIENTES
+    fetchDataIngredientes();
 
   }, []);
 
   //Devolver el provider con los valores que vamos a llevar a otros componentes
   return (
-    <GlobalContext.Provider value={{ unidadesDeMedida, setUnidadesDeMedida, ingredientes, setIngredientes, /*categorias, setCategorias */ }}>
+    <GlobalContext.Provider value={{ unidadesDeMedida, setUnidadesDeMedida, ingredientes, setIngredientes, busquedaXNombre, setBusquedaXNombre }}>
       {children}
     </GlobalContext.Provider>
   );

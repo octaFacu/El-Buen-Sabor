@@ -9,6 +9,7 @@
   /* border-radius: 11px; */
   margin-bottom: 2%;
   max-width: 100%;
+  cursor: pointer;
 
   /* Ajustar la imagen al tamaño sin deformarla  */
   /* object-fit: cover;  */
@@ -36,6 +37,10 @@
 
 .cart-icon {
   font-size: 30px;
+}
+
+.cursorPointer{
+  cursor: pointer;
 }
 
 /* Cuando la pantalla tenga una anchura de 767px o menos */

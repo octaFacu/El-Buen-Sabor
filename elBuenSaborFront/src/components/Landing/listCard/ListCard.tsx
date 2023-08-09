@@ -15,6 +15,15 @@ interface ListCardProps {
 
 const ListCard: FC<ListCardProps> = ({ categoria, productos, setModalDetalleProducto, setProductoSeleccionado }) => {
 
+    //ARREGLAR SI SALE LOADER O NO RESULTADOS
+    
+    if (productos.length === 0) {
+        console.log("LOGGGGGGGGG");
+        return (
+            <ListLoader />
+        );
+    }
+
     if (productos === undefined) {
         console.log("LOGGGGGGGGG");
         return (
@@ -33,13 +42,6 @@ const ListCard: FC<ListCardProps> = ({ categoria, productos, setModalDetalleProd
             </div>
         );
     }
-
-    // if(productos.length === 0){
-    //     console.log("LOGGGGGGGGG");
-    //     return(
-    //         <ListLoader />
-    //     );
-    // }
 
     return (
 
@@ -74,7 +76,9 @@ const ListCard: FC<ListCardProps> = ({ categoria, productos, setModalDetalleProd
             <div className="centerTitle">
 
                 <hr style={{ marginRight: "2%", marginLeft: "2%" }}></hr>
-                <div className="mt-3" style={{ textAlign: "center" }}><h3 style={{ color: "#864e1b" }}>{categoria}</h3></div>
+                <div className="mt-3" style={{ textAlign: "center" }}>
+                    <h3 style={{ color: "#864e1b" }}>{categoria}</h3>
+                </div>
                 <hr style={{ marginRight: "2%", marginLeft: "2%" }}></hr>
             </div>
 

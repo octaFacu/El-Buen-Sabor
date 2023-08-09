@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import ImgLogo from '../../components/Landing/ImgLogo'
 import { useUnidadContext } from "../../context/GlobalContext"
 import CarruselCategorias from '../../components/Landing/carruselCategorias/CarruselCategorias'
-
+import "../pagesStyles/landing.css"
 import { CategoriaProducto } from '../../context/interfaces/interfaces'
 import { CategoriaProductoService } from "../../services/CategoriaProductoService";
 import { ProductoService } from "../../services/ProductoService";
@@ -21,17 +21,25 @@ export const Landing = () => {
   //PARA BUSQUEDA POR FILTRO
   const { busquedaXNombre, setBusquedaXNombre } = useUnidadContext();
   const [productosPorFiltro, setProductosPorFiltro] = useState<Producto[]>([])
+  const [totalElements, setTotalElements] = useState<number>(0)
 
-  //Trae los productos filtrados por filtro
+  //Trae los productos paginados por filtro
   const fetchProductosXFiltroPaginado = async () => {
     const data = await productoService.getProductoXFiltroPaginado(busquedaXNombre)
-
+    setTotalElements(data.totalElements)
     if (data === undefined) {
       await setProductosPorFiltro(data);
     } else {
       await setProductosPorFiltro(data.content);
     }
   }
+  //Trae todos los productos por filtro
+  const fetchProductosXFiltro = async () => {
+    const data = await productoService.getProductoXFiltro(busquedaXNombre)
+    await setProductosPorFiltro(data);
+    setTotalElements(0);                                //Para que el boton de "ver mas" desaparezca
+  }
+
   //AGREGAR PAGINACION
   useEffect(() => {
 
@@ -43,7 +51,7 @@ export const Landing = () => {
 
       fetchProductosXFiltroPaginado();
       //Cambio el valor para que cuando vuelva al inicio se reendericen los productos 
-      setPageNumber(0)
+      setPageNumber(5)
     }
 
   }, [busquedaXNombre])
@@ -172,9 +180,11 @@ export const Landing = () => {
       <>
         <div className="container containerMain">
 
-          <button onClick={() => {
+          <div className='d-flex justify-content-center'>          <button className='btn-landing' onClick={() => {
             recetLanding()
           }}>Volver al inicio</button>
+          </div>
+
 
           <CarruselCategorias
             categorias={categorias}
@@ -201,6 +211,13 @@ export const Landing = () => {
                 setProductoSeleccionado={setProductoSeleccionado}
               />
             </div>
+          }
+
+          {totalElements > 6 &&
+            <div className='d-flex justify-content-center'>
+              <button className='btn-landing' onClick={fetchProductosXFiltro}>Ver mas</button>
+            </div>
+
           }
 
         </div>

@@ -1,14 +1,14 @@
-.pointer{
-    cursor: pointer;
+.pointer {
+  cursor: pointer;
 }
 
-.ctr{
-    margin: auto;
-    display: flex;
+.ctr {
+  margin: auto;
+  display: flex;
   justify-content: center;
 }
 
-.colorActivo{
-    color: white;
-    background-color: saddlebrown;
+.colorActivo {
+  color: white;
+  background-color: saddlebrown;
 }

@@ -1,6 +1,5 @@
 const ImgLogo: React.FC = () => {
 
-
     return(
         <div className="container-img">
             <img className="imgMain" src="../src/assets/backgroundPhoto.jpg" alt="fondo de comida"/>
@@ -8,6 +7,5 @@ const ImgLogo: React.FC = () => {
         </div>
     )
 }
-
 
 export default ImgLogo;

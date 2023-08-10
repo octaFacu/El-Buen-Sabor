@@ -1,10 +1,16 @@
+import { FC } from "react";
 import { Link } from "react-router-dom";
 
-const NavegationModal: React.FC = () => {
+interface NavegationModalProps{
+  setMostrarNavegacion: (modal: boolean) => void;
+}
+
+
+const NavegationModal: FC<NavegationModalProps> = ({setMostrarNavegacion}) => {
 
 
 return(
-  <div className="overlay" >
+  <div className="overlay" onClick={() => setMostrarNavegacion(false)}>
     <div className="container my-5 contenedorModal" style={{borderRadius: "25px", backgroundColor: "#f99132", border: '4px dashed #864e1b', color: "white", maxWidth: "70%"}}>
       <div className="container mx-4 my-4 d-flex text-center" style={{display: "flex",alignItems: "flex-start"}}>
         <div className="mx-4">

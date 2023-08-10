@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import Navbar from './components/Navbar'
 import LoginBtn from './components/LoginBtn'
-import ImgLogo from './components/Landing/ImgLogo'
+import ImgLogo from './components/Landing/imgLogo/ImgLogo'
 import CategoriaIngrABM from './pages/ABMPages/CategoriaIngredienteABM'
 import { ContextProvider } from './context/ContextProvider'
 import { BrowserRouter } from "react-router-dom"

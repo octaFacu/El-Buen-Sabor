@@ -7,24 +7,26 @@ import ListLoader from "../listLoader/ListLoader";
 interface ListCardProps {
 
     categoria: string
-    productos: Producto[]
+    productos: Producto[] | null
 
     setProductoSeleccionado: (producto: Producto) => void;
     setModalDetalleProducto: (modal: boolean) => void;
+
+    isLoading: boolean
 }
 
-const ListCard: FC<ListCardProps> = ({ categoria, productos, setModalDetalleProducto, setProductoSeleccionado }) => {
+const ListCard: FC<ListCardProps> = ({ categoria, productos, setModalDetalleProducto, setProductoSeleccionado, isLoading }) => {
 
     //ARREGLAR SI SALE LOADER O NO RESULTADOS
     
-    if (productos.length === 0) {
+    if (isLoading) {
         console.log("LOGGGGGGGGG");
         return (
             <ListLoader />
         );
     }
 
-    if (productos === undefined) {
+    if (productos === null) {
         console.log("LOGGGGGGGGG");
         return (
             <div className="container-cat" style={{ marginTop: "3%" }}>

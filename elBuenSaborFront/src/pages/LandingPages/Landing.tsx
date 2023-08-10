@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import ImgLogo from '../../components/Landing/ImgLogo'
+import ImgLogo from '../../components/Landing/imgLogo/ImgLogo'
 import { useUnidadContext } from "../../context/GlobalContext"
 import CarruselCategorias from '../../components/Landing/carruselCategorias/CarruselCategorias'
 import "../pagesStyles/landing.css"
@@ -20,19 +20,28 @@ export const Landing = () => {
 
   //PARA BUSQUEDA POR FILTRO
   const { busquedaXNombre, setBusquedaXNombre } = useUnidadContext();
-  const [productosPorFiltro, setProductosPorFiltro] = useState<Producto[]>([])
+  const [productosPorFiltro, setProductosPorFiltro] = useState<Producto[] | null>([])
   const [totalElements, setTotalElements] = useState<number>(0)
 
   //Trae los productos paginados por filtro
   const fetchProductosXFiltroPaginado = async () => {
     const data = await productoService.getProductoXFiltroPaginado(busquedaXNombre)
-    setTotalElements(data.totalElements)
-    if (data === undefined) {
-      await setProductosPorFiltro(data);
+    if(data.totalElements){
+      setTotalElements(data.totalElements)
+    }
+
+    //Si existe la propiedad "error" (solo va a exisitir error si no se encontraron resultados para la busqueda o haya otro error inesperado)
+    if (data.error) {
+      await setProductosPorFiltro(null);
+      console.log(data);
+      console.log("ES NULLLLLLLLL");
     } else {
       await setProductosPorFiltro(data.content);
+      console.log(data);
+      console.log("NO ES NULLLLLLLLL");
     }
   }
+
   //Trae todos los productos por filtro
   const fetchProductosXFiltro = async () => {
     const data = await productoService.getProductoXFiltro(busquedaXNombre)
@@ -49,9 +58,10 @@ export const Landing = () => {
         setCategoriaSeleccionada(null)
       }
 
+      setIsLoading(true);
       fetchProductosXFiltroPaginado();
-      //Cambio el valor para que cuando vuelva al inicio se reendericen los productos 
-      setPageNumber(5)
+      setPageNumber(5)                            //Cambio el valor para que cuando vuelva al inicio se reendericen los productos 
+      setIsLoading(false);
     }
 
   }, [busquedaXNombre])
@@ -180,9 +190,10 @@ export const Landing = () => {
       <>
         <div className="container containerMain">
 
-          <div className='d-flex justify-content-center'>          <button className='btn-landing' onClick={() => {
-            recetLanding()
-          }}>Volver al inicio</button>
+          <div className='d-flex justify-content-center'>
+            <button className='btn-landing' onClick={() => {
+              recetLanding()
+            }}>Volver al inicio</button>
           </div>
 
 
@@ -191,6 +202,7 @@ export const Landing = () => {
             setCategoriaSeleccionada={setCategoriaSeleccionada}
           />
 
+          {/* Si busco por categoria */}
           {categoriaSeleccionada &&
             <div>
               <ListCard
@@ -198,10 +210,12 @@ export const Landing = () => {
                 productos={productosPorCategoria}
                 setModalDetalleProducto={setModalDetalleProducto}
                 setProductoSeleccionado={setProductoSeleccionado}
+                isLoading={isLoading}
               />
             </div>
           }
 
+          {/* Si busco por filtro */}
           {busquedaXNombre &&
             <div>
               <ListCard
@@ -209,6 +223,7 @@ export const Landing = () => {
                 productos={productosPorFiltro}
                 setModalDetalleProducto={setModalDetalleProducto}
                 setProductoSeleccionado={setProductoSeleccionado}
+                isLoading={isLoading}
               />
             </div>
           }
@@ -237,7 +252,7 @@ export const Landing = () => {
   return (
 
     <>
-      {/* <ImgLogo></ImgLogo> */}
+      <ImgLogo/>
 
       <div className="container containerMain">
 
@@ -253,6 +268,7 @@ export const Landing = () => {
               productos={productList}
               setModalDetalleProducto={setModalDetalleProducto}
               setProductoSeleccionado={setProductoSeleccionado}
+              isLoading={isLoading}
             />
           </div>
         ))}

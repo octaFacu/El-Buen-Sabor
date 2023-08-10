@@ -35,7 +35,9 @@ return(
 
 
     {   mostrarNavegacion &&
-        <NavegationModal></NavegationModal>
+        <NavegationModal 
+            setMostrarNavegacion={setMostrarNavegacion}
+        />
     }
 </>
   )

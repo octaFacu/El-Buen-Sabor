@@ -6,11 +6,16 @@ import CategoriaProductosABM from '../pages/ABMPages/CategoriaProductosABM';
 import { ProductosABM } from '../pages/ABMPages/ProductosAMB';
 import { NotFound } from '../components/NotFound';
 import InformacionAdicionalPostRegistro from '../pages/UsuariosPages/InformacionAdicionalPostRegistro';
+import { CajeroPedidosPage } from '../pages/CajeroPages/CajeroPedidosPage';
 
 export const routesConfig = [
     {
         path: '/',
         component: Landing,
+    },
+    {
+        path: '/dashboard-pedidos',
+        component: CajeroPedidosPage,
     },
     {
         path: '/usuarios',

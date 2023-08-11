@@ -1,0 +1,24 @@
+.text-pedido{
+    color: white;
+}
+
+.separator-white{
+    height: 3px; 
+    border: none; 
+    background-color: white; 
+}
+
+.card-pedidos{
+    flex: auto;
+    text-align: center;
+    background-color: #864e1b; 
+    border-radius: 15px;
+    border: none;
+}
+
+.dropdown-estado{
+    border-radius: "25px";
+     background-color: "#FDA859";
+    color: "white"
+}
+

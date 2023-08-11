@@ -1,0 +1,41 @@
+.no-pedidos-text{
+    color: "white";
+    display: flex;
+    justify-content: center;
+    align-self: center;
+    margin: "auto";
+    
+}
+
+.card-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px; /* Adjust the gap between cards as needed */
+  }
+  
+  .card-container > * {
+    flex: calc(33.33% - 16px); /* Adjust the width and gap to fit your design */
+    min-width: 0; /* Allow content to shrink if necessary */
+  }
+  
+  /* Adjust flex for the first card in each row */
+  .card-container > *:nth-child(3n + 1) {
+    flex: 100%;
+  }
+  
+
+.parent {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start; /* Align items to the top */
+    width: 100%;
+    margin-top: 10px; /* Add margin on top */
+}
+
+.child {
+    flex-basis: calc(25% - 3%);
+    margin-right: 3%;
+}
+.child:first-child {
+    margin-left: 3%; /* Add margin only to the first child */
+}

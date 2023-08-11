@@ -5,6 +5,7 @@ import { Direccion } from "./interfaces";
 export class Pedido{
     id?: number = 0;
     precioTotal: number = 0;
+    estado: EstadoPedido = 0;
     activo: boolean = true;
     numeroPedidoDia: number = 0;
     esEnvio: boolean = false;
@@ -21,3 +22,11 @@ export class Pedido{
 }
 
 export default Pedido;
+
+export enum EstadoPedido{
+  AConfirmar,
+  EnCocina,
+  Listo,
+  EnDelivery,
+  Entregado
+}

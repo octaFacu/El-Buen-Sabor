@@ -43,7 +43,3 @@ export interface Direccion {
   usuario: Usuario;
 }
 
-export interface Cliente{
-  id: number;
-  usuario: Usuario;
-}

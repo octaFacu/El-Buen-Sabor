@@ -1,0 +1,7 @@
+.btn-return {
+    margin: 1rem;
+    background-color: var(--main-color) !important;
+  }
+  .btn-return:hover {
+    background-color: var(--input-text) !important;
+  }

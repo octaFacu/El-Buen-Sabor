@@ -53,8 +53,12 @@ const Navbar: React.FC = () => {
         {/*<div style={{flexDirection: "row", justifyContent: "flex-end"}}>*/}
 
         <div className='mt-3'>
-          <i className="material-icons" style={{ fontSize: "30px", cursor: "pointer" }}> shopping_cart</i>
-          <i className="material-icons" style={{ fontSize: "30px", cursor: "pointer" }}> favorite</i>
+          <NavLink to="/carrito" className={"m-1"}>
+            <i className="material-icons" style={{ fontSize: "30px", color: "white" }}> shopping_cart</i>
+          </NavLink>
+          <NavLink to="/favoritos">
+            <i className="material-icons" style={{ fontSize: "30px", color: "white" }}> favorite</i>
+          </NavLink>
         </div>
 
         <div>
@@ -80,7 +84,7 @@ const Navbar: React.FC = () => {
       <header className="headerLogo">
         <div className="logo mx-3 mt-2" style={{ display: "inline-flex", alignItems: "center" }}>
 
-          <NavLink to="/" onClick={() => window.location.reload()}>
+          <NavLink to="/" >
             <img src={logoSimple} alt="logo" />
           </NavLink>
 
@@ -96,12 +100,15 @@ const Navbar: React.FC = () => {
         </div>
 
         <nav className="row mt-2">
-          <i className="col-sm mt-3 material-icons" style={{ fontSize: "30px", color: "white" }}> shopping_cart</i>
+          <div className="col-sm d-flex align-items-center">
+            <NavLink to="/carrito">
+              <i className="material-icons" style={{ fontSize: "30px", color: "white" }}>shopping_cart</i>
+            </NavLink>
+          </div>
 
           <div className="col-sm mx-1">
             <LoginBtn />
           </div>
-
         </nav>
       </header>
     )

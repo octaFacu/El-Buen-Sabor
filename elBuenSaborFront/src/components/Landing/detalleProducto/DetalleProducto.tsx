@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useState } from "react";
 import Producto from '../../../context/interfaces/Producto';
 import "./DetalleProducto.css";
 import leftArrow from "../../../assets/left-arrow.png";
@@ -13,6 +13,8 @@ interface DetalleProductoProps {
 }
 
 const DetalleProducto: FC<DetalleProductoProps> = ({ producto, modalDetalleProducto, setModalDetalleProducto }) => {
+
+    const [cantidad, setCantidad] = useState<number>(1)
 
     //AGREGAR FUNCION PARA AÑADIR AL CARRITO
     const handleAddToCart = () => {
@@ -96,7 +98,13 @@ const DetalleProducto: FC<DetalleProductoProps> = ({ producto, modalDetalleProdu
 
                         </div>
 
-                        <div className="d-flex justify-content-center">
+                        {/* <div className="d-flex justify-content-center"> */}
+                        <div className="d-flex justify-content-evenly ">
+                            <div className="bg-cant">
+                                <button className="btn bg-cant-btn " disabled={cantidad === 1} onClick={() => setCantidad(cantidad - 1)}>-</button>
+                                <span className="px-3">{cantidad}</span>
+                                <button className="btn bg-cant-btn" onClick={() => setCantidad(cantidad + 1)}>+</button>
+                            </div>
                             <button className="btn btn-add-cart d-flex" onClick={handleAddToCart}>
                                 Agregar al<i className="material-icons cart-icon" style={{ fontSize: "23px", cursor: "pointer" }}> shopping_cart</i>
                             </button>

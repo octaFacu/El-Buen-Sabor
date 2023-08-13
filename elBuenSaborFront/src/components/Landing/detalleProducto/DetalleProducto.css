@@ -68,6 +68,7 @@
   background-color: var(--green-color) !important;
   color: white !important;
   align-items: end;
+  font-family: var(--letra-btn) !important;
 }
 
 .btn-add-cart:hover {

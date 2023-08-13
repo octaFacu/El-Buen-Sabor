@@ -4,6 +4,7 @@ import "./DetalleProducto.css";
 import leftArrow from "../../../assets/left-arrow.png";
 import heart from "../../../assets/heart.png";
 import filledHeart from "../../../assets/filledHeart.png";
+import { ProductoParaPedido } from "../../../context/interfaces/interfaces";
 
 interface DetalleProductoProps {
     modalDetalleProducto: boolean
@@ -14,17 +15,61 @@ interface DetalleProductoProps {
 
 const DetalleProducto: FC<DetalleProductoProps> = ({ producto, modalDetalleProducto, setModalDetalleProducto }) => {
 
-    const [cantidad, setCantidad] = useState<number>(1)
+    const [cant, setCant] = useState<number>(1)
 
-    //AGREGAR FUNCION PARA AÑADIR AL CARRITO
-    const handleAddToCart = () => {
-        console.log("Agrego al carrito");
+    //METODO PROVISORIO PARA BORRAR EL LOCAL STORAGE
+    const borrarLocalStorage = () => {
+        localStorage.clear()
+    }
 
+    //AGREGAR FUNCION PARA AÑADIR AL CARRITO EN EL LOCALSTORAGE
+    const handleAddToCart = (value: ProductoParaPedido) => {
+
+        const miArregloString = localStorage.getItem("carritoArreglo");
+
+        if (miArregloString) {
+
+            try {
+
+                let repetido: boolean = false
+                // Intentar convertir el arreglo de cadena JSON a un arreglo JavaScript
+                const miArreglo = JSON.parse(miArregloString);
+
+                // Recorrer el arreglo y para ver si el producto ya existe en el carrito
+                miArreglo.forEach((elemento: ProductoParaPedido, index: number) => {
+                    // Validacion para ver si ya existe el producto que se esta por agregar al carrito, para sobreescribirlo y que no se repita en el mismo
+                    if (value.id === elemento.id) {
+                        miArreglo[index].cantidad = elemento.cantidad + value.cantidad
+                        repetido = true;
+                    }
+                });
+
+                if(!repetido){
+                    //Agrego al arreglo el producto con su cantidad
+                    miArreglo.push(value)                       
+                    localStorage.setItem("carritoArreglo", JSON.stringify(miArreglo));
+                    console.log("Producto agregado al carrito");
+                }else{
+                    //Sobreescrivo la cantidad de un producto repeetido 
+                    localStorage.setItem("carritoArreglo", JSON.stringify(miArreglo));
+                    console.log("Producto repetido, se sumo al carrito");
+                }
+
+            } catch (error) {
+                console.error("Error al analizar el arreglo en el Local Storage: ", error);
+            }
+
+        }else{
+            console.log("El arreglo en el Local Storage está vacío o no existe. Lo voy a crear y ejecutar de nuevo esta funcion");
+            localStorage.setItem("carritoArreglo", JSON.stringify([]));
+            handleAddToCart(value)
+        }
     }
 
     //AGREGAR FUNCION PARA AGREGAR A FAVORITOS
     const handleAddToFavorites = () => {
         console.log("Agrego a favoritos");
+
 
     }
 
@@ -101,11 +146,12 @@ const DetalleProducto: FC<DetalleProductoProps> = ({ producto, modalDetalleProdu
                         {/* <div className="d-flex justify-content-center"> */}
                         <div className="d-flex justify-content-evenly ">
                             <div className="bg-cant">
-                                <button className="btn bg-cant-btn " disabled={cantidad === 1} onClick={() => setCantidad(cantidad - 1)}>-</button>
-                                <span className="px-3">{cantidad}</span>
-                                <button className="btn bg-cant-btn" onClick={() => setCantidad(cantidad + 1)}>+</button>
+                                <button className="btn bg-cant-btn " disabled={cant === 1} onClick={() => setCant(cant - 1)}>-</button>
+                                <span className="px-3">{cant}</span>
+                                <button className="btn bg-cant-btn" onClick={() => setCant(cant + 1)}>+</button>
                             </div>
-                            <button className="btn btn-add-cart d-flex" onClick={handleAddToCart}>
+                            {/* <button className="btn btn-add-cart d-flex" onClick={borrarLocalStorage}> */}
+                            <button className="btn btn-add-cart d-flex" onClick={() => handleAddToCart({ id: producto.id!, cantidad: cant })}>
                                 Agregar al<i className="material-icons cart-icon" style={{ fontSize: "23px", cursor: "pointer" }}> shopping_cart</i>
                             </button>
                         </div>

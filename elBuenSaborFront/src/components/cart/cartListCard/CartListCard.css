@@ -1,0 +1,5 @@
+.cart-no-content{
+    font-family: var(--letra-titulo) !important;
+    margin: auto;
+    color: white;
+}

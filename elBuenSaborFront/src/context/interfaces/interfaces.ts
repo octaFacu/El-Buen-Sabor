@@ -64,6 +64,6 @@ export interface ExcepcionesVerificaUsuario{
 
 //Esta interfaz no es una entidad en si, solo lo uso apra dar formato a la informacion que sera pasada para crear un pedido (producto y cantidad del mismo)
 export interface ProductoParaPedido{
-  id: number,
+  producto: Producto,
   cantidad: number
 }

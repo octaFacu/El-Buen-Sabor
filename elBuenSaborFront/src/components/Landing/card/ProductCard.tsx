@@ -21,6 +21,7 @@ const ProductCard: FC<ProductCardProps> = ({ producto, setProductoSeleccionado, 
 
     return (
 
+
         <div className="col-sm-6 col-md-4 responsiveCard" >
             <div className="card cardEdit mb-3">
                 {/* <div className="card-body"> */}

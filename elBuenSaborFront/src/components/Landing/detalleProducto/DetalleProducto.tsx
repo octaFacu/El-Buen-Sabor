@@ -38,18 +38,18 @@ const DetalleProducto: FC<DetalleProductoProps> = ({ producto, modalDetalleProdu
                 // Recorrer el arreglo y para ver si el producto ya existe en el carrito
                 miArreglo.forEach((elemento: ProductoParaPedido, index: number) => {
                     // Validacion para ver si ya existe el producto que se esta por agregar al carrito, para sobreescribirlo y que no se repita en el mismo
-                    if (value.id === elemento.id) {
+                    if (value.producto.id === elemento.producto.id) {
                         miArreglo[index].cantidad = elemento.cantidad + value.cantidad
                         repetido = true;
                     }
                 });
 
-                if(!repetido){
+                if (!repetido) {
                     //Agrego al arreglo el producto con su cantidad
-                    miArreglo.push(value)                       
+                    miArreglo.push(value)
                     localStorage.setItem("carritoArreglo", JSON.stringify(miArreglo));
                     console.log("Producto agregado al carrito");
-                }else{
+                } else {
                     //Sobreescrivo la cantidad de un producto repeetido 
                     localStorage.setItem("carritoArreglo", JSON.stringify(miArreglo));
                     console.log("Producto repetido, se sumo al carrito");
@@ -59,7 +59,7 @@ const DetalleProducto: FC<DetalleProductoProps> = ({ producto, modalDetalleProdu
                 console.error("Error al analizar el arreglo en el Local Storage: ", error);
             }
 
-        }else{
+        } else {
             console.log("El arreglo en el Local Storage está vacío o no existe. Lo voy a crear y ejecutar de nuevo esta funcion");
             localStorage.setItem("carritoArreglo", JSON.stringify([]));
             handleAddToCart(value)
@@ -101,7 +101,10 @@ const DetalleProducto: FC<DetalleProductoProps> = ({ producto, modalDetalleProdu
                         <div className="d-flex mb-2 ">
 
                             <div className="btn-container">
-                                <button className="btn rounded-circle btn-go-back" onClick={() => setModalDetalleProducto(!modalDetalleProducto)}>
+                                <button className="btn rounded-circle btn-go-back" onClick={() => {
+                                    setCant(1)
+                                    setModalDetalleProducto(!modalDetalleProducto)
+                                }}>
                                     <img src={leftArrow} alt="Flecha" width="20" height="30" />
                                 </button>
                             </div>
@@ -151,7 +154,7 @@ const DetalleProducto: FC<DetalleProductoProps> = ({ producto, modalDetalleProdu
                                 <button className="btn bg-cant-btn" onClick={() => setCant(cant + 1)}>+</button>
                             </div>
                             {/* <button className="btn btn-add-cart d-flex" onClick={borrarLocalStorage}> */}
-                            <button className="btn btn-add-cart d-flex" onClick={() => handleAddToCart({ id: producto.id!, cantidad: cant })}>
+                            <button className="btn btn-add-cart d-flex" onClick={() => handleAddToCart({ producto: producto, cantidad: cant })}>
                                 Agregar al<i className="material-icons cart-icon" style={{ fontSize: "23px", cursor: "pointer" }}> shopping_cart</i>
                             </button>
                         </div>

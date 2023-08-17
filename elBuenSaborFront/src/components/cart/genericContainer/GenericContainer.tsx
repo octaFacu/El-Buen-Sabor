@@ -10,22 +10,24 @@ interface GenericContainerProps {
     children?: React.ReactNode;
 }
 
-const GenericContainer: FC<GenericContainerProps> = ({children, title}) => {
+const GenericContainer: FC<GenericContainerProps> = ({ children, title }) => {
 
     return (
-        <div className="container my-2 pb-1 mb-3" style={{ background: "#f99132", borderRadius: "25px" }}>
-            <div className="titleAndAddButton">
-                <div className="text-center py-4 px-3 d-flex">
+        <div className="pb-5">
+            <div className="otra-clase container pb-1" style={{ background: "#f99132", borderRadius: "25px" }}>
+                <div className="titleAndAddButton">
+                    <div className="text-center py-4 px-3 d-flex">
 
-                    <h1 className="title-cart">{title}</h1>
+                        <h1 className="title-cart">{title}</h1>
+                    </div>
                 </div>
-            </div>
 
-            <div>
-                {children}
-            </div>
+                <div>
+                    {children}
+                </div>
 
-        </div >
+            </div >
+        </div>
     );
 }
 

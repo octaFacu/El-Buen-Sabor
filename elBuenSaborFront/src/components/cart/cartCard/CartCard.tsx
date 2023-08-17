@@ -6,21 +6,16 @@ interface CartCardProps {
     index: number
     product: ProductoParaPedido
     actualizarCantidad: (indice: number, nuevaCantidad: number) => void
+    eliminarProducto: (indice: number) => void
+    handleValorTotalChange: (valor: number, esSuma: boolean) => void
 }
 
-const CartCard: FC<CartCardProps> = ({ product, actualizarCantidad, index }) => {
+const CartCard: FC<CartCardProps> = ({ product, actualizarCantidad, eliminarProducto, handleValorTotalChange, index }) => {
 
-    // const [localStorageValue, setLocalStorageValue] = useState<ProductoParaPedido>();
-
-    // useEffect(() => {
-    //     const storedItems = localStorage.getItem('carritoArreglo');
-    //     if (storedCartItems) {
-    //       setCartItems(JSON.parse(storedCartItems));
-    //     }
-    //   }, []);
-
-    //--------------
-
+    //Para que carge el valor inicial (precio * cantidad) al valor total del pedido, solo se ejecuta la primera vez cuando carga el componenete
+    useEffect(() => {
+        handleValorTotalChange(product.producto.precioTotal * product.cantidad, true)
+    }, [])
 
 
     return (
@@ -34,33 +29,42 @@ const CartCard: FC<CartCardProps> = ({ product, actualizarCantidad, index }) => 
 
                     <div className="col-md-2">
                         <div className="m-1 text-center">
-                            <span>{product.producto.denominacion}</span>
+                            <span className="cart-denominacion">{product.producto.denominacion}</span>
                         </div>
                     </div>
 
                     <div className="col-md-2">
                         <div className="text-center">
-                            <span>${product.producto.precioTotal}</span>
+                            <span className="cart-product-price">${product.producto.precioTotal}</span>
                         </div>
                     </div>
 
                     <div className="col-md-4 d-flex justify-content-evenly">
                         <div>
-                            <button className="btn bg-cant-btn" onClick={() => actualizarCantidad(index, product.cantidad - 1)} disabled={product.cantidad === 1}>-</button>
+                            <button className="btn bg-cant-btn" onClick={() => {
+                                actualizarCantidad(index, product.cantidad - 1)
+                                handleValorTotalChange(product.producto.precioTotal, false)
+                            }} disabled={product.cantidad === 1}>-</button>
                             <span className="px-3">{product.cantidad}</span>
-                            <button className="btn bg-cant-btn" onClick={() => actualizarCantidad(index, product.cantidad + 1)}>+</button>
+                            <button className="btn bg-cant-btn" onClick={() => {
+                                actualizarCantidad(index, product.cantidad + 1)
+                                handleValorTotalChange(product.producto.precioTotal, true)
+                            }}>+</button>
                         </div>
 
                         <span className="mt-1">=</span>
 
-                        <div className="total-product-price">
+                        <div className="cart-total-product-price">
                             <span >${product.producto.precioTotal * product.cantidad}</span>
                         </div>
                     </div>
 
                     <div className="col-md-1">
                         <div>
-                            <button className="btn bg-cant-btn">X</button>
+                            <button className="btn bg-cant-btn" onClick={() => {
+                                eliminarProducto(index)
+                                handleValorTotalChange(product.producto.precioTotal * product.cantidad, false)
+                                }}>X</button>
                         </div>
                     </div>
 

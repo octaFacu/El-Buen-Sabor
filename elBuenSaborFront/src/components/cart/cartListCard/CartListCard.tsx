@@ -5,9 +5,11 @@ import CartCard from "../cartCard/CartCard";
 interface CartListCardProps {
     localStorageValues: ProductoParaPedido[]
     actualizarCantidad: (indice: number, nuevaCantidad: number) => void
+    eliminarProducto: (indice: number) => void
+    handleValorTotalChange: (valor: number, esSuma: boolean) => void
 }
 
-const CartListCard: FC<CartListCardProps> = ({ localStorageValues, actualizarCantidad }) => {
+const CartListCard: FC<CartListCardProps> = ({ localStorageValues, actualizarCantidad, eliminarProducto, handleValorTotalChange }) => {
 
 
 
@@ -27,6 +29,8 @@ const CartListCard: FC<CartListCardProps> = ({ localStorageValues, actualizarCan
                     index={index}
                     product={producto}
                     actualizarCantidad={actualizarCantidad}
+                    eliminarProducto={eliminarProducto}
+                    handleValorTotalChange={handleValorTotalChange}
                 />
             ))}
 

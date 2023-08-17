@@ -20,11 +20,21 @@ export const Cart = () => {
 
     //Elimina un produco del carrito
     const eliminarProducto = (indice: number) => {
-        // setLocalStorageValues((prevProductos) => {
+        setLocalStorageValues((prevProductos) => {
+            const productos = [...prevProductos];
+            const nuevosProductos = productos.filter((el, index) => index !== indice);
+            return nuevosProductos;
+        });
+    };
 
-        //SEGUIR ACAAAAAAAAAAAAAAA
-
-        // });
+    //Calcular el valor total del pedido
+    const handleValorTotalChange = (nuevoValor: number, esSuma: boolean) => {
+        if (esSuma) {
+            setValorTotal(prevContador => prevContador + nuevoValor);
+        }else{
+            setValorTotal(prevContador => prevContador - nuevoValor);
+        }
+        
     };
 
     //Funsion para confirmar el pedido
@@ -56,12 +66,14 @@ export const Cart = () => {
                 <CartListCard
                     localStorageValues={localStorageValues}
                     actualizarCantidad={actualizarCantidad}
+                    eliminarProducto={eliminarProducto}
+                    handleValorTotalChange={handleValorTotalChange}
                 />
 
                 <div className="my-4 d-flex justify-content-evenly align-items-center">
                     <div className="mx-5"></div>
 
-                    <button className="px-4 btn btn-add-order d-flex" onClick={handlerConfirmOrder}>
+                    <button className="px-5 py-2 btn btn-add-order d-flex" onClick={handlerConfirmOrder}>
                         Confirmar pedido
                     </button>
 
@@ -73,8 +85,6 @@ export const Cart = () => {
                 </div>
 
             </GenericContainer>
-
-            <div className='mb-5'></div>
 
         </>
     )

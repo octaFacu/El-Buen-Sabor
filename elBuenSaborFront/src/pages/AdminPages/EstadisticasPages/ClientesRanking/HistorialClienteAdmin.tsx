@@ -13,9 +13,6 @@ export default function HistorialClienteAdmin() {
 
   const { clienteId } = useParams();
   const [historial, setHistorial] = useState<PageProyeccionHistorialPedido<ProyeccionPedidoUsuario>>();
-
-  
-
   const [page, setPage] = useState<number>(0);
 
   const traerHistorialPedidos = async (pageNumber: number) => {

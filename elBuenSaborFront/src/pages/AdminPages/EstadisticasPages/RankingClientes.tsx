@@ -3,64 +3,46 @@ import { PageProyeccionHistorialPedido, ProyeccionHistorialPedido } from '../../
 import { ClienteService } from '../../../services/ClienteService';
 import ClientesCardComponent from '../../../components/ComponentesRanking/ClientesCardComponent';
 import '../../../css/estilosEstadistias.css'
-import { useNavigate } from 'react-router-dom';
 import Paginacion from '../../../components/genericos/Paginacion';
 import OrdenamientosClienteComponent from '../../../components/ComponentesRanking/OrdenamientosClienteComponent';
+import BotonExcelYAtrasComponent from '../../../components/ComponentesRanking/BotonExcelYAtrasComponent';
 
 
 export default function RankingClientes() {
-    const navigate = useNavigate();
+
     const [page, setPage] = useState<number>(0);
     const [rankingCliente, setRankingCliente] = useState<PageProyeccionHistorialPedido<ProyeccionHistorialPedido>>();
+    const servicioCliente = new ClienteService();
+    const [orderBy, setOrderBy] = useState<string>("importe_total");
+    const [direccion, setDireccion] = useState<string>("DESC");
+    const [startDate, setStartDate] = useState<Date | null>(null);
+    const [endDate, setEndDate] = useState<Date | null>(null); // 
 
-
-    const traerClientes = async (pageNumber: number) => {
-        const servicioCliente = new ClienteService();
+    const traerClientesConOrden = async (pageNumber: number) => {
         try {
-            const clientes = await servicioCliente.getRankingClientes(pageNumber);
+            const clientes = await servicioCliente.getRankingClientess(pageNumber, 3, orderBy, direccion, startDate, endDate);
             setRankingCliente(clientes);
         } catch (error) {
             console.error(error);
         }
     };
-
-    const handleAtras = () => {
-        navigate(-1);
-    };
-
     const actualizarPagina = (pageNumber: number) => {
         setPage(pageNumber);
     };
 
 
     useEffect(() => {
-        traerClientes(page);
-    }, [page]);
-    
+        traerClientesConOrden(page);
+    }, [page, orderBy, direccion]);
 
-    const ordenarPorImporteTotal = (estado: boolean) => {
-        if (rankingCliente) {
-            if (estado) {
-                const nuevoOrden = rankingCliente.content.slice().sort((a, b) => b.importe_total - a.importe_total);
-                setRankingCliente({ ...rankingCliente, content: nuevoOrden });
-            } else {
-                const nuevoOrden = rankingCliente.content.slice().sort((a, b) => a.importe_total - b.importe_total);
-                setRankingCliente({ ...rankingCliente, content: nuevoOrden });
-            }
-        }
+
+    const actualizarCriteriosOrdenamiento = (nuevoOrderBy: string, nuevaDireccion: string, nuevaFechaInicio: Date | null, nuevaFechaFin: Date | null) => {
+        setOrderBy(nuevoOrderBy);
+        setDireccion(nuevaDireccion);
+        setStartDate(nuevaFechaInicio); // Actualizar estado de fecha de inicio
+        setEndDate(nuevaFechaFin);      // Actualizar estado de fecha de fin
+        traerClientesConOrden(0);       // Traer clientes de la página 0 con los nuevos criterios y fechas
     };
-
-    const ordenarPorCantidadPedidos = (estado: boolean) => {
-        if (rankingCliente) {
-            if (estado) {
-                const nuevoOrden = rankingCliente.content.slice().sort((a, b) => b.cantidad_pedidos - a.cantidad_pedidos);
-                setRankingCliente({ ...rankingCliente, content: nuevoOrden });
-            } else {
-                const nuevoOrden = rankingCliente.content.slice().sort((a, b) => a.cantidad_pedidos - b.cantidad_pedidos);
-                setRankingCliente({ ...rankingCliente, content: nuevoOrden });
-            }
-        }
-    }
 
     if (rankingCliente === undefined) {
         return <div>Cargando...</div>;
@@ -72,7 +54,7 @@ export default function RankingClientes() {
                 <div className="contenedor-tituloEstadistica text-white">
                     <h3 className="card-title text-center">Ranking de Clientes</h3>
                 </div>
-                <OrdenamientosClienteComponent ordenarPorImporteTotal={ordenarPorImporteTotal} ordenarPorCantidadPedidos={ordenarPorCantidadPedidos}/>
+                <OrdenamientosClienteComponent actualizarCriteriosOrdenamiento={actualizarCriteriosOrdenamiento} />
                 <div className="card-body d-flex flex-column">
                     <div className="d-flex flex-column mb-3">
                         {rankingCliente.content.map((cliente) => (
@@ -88,12 +70,7 @@ export default function RankingClientes() {
                     totalPages={rankingCliente.totalPages}
                     size={rankingCliente.size}
                 />
-                <div className="d-flex justify-content-between">
-                    <button className="btn btn-atras text-white" onClick={handleAtras}>
-                        Atrás
-                    </button>
-                    <button className="btn btn-excel text-white">Excel</button>
-                </div>
+                <BotonExcelYAtrasComponent />
             </div>
         </div>
     );

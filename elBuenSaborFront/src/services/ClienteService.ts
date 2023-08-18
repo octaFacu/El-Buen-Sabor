@@ -44,9 +44,9 @@ export class ClienteService extends ServiceBasicos {
   }
 
 
-  async getRankingClientes(page: number = 0, size: number = 3):  Promise<PageProyeccionHistorialPedido<ProyeccionHistorialPedido>> {
+  async getRankingClientes(page: number = 0, size: number = 3, orderBy: string = 'importe_total', direccion: string = 'desc'): Promise<PageProyeccionHistorialPedido<ProyeccionHistorialPedido>> {
     try {
-      const parametros = `?page=${page}&size=${size}`;
+      const parametros = `?page=${page}&size=${size}&orderBy=${orderBy}&direccion=${direccion}`;
       const res = await fetch(`${this.url}/totalPedidos${parametros}`);
 
       if (!res.ok) {
@@ -59,4 +59,35 @@ export class ClienteService extends ServiceBasicos {
       return err;
     }
   }
+
+  async getRankingClientess(
+    page: number = 0,
+    size: number = 3,
+    orderBy: string = 'importe_total',
+    direccion: string = 'desc',
+    fechaInicio: Date | null = null,
+    fechaFin: Date | null = null
+  ): Promise<PageProyeccionHistorialPedido<ProyeccionHistorialPedido>> {
+    try {
+      let parametros = `?page=${page}&size=${size}&campoOrden=${orderBy}&direccionOrden=${direccion}`;
+      
+      if (fechaInicio !== null && fechaFin !== null) {
+        parametros += `&fechaInicio=${fechaInicio}&fechaFin=${fechaFin}`;
+      }
+      
+      const res = await fetch(`${this.url}/obtener-estadisticas-pedido${parametros}`);
+  
+      if (!res.ok) {
+        const respuesta: ExcepcionesVerificaUsuario = await res.json();
+        throw respuesta;
+      }
+      
+      const jsonRes = await res.json();
+      return jsonRes;
+    } catch (err: any) {
+      return err;
+    }
+  }
+  
+
 }

@@ -4,6 +4,7 @@ import { ProyeccionPedidoUsuario } from "../../context/interfaces/Proyecciones/P
 import { ClienteService } from "../../services/ClienteService";
 import CardHistorialPedidos from "./CardHistorialPedidos";
 import { PageProyeccionHistorialPedido } from "../../context/interfaces/Proyecciones/ProyeccionHistorialPedidoCliente";
+import Paginacion from "../genericos/Paginacion";
 
 
 interface Props {
@@ -16,10 +17,12 @@ export default function MisPedidosComponent({ usuario }: Props) {
 
   const servicioCliente = new ClienteService();
 
-  const traerPedidos = async () => {
+  const [page, setPage] = useState<number>(0);
+
+  const traerPedidos = async (pageNumber: number) => {
     try {
       const pedido = await servicioCliente.getPedidosUsuario(
-        await servicioCliente.getIdCliente(usuario.id)
+        await servicioCliente.getIdCliente(usuario.id), pageNumber
       );
       setPedidos(pedido);
     } catch (error) {
@@ -28,16 +31,42 @@ export default function MisPedidosComponent({ usuario }: Props) {
   };
 
   useEffect(() => {
-    traerPedidos();
-  }, []);
+    traerPedidos(page);
+  }, [page]);
+
+  const actualizarPagina = (pageNumber: number) => {
+    setPage(pageNumber);
+  };
+
+  if (pedidos === undefined) {
+    return <div>cargando...</div>
+  }
 
   return (
-    <div className="text-center" style={{ marginTop: "6rem" }}>
-      <h2 className="bold">Pedidos Anteriores</h2>
-      <div className="card-container espacio-pedidos" > 
-        {pedidos?.content.map((pedido) => (
-          <CardHistorialPedidos historial={pedido} key={pedido.pedido_id}/>
-        ))}
+    <div className="container mx-auto">
+      <div className="card card-generica">
+        <div className="contenedor-tituloEstadistica text-white">
+          <h3 className="card-title text-center">Historial de pedidos</h3>
+        </div>
+        <div className="card-body d-flex flex-column">
+          <div className="d-flex flex-column mb-3">
+            {
+              pedidos.content.length === 0 ? (
+                <h4 className='text-center'>Todavia no ah realizado ningun pedido</h4>
+              ) : (
+                pedidos.content.map((historial: ProyeccionPedidoUsuario) => (
+                  <div key={historial.pedido_id}>
+                    <CardHistorialPedidos historial={historial} />
+                  </div>
+                ))
+              )
+            }
+          </div>
+          <Paginacion page={pedidos.pageable.pageNumber}
+            setPage={actualizarPagina}
+            totalPages={pedidos.totalPages}
+            size={pedidos.size} />
+        </div>
       </div>
     </div>
   );

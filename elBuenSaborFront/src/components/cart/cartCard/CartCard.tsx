@@ -39,29 +39,29 @@ const CartCard: FC<CartCardProps> = ({ product, actualizarCantidad, eliminarProd
                         </div>
                     </div>
 
-                    <div className="col-md-4 d-flex justify-content-evenly">
-                        <div>
-                            <button className="btn bg-cant-btn" onClick={() => {
+                    <div className="col-md-4 d-flex justify-content-evenly align-items-center">
+                        <div className="bg-cart-cant d-flex align-items-center">
+                            <button className="cant-btn-resta bg-cant-btn" onClick={() => {
                                 actualizarCantidad(index, product.cantidad - 1)
                                 handleValorTotalChange(product.producto.precioTotal, false)
                             }} disabled={product.cantidad === 1}>-</button>
-                            <span className="px-3">{product.cantidad}</span>
-                            <button className="btn bg-cant-btn" onClick={() => {
+                            <span className="px-5 fs-5">{product.cantidad}</span>   {/*PARA RESPONSIVIDAD PASAR DE "px-5" A "px-3"*/}
+                            <button className="bg-cant-btn" onClick={() => {
                                 actualizarCantidad(index, product.cantidad + 1)
                                 handleValorTotalChange(product.producto.precioTotal, true)
                             }}>+</button>
                         </div>
 
-                        <span className="mt-1">=</span>
+                        <span className="mt-1 fs-4">=</span>
 
                         <div className="cart-total-product-price">
                             <span >${product.producto.precioTotal * product.cantidad}</span>
                         </div>
                     </div>
 
-                    <div className="col-md-1">
+                    <div className="col-md-1 d-flex justify-content-center">
                         <div>
-                            <button className="btn bg-cant-btn" onClick={() => {
+                            <button className="bg-cart-cancel-btn" onClick={() => {
                                 eliminarProducto(index)
                                 handleValorTotalChange(product.producto.precioTotal * product.cantidad, false)
                                 }}>X</button>

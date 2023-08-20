@@ -148,13 +148,13 @@ const DetalleProducto: FC<DetalleProductoProps> = ({ producto, modalDetalleProdu
 
                         {/* <div className="d-flex justify-content-center"> */}
                         <div className="d-flex justify-content-evenly ">
-                            <div className="bg-cant">
-                                <button className="btn bg-cant-btn " disabled={cant === 1} onClick={() => setCant(cant - 1)}>-</button>
+                            <div className="bg-cant d-flex align-items-center">
+                                <button className="cant-btn-resta bg-cant-btn " disabled={cant === 1} onClick={() => setCant(cant - 1)}>-</button>
                                 <span className="px-3">{cant}</span>
-                                <button className="btn bg-cant-btn" onClick={() => setCant(cant + 1)}>+</button>
+                                <button className="bg-cant-btn" onClick={() => setCant(cant + 1)}>+</button>
                             </div>
                             {/* <button className="btn btn-add-cart d-flex" onClick={borrarLocalStorage}> */}
-                            <button className="btn btn-add-cart d-flex" onClick={() => handleAddToCart({ producto: producto, cantidad: cant })}>
+                            <button className="btn btn-add-cart d-flex align-items-center" onClick={() => handleAddToCart({ producto: producto, cantidad: cant })}>
                                 Agregar al<i className="material-icons cart-icon" style={{ fontSize: "23px", cursor: "pointer" }}> shopping_cart</i>
                             </button>
                         </div>

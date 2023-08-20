@@ -1,32 +1,32 @@
-.title-cart{
-    font-family: var(--letra-titulo);
-    margin: auto;
-    color: white;
+.title-cart {
+  font-family: var(--letra-titulo);
+  margin: auto;
+  color: white;
 }
 
-.container-valor-total{
-    font-size: 1.2em;
-    color: white;
+.container-valor-total {
+  font-size: 1.2em;
+  color: white;
 }
 
-.txt-Total{
-    font-family: var(--letra-titulo);
+.txt-Total {
+  font-family: var(--letra-titulo);
 }
 
-.txt-valorTotal{
-    font-family: var(--letra-btn);
-    background-color: var(--btn-color);
-    border-radius: 10px;
-    padding: 1rem;
-    margin-left: 1rem;
+.txt-valorTotal {
+  font-family: var(--letra-btn);
+  background-color: var(--btn-color);
+  border-radius: 10px;
+  padding: 1rem;
+  margin-left: 1rem;
 }
 
 .btn-add-order {
-    background-color: var(--green-color) !important;
-    color: white !important;
-    font-family: var(--letra-btn) !important;
-  }
+  background-color: var(--green-color) !important;
+  color: white !important;
+  font-family: var(--letra-btn) !important;
+}
 
-  .otra-clase{
-    margin-bottom: 100px !important;
-  }
+.otra-clase {
+  margin-bottom: 100px !important;
+}

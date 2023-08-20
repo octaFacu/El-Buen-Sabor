@@ -9,7 +9,7 @@
 }
 
 .cart-total-product-price{
-    
+    font-size: 1.2rem;
     font-family: var(--letra-inputs);
     padding: 8px;
     background-color: var(--btn-color);
@@ -24,6 +24,24 @@
 .cart-denominacion{
     font-size: 1.2rem;
     font-family: var(--letra-titulo);
+}
+
+.bg-cart-cancel-btn{
+    font-size: 1.3rem;
+    font-weight: bold;
+
+    border-radius: 11px;
+    padding-left: 17px; 
+    padding-right: 17px;
+    padding-top: 11px;
+    padding-bottom: 11px;
+    color: white;
+    background-color: var(--red-color)
+}
+
+.bg-cart-cant{
+    background-color: var(--main-color);
+    border-radius: 0.6rem;
 }
 
 /* --letra-titulo: "Alfa Slab One", cursive;

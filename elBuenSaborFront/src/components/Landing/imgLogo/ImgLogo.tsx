@@ -1,3 +1,5 @@
+import "./imgLogo.css"
+
 const ImgLogo: React.FC = () => {
 // ARREGLAAAAAAAAAR
     return(

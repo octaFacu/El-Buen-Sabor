@@ -1,0 +1,54 @@
+.imgContainer {
+  /* object-fit: contain; */
+  position: relative;
+}
+
+.imgMain {
+  width: 100%;
+  height: 55vh;
+  display: block;
+  /* max-width: 100%; */
+  /* height: auto; */
+}
+
+.logoMain {
+  position: absolute;
+  top: 35%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  max-width: 80%;
+}
+
+@media (max-width: 1199px) {
+
+    .imgMain{
+        height: 45vh;
+    }
+    .logoMain{
+        top: 30%;
+    }
+}
+
+/* Cuando la pantalla tenga una anchura de 992px o menos */
+@media (max-width: 992px) {
+    .imgMain{
+        height: 35vh;
+    }
+    .logoMain{
+        top: 25%;
+    }
+}
+
+/* Cuando la pantalla tenga una anchura de 767px o menos */
+@media (max-width: 767px) {
+    .imgMain{
+        height: 25vh;
+    }
+    .logoMain{
+        top: 20%;
+    }
+}
+
+/* Cuando la pantalla tenga una anchura de 767px o menos */
+@media (max-width: 575px) {
+}

@@ -1,85 +1,84 @@
-button{
-    all: unset;
+button {
+  all: unset;
 }
 
 .menuCat {
-    background-color: #fda859;
-    color: white;
+  background-color: #fda859;
+  color: white;
 
-    /* width: 60%; */
-    max-width: 60%;
+  /* width: 60%; */
+  max-width: 60%;
 
-    margin: auto;
-    margin-top: 2%;
-    margin-bottom: 2%; 
+  margin: auto;
+  margin-top: 2%;
+  margin-bottom: 2%;
 
-    display: flex;
-    font-family: var(--letra-titulo);
-    border-radius: 30px;
-    padding-top: 1.3%;
-    padding-bottom: 1%;
-    flex-direction: row;
+  display: flex;
+  font-family: var(--letra-titulo);
+  border-radius: 30px;
+  padding-top: 1.3%;
+  padding-bottom: 1%;
+  flex-direction: row;
 
-    justify-content:space-between;
-    align-items: center;
-
+  justify-content: space-between;
+  align-items: center;
 }
 
-.cat{
-    font-size: 23px;
-    width: 100%;
-    display: flex;
-    justify-content: space-evenly;
+.cat {
+  font-size: 23px;
+  width: 100%;
+  display: flex;
+  justify-content: space-evenly;
 }
 
-.arrow-size{
-    font-size: 45px;
+.arrow-size {
+  font-size: 45px;
 }
 
 .btnPag {
-    /* border-radius: 100px; */
-    /* background-color: #864e1b; */
-    color: white;
-    cursor: pointer;
-    border: 0;
-  }
+  /* border-radius: 100px; */
+  /* background-color: #864e1b; */
+  color: white;
+  cursor: pointer;
+  border: 0;
+}
 
 /* Cuando la pantalla tenga una anchura de 1199px o menos */
 @media (max-width: 1199px) {
-    .cat{
-        font-size: 20px;
-    }
+  .cat {
+    font-size: 20px;
   }
+}
 
 /* Cuando la pantalla tenga una anchura de 992px o menos */
 @media (max-width: 992px) {
-    .menuCat{
-        max-width: 80%;
-        /* width: 80%; */
-    }
+  .menuCat {
+    max-width: 80%;
+    /* width: 80%; */
   }
+}
 
-  /* Cuando la pantalla tenga una anchura de 767px o menos */
+/* Cuando la pantalla tenga una anchura de 767px o menos */
 @media (max-width: 767px) {
-    .menuCat{
-        /* width: 90%; */
-        max-width: 90%;
-    }
-    .cat{
-        font-size: 16px;
-    }
-    .arrow-size{
-        font-size: 40px;
-    }
-    .btnPag{
-        margin-top: 5px;
-    }
+  .menuCat {
+    /* width: 90%; */
+    max-width: 90%;
   }
+  .cat {
+    font-size: 16px;
+  }
+  .arrow-size {
+    font-size: 40px;
+  }
+  .btnPag {
+    margin-top: 5px;
+  }
+}
 
-    /* Cuando la pantalla tenga una anchura de 767px o menos */
+/* Cuando la pantalla tenga una anchura de 767px o menos */
 @media (max-width: 575px) {
-    .menuCat{
-        /* width: 100%; */
-        max-width: 100%;
-    }
+  .menuCat {
+    /* width: 100%; */
+    max-width: 100%;
   }
+}

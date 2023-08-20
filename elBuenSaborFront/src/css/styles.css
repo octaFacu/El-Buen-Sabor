@@ -163,35 +163,6 @@ body {
 }
 
 /*------------------------------------------ MAIN PAGE ---------------------------------------------*/
-.imgContainer {
-  /* object-fit: contain; */
-  position: relative;
-}
-
-.imgMain {
-  width: 100%;
-  height: 350px;
-  display: block;
-  /* max-width: 100%; */
-  /* height: auto; */
-}
-
-.logoMain {
-  /* position: relative;
-  width: 40%;
-  height: 20%;
-
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  padding: 5px; */
-
-  position: absolute;
-  top: 25%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  max-width: 80%;
-}
 
 .inputColor {
   font-family: var(--letra-inputs);

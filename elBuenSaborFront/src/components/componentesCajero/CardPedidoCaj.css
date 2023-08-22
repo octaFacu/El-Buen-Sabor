@@ -11,7 +11,7 @@
 .card-pedidos{
     flex: auto;
     text-align: center;
-    background-color: #864e1b; 
+    background-color: #9e6b3b; 
     border-radius: 15px;
     border: none;
 }
@@ -22,3 +22,14 @@
     color: "white"
 }
 
+.imagen-pedido{
+    max-width: 35%;
+    max-height: 6%;
+    border-radius: 5%;
+}
+.product-container {
+    border-radius: 4%;
+    background-color: #5a3b1f;
+    display: flex; /* Use flexbox to align items side by side */
+    align-items: center; /* Align items vertically within the container */
+}

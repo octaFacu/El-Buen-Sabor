@@ -19,6 +19,7 @@ return(
         height: "65px",
         bottom: "0",
         borderRadius: "50%",
+        backgroundColor: "#eb6f17",
         cursor: "pointer",
         left: "auto", // Set left to "auto"
         right: "0", // Set right to "0"

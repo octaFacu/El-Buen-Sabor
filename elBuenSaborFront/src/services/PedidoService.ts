@@ -28,4 +28,24 @@ export class PedidoService extends ServiceBasicos{
         }
     }
 
+    async getProductosByPedido(idPedido: number) {
+
+        console.log("LOS PRODUCTOS DE ESTE PEDIDO: "+ idPedido);
+
+        try {
+
+            let res = await fetch(this.url + "/productos/"+ idPedido);
+
+            if (!res.ok) {
+                throw { status: res.status, statusText: res.statusText }
+            }
+
+            let jsonRes = await res.json();
+            return jsonRes;
+
+        } catch (err: any) {
+            console.log(`Error ${err.status}: ${err.statusText}`);
+        }
+    }
+
 }

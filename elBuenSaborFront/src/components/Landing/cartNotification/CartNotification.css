@@ -1,0 +1,42 @@
+.notification {
+  position: fixed;
+  top: -105px; /* Inicialmente, la notificación está fuera de la vista */
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: var(--main-color);
+  color: #fff;
+  padding: 20px;
+  border-radius: 20px;
+  border-color: black;
+  border-style: solid;
+  border-width: 1px;
+  transition: top 0.3s ease-in-out, opacity 0.3s ease-in-out; /* Agregamos una transición de opacidad */
+
+  font-family: var(--letra-btn);
+  opacity: 0; /* Inicialmente, la notificación es invisible */
+}
+
+.slide-in {
+  top: 25px; /* La notificación se desliza hacia abajo */
+  opacity: 1; /* Hacer la notificación visible cuando se desliza hacia abajo */
+}
+
+.slide-out {
+  top: -105px; /* La notificación se desliza hacia arriba y se oculta */
+  opacity: 0; /* Hacer la notificación invisible cuando se desliza hacia arriba */
+}
+
+.omegalul {
+    text-decoration: none !important;
+}
+
+.btn-go-to-cart {
+  background-color: var(--green-color) !important;
+  color: white !important;
+  align-items: end;
+  font-family: var(--letra-btn) !important;
+}
+
+.btn-go-to-cart:hover {
+  background-color: var(--green-color-light) !important;
+}

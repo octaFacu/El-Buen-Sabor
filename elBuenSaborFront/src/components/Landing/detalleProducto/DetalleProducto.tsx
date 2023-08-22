@@ -11,16 +11,13 @@ interface DetalleProductoProps {
     setModalDetalleProducto: (modal: boolean) => void;
 
     producto: Producto | undefined;
+
+    handleNotificationAddToCart: () => void
 }
 
-const DetalleProducto: FC<DetalleProductoProps> = ({ producto, modalDetalleProducto, setModalDetalleProducto }) => {
+const DetalleProducto: FC<DetalleProductoProps> = ({ producto, modalDetalleProducto, setModalDetalleProducto, handleNotificationAddToCart }) => {
 
     const [cant, setCant] = useState<number>(1)
-
-    //METODO PROVISORIO PARA BORRAR EL LOCAL STORAGE
-    const borrarLocalStorage = () => {
-        localStorage.clear()
-    }
 
     //AGREGAR FUNCION PARA AÑADIR AL CARRITO EN EL LOCALSTORAGE
     const handleAddToCart = (value: ProductoParaPedido) => {
@@ -153,8 +150,11 @@ const DetalleProducto: FC<DetalleProductoProps> = ({ producto, modalDetalleProdu
                                 <span className="px-3">{cant}</span>
                                 <button className="bg-cant-btn" onClick={() => setCant(cant + 1)}>+</button>
                             </div>
-                            {/* <button className="btn btn-add-cart d-flex" onClick={borrarLocalStorage}> */}
-                            <button className="btn btn-add-cart d-flex align-items-center" onClick={() => handleAddToCart({ producto: producto, cantidad: cant })}>
+                            <button className="btn btn-add-cart d-flex align-items-center" onClick={() => {
+                                handleAddToCart({ producto: producto, cantidad: cant })
+                                handleNotificationAddToCart()
+                                setModalDetalleProducto(!modalDetalleProducto)
+                            }}>
                                 Agregar al<i className="material-icons cart-icon" style={{ fontSize: "23px", cursor: "pointer" }}> shopping_cart</i>
                             </button>
                         </div>

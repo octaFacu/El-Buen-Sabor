@@ -9,6 +9,7 @@ interface ProductCardProps {
 
     setProductoSeleccionado: (producto: Producto) => void;
     setModalDetalleProducto: (modal: boolean) => void;
+    
 }
 
 const ProductCard: FC<ProductCardProps> = ({ producto, setProductoSeleccionado, setModalDetalleProducto }) => {

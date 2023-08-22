@@ -12,11 +12,23 @@ import PageLoader from '../../components/pageLoader/PageLoader';
 import Footer from '../../components/Landing/footer/Footer'
 import DetalleProducto from '../../components/Landing/detalleProducto/DetalleProducto'
 import ListLoader from '../../components/Landing/listLoader/ListLoader'
+import CartNotification from "../../components/Landing/cartNotification/CartNotification"
 
 export const Landing = () => {
 
   const categoriaProductoService = new CategoriaProductoService()
   const productoService = new ProductoService()
+
+  //PARA MOSTRAR NOTIFICACION DE AÑADIDO AL CARRITO
+  const [showNotification, setShowNotification] = useState(false);
+
+  const handleNotificationAddToCart = () => {
+    setShowNotification(true);
+
+    setTimeout(() => {
+      setShowNotification(false);
+    }, 3000);
+  };
 
   //PARA BUSQUEDA POR FILTRO
   const { busquedaXNombre, setBusquedaXNombre } = useUnidadContext();
@@ -26,7 +38,7 @@ export const Landing = () => {
   //Trae los productos paginados por filtro
   const fetchProductosXFiltroPaginado = async () => {
     const data = await productoService.getProductoXFiltroPaginado(busquedaXNombre)
-    if(data.totalElements){
+    if (data.totalElements) {
       setTotalElements(data.totalElements)
     }
 
@@ -244,7 +256,15 @@ export const Landing = () => {
           modalDetalleProducto={modalDetalleProducto}
           setModalDetalleProducto={setModalDetalleProducto}
           producto={productoSeleccionado}
+          handleNotificationAddToCart={handleNotificationAddToCart}
         />
+
+        {/* Notificacion de añadido al carrito */}
+        <CartNotification
+          mensaje={"Producto añadido al carrito!"}
+          show={showNotification}
+        />
+
       </>
     )
   }
@@ -252,7 +272,7 @@ export const Landing = () => {
   return (
 
     <>
-      <ImgLogo/>
+      <ImgLogo />
 
       <div className="container containerMain">
 
@@ -284,6 +304,13 @@ export const Landing = () => {
         modalDetalleProducto={modalDetalleProducto}
         setModalDetalleProducto={setModalDetalleProducto}
         producto={productoSeleccionado}
+        handleNotificationAddToCart={handleNotificationAddToCart}
+      />
+
+      {/* Notificacion de añadido al carrito */}
+      <CartNotification
+        mensaje={"Producto añadido al carrito!"}
+        show={showNotification}
       />
 
     </>

@@ -3,6 +3,7 @@ import "./ListCard.css"
 import ProductCard from "../card/ProductCard";
 import Producto from "../../../context/interfaces/Producto";
 import ListLoader from "../listLoader/ListLoader";
+import { ProductoParaPedido } from "../../../context/interfaces/interfaces";
 
 interface ListCardProps {
 
@@ -13,9 +14,11 @@ interface ListCardProps {
     setModalDetalleProducto: (modal: boolean) => void;
 
     isLoading: boolean
+
+    handleAddToCart: (value: ProductoParaPedido) => void;
 }
 
-const ListCard: FC<ListCardProps> = ({ categoria, productos, setModalDetalleProducto, setProductoSeleccionado, isLoading }) => {
+const ListCard: FC<ListCardProps> = ({ categoria, productos, setModalDetalleProducto, setProductoSeleccionado, isLoading, handleAddToCart }) => {
 
     //ARREGLAR SI SALE LOADER O NO RESULTADOS
     
@@ -91,6 +94,7 @@ const ListCard: FC<ListCardProps> = ({ categoria, productos, setModalDetalleProd
                         producto={producto}
                         setProductoSeleccionado={setProductoSeleccionado}
                         setModalDetalleProducto={setModalDetalleProducto}
+                        handleAddToCart={handleAddToCart}
                     />
                 ))}
 

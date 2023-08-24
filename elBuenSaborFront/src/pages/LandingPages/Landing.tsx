@@ -3,7 +3,7 @@ import ImgLogo from '../../components/Landing/imgLogo/ImgLogo'
 import { useUnidadContext } from "../../context/GlobalContext"
 import CarruselCategorias from '../../components/Landing/carruselCategorias/CarruselCategorias'
 import "../pagesStyles/landing.css"
-import { CategoriaProducto } from '../../context/interfaces/interfaces'
+import { CategoriaProducto, ProductoParaPedido } from '../../context/interfaces/interfaces'
 import { CategoriaProductoService } from "../../services/CategoriaProductoService";
 import { ProductoService } from "../../services/ProductoService";
 import ListCard from '../../components/Landing/listCard/ListCard'
@@ -29,6 +29,53 @@ export const Landing = () => {
       setShowNotification(false);
     }, 3000);
   };
+
+  //AGREGAR FUNCION PARA AÑADIR AL CARRITO EN EL LOCALSTORAGE
+  const handleAddToCart = (value: ProductoParaPedido) => {
+
+    const miArregloString = localStorage.getItem("carritoArreglo");
+
+    if (miArregloString) {
+
+      try {
+
+        let repetido: boolean = false
+        // Intentar convertir el arreglo de cadena JSON a un arreglo JavaScript
+        const miArreglo = JSON.parse(miArregloString);
+
+        // Recorrer el arreglo y para ver si el producto ya existe en el carrito
+        miArreglo.forEach((elemento: ProductoParaPedido, index: number) => {
+          // Validacion para ver si ya existe el producto que se esta por agregar al carrito, para sobreescribirlo y que no se repita en el mismo
+          if (value.producto.id === elemento.producto.id) {
+            miArreglo[index].cantidad = elemento.cantidad + value.cantidad
+            repetido = true;
+          }
+        });
+
+        if (!repetido) {
+          //Agrego al arreglo el producto con su cantidad
+          miArreglo.push(value)
+          localStorage.setItem("carritoArreglo", JSON.stringify(miArreglo));
+          console.log("Producto agregado al carrito");
+        } else {
+          //Sobreescrivo la cantidad de un producto repeetido 
+          localStorage.setItem("carritoArreglo", JSON.stringify(miArreglo));
+          console.log("Producto repetido, se sumo al carrito");
+        }
+
+        handleNotificationAddToCart()
+
+      } catch (error) {
+        console.error("Error al analizar el arreglo en el Local Storage: ", error);
+      }
+
+    } else {
+      console.log("El arreglo en el Local Storage está vacío o no existe. Lo voy a crear y ejecutar de nuevo esta funcion");
+      localStorage.setItem("carritoArreglo", JSON.stringify([]));
+      handleAddToCart(value)
+    }
+  }
+  //----------------------------------
 
   //PARA BUSQUEDA POR FILTRO
   const { busquedaXNombre, setBusquedaXNombre } = useUnidadContext();
@@ -83,7 +130,6 @@ export const Landing = () => {
   const [categorias, setCategorias] = useState<CategoriaProducto[]>([])
   const [categoriaSeleccionada, setCategoriaSeleccionada] = useState<CategoriaProducto | null>(null)
   const [productosPorCategoria, setProductosPorCategoria] = useState<Producto[]>([])
-  const [decremento, setDecremento] = useState<number>(1)
 
   //Trae los productos filtrados por categoria
   const fetchProductosXCategoria = async () => {
@@ -117,14 +163,9 @@ export const Landing = () => {
 
   //--------------------
 
-  //Ventana modal para detalle producto
+  //VENTANA MODAL PARA DETALLE PRODUCTO
   const [modalDetalleProducto, setModalDetalleProducto] = useState<boolean>(false)
   const [productoSeleccionado, setProductoSeleccionado] = useState<Producto>()
-
-  useEffect(() => {
-    console.log("cambio estado de modal");
-
-  }, [modalDetalleProducto])
 
   //--------------------
 
@@ -144,11 +185,11 @@ export const Landing = () => {
   // Cargar los productos iniciales cuando el componente se monte
   useEffect(() => {
 
-    //Esta validacion sirve para cuando muestre la busqueda por categoria, que no se haga la peticion del el scroll infinito
+    //Esta validacion sirve para cuando muestre la busqueda por categoria, que no se haga la peticion de el scroll infinito
     if (categoriaSeleccionada === null && busquedaXNombre === "") {
 
-      if (pageNumber <= categorias.length + decremento) {
-        setDecremento(0);
+      if (pageNumber <= categorias.length) {
+        console.log("pageNumber: " + pageNumber);
 
         setIsLoading(true);
         fetchProducts(pageNumber).then((data) => {
@@ -159,7 +200,7 @@ export const Landing = () => {
       }
     }
 
-  }, [pageNumber, categoriaSeleccionada]);
+  }, [categorias, pageNumber, categoriaSeleccionada]);
 
   // Función para cargar más productos cuando el usuario scrollee hacia abajo
   const handleScroll = () => {
@@ -189,7 +230,6 @@ export const Landing = () => {
     setCategoriaSeleccionada(null)
     setProductos([])
     setPageNumber(1)
-    setDecremento(1)
   }
 
   //Loader
@@ -208,7 +248,6 @@ export const Landing = () => {
             }}>Volver al inicio</button>
           </div>
 
-
           <CarruselCategorias
             categorias={categorias}
             setCategoriaSeleccionada={setCategoriaSeleccionada}
@@ -223,6 +262,7 @@ export const Landing = () => {
                 setModalDetalleProducto={setModalDetalleProducto}
                 setProductoSeleccionado={setProductoSeleccionado}
                 isLoading={isLoading}
+                handleAddToCart={handleAddToCart}
               />
             </div>
           }
@@ -236,6 +276,7 @@ export const Landing = () => {
                 setModalDetalleProducto={setModalDetalleProducto}
                 setProductoSeleccionado={setProductoSeleccionado}
                 isLoading={isLoading}
+                handleAddToCart={handleAddToCart}
               />
             </div>
           }
@@ -256,7 +297,7 @@ export const Landing = () => {
           modalDetalleProducto={modalDetalleProducto}
           setModalDetalleProducto={setModalDetalleProducto}
           producto={productoSeleccionado}
-          handleNotificationAddToCart={handleNotificationAddToCart}
+          handleAddToCart={handleAddToCart}
         />
 
         {/* Notificacion de añadido al carrito */}
@@ -289,6 +330,7 @@ export const Landing = () => {
               setModalDetalleProducto={setModalDetalleProducto}
               setProductoSeleccionado={setProductoSeleccionado}
               isLoading={isLoading}
+              handleAddToCart={handleAddToCart}
             />
           </div>
         ))}
@@ -304,7 +346,7 @@ export const Landing = () => {
         modalDetalleProducto={modalDetalleProducto}
         setModalDetalleProducto={setModalDetalleProducto}
         producto={productoSeleccionado}
-        handleNotificationAddToCart={handleNotificationAddToCart}
+        handleAddToCart={handleAddToCart}
       />
 
       {/* Notificacion de añadido al carrito */}

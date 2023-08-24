@@ -1,6 +1,7 @@
 import { FC } from "react";
 import "./ProductCard.css";
 import Producto from "../../../context/interfaces/Producto";
+import { ProductoParaPedido } from "../../../context/interfaces/interfaces";
 
 interface ProductCardProps {
 
@@ -9,15 +10,22 @@ interface ProductCardProps {
 
     setProductoSeleccionado: (producto: Producto) => void;
     setModalDetalleProducto: (modal: boolean) => void;
-    
+
+    handleAddToCart: (value: ProductoParaPedido) => void;
+
 }
 
-const ProductCard: FC<ProductCardProps> = ({ producto, setProductoSeleccionado, setModalDetalleProducto }) => {
+const ProductCard: FC<ProductCardProps> = ({ producto, setProductoSeleccionado, setModalDetalleProducto, handleAddToCart }) => {
 
     const abrirModal = () => {
         setModalDetalleProducto(true);
         setProductoSeleccionado(producto);
         console.log(producto);
+    }
+
+    const addProductFromCard = () => {
+        console.log("Añado producto desde la carta");
+        
     }
 
     return (
@@ -39,7 +47,9 @@ const ProductCard: FC<ProductCardProps> = ({ producto, setProductoSeleccionado, 
                             </div>
                         </div>
                         <div className="shopping">
-                            <i className="material-icons cart-icon"> add_shopping_cart</i>
+                            <button onClick={() => handleAddToCart({ producto: producto, cantidad: 1 })}>
+                                <i className="material-icons cart-icon"> add_shopping_cart</i>
+                            </button>
                         </div>
                     </div>
 

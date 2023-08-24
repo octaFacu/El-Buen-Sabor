@@ -12,56 +12,12 @@ interface DetalleProductoProps {
 
     producto: Producto | undefined;
 
-    handleNotificationAddToCart: () => void
+    handleAddToCart: (value: ProductoParaPedido) => void;
 }
 
-const DetalleProducto: FC<DetalleProductoProps> = ({ producto, modalDetalleProducto, setModalDetalleProducto, handleNotificationAddToCart }) => {
+const DetalleProducto: FC<DetalleProductoProps> = ({ producto, modalDetalleProducto, setModalDetalleProducto, handleAddToCart }) => {
 
     const [cant, setCant] = useState<number>(1)
-
-    //AGREGAR FUNCION PARA AÑADIR AL CARRITO EN EL LOCALSTORAGE
-    const handleAddToCart = (value: ProductoParaPedido) => {
-
-        const miArregloString = localStorage.getItem("carritoArreglo");
-
-        if (miArregloString) {
-
-            try {
-
-                let repetido: boolean = false
-                // Intentar convertir el arreglo de cadena JSON a un arreglo JavaScript
-                const miArreglo = JSON.parse(miArregloString);
-
-                // Recorrer el arreglo y para ver si el producto ya existe en el carrito
-                miArreglo.forEach((elemento: ProductoParaPedido, index: number) => {
-                    // Validacion para ver si ya existe el producto que se esta por agregar al carrito, para sobreescribirlo y que no se repita en el mismo
-                    if (value.producto.id === elemento.producto.id) {
-                        miArreglo[index].cantidad = elemento.cantidad + value.cantidad
-                        repetido = true;
-                    }
-                });
-
-                if (!repetido) {
-                    //Agrego al arreglo el producto con su cantidad
-                    miArreglo.push(value)
-                    localStorage.setItem("carritoArreglo", JSON.stringify(miArreglo));
-                    console.log("Producto agregado al carrito");
-                } else {
-                    //Sobreescrivo la cantidad de un producto repeetido 
-                    localStorage.setItem("carritoArreglo", JSON.stringify(miArreglo));
-                    console.log("Producto repetido, se sumo al carrito");
-                }
-
-            } catch (error) {
-                console.error("Error al analizar el arreglo en el Local Storage: ", error);
-            }
-
-        } else {
-            console.log("El arreglo en el Local Storage está vacío o no existe. Lo voy a crear y ejecutar de nuevo esta funcion");
-            localStorage.setItem("carritoArreglo", JSON.stringify([]));
-            handleAddToCart(value)
-        }
-    }
 
     //AGREGAR FUNCION PARA AGREGAR A FAVORITOS
     const handleAddToFavorites = () => {
@@ -152,7 +108,6 @@ const DetalleProducto: FC<DetalleProductoProps> = ({ producto, modalDetalleProdu
                             </div>
                             <button className="btn btn-add-cart d-flex align-items-center" onClick={() => {
                                 handleAddToCart({ producto: producto, cantidad: cant })
-                                handleNotificationAddToCart()
                                 setModalDetalleProducto(!modalDetalleProducto)
                             }}>
                                 Agregar al<i className="material-icons cart-icon" style={{ fontSize: "23px", cursor: "pointer" }}> shopping_cart</i>

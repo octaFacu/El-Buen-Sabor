@@ -7,8 +7,15 @@ export default function PaginaPrincipalAdministrador() {
 
   const handleClick = (opcion: number) => {
     switch (opcion) {
+      case 3: 
+        navigate('/admin/estadisticas/InformeGanancias')
+        break;
+      case 4:
+        navigate('/admin/estadisticas/RankingProducto')
+        break;
       case 5:
         navigate("/admin/estadisticas/rankingCliente");
+        break;
     }
   }
 
@@ -25,9 +32,9 @@ export default function PaginaPrincipalAdministrador() {
             <button className='btn btn-administrar text-white mb-2'>Gestionar Rubros - Insumos - Productos</button>
           </div>
           <div className="d-flex justify-content-between btn-separador btn-AñadirPadding">
-            <button className='btn btn-administrar text-white btn-margenDerecho'>Ver ranking comidas</button>
+            <button className='btn btn-administrar text-white btn-margenDerecho' onClick={()=> handleClick(4)}>Ver ranking comidas</button>
             <button className='btn btn-administrar text-white btn-margenDerecho' onClick={() => handleClick(5)}>Ver ranking clientes</button>
-            <button className='btn btn-administrar text-white'>Generar informe ganancias</button>
+            <button className='btn btn-administrar text-white' onClick={()=> handleClick(3)}>Generar informe ganancias</button>
           </div>
         </div>
       </div>

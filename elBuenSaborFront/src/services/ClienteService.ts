@@ -26,9 +26,12 @@ export class ClienteService extends ServiceBasicos {
   }
 
 
-  async getPedidosUsuario(clienteId: number, page: number = 0, size: number = 1): Promise<PageProyeccionHistorialPedido<ProyeccionPedidoUsuario>> {
+  async getPedidosUsuario(clienteId: number, page: number = 0, size: number = 1, fechaInicio: Date | null = null, fechaFin: Date | null = null): Promise<PageProyeccionHistorialPedido<ProyeccionPedidoUsuario>> {
     try {
-      const parametros = `?page=${page}&size=${size}`;
+      let parametros = `?page=${page}&size=${size}`;
+      if (fechaInicio !== null && fechaFin !== null) {
+        parametros += `&fechaInicio=${fechaInicio}&fechaFin=${fechaFin}`;
+      }
       const res = await fetch(`${this.url}/historialPedidos/${clienteId}${parametros}`);
 
       if (!res.ok) {
@@ -63,7 +66,7 @@ export class ClienteService extends ServiceBasicos {
   async getRankingClientess(
     page: number = 0,
     size: number = 3,
-    orderBy: string = 'importe_total',
+    orderBy: string = 'id_cliente',
     direccion: string = 'desc',
     fechaInicio: Date | null = null,
     fechaFin: Date | null = null

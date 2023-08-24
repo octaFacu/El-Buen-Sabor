@@ -1,3 +1,5 @@
+import { PageProyeccionHistorialPedido } from "../context/interfaces/Proyecciones/ProyeccionHistorialPedidoCliente";
+import { rankingProductos } from "../context/interfaces/Proyecciones/ProyeccionProductoRanking";
 import { ServiceBasicos } from "./ServiceBasicos";
 
 
@@ -62,4 +64,43 @@ export class ProductoService extends ServiceBasicos{
           console.log(`Error ${err.status}: ${err.statusText}`);
       }
     }
+
+    async getRankingProductosComida(fechaInicio: Date | null = null, fechaFin: Date | null = null, direccion: string, size: number=3, page: number=0
+      ):Promise<PageProyeccionHistorialPedido<rankingProductos>>
+      {
+      try {
+        let parametros = `?page=${page}&size=${size}&direccionOrden=${direccion}`;
+        
+        if (fechaInicio !== null && fechaFin !== null) {
+          parametros += `&fechaInicio=${fechaInicio}&fechaFin=${fechaFin}`;
+        }
+
+        const res = await fetch(`${this.url}/rankingProductos/comida${parametros}`);
+
+        const jsonRes = await res.json();
+        return jsonRes;
+      } catch (error:any) {
+        return error;
+      }
     }
+
+    async getRankingProductosBebida(fechaInicio: Date | null = null, fechaFin: Date | null = null, direccion: string, size: number=3, page: number=0
+      ):Promise<PageProyeccionHistorialPedido<rankingProductos>>
+      {
+      try {
+        let parametros = `?page=${page}&size=${size}&direccionOrden=${direccion}`;
+        
+        if (fechaInicio !== null && fechaFin !== null) {
+          parametros += `&fechaInicio=${fechaInicio}&fechaFin=${fechaFin}`;
+        }
+
+        const res = await fetch(`${this.url}/rankingProductos/bebida${parametros}`);
+
+        const jsonRes = await res.json();
+        return jsonRes;
+      } catch (error:any) {
+        return error;
+      }
+    }
+
+}

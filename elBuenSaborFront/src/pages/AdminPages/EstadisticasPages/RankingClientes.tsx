@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react'
 import { PageProyeccionHistorialPedido, ProyeccionHistorialPedido } from '../../../context/interfaces/Proyecciones/ProyeccionHistorialPedidoCliente';
 import { ClienteService } from '../../../services/ClienteService';
-import ClientesCardComponent from '../../../components/ComponentesRanking/ClientesCardComponent';
+import ClientesCardComponent from '../../../components/ComponentesRanking/ComponenteRankingCliente/ClientesCardComponent';
 import '../../../css/estilosEstadistias.css'
 import Paginacion from '../../../components/genericos/Paginacion';
-import OrdenamientosClienteComponent from '../../../components/ComponentesRanking/OrdenamientosClienteComponent';
+import OrdenamientosClienteComponent from '../../../components/ComponentesRanking/ComponenteRankingCliente/OrdenamientosClienteComponent';
 import BotonExcelYAtrasComponent from '../../../components/ComponentesRanking/BotonExcelYAtrasComponent';
 
 
@@ -13,7 +13,7 @@ export default function RankingClientes() {
     const [page, setPage] = useState<number>(0);
     const [rankingCliente, setRankingCliente] = useState<PageProyeccionHistorialPedido<ProyeccionHistorialPedido>>();
     const servicioCliente = new ClienteService();
-    const [orderBy, setOrderBy] = useState<string>("importe_total");
+    const [orderBy, setOrderBy] = useState<string>("id_cliente");
     const [direccion, setDireccion] = useState<string>("DESC");
     const [startDate, setStartDate] = useState<Date | null>(null);
     const [endDate, setEndDate] = useState<Date | null>(null); // 
@@ -33,15 +33,15 @@ export default function RankingClientes() {
 
     useEffect(() => {
         traerClientesConOrden(page);
-    }, [page, orderBy, direccion]);
+    }, [page, orderBy, direccion, startDate, endDate]);
 
 
     const actualizarCriteriosOrdenamiento = (nuevoOrderBy: string, nuevaDireccion: string, nuevaFechaInicio: Date | null, nuevaFechaFin: Date | null) => {
         setOrderBy(nuevoOrderBy);
         setDireccion(nuevaDireccion);
-        setStartDate(nuevaFechaInicio); // Actualizar estado de fecha de inicio
-        setEndDate(nuevaFechaFin);      // Actualizar estado de fecha de fin
-        traerClientesConOrden(0);       // Traer clientes de la página 0 con los nuevos criterios y fechas
+        setStartDate(nuevaFechaInicio); 
+        setEndDate(nuevaFechaFin);     
+        traerClientesConOrden(0);  // Traer clientes de la página 0 con los nuevos criterios y fechas
     };
 
     if (rankingCliente === undefined) {
@@ -59,7 +59,7 @@ export default function RankingClientes() {
                     <div className="d-flex flex-column mb-3">
                         {rankingCliente.content.map((cliente) => (
                             <div key={cliente.id_cliente}>
-                                <ClientesCardComponent cliente={cliente} />
+                                <ClientesCardComponent cliente={cliente} startDate={startDate} endDate={endDate}/>
                             </div>
                         ))}
                     </div>
@@ -70,7 +70,7 @@ export default function RankingClientes() {
                     totalPages={rankingCliente.totalPages}
                     size={rankingCliente.size}
                 />
-                <BotonExcelYAtrasComponent />
+                <BotonExcelYAtrasComponent informe={1} nombre='InformeClientes'/>
             </div>
         </div>
     );

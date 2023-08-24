@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { useNavigate, useParams  } from 'react-router-dom';
+import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import { ProyeccionPedidoUsuario } from '../../../../context/interfaces/Proyecciones/ProyeccionPedidoUsuario';
 import CardHistorialPedidos from '../../../../components/componentesUsuarios/CardHistorialPedidos';
 import { PageProyeccionHistorialPedido } from '../../../../context/interfaces/Proyecciones/ProyeccionHistorialPedidoCliente';
@@ -15,13 +15,31 @@ export default function HistorialClienteAdmin() {
   const [historial, setHistorial] = useState<PageProyeccionHistorialPedido<ProyeccionPedidoUsuario>>();
   const [page, setPage] = useState<number>(0);
 
+  const location = useLocation();
+  const { startDate, endDate } = location.state || {};
+
   const traerHistorialPedidos = async (pageNumber: number) => {
     try {
-      console.log(clienteId)
       const servicioPedido = new ClienteService();
-      const historial = await servicioPedido.getPedidosUsuario(parseInt(clienteId ?? '0'), pageNumber);
-      setHistorial(historial);
-      
+      if (startDate !== null && endDate !== null) {
+        const historialFiltrado = await servicioPedido.getPedidosUsuario(
+          parseInt(clienteId ?? '0'),
+          pageNumber,
+          1,
+          startDate,
+          endDate
+        );
+
+        setHistorial(historialFiltrado);
+      } else {
+        
+        const historial = await servicioPedido.getPedidosUsuario(
+          parseInt(clienteId ?? '0'),
+          pageNumber
+        );
+        setHistorial(historial);
+      }
+
     } catch (err) {
       console.error(err);
     }
@@ -37,7 +55,6 @@ export default function HistorialClienteAdmin() {
 
   useEffect(() => {
     traerHistorialPedidos(page);
-  
   }, [page]);
 
   if (historial === undefined) {

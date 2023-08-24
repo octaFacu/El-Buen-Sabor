@@ -10,6 +10,7 @@ import { Component } from 'react';
 import PaginaPrincipalAdministrador from '../pages/AdminPages/PaginaPrincipalAdministrador';
 import RankingClientes from '../pages/AdminPages/EstadisticasPages/RankingClientes';
 import HistorialClienteAdmin from '../pages/AdminPages/EstadisticasPages/ClientesRanking/HistorialClienteAdmin';
+import RankingProductos from '../pages/AdminPages/EstadisticasPages/RankingProductos';
 
 
 export const routesConfig = [
@@ -52,6 +53,14 @@ export const routesConfig = [
     {
         path: '/admin/estadisticas/rankingCliente/HistorialCliente/:clienteId',
         component: HistorialClienteAdmin,
+    },
+    {
+        path: '/admin/estadisticas/RankingProducto',
+        component: RankingProductos,
+    },
+    {
+        path: '/admin/estadisticas/InformeGanancias',
+        component: RankingProductos,
     },
     {
         path: '*',

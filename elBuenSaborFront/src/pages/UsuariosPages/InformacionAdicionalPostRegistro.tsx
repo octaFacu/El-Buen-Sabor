@@ -54,9 +54,10 @@ export default function InformacionAdicionalPostRegistro() {
   }
 
   if (user && user.login_count === 1) {
+    
     return (
-      <div className="container mt-4" style={{ paddingTop: "100px" }}>
-        <div className="card card-generica cardFormularioConitnuacion">
+      <div className="container mx-auto justify-content-center align-items-center" >
+      <div className="card cardFormularioConitnuacion">
           <div className="card-body">
             <h3 className="card-title">Informacion Adicional</h3>
             <form onSubmit={handleSubmit}>
@@ -107,7 +108,7 @@ export default function InformacionAdicionalPostRegistro() {
                   onChange={handleInputChange}
                 />
               </div>
-              <button type="submit" className="btn  btnFormContinuacion">
+              <button type="submit" className="btn btnFormContinuacion">
                 Enviar
               </button>
             </form>

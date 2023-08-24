@@ -47,6 +47,10 @@
     width: 40vh;
 }
 
+.btn.enviar:hover{
+  background-color:  #fda859 !important;
+}
+
 .close {
     position: absolute;
     bottom: 0px; 
@@ -133,4 +137,16 @@
   margin-top: 10vh;
   background-color: #f99132 !important;
   color: white;
+}
+
+.imagenes-pedidos-usuario{
+  border-radius: 15%;
+  width: 5rem !important; 
+  height: 5rem !important; 
+  object-fit: cover;
+  flex-shrink: 0; 
+}
+
+.centrado-denominacion {
+  text-align: center; /* Centrar horizontalmente */
 }

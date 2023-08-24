@@ -7,13 +7,15 @@
 }
 
 .cardFormularioConitnuacion {
-    background-color: #fda859;
-    max-width: 600px;
+    background-color: #F99132 !important;
+    max-width: 70vh;
     margin: 0 auto;
+    margin-top: 15vh;
     text-align: center;
-    padding: 10px;
+    padding: 2rem;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    height: 50vh; 
+    max-height: 90vh !important; 
+    color: white;
   }
   
 .inputsControlador{

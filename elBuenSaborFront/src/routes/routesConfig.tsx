@@ -8,6 +8,7 @@ import { NotFound } from '../components/NotFound';
 import InformacionAdicionalPostRegistro from '../pages/UsuariosPages/InformacionAdicionalPostRegistro';
 import DetalleProducto from '../components/Landing/detalleProducto/DetalleProducto';
 import { Cart } from '../pages/CartPages/Cart';
+import Checkout from '../pages/CartPages/Checkout';
 
 export const routesConfig = [
     {
@@ -17,6 +18,10 @@ export const routesConfig = [
     {
         path: '/carrito',
         component: Cart,
+    },
+    {
+        path: '/checkout',
+        component: Checkout,
     },
     {
         path: '/usuarios',

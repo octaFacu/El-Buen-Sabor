@@ -3,6 +3,7 @@ import GenericContainer from '../../components/cart/genericContainer/GenericCont
 import ReturnButton from '../../components/cart/returnButton/ReturnButton'
 import { ProductoParaPedido } from '../../context/interfaces/interfaces';
 import CartListCard from '../../components/cart/cartListCard/CartListCard';
+import { NavLink } from 'react-router-dom';
 
 export const Cart = () => {
 
@@ -31,16 +32,11 @@ export const Cart = () => {
     const handleValorTotalChange = (nuevoValor: number, esSuma: boolean) => {
         if (esSuma) {
             setValorTotal(prevContador => prevContador + nuevoValor);
-        }else{
+        } else {
             setValorTotal(prevContador => prevContador - nuevoValor);
         }
-        
-    };
 
-    //Funsion para confirmar el pedido
-    const handlerConfirmOrder = () => {
-        console.log("Confirmar pedido");
-    }
+    };
 
     useEffect(() => {
         const storedCartItems = localStorage.getItem('carritoArreglo');
@@ -73,9 +69,11 @@ export const Cart = () => {
                 <div className="my-4 d-flex justify-content-evenly align-items-center">
                     <div className="mx-5"></div>
 
-                    <button className="px-5 py-2 btn btn-add-order d-flex" onClick={handlerConfirmOrder}>
-                        Confirmar pedido
-                    </button>
+                    <NavLink className="px-5 py-2 btn btn-add-order d-flex" to={"/checkout"} state={
+                        {
+                            valorTotal: valorTotal,
+                            localStorageValues: localStorageValues
+                        }}>Continuar</NavLink>
 
                     <div className="container-valor-total">
                         <span className="txt-Total">Total: </span>

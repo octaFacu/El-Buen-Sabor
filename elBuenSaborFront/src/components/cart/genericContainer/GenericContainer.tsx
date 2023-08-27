@@ -14,7 +14,7 @@ const GenericContainer: FC<GenericContainerProps> = ({ children, title }) => {
 
     return (
         <div className="pb-5">
-            <div className="otra-clase container pb-1" style={{ background: "#f99132", borderRadius: "25px" }}>
+            <div className="container pb-1 mb-5" style={{ background: "#f99132", borderRadius: "25px" }}>
                 <div className="titleAndAddButton">
                     <div className="text-center py-4 px-3 d-flex">
 

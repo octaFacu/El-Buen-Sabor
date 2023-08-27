@@ -1,0 +1,23 @@
+.order-information-div {
+  background-color: var(--main-color);
+  border-radius: 20px;
+  padding: 1rem;
+  color: white;
+  font-family: var(--letra-btn);
+
+  /* Propiedad de sombra */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3); 
+
+  /* font-weight: bold !important; */
+}
+
+.separator-line {
+  position: relative;
+  /* background: rgb(234, 227, 227);
+  border-bottom: 1px solid rgb(234, 227, 227); */
+  background: rgb(206, 127, 9);
+  border-bottom: 1px solid rgb(206, 127, 9);
+  margin-left: 0%;
+  width: 85%;
+  margin: auto;
+}

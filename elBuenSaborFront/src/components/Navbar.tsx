@@ -17,7 +17,7 @@ const Navbar: React.FC = () => {
 
   const filterHandler = () => {
     setBusquedaXNombre(filterText);
-    setFilterText("");
+    // setFilterText("");
   }
 
   if (isLoading) {

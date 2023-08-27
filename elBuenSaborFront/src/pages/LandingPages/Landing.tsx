@@ -192,7 +192,8 @@ export const Landing = () => {
         console.log("pageNumber: " + pageNumber);
 
         setIsLoading(true);
-        fetchProducts(pageNumber).then((data) => {
+        // fetchProducts(pageNumber).then((data) => {
+        fetchProducts(categorias[pageNumber - 1].id!).then((data) => {
           setProductos((arreglosActuales) => [...arreglosActuales, data]);
           setIsLoading(false);
 
@@ -248,10 +249,10 @@ export const Landing = () => {
             }}>Volver al inicio</button>
           </div>
 
-          <CarruselCategorias
+          {/* <CarruselCategorias
             categorias={categorias}
             setCategoriaSeleccionada={setCategoriaSeleccionada}
-          />
+          /> */}
 
           {/* Si busco por categoria */}
           {categoriaSeleccionada &&
@@ -271,7 +272,7 @@ export const Landing = () => {
           {busquedaXNombre &&
             <div>
               <ListCard
-                categoria={"Resultados para: " + busquedaXNombre}
+                categoria={'"' + busquedaXNombre + '"'}
                 productos={productosPorFiltro}
                 setModalDetalleProducto={setModalDetalleProducto}
                 setProductoSeleccionado={setProductoSeleccionado}

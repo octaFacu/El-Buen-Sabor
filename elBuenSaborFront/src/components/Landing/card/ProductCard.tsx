@@ -32,7 +32,7 @@ const ProductCard: FC<ProductCardProps> = ({ producto, setProductoSeleccionado, 
 
 
         <div className="col-sm-6 col-md-4 responsiveCard" >
-            <div className="card cardEdit mb-3">
+            <div className="card product-card cardEdit mb-3">
                 {/* <div className="card-body"> */}
                 <div>
 

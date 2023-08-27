@@ -1,3 +1,11 @@
+.product-card{
+  border-radius: 11px !important;
+  margin-left: 5vh;
+  margin-top: 10vh;
+  background-color: var(--input-text) !important;
+  color: white;
+}
+
 .cardEdit {
   margin-left: 0px !important;
   margin-top: 0px !important;

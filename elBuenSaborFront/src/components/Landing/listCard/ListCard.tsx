@@ -41,7 +41,7 @@ const ListCard: FC<ListCardProps> = ({ categoria, productos, setModalDetalleProd
                 </div>
 
                 <div className="d-flex justify-content-center p-5 m-5">
-                    <h1>No hay {categoria.toLowerCase()}</h1>
+                    <h1>No hay resultados para {categoria.toLowerCase()}</h1>
 
                 </div>
             </div>
@@ -78,13 +78,13 @@ const ListCard: FC<ListCardProps> = ({ categoria, productos, setModalDetalleProd
 
 
         <div className="container-cat" style={{ marginTop: "3%" }}>
-            <div className="centerTitle">
 
-                <hr style={{ marginRight: "2%", marginLeft: "2%" }}></hr>
-                <div className="mt-3" style={{ textAlign: "center" }}>
-                    <h3 style={{ color: "#864e1b" }}>{categoria}</h3>
+            <div className="centerTitle">
+                <hr className="hr-title mx-3"></hr>
+                <div className="mt-3 title-section">
+                    <h3 className="title-section" style={{ color: "#864e1b" }}>{categoria}</h3>
                 </div>
-                <hr style={{ marginRight: "2%", marginLeft: "2%" }}></hr>
+                <hr className="hr-title mx-3"></hr>
             </div>
 
             <div className="row rowEdit">

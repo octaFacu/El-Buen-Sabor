@@ -3,12 +3,17 @@ import GenericContainer from '../../components/cart/genericContainer/GenericCont
 import ReturnButton from '../../components/cart/returnButton/ReturnButton'
 import { ProductoParaPedido } from '../../context/interfaces/interfaces';
 import CartListCard from '../../components/cart/cartListCard/CartListCard';
-import { NavLink } from 'react-router-dom';
+import { NavLink, Outlet, useNavigate } from 'react-router-dom';
+import { useAuth0 } from '@auth0/auth0-react';
+import { Link } from 'react-router-dom';
 
 export const Cart = () => {
 
     const [valorTotal, setValorTotal] = useState<number>(0);
     const [localStorageValues, setLocalStorageValues] = useState<ProductoParaPedido[]>([]);
+
+    //Para saber si el usuario esta logueado
+    const { isAuthenticated } = useAuth0()
 
     //Actualiza las cantidades de un producto en las cartas
     const actualizarCantidad = (indice: number, nuevaCantidad: number) => {
@@ -69,11 +74,20 @@ export const Cart = () => {
                 <div className="my-4 d-flex justify-content-evenly align-items-center">
                     <div className="mx-5"></div>
 
-                    <NavLink className="px-5 py-2 btn btn-add-order d-flex" to={"/checkout"} state={
-                        {
-                            valorTotal: valorTotal,
-                            localStorageValues: localStorageValues
-                        }}>Continuar</NavLink>
+                    {/* Valida si el usuario esta logueado apra ver a que vista mandarlo */}
+                    <NavLink
+                        className="px-5 py-2 btn btn-add-order d-flex"
+                        to={isAuthenticated
+                            ? "/checkout" 
+                            : "https://dev-elbuensabor.us.auth0.com/u/signup?state=hKFo2SBteUtJVWZocnJsOVllbEIyblNRNEVJcHplbXpmRS11cqFur3VuaXZlcnNhbC1sb2dpbqN0aWTZIFpQdGFRTmVkV1hHVEJKaTlkNDh1R1I2R2RsaGxSNm1Vo2NpZNkgR0ZCR3daUFB1RktNS1VzVHRyZmt3QXFHM0JKQ0llNWw"}
+                        state={isAuthenticated
+                            ? {
+                                valorTotal: valorTotal,
+                                localStorageValues: localStorageValues
+                            }
+                            : null
+                        }
+                    >Continuar</NavLink>
 
                     <div className="container-valor-total">
                         <span className="txt-Total">Total: </span>

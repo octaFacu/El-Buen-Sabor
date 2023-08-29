@@ -3,6 +3,8 @@ import { useLocation } from "react-router-dom";
 import { ProductoParaPedido } from "../../context/interfaces/interfaces";
 import OrderInformation from "../../components/checkout/orderInformation/OrderInformation";
 import PurchaseSteps from "../../components/checkout/purchaseSteps/PurchaseSteps";
+import ButtonsNextPrev from "../../components/checkout/buttonsNextPrev/ButtonsNextPrev";
+import OrderSelections from "../../components/checkout/orderSelections/OrderSelections";
 
 
 interface CheckoutProps {
@@ -18,6 +20,12 @@ const Checkout: FC<CheckoutProps> = () => {
 
     const [estadoCompra, setEstadoCompra] = useState<number>(1);
 
+    //Funcion para terminar de generar el pedido
+    const generarPedido = () =>{
+        console.log("genero el pedido");
+        
+    }
+
     return (
         <div className="container">
             <div className="row mt-5">
@@ -32,15 +40,19 @@ const Checkout: FC<CheckoutProps> = () => {
                     <div className="container" style={{ background: "#f99132", borderRadius: "25px" }}>
                         <div className="m-auto my-5" style={{ width: "90%" }}>
 
-                            <h1>SELECCION</h1>
+                            <OrderSelections 
+                                estadoCompra={estadoCompra}
+                            
+                            />
+
                         </div>
                     </div >
 
-                    {/* Lo hago componente???????? */}
-                    <div className="d-flex justify-content-between">
-                        <button onClick={() => setEstadoCompra(estadoCompra - 1)}>Paso Anterior</button>
-                        <button onClick={() => setEstadoCompra(estadoCompra + 1)}>Continuar</button>
-                    </div>
+                    <ButtonsNextPrev 
+                        estadoCompra={estadoCompra}
+                        setEstadoCompra={setEstadoCompra}
+                        generarPedido={generarPedido}
+                    />
 
                 </div>
 

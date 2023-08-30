@@ -108,6 +108,7 @@ const DetalleProducto: FC<DetalleProductoProps> = ({ producto, modalDetalleProdu
                             </div>
                             <button className="btn btn-add-cart d-flex align-items-center" onClick={() => {
                                 handleAddToCart({ producto: producto, cantidad: cant })
+                                setCant(1)
                                 setModalDetalleProducto(!modalDetalleProducto)
                             }}>
                                 Agregar al<i className="material-icons cart-icon" style={{ fontSize: "23px", cursor: "pointer" }}> shopping_cart</i>

@@ -1,10 +1,12 @@
 import { FC } from "react";
+import { Direccion } from "../../../context/interfaces/interfaces";
 
 interface OrderSelectionsProps {
     estadoCompra: number;
+    direcciones: Direccion[]
 }
 
-const OrderSelections: FC<OrderSelectionsProps> = ({ estadoCompra }) => {
+const OrderSelections: FC<OrderSelectionsProps> = ({ estadoCompra, direcciones }) => {
 
 
     if (estadoCompra === 1) {

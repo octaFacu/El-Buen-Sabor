@@ -36,7 +36,7 @@ const ProductCard: FC<ProductCardProps> = ({ producto, setProductoSeleccionado, 
                 {/* <div className="card-body"> */}
                 <div>
 
-                    <img className="imgCard" src={producto.imagen} alt="Hamburguesa simple" onClick={abrirModal}></img>
+                    <img className="imgCard" src={producto.imagen} alt={producto.denominacion} onClick={abrirModal}></img>
                     <div className="cardTextContent margin-text">
                         <div style={{ marginLeft: "2%" }}>
                             <div className="cursor-pointer" onClick={abrirModal}>

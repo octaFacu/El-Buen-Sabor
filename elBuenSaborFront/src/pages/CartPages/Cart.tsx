@@ -13,7 +13,7 @@ export const Cart = () => {
     const [localStorageValues, setLocalStorageValues] = useState<ProductoParaPedido[]>([]);
 
     //Para saber si el usuario esta logueado
-    const { isAuthenticated } = useAuth0()
+    const { isAuthenticated, loginWithRedirect } = useAuth0()
 
     //Actualiza las cantidades de un producto en las cartas
     const actualizarCantidad = (indice: number, nuevaCantidad: number) => {
@@ -75,19 +75,26 @@ export const Cart = () => {
                     <div className="mx-5"></div>
 
                     {/* Valida si el usuario esta logueado apra ver a que vista mandarlo */}
-                    <NavLink
-                        className="px-5 py-2 btn btn-add-order d-flex"
-                        to={isAuthenticated
-                            ? "/checkout" 
-                            : "https://dev-elbuensabor.us.auth0.com/u/signup?state=hKFo2SBteUtJVWZocnJsOVllbEIyblNRNEVJcHplbXpmRS11cqFur3VuaXZlcnNhbC1sb2dpbqN0aWTZIFpQdGFRTmVkV1hHVEJKaTlkNDh1R1I2R2RsaGxSNm1Vo2NpZNkgR0ZCR3daUFB1RktNS1VzVHRyZmt3QXFHM0JKQ0llNWw"}
-                        state={isAuthenticated
-                            ? {
+                    {isAuthenticated
+                        ? <NavLink
+                            className="px-5 py-2 btn btn-add-order d-flex"
+                            to={"/checkout"}
+                            state={{
                                 valorTotal: valorTotal,
                                 localStorageValues: localStorageValues
-                            }
-                            : null
-                        }
-                    >Continuar</NavLink>
+                            }}
+                        >Continuar</NavLink>
+                        : <NavLink
+                            className="px-5 py-2 btn btn-add-order d-flex"
+                            onClick={() => loginWithRedirect({
+                                authorizationParams: {
+                                    screen_hint: 'signup',
+                                    redirect_uri: 'http://localhost:5173/informacionAdicional',
+                                },
+                            })}
+                            to={"#"}
+                        >Continuar</NavLink>
+                    }
 
                     <div className="container-valor-total">
                         <span className="txt-Total">Total: </span>

@@ -34,7 +34,7 @@ export default function PaginaPrincipalAdministrador() {
           <div className="d-flex justify-content-between btn-separador btn-AñadirPadding">
             <button className='btn btn-administrar text-white btn-margenDerecho' onClick={()=> handleClick(4)}>Ver ranking comidas</button>
             <button className='btn btn-administrar text-white btn-margenDerecho' onClick={() => handleClick(5)}>Ver ranking clientes</button>
-            <button className='btn btn-administrar text-white' onClick={()=> handleClick(3)}>Generar informe ganancias</button>
+            <button className='btn btn-administrar text-white' onClick={()=> handleClick(3)}>ver informe ganancias</button>
           </div>
         </div>
       </div>

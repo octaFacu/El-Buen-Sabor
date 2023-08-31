@@ -103,4 +103,51 @@ export class ProductoService extends ServiceBasicos{
       }
     }
 
+    async getInformeGananciasGrafico(fechaInicio: Date | null = null, fechaFin: Date | null = null){
+      try {
+        let parametros = "";
+        
+        if (fechaInicio !== null && fechaFin !== null) {
+          parametros += `?fechaInicio=${fechaInicio}&fechaFin=${fechaFin}`;
+        }
+
+        const res = await fetch(`${this.url}/informeGanancias/grafico${parametros}`);
+
+        const jsonRes = await res.json();
+        return jsonRes;
+      } catch (error:any) {
+        return error;
+      }
+    }
+
+    
+    async getInformeRentabilidad(fechaInicio: Date | null = null, fechaFin: Date | null = null){
+      try {
+        let parametros = "";
+        
+        if (fechaInicio !== null && fechaFin !== null) {
+          parametros += `?fechaInicio=${fechaInicio}&fechaFin=${fechaFin}`;
+        }
+
+        const res = await fetch(`${this.url}/informeGanancias/graficoRentabilidad${parametros}`);
+
+        const jsonRes = await res.json();
+        return jsonRes;
+      } catch (error:any) {
+        return error;
+      }
+    }
+
+    async getInformeGananciasMes(){
+      try {
+
+        const res = await fetch(`${this.url}/informeGanancias/graficoGananciaMes`);
+
+        const jsonRes = await res.json();
+        return jsonRes;
+      } catch (error:any) {
+        return error;
+      }
+    }
+
 }

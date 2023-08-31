@@ -20,6 +20,9 @@ export default function BotonExcelYAtrasComponent({informe, nombre}: Props) {
                 case 2:
                     blob = await servicioAdmin.generarInformeProductos();
                     break;
+                case 3:
+                    blob = await servicioAdmin.generarInformeGanancias();
+                    break;
                 default:
                     console.error("Opción no válida");
                     return;

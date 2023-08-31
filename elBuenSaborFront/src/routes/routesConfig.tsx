@@ -11,6 +11,7 @@ import PaginaPrincipalAdministrador from '../pages/AdminPages/PaginaPrincipalAdm
 import RankingClientes from '../pages/AdminPages/EstadisticasPages/RankingClientes';
 import HistorialClienteAdmin from '../pages/AdminPages/EstadisticasPages/ClientesRanking/HistorialClienteAdmin';
 import RankingProductos from '../pages/AdminPages/EstadisticasPages/RankingProductos';
+import InformeGanancias from '../pages/AdminPages/EstadisticasPages/InformeGanancias';
 
 
 export const routesConfig = [
@@ -60,7 +61,7 @@ export const routesConfig = [
     },
     {
         path: '/admin/estadisticas/InformeGanancias',
-        component: RankingProductos,
+        component: InformeGanancias,
     },
     {
         path: '*',

@@ -8,6 +8,11 @@
 .ancho-card {
   width: 75rem;
 }
+
+.largo-card {
+  height: 35rem;
+}
+
 .btn-administrar {
   background-color: #864e1b !important;
   border-radius: 30px !important;

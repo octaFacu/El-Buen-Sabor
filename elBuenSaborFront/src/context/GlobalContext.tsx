@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction, createContext, useContext } from "react";
-import { unidadDeMedida, Ingrediente } from "./interfaces/interfaces";
+import { unidadDeMedida, Ingrediente, CategoriaProducto } from "./interfaces/interfaces";
 
 //Interface de que es lo que va a contener este contexto
 export interface UnidadContextInteface{
@@ -9,6 +9,9 @@ export interface UnidadContextInteface{
 
     ingredientes: Ingrediente[],
     setIngredientes: Dispatch<SetStateAction<Ingrediente[]>>
+
+    // categorias: CategoriaProducto[],
+    // setCategorias: Dispatch<SetStateAction<CategoriaProducto[]>>
 
 }
 
@@ -20,7 +23,8 @@ export const GlobalContext = createContext<UnidadContextInteface>({
     setUnidadesDeMedida: () => {},
     ingredientes: [],
     setIngredientes: () => {},
-
+    // categorias: [],
+    // setCategorias: () => {}
 
 
 });

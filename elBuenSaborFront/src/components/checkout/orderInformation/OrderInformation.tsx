@@ -20,9 +20,9 @@ const OrderInformation: FC<OrderInformationProps> = ({ valorTotal, localStorageV
             <div className="separator-line my-2" />
 
             <div>
-                {localStorageValues.map((el) => {
+                {localStorageValues.map((el, index) => {
                     return (
-                        <div className="d-flex justify-content-between">
+                        <div className="d-flex justify-content-between" key={index}>
                             <span>{el.producto.denominacion} x{el.cantidad}</span>
                             <span>${el.producto.precioTotal * el.cantidad}</span>
                         </div>

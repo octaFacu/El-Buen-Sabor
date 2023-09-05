@@ -67,3 +67,9 @@ export interface ProductoParaPedido{
   producto: Producto,
   cantidad: number
 }
+
+export interface UserAuth0{
+  nombre?: string,
+  apellido?: string,
+  email?: string
+}

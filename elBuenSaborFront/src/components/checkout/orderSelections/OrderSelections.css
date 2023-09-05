@@ -1,0 +1,17 @@
+.separator-line-selections {
+  position: relative;
+  background: rgb(206, 127, 9);
+  border-bottom: 1px solid rgb(206, 127, 9);
+  margin-left: 0%;
+  width: 85%;
+}
+
+.fomat-order-selection {
+    color: white;
+    font-family: var(--letra-inputs);
+}
+
+.add-direction-btn{
+    background-color: var(--btn-color-light) !important;
+    border-radius: 20px;
+}

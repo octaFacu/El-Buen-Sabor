@@ -23,11 +23,6 @@ const ProductCard: FC<ProductCardProps> = ({ producto, setProductoSeleccionado, 
         console.log(producto);
     }
 
-    const addProductFromCard = () => {
-        console.log("Añado producto desde la carta");
-        
-    }
-
     return (
 
 

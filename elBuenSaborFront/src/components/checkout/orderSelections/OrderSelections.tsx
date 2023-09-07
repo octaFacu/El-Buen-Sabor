@@ -88,7 +88,6 @@ const OrderSelections: FC<OrderSelectionsProps> = ({ estadoCompra, direcciones, 
             <>
                 <h1>pag 3</h1>
                 <Pago
-                    publicToken={import.meta.env.VITE_MP_PUBLIC_KEY! as string}
                     usuarioMP={usuarioMP}
                     localStorageValues={localStorageValues}
                 />

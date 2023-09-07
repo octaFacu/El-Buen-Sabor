@@ -1,61 +1,43 @@
 import { FC, useEffect, useState } from "react";
 import { initMercadoPago, Wallet } from '@mercadopago/sdk-react'
-import { ProductoParaPedido, UserAuth0 } from "../../../context/interfaces/interfaces";
+import { ProductoParaPedido, RequestDataMP, UserAuth0 } from "../../../context/interfaces/interfaces";
+import ListLoader from "../../Landing/listLoader/ListLoader";
+import "./Pago.css"
 
 interface PagoProps {
-    publicToken: string
-
     usuarioMP: UserAuth0
     localStorageValues: ProductoParaPedido[]
 }
 
-const Pago: FC<PagoProps> = ({ publicToken, usuarioMP, localStorageValues }) => {
+const Pago: FC<PagoProps> = ({ usuarioMP, localStorageValues }) => {
 
-    initMercadoPago(publicToken);
+    initMercadoPago(import.meta.env.VITE_MP_PUBLIC_KEY! as string);
+    //initMercadoPago(import.meta.env.VITE_MP_TEST_PUBLIC_KEY! as string);
 
-    const [preferenceId, setPreferenceId] = useState<string>();
+    const [preferenceId, setPreferenceId] = useState<string>("");
 
-    const productos: ProductoParaPedido[] = localStorageValues;
-    const usuario: UserAuth0 = usuarioMP;
+    const requestData: RequestDataMP = {
+        usuario: usuarioMP,
+        productos: localStorageValues
+    }
 
     const fetchCheckout = async () => {
-
-        console.log("Inicio peticion MP");
-        console.log(productos);
 
         const res = await fetch("http://localhost:8080/mp/checkout", {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({
-                //usuario,
-                //productos
-            })
+            body: JSON.stringify(
+                requestData
+            )
         })
 
         const data = await res.json()
-        //setPreferenceId(data)
+        setPreferenceId(data.preferenceId)
         console.log("RESPUESTA DE MERCADO PAGO:");
         console.log(data);
-        
 
-        // if (data.global) {
-        //     const mp = new window.MercadoPago(import.meta.env.NEXT_PUBLIC_MP_PUBLIC_KEY, {
-        //         locale: "es-AR"
-        //     })
-        //     const bricksBuilder = mp.bricks();   
-
-        //     mp.checkout({
-        //         preference: {
-        //             id: data.global
-        //         },
-        //         render: {
-        //             container: ".cho-container",
-        //             label: "Pagar"
-        //         }
-        //     })
-        // }
     }
 
     useEffect(() => {
@@ -64,12 +46,18 @@ const Pago: FC<PagoProps> = ({ publicToken, usuarioMP, localStorageValues }) => 
 
     }, [])
 
+    if (preferenceId != "") {
+        return (
+            <div className="btn-mp">
+                <Wallet initialization={{ preferenceId: preferenceId! }} />
+            </div>
+        );
+    }
+
     return (
-        <>
-            {/* <div id="cho-container"></div> */}
-            <Wallet initialization={{ preferenceId: preferenceId! }} />
-        </>
+        <ListLoader />
     );
+
 }
 
 export default Pago;

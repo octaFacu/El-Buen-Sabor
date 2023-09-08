@@ -12,7 +12,7 @@ const OrderInformation: FC<OrderInformationProps> = ({ valorTotal, localStorageV
 
 
     return (
-        <div className="order-information-div">
+        <div className="order-information-div m-auto">
             <div>
                 <h3>Tu pedido</h3>
             </div>

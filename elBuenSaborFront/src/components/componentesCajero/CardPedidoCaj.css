@@ -1,0 +1,39 @@
+.text-pedido{
+    color: white;
+}
+
+.separator-white{
+    height: 3px; 
+    border: none; 
+    background-color: white; 
+}
+
+.card-pedidos{
+    flex: auto;
+    text-align: center;
+    background-color: #9e6b3b; 
+    border-radius: 15px;
+    border: none;
+}
+
+.dropdown-estado{
+    border-radius: "25px";
+     background-color: "#FDA859";
+    color: "white"
+}
+
+.imagen-pedido{
+    max-width: 35%;
+    max-height: 6%;
+    border-radius: 5%;
+}
+.product-container {
+    border-radius: 4%;
+    background-color: #5a3b1f;
+    display: flex; /* Use flexbox to align items side by side */
+    align-items: center; /* Align items vertically within the container */
+}
+
+.cocina-card{
+    cursor: pointer;
+}

@@ -1,5 +1,5 @@
 
-.card{
+.card-generica{
   border-radius: 11px !important;
   margin-left: 5vh;
   margin-top: 10vh;
@@ -13,17 +13,15 @@
 }
 
 
-/* .btn{
-  font-size: 1.2rem !important; 
-} */
 .btn-color {
   background-color: #864E1B !important;
   border-color: #864E1B !important;
+  font-size: 1.2rem !important; 
 }
 
-/* .btn:hover {
+.btn-hover:hover {
   background-color: #FDA859 !important;
-} */
+}
 
 .my-3{
   border: 2px solid white;

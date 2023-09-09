@@ -1,0 +1,35 @@
+.custom-datepicker {
+    border-radius: 30px;
+    background-color: #864E1B; /* Cambia el color de fondo a naranja */
+    border: 1px solid #F99132;
+    margin: 5px;
+    color: white;
+    text-align: center;
+}
+
+.btn-reseteo-fechas{
+    border-radius: 11px !important;
+    color: white !important;
+    background-color: gray !important;
+    margin-right: 5px;
+}
+
+.btn-reseteo-fechas:hover{
+    background-color:  #864E1B !important;
+}
+
+.btn-busqueda-fechas {
+    border-radius: 11px !important;
+    color: white !important;
+    background-color: gray !important;
+    margin-right: 5px;
+}
+
+.btn-busqueda-fechas:hover {
+    background-color: #864E1B !important;
+}
+
+.pruebita{
+ margin-top: 0.625rem;
+ margin-right: 0.625rem;
+}

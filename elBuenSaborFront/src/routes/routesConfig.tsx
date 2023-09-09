@@ -8,6 +8,12 @@ import { NotFound } from '../components/NotFound';
 import InformacionAdicionalPostRegistro from '../pages/UsuariosPages/InformacionAdicionalPostRegistro';
 import { Cart } from '../pages/CartPages/Cart';
 import Checkout from '../pages/CartPages/Checkout';
+import PaginaPrincipalAdministrador from '../pages/AdminPages/PaginaPrincipalAdministrador';
+import RankingClientes from '../pages/AdminPages/EstadisticasPages/RankingClientes';
+import HistorialClienteAdmin from '../pages/AdminPages/EstadisticasPages/ClientesRanking/HistorialClienteAdmin';
+import RankingProductos from '../pages/AdminPages/EstadisticasPages/RankingProductos';
+import InformeGanancias from '../pages/AdminPages/EstadisticasPages/InformeGanancias';
+
 
 export const routesConfig = [
     {
@@ -45,6 +51,26 @@ export const routesConfig = [
     {
         path: '/abm/productos',
         component: ProductosABM,
+    },
+    {
+        path: '/admin',
+        component: PaginaPrincipalAdministrador,
+    },
+    {
+        path: '/admin/estadisticas/rankingCliente',
+        component: RankingClientes,
+    },
+    {
+        path: '/admin/estadisticas/rankingCliente/HistorialCliente/:clienteId',
+        component: HistorialClienteAdmin,
+    },
+    {
+        path: '/admin/estadisticas/RankingProducto',
+        component: RankingProductos,
+    },
+    {
+        path: '/admin/estadisticas/InformeGanancias',
+        component: InformeGanancias,
     },
     {
         path: '*',

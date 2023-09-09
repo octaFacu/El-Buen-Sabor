@@ -2,10 +2,12 @@ import { useEffect, useState } from "react";
 import {
   Usuario,
   proyeccionProductoFavorito,
-} from "../../context/interfaces/interfaces";
+} 
+from "../../context/interfaces/interfaces";
 import { FavoritoService } from "../../services/FavoritoService";
 import { ClienteService } from "../../services/ClienteService";
 import "../../css/favoritos.css";
+import "../../css/estilosEstadistias.css"
 
 interface Props {
   usuario: Usuario;
@@ -34,9 +36,9 @@ export default function MisFavoritosComponent({ usuario }: Props) {
   return (
     <div className="text-center" style={{ marginTop: "6rem" }}>
       <h2 className="bold">Mis favoritos</h2>
-      <div className="card-container">
+      
         {productos?.map((producto) => (
-          <div key={producto.id} className="card espacioEntreCards">
+          <div key={producto.id} className="card card-generica espacioEntreCards">
             <div className="card-body">
               <div className="d-flex justify-content-between align-items-center">
                 <div className="img-flex">
@@ -77,6 +79,6 @@ export default function MisFavoritosComponent({ usuario }: Props) {
           </div>
         ))}
       </div>
-    </div>
+ 
   );
 }

@@ -25,7 +25,7 @@ export default function MiCuentaComponent() {
       <div className="row mb-3">
         <div className="col-md-11">
           <button
-            className="card w-100 text-black text-decoration-none"
+            className="card card-generica w-100 text-black text-decoration-none"
             onClick={abrirModalInformacion}
           >
             <div className="card-body">
@@ -42,7 +42,7 @@ export default function MiCuentaComponent() {
         </div>
         <div className="col-md-11">
           <button
-            className="card w-100 text-decoration-none"
+            className="card card-generica w-100 text-decoration-none"
             onClick={abrirModalContraseña}
           >
             <div className="card-body">

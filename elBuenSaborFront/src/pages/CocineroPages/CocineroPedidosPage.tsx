@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { ListaCartasABM } from "../../components/genericos/ListaCartasABM"
-import Pedido, { EstadoPedido } from "../../context/models/Pedido";
+import Pedido, { EstadoPedido } from "../../context/interfaces/Pedido";
 import { PedidoService } from "../../services/PedidoService";
 import '../CajeroPages/CajeroPagesStyle.css';
 import { Stomp } from "@stomp/stompjs";
@@ -8,7 +8,7 @@ import * as SockJS from 'sockjs-client';
 import * as Socket from 'socket.io-client';
 import CardPedidoCocina from "../../components/componentesCocina/CardPedidoCocina";
 import DetalleProdCocina from "../../components/componentesCocina/DetalleProdCocina";
-import Producto from "../../context/models/Producto";
+import Producto from "../../context/interfaces/Producto";
 
 
 export const CocineroPedidosPage = () => {

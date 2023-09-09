@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { ListaCartasABM } from "../../components/genericos/ListaCartasABM"
-import Pedido, { EstadoPedido } from "../../context/models/Pedido";
+import Pedido, { EstadoPedido } from "../../context/interfaces/Pedido";
 import { PedidoService } from "../../services/PedidoService";
 import CardPedidoCaja from "../../components/componentesCajero/CardPedidoCaj";
 import './CajeroPagesStyle.css';

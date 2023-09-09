@@ -3,7 +3,7 @@ import MenuCat from '../../components/Landing/MenuCat'
 import ImgLogo from '../../components/Landing/ImgLogo'
 import CarruselCategorias from '../../components/Landing/carruselCategorias/CarruselCategorias'
 
-import { CategoriaProducto } from '../../context/models/interfaces'
+import { CategoriaProducto } from '../../context/interfaces/interfaces'
 import { CategoriaProductoService } from "../../services/CategoriaProductoService";
 
 export const Landing = () => {

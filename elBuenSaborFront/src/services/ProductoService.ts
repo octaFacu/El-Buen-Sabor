@@ -1,5 +1,5 @@
-import IngredienteDeProducto from "../context/models/IngredienteDeProducto";
-import Producto from "../context/models/Producto";
+import IngredienteDeProducto from "../context/interfaces/IngredienteDeProducto";
+import Producto from "../context/interfaces/Producto";
 import { ServiceBasicos } from "./ServiceBasicos";
 
 

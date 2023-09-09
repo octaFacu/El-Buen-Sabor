@@ -6,7 +6,7 @@ import MisFavoritosComponent from '../../components/componentesUsuarios/MisFavor
 import MisPedidosComponent from '../../components/componentesUsuarios/MisPedidosComponent'
 import {useAuth0} from '@auth0/auth0-react'
 import { ServiceBasicos } from "../../services/ServiceBasicos";
-import { Usuario } from "../../context/models/interfaces";
+import { Usuario } from "../../context/interfaces/interfaces";
 
 export default function InformacionUsuario() {
   const [mostrarCarta, setMostrarCarta] = useState(false);

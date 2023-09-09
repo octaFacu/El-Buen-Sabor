@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import "../../pages/pagesStyles/categoriaIngredienteABM.css"
-import { CategoriaProducto } from "../../context/models/interfaces";
+import { CategoriaProducto } from "../../context/interfaces/interfaces";
 import { CategoriaProductoService } from "../../services/CategoriaProductoService";
 
 interface CategProductoCardProps {

@@ -1,12 +1,12 @@
 import { useContext, useEffect, useState } from "react"
 import "../../css/ventanaModal.css"
-import { Ingrediente, unidadDeMedida } from "../../context/models/interfaces";
+import { Ingrediente, unidadDeMedida } from "../../context/interfaces/interfaces";
 import { Rubro } from "../compIngrediente/Rubro";
 import { GlobalContext } from "../../context/GlobalContext";
 import { ProductoService } from "../../services/ProductoService";
-import Producto from "../../context/models/Producto";
+import Producto from "../../context/interfaces/Producto";
 import GrupoBotones from "../genericos/GrupoBotones";
-import IngredienteDeProducto from "../../context/models/IngredienteDeProducto";
+import IngredienteDeProducto from "../../context/interfaces/IngredienteDeProducto";
 import { IngredientesService } from "../../services/IngredientesService";
 import { ServiceBasicos } from "../../services/ServiceBasicos";
 

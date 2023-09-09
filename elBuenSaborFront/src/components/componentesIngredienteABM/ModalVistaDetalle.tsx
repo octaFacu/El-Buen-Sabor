@@ -1,4 +1,4 @@
-import { Ingrediente } from "../../context/models/interfaces"
+import { Ingrediente } from "../../context/interfaces/interfaces"
 
 interface ModalVistaDetalleProps{
     ingrediente: Ingrediente,

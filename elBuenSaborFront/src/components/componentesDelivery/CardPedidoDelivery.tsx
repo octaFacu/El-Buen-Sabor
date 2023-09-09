@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
-import Pedido, { EstadoPedido } from "../../context/models/Pedido"
+import Pedido, { EstadoPedido } from "../../context/interfaces/Pedido"
 import '../componentesCajero/CardPedidoCaj.css'
-import PedidoHasProductos from "../../context/models/PedidoHasProductos"
+import PedidoHasProductos from "../../context/interfaces/PedidoHasProductos"
 import { PedidoService } from "../../services/PedidoService"
 import ProductoDeliveryCard from "./ProductoDeliveryCard"
 import MapLocation from "./MapLocation"

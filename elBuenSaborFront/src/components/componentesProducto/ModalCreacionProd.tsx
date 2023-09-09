@@ -3,9 +3,9 @@ import "../../css/ventanaModal.css"
 import { Rubro } from "../compIngrediente/Rubro";
 import { GlobalContext } from "../../context/GlobalContext";
 import { ProductoService } from "../../services/ProductoService";
-import Producto from "../../context/models/Producto";
+import Producto from "../../context/interfaces/Producto";
 import GrupoBotones from "../genericos/GrupoBotones";
-import IngredienteDeProducto from "../../context/models/IngredienteDeProducto";
+import IngredienteDeProducto from "../../context/interfaces/IngredienteDeProducto";
 import ModalAgregarIngrediente from "./ModalAgregarIngrediente";
 import TablaIngredientesMostrar from "./TablaIngredientesMostrar";
 

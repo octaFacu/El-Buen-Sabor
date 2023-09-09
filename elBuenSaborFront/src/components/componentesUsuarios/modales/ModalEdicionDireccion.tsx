@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { ServiceBasicos } from "../../../services/ServiceBasicos";
 import { DireccionService } from "../../../services/DireccionService";
-import { Direccion } from "../../../context/models/interfaces";
+import { Direccion } from "../../../context/interfaces/interfaces";
 
 interface ModalProps {
   cerrarModal: () => void;

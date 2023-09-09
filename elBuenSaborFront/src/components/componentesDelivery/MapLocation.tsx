@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Direccion } from "../../context/models/interfaces";
+import { Direccion } from "../../context/interfaces/interfaces";
 import 'leaflet/dist/leaflet.css';
 import L, { LatLngTuple } from 'leaflet';
 

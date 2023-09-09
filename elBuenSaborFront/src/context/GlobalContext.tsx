@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction, createContext, useContext } from "react";
-import { unidadDeMedida, Ingrediente, CategoriaProducto } from "./models/interfaces";
-import Producto from "./models/Producto";
+import { unidadDeMedida, Ingrediente, CategoriaProducto } from "./interfaces/interfaces";
+import Producto from "./interfaces/Producto";
 
 //Interface de que es lo que va a contener este contexto
 export interface UnidadContextInteface{

@@ -1,4 +1,4 @@
-import PedidoHasProductos from "../../context/models/PedidoHasProductos";
+import PedidoHasProductos from "../../context/interfaces/PedidoHasProductos";
 
 interface PedidoProps {
 

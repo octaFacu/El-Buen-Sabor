@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 
-import { Ingrediente } from "../../context/models/interfaces";
+import { Ingrediente } from "../../context/interfaces/interfaces";
 import { Rubro } from "../compIngrediente/Rubro";
 import { IngredientesService } from "../../services/IngredientesService";
 

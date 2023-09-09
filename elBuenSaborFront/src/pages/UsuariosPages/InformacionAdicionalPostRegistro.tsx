@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import "../../css/InformacionUsuario.css";
 import { useAuth0 } from "@auth0/auth0-react";
 import { ServiceBasicos } from "../../services/ServiceBasicos";
-import { Usuario } from "../../context/models/interfaces";
+import { Usuario } from "../../context/interfaces/interfaces";
 
 export default function InformacionAdicionalPostRegistro() {
   const { user, isLoading } = useAuth0();

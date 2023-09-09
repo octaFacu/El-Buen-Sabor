@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { CategoriaProducto } from '../../context/models/interfaces';
+import { CategoriaProducto } from '../../context/interfaces/interfaces';
 import CategProductoCard from '../../components/componentesCatProductos/CategProductoCard';
 import CategProductoForm from '../../components/componentesCatProductos/CategProductoForm';
 import { ListaCartasABM } from '../../components/genericos/ListaCartasABM';

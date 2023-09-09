@@ -3,7 +3,7 @@ import "./modal.css";
 import { useAuth0 } from "@auth0/auth0-react";
 import { ServiceBasicos } from "../../../services/ServiceBasicos";
 import ModalConfirmacion from "./ModalConfirmacion";
-import { Usuario } from "../../../context/models/interfaces";
+import { Usuario } from "../../../context/interfaces/interfaces";
 
 interface ModalProps {
   cerrarModal: () => void;

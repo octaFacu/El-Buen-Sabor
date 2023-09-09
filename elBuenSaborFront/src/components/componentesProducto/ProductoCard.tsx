@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { ProductoService } from "../../services/ProductoService"
-import { Producto } from "../../context/models/Producto"
+import { Producto } from "../../context/interfaces/Producto"
 
 interface ProductoCardProps {
 

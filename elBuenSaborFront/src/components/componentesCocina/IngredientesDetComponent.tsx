@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import IngredienteDeProducto from "../../context/models/IngredienteDeProducto";
+import IngredienteDeProducto from "../../context/interfaces/IngredienteDeProducto";
 import { IngredientesService } from "../../services/IngredientesService";
 import { ServiceBasicos } from "../../services/ServiceBasicos";
-import { Ingrediente, unidadDeMedida } from "../../context/models/interfaces";
+import { Ingrediente, unidadDeMedida } from "../../context/interfaces/interfaces";
 
 
 interface TablaIngredientesProdProps {

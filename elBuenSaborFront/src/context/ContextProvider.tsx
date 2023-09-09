@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { GlobalContext } from "./GlobalContext"
-import { CategoriaProducto, Ingrediente, unidadDeMedida } from "./models/interfaces";
+import { CategoriaProducto, Ingrediente, unidadDeMedida } from "./interfaces/interfaces";
 import { IngredientesService } from "../services/IngredientesService";
 import { ServiceBasicos } from "../services/ServiceBasicos";
-import Producto from "./models/Producto";
+import Producto from "./interfaces/Producto";
 import { ProductoService } from "../services/ProductoService";
 import { CategoriaProductoService } from "../services/CategoriaProductoService";
 

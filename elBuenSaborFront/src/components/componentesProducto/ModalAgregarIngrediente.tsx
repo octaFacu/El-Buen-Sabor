@@ -15,53 +15,98 @@ interface ProdFormProps {
     //De categoriaIngrABM, cambio su estado
     estado: boolean,
     cambiarEstado: (estado: boolean) => void,
-    producto: Producto,
+    cambiarEstadoFormProd: any,
 
-    /*datos?: IngredienteDeProducto
-    setDatos: any*/
+    ingredientesList: IngredienteDeProducto[],
+    setIngredientesList: any,
+
+    productoId?: number
 
 }
 
-const ModalAgregarIngrediente: React.FC<ProdFormProps> = ({ estado, cambiarEstado, producto }) => {
+const ModalAgregarIngrediente: React.FC<ProdFormProps> = ({ estado, cambiarEstado, ingredientesList, setIngredientesList, cambiarEstadoFormProd, productoId }) => {
 
-    const ingredienteService = new IngredientesService();
-    const serviceMedida = new ServiceBasicos("unidadmedida");
+    const ingredienteService = new IngredientesService()
+    const serviceMedida = new ServiceBasicos("unidadDeMedida");
   
+    const [Ingredientenuevo, setIngredienteNuevo] = useState<IngredienteDeProducto>(new IngredienteDeProducto());
 
-    let Ingredientenuevo: IngredienteDeProducto = new IngredienteDeProducto();
-    let ingredientes: Ingrediente[] = [];
-    let medidas: unidadDeMedida[] = [];
-    const [ingredienteSelect, setIngredienteSelect] = useState<IngredienteDeProducto>( new IngredienteDeProducto());
+    const [ingredientes, setIngredientes] = useState<Ingrediente[]>([]);
+    const [medidas, setMedidas] = useState<unidadDeMedida[]>([]);
+
+
+    useEffect(() => {
+        setIngredienteNuevo(new IngredienteDeProducto());
+    }, [estado]);
+
+
+
+
+    const [ingredienteSelect, setIngredienteSelect] = useState<Ingrediente>({
+        nombre: "",
+        activo: true,
+        precioCompra: 0,
+        stockActual: 0,
+        stockMaximo: 0,
+        stockMinimo: 0,
+        unidadmedida: {id: 0, denominacion: ""},
+        categoriaIngrediente: {id: 0, denominacion: "", activo: true}
+
+
+    });
+    const [medidaSelect, setMedidaSelect] = useState<unidadDeMedida>();
     
 
 
     const handleSelectChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        
-        //Ingredientenuevo.denominacion =(event.target.value)
 
-        setIngredienteSelect({ ...ingredienteSelect, cantidad: parseFloat(event.target.value) });
+        setIngredienteNuevo({ ...Ingredientenuevo, cantidad: parseFloat(event.target.value) });
+    }
+
+    const getMedidasYIngredientes = async () => {
+
+        setMedidas(await serviceMedida.getAllBasic());
+
+        setIngredientes(await ingredienteService.getAllBasic()); 
     }
 
     useEffect(() => {
-        /*if(datos !== undefined){
-            setIngredienteSelect(datos!);
-        }*/
-        const getMedidasYIngredientes = async () => {
 
-            medidas = await serviceMedida.getAllBasic();
+        getMedidasYIngredientes(); 
 
-            ingredientes = await ingredienteService.getAllBasic();
-        }
-        
-        getMedidasYIngredientes();
-        
     }, [])
 
+    useEffect(() => {
+        if (ingredientes.length > 0) {
+          setIngredienteSelect(ingredientes[0]);
+        }
+    
+        if (medidas.length > 0) {
+          setMedidaSelect(medidas[0]);
+        }
+      }, [ingredientes, medidas]);
+
+    
+
+    if(estado && (ingredientes.length == 0 || medidas.length == 0)){
+
+        return(
+            <div>
+                <div className="overlay">
+                    <div className="container my-5 contenedorModal" style={{borderRadius: "25px", backgroundColor: "#f99132", color: "white", maxWidth: "50%"}}>
+                        <div className="" style={{textAlign: "center", alignContent: "center"}}>
+                            <h3>Cargando...</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        )
+    }
     
 
     return (
         <>
-            {estado && ingredienteSelect !== undefined &&
+            {estado && ingredientes.length !== 0 && medidas.length !== 0 &&
                 <div className="overlay">
                     <div className="container my-5 contenedorModal" style={{borderRadius: "25px", backgroundColor: "#f99132", color: "white", maxWidth: "50%"}}>
                         <div className="" style={{textAlign: "center", alignContent: "center"}}>
@@ -76,30 +121,21 @@ const ModalAgregarIngrediente: React.FC<ProdFormProps> = ({ estado, cambiarEstad
                                     <div style={{display: "flex"}}>
                                         <div className="mb-3">
                                             <label htmlFor="stockActual" className="form-label">Cantidad</label>
-                                            <input type="number" style={{borderRadius: "25px", backgroundColor: "#FDA859", color: "white"}} className="form-control me-2" id="Cantidad" name="Cantidad" required value={ingredienteSelect.cantidad.toString()}/>
+                                            <input type="number" min="0" style={{borderRadius: "25px", backgroundColor: "#FDA859", color: "white"}} className="form-control me-2" id="Cantidad" name="Cantidad" required value={Ingredientenuevo.cantidad.toString()} onChange={e => handleSelectChange(e)}/>
                                         </div>
                                     </div>
                                     </div>
                                     
-
-                                
-
-                                
-                                
-                                
                                     
 
 
                                 <div className="container" style={{display: "flex", justifyContent: "space-evenly"}}>
                                 <div className="mb-4" style={{display: "flex", maxWidth: "70%", maxHeight: "40%", alignItems: "center", justifyContent: "center" }}>
                                     <label htmlFor="rubro" className="form-label">Ingrediente</label>
-                                    <select style={{borderRadius: "25px", backgroundColor: "#FDA859", color: "white"}} className="form-select" id="ingredientes" name="ingredientes" /*onChange={e =>{  setUnidadElegida(e.target.value); Ingredientenuevo.unidadmedida = JSON.parse(unidadElegida!.valueOf());}}*/>
-                                    <option /*selected value={JSON.stringify(Productonuevo.categoriaProducto)}*/>{/*Productonuevo.categoriaProducto.denominacion*/}</option>
-                                        {/* { ingredientes!.map(ing => (
-                                            // TODO: ing es de clase diferente que ingredientes, comparar nombres
-                                            !(producto.ingredientes!.find(ing)) &&
+                                    <select style={{borderRadius: "25px", backgroundColor: "#FDA859", color: "white"}} className="form-select" id="ingredientes" name="ingredientes" onChange={e =>{  setIngredienteSelect(JSON.parse(e.target.value)); Ingredientenuevo.idIngrediente = ingredienteSelect.id!;}}>
+                                        { ingredientes!.map(ing => (
                                             <option value={JSON.stringify(ing)}>{ing.nombre}</option>
-                                        ))} */}
+                                        ))}
                                     </select>
 
                                 </div>
@@ -107,9 +143,8 @@ const ModalAgregarIngrediente: React.FC<ProdFormProps> = ({ estado, cambiarEstad
 
                                 <div className="container" style={{display: "flex", justifyContent: "space-evenly"}}>
                                 <div className="mb-4" style={{display: "flex", maxWidth: "70%", maxHeight: "40%", alignItems: "center", justifyContent: "center" }}>
-                                    <label htmlFor="rubro" className="form-label">Ingrediente</label>
-                                    <select style={{borderRadius: "25px", backgroundColor: "#FDA859", color: "white"}} className="form-select" id="medidas" name="medidas" /*onChange={e =>{  setUnidadElegida(e.target.value); Ingredientenuevo.unidadmedida = JSON.parse(unidadElegida!.valueOf());}}*/>
-                                    <option /*selected value={JSON.stringify(Productonuevo.categoriaProducto)}*/>{/*Productonuevo.categoriaProducto.denominacion*/}</option>
+                                    <label htmlFor="rubro" className="form-label">Unidad de Medida</label>
+                                    <select style={{borderRadius: "25px", backgroundColor: "#FDA859", color: "white"}} className="form-select" id="medidas" name="medidas" onChange={e =>{  setMedidaSelect(JSON.parse(e.target.value)); Ingredientenuevo.idMedida = medidaSelect!.id;}}>
                                         { medidas!.map(med => (
 
                                             <option value={JSON.stringify(med)}>{med.denominacion}</option>
@@ -124,41 +159,38 @@ const ModalAgregarIngrediente: React.FC<ProdFormProps> = ({ estado, cambiarEstad
 
 
 
-                                {/* <button className="btn btn-danger mx-3" onClick={() => cambiarEstado(!estado)}><i className="material-icons" style={{fontSize: "30px", cursor:"pointer"}}>highlight_off</i></button>
+                                 <button className="btn btn-danger mx-3" onClick={() => {cambiarEstado(!estado);
+                                                                                            cambiarEstadoFormProd(true);}}>
+                                    <i className="material-icons" style={{fontSize: "30px", cursor:"pointer"}}>highlight_off</i></button>
 
                                 <button type="submit" className="btn" style={{backgroundColor: "#864e1b", color: "white"}} onClick={() => {
 
 
-                                   if((categoriaElegida !== undefined || unidadElegida !== undefined) || (Ingredientenuevo.categoriaIngrediente.id !== 0 || Ingredientenuevo.unidadmedida.id !== 0)){
-
-                                        if(categoriaElegida !== undefined){
-                                            Ingredientenuevo.categoriaIngrediente = JSON.parse(categoriaElegida!.valueOf());
-                                        }
-                                        if(unidadElegida !== undefined){
-                                            Ingredientenuevo.unidadmedida = JSON.parse(unidadElegida!.valueOf());
-                                        }
-                                    
-                                    
-
-                                        if(Ingredientenuevo.id !== 0){
-
-                                            //pasar los datos guardados al metodo de update
-                                            ingredientesService.updateEntity(Ingredientenuevo);
-                                            cambiarEstado(!estado);
-
-                                        }else{
-                                            ingredientesService.createEntity(Ingredientenuevo);
-                                            cambiarEstado(!estado);
-                                            window.location.reload();
+                                   if(ingredienteSelect.id !== 0 || medidaSelect!.id !== 0 || Ingredientenuevo.cantidad !== 0){
                                             
-                                        }
+
+                                            Ingredientenuevo.idIngrediente = ingredienteSelect.id!;
+                                            Ingredientenuevo.idMedida = medidaSelect!.id!;
+
+                                            if(productoId != undefined){
+                                                Ingredientenuevo.idProducto = productoId;
+                                            }
+
+                                            setIngredientesList([...ingredientesList, Ingredientenuevo]);
+                                            
+
+                                            cambiarEstado(!estado);
+                                            cambiarEstadoFormProd(true);
+                                                                               
  
                                 }
-                                }}> <i className="material-icons" style={{fontSize: "30px", cursor:"pointer"}}>check</i></button> */}
+                                }}> <i className="material-icons" style={{fontSize: "30px", cursor:"pointer"}}>check</i></button> 
                             </form>
                         </div>
                     </div>
+                    
                 </div>
+                
             }
         </>
 

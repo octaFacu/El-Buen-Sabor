@@ -13,12 +13,27 @@ import RankingClientes from '../pages/AdminPages/EstadisticasPages/RankingClient
 import HistorialClienteAdmin from '../pages/AdminPages/EstadisticasPages/ClientesRanking/HistorialClienteAdmin';
 import RankingProductos from '../pages/AdminPages/EstadisticasPages/RankingProductos';
 import InformeGanancias from '../pages/AdminPages/EstadisticasPages/InformeGanancias';
+import { CajeroPedidosPage } from '../pages/CajeroPages/CajeroPedidosPage';
+import CocineroPedidosPage from '../pages/CocineroPages/CocineroPedidosPage';
+import DeliveryPedidosPage from '../pages/DeliveryPages/DeliveryPedidosPage';
 
 
 export const routesConfig = [
     {
         path: '/',
         component: Landing,
+    },
+    {
+        path: '/dashboard-pedidos',
+        component: CajeroPedidosPage,
+    },
+    {
+        path: '/dashboard-cocina',
+        component: CocineroPedidosPage,
+    },
+    {
+        path: '/dashboard-delivery',
+        component: DeliveryPedidosPage,
     },
     {
         path: '/carrito',

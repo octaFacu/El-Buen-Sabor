@@ -1,5 +1,6 @@
 import { Dispatch, SetStateAction, createContext, useContext } from "react";
 import { unidadDeMedida, Ingrediente, CategoriaProducto } from "./interfaces/interfaces";
+import Producto from "./interfaces/Producto";
 
 //Interface de que es lo que va a contener este contexto
 export interface UnidadContextInteface{
@@ -13,6 +14,12 @@ export interface UnidadContextInteface{
     busquedaXNombre: string,
     setBusquedaXNombre: Dispatch<SetStateAction<string>>
 
+    productos: Producto[],
+    setProductos: Dispatch<SetStateAction<Producto[]>>
+
+    categoriasProductos: CategoriaProducto[],
+    setCategoriasProductos: Dispatch<SetStateAction<CategoriaProducto[]>>
+
 }
 
 // const serviceBasicos = new ServiceBasicos();
@@ -24,9 +31,11 @@ export const GlobalContext = createContext<UnidadContextInteface>({
     ingredientes: [],
     setIngredientes: () => {},
     busquedaXNombre: "",
-    setBusquedaXNombre: () => {}
-
-
+    setBusquedaXNombre: () => {},
+    productos: [],
+    setProductos: () => {},
+    categoriasProductos: [],
+    setCategoriasProductos: () => {}
 });
 
 export const useUnidadContext = () => useContext(GlobalContext);

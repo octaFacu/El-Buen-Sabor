@@ -1,0 +1,61 @@
+.no-pedidos-text{
+    color: "white";
+    display: flex;
+    justify-content: center;
+    align-self: center;
+    margin: "auto";
+    
+}
+
+.card-containerPed {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px; /* Adjust the gap between cards as needed */
+  }
+  
+  .card-containerPed > * {
+    flex: calc(33.33% - 16px); /* Adjust the width and gap to fit your design */
+    min-width: 0; /* Allow content to shrink if necessary */
+  }
+  
+  /* Adjust flex for the first card in each row */
+  .card-containerPed > *:nth-child(3n + 1) {
+    flex: 100%;
+  }
+  
+
+.parentPed {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start; /* Align items to the top */
+    width: 100%;
+    margin-top: 10px; 
+}
+
+.childPed {
+    flex-basis: calc(25% - 3%);
+    margin-right: 3%;
+}
+.childPed:first-child {
+    margin-left: 3%; /* Add margin only to the first child */
+}
+
+.circleButtons {
+  display: flex;
+  align-items: center; /* Vertically center the circle buttons */
+}
+
+.circleButton {
+  width: 30px; 
+  height: 30px; 
+  background-color: #c33232; 
+  border-radius: 50%; /* Make it a circle */
+  margin-left: 5px; /* Add some space between the circle buttons */
+  text-align: center;
+  cursor: pointer;
+
+}
+.circleButtonText {
+  font-size: 15px; /* Adjust the font size of the number */
+  color: white;
+}

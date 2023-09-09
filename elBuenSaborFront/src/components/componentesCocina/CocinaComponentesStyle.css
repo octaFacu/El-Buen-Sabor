@@ -1,0 +1,16 @@
+
+.productoContainer{
+    text-align: center;
+    overflow: auto
+}
+
+.productoTitle{
+    background-color: #864e1b;
+
+}
+
+.tiempoProducto{
+    background-color: #864e1b;
+    border-radius: 5%;
+
+}

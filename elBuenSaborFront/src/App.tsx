@@ -13,9 +13,7 @@ const App: React.FC = () => {
     <BrowserRouter>
 
           <Navbar />
-
           <AppRoutes/>
-
           <FloatingBtn></FloatingBtn>
 
       </BrowserRouter>

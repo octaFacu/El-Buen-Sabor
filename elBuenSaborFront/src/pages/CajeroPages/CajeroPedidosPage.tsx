@@ -216,8 +216,7 @@ export const CajeroPedidosPage = () => {
                 <div /*className="card-containerPed"*/ className="row">
                     {pedidos.map(ped => (
                          <div className="col-sm-6 col-md-4">
-                            <CardPedidoCaja changeEstadoPedido={handleChangeEstado} pedido={ped} estado={estadoModal}
-                            cambiarEstado={setEstadoModal}></CardPedidoCaja>
+                            <CardPedidoCaja changeEstadoPedido={handleChangeEstado} pedido={ped} ></CardPedidoCaja>
                             </div>
                     ))}
                     

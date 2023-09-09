@@ -7,6 +7,8 @@ import { ProductosABM } from '../pages/ABMPages/ProductosAMB';
 import { NotFound } from '../components/NotFound';
 import InformacionAdicionalPostRegistro from '../pages/UsuariosPages/InformacionAdicionalPostRegistro';
 import { CajeroPedidosPage } from '../pages/CajeroPages/CajeroPedidosPage';
+import CocineroPedidosPage from '../pages/CocineroPages/CocineroPedidosPage';
+import DeliveryPedidosPage from '../pages/DeliveryPages/DeliveryPedidosPage';
 
 export const routesConfig = [
     {
@@ -16,6 +18,14 @@ export const routesConfig = [
     {
         path: '/dashboard-pedidos',
         component: CajeroPedidosPage,
+    },
+    {
+        path: '/dashboard-cocina',
+        component: CocineroPedidosPage,
+    },
+    {
+        path: '/dashboard-delivery',
+        component: DeliveryPedidosPage,
     },
     {
         path: '/usuarios',

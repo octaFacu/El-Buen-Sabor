@@ -41,5 +41,6 @@ export interface Direccion {
   nroCasa: number;
   pisoDpto: string;
   usuario: Usuario;
+  activo: boolean
 }
 

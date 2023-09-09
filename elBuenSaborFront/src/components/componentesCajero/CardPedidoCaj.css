@@ -33,3 +33,7 @@
     display: flex; /* Use flexbox to align items side by side */
     align-items: center; /* Align items vertically within the container */
 }
+
+.cocina-card{
+    cursor: pointer;
+}

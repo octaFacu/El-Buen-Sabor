@@ -5,7 +5,7 @@ export class Producto{
     activo: boolean = true;
     denominacion: string = '';
     esManufacturado: boolean = true;
-    tiempoCocina?: number = 0;
+    tiempoCocina?: string = '';
     descripcion: string = '';
     receta?: string = '';
     costoTotal: number = 0;
@@ -21,7 +21,7 @@ export class Producto{
         this.activo = true;
         this.denominacion = '';
         this.esManufacturado = true;
-        this.tiempoCocina = 0;
+        this.tiempoCocina = '';
         this.descripcion = '';
         this.receta = '';
         this.costoTotal = 0;

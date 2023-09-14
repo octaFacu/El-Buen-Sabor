@@ -1,30 +1,57 @@
-import { FC } from "react";
+import { FC, useEffect } from "react";
 import { Direccion, ProductoParaPedido, UserAuth0 } from "../../../context/interfaces/interfaces";
 import "./OrderSelections.css"
 import Pago from "../mercadoPago/Pago";
 import mp_logo from "../../../assets/mp_logo.png";
+import Pedido from "../../../context/interfaces/Pedido";
 
 interface OrderSelectionsProps {
     estadoCompra: number;
     direcciones: Direccion[]
 
+    pedido: Pedido;
+    setPedido: (valor: any) => void;
+
     usuarioMP: UserAuth0
     localStorageValues: ProductoParaPedido[]
 }
 
-const OrderSelections: FC<OrderSelectionsProps> = ({ estadoCompra, direcciones, usuarioMP, localStorageValues }) => {
+const OrderSelections: FC<OrderSelectionsProps> = ({ estadoCompra, direcciones, usuarioMP, localStorageValues, setPedido, pedido }) => {
 
-    // const handleChange = (opcion: Direccion | null) => {
-    const handleChange = () => {
-        console.log("logueando");
+    //Asigna la direccion y el metodo de pago al pedido
+    const handlePedidoDireccion = (opcion: Direccion | null) => {
+        console.log("asigno direccion al pedido");
 
-        // set.....(opcion);
+        if (opcion) {
+            setPedido((prevPedid: Pedido) => ({
+                ...prevPedid,
+                direccion: opcion,
+                esEnvio: true
+            }));
+        } else {
+            setPedido((prevPedid: Pedido) => ({
+                ...prevPedid,
+                direccion: undefined,
+                esEnvio: false
+            }));
+        }
+
     }
 
+    const handlePagoPedido = () => {
+
+
+    }
+
+    //HACER ESTOOOOOOOOOOOOOOOOOOOOOOOOOO
     const agregoNuevaDireccion = () => {
         console.log("Agrego nueva direccion");
 
     }
+
+    useEffect(() => {
+        console.log(pedido);
+    }, [pedido])
 
     if (estadoCompra === 1) {
         return (
@@ -36,10 +63,9 @@ const OrderSelections: FC<OrderSelectionsProps> = ({ estadoCompra, direcciones, 
                         <input
                             className="form-check-input"
                             type="checkbox"
-                            id={`checkbox-${index}`}
-                            value={index}
-                            onChange={handleChange}
-                        //   checked={dir === opcionSeleccionada}
+                            // value={index}
+                            onChange={() => handlePedidoDireccion(dir)}
+                            checked={dir === pedido.direccion}
                         />
                         <label className="form-check-label" htmlFor={`checkbox-${index}`}>
                             {dir.calle} {dir.nroCasa} - {dir.pisoDpto}
@@ -49,15 +75,6 @@ const OrderSelections: FC<OrderSelectionsProps> = ({ estadoCompra, direcciones, 
 
                     </div>
 
-                    // <div key={index}>
-                    //     <input
-                    //         type="checkbox"
-                    // value={dir}
-                    // checked={dir === opcionSeleccionada}
-                    // onChange={() => handleChange(opcion)}
-                    //     />
-                    //     <label htmlFor={dir.calle}>{dir.calle}</label>
-                    // </div>
                 ))}
 
                 <button className="order-selection-btn p-2" onClick={agregoNuevaDireccion}>Agregar dirección</button>
@@ -67,13 +84,12 @@ const OrderSelections: FC<OrderSelectionsProps> = ({ estadoCompra, direcciones, 
                     <input
                         className="form-check-input"
                         type="checkbox"
-                        // id={`checkbox-${index}`}
-                        // value={index}
-                        onChange={handleChange}
-                    //   checked={dir === opcionSeleccionada}
+                        // value={99}
+                        onChange={() => handlePedidoDireccion(null)}
+                        checked={pedido.direccion === undefined}
                     />
                     <label className="form-check-label">
-                        Retiro en el local
+                        Retiro en el local - (10% desc)
                     </label>
 
                 </div>
@@ -90,8 +106,8 @@ const OrderSelections: FC<OrderSelectionsProps> = ({ estadoCompra, direcciones, 
                         className="form-check-input"
                         type="checkbox"
                         value="mp"
-                        onChange={handleChange}
-                    //   checked={dir === opcionSeleccionada}
+                        onChange={handlePagoPedido}
+                        // checked={dir === opcionSeleccionada}
                     />
                     <img style={{ width: "30px" }} src={mp_logo} alt="mp_logo" />
                     <label className="form-check-label">Mercado pago</label>
@@ -106,9 +122,9 @@ const OrderSelections: FC<OrderSelectionsProps> = ({ estadoCompra, direcciones, 
                     <input
                         className="form-check-input"
                         type="checkbox"
-                        value="mp"
-                        onChange={handleChange}
-                    //   checked={dir === opcionSeleccionada}
+                        value="efectivo"
+                        onChange={handlePagoPedido}
+                        // checked={dir === opcionSeleccionada}
                     />
                     <label className="form-check-label">Efectivo</label>
 
@@ -122,21 +138,26 @@ const OrderSelections: FC<OrderSelectionsProps> = ({ estadoCompra, direcciones, 
 
                 <div>
                     <h4>Tipo de entrega </h4>
-                    <label className="form-check-label">tipo de entrega...</label>
+                    <label className="form-check-label">{pedido.esEnvio ? "Delivery" : "Retiro en el local"}</label>
                 </div>
 
                 <div className="separator-line-selections my-2" />
 
-                {/* Si es entrega reenderizo esto */}
-                <div className="d-flex justify-content-between align-items-center">
-                    <div>
-                        <h4>Direccion</h4>
-                        <label className="form-check-label">direccion....</label>
-                    </div>
-                    <button className="order-selection-btn p-2">Editar</button>
-                </div>
+                {/* Si no es envio reenderizo esto */}
+                {pedido.esEnvio &&
+                    <>
+                        <div className="d-flex justify-content-between align-items-center">
+                            <div>
+                                <h4>Direccion</h4>
+                                <label className="form-check-label">{pedido.direccion?.calle} {pedido.direccion?.calle} - {pedido.direccion?.pisoDpto}</label>
+                            </div>
+                            <button className="order-selection-btn p-2">Editar</button>
+                        </div>
 
-                <div className="separator-line-selections my-2" />
+                        <div className="separator-line-selections my-2" />
+                    </>
+                }
+
 
                 {/* ----------- */}
                 <div className="d-flex justify-content-between align-items-center">

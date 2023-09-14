@@ -5,9 +5,11 @@ import { ProductoParaPedido } from "../../../context/interfaces/interfaces";
 interface OrderInformationProps {
     valorTotal: number
     localStorageValues: ProductoParaPedido[]
+
+    esEnvio: boolean;
 }
 
-const OrderInformation: FC<OrderInformationProps> = ({ valorTotal, localStorageValues }) => {
+const OrderInformation: FC<OrderInformationProps> = ({ valorTotal, localStorageValues, esEnvio }) => {
 
 
 
@@ -28,13 +30,21 @@ const OrderInformation: FC<OrderInformationProps> = ({ valorTotal, localStorageV
                         </div>
                     )
                 })}
+
+                {!esEnvio &&
+                    <div className="d-flex justify-content-between">
+                    <span>Descuento</span>
+                    <span>- ${valorTotal * 0.1}</span>
+                </div>
+                }
+
             </div>
 
             <div className="separator-line my-2" />
 
             <div className="d-flex justify-content-between">
                 <span>Total:</span>
-                <span>${valorTotal}</span>
+                <span>${!esEnvio ? valorTotal * 0.9 : valorTotal}</span>
             </div>
         </div>
     );

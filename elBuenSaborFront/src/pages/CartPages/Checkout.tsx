@@ -8,6 +8,9 @@ import OrderSelections from "../../components/checkout/orderSelections/OrderSele
 import { useAuth0 } from "@auth0/auth0-react";
 import { DireccionService } from "../../services/DireccionService";
 import PageLoader from "../../components/pageLoader/PageLoader";
+import Pedido from "../../context/interfaces/Pedido";
+import { Cliente } from "../../context/interfaces/Cliente";
+import PedidoHasProductos from "../../context/interfaces/PedidoHasProductos";
 
 
 interface CheckoutProps {
@@ -23,7 +26,8 @@ const Checkout: FC<CheckoutProps> = () => {
 
     //Informacion traida desde el carrito
     const location = useLocation();
-    const valorTotal: number = location.state.valorTotal;
+    const [valorTotal, setValorTotal] = useState<number>(location.state.valorTotal);
+    //const valorTotal: number = location.state.valorTotal;
     const localStorageValues: ProductoParaPedido[] = location.state.localStorageValues;
 
     //Estado de los pasos de compra representados por numeros del 1 al 3
@@ -33,14 +37,22 @@ const Checkout: FC<CheckoutProps> = () => {
 
     //---------------------------------------------------------------------------------
 
-
-    
-    //MAS TARDEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
     //Estado para generar el pedido
-    // const [Pedido, setPedido] = useState<QUE SE YO>({
+    const [pedido, setPedido] = useState<Pedido>({
+        precioTotal: 0,
+        //String que diga AConfirmar
+        estado: 0,
+        activo: true,
+        numeroPedidoDia: 0,
+        esEnvio: false,
+        horaEstimada: "",
+        fechaPedido: "",
+        cliente: new Cliente(),
+        direccion: undefined
+    })
 
-    // })
-    
+    const [pedidoHasProductos, setPedidoHasProductos] = useState<PedidoHasProductos[]>([])
+
     //-----------------------------------------------------------------------------------
 
     //Cargar las direcciones del usuario logueado
@@ -59,30 +71,85 @@ const Checkout: FC<CheckoutProps> = () => {
 
     //Se reenderiza cuando cambia "user" porque al recargar la pagina, se necesita al usuario para cargar sus direcciones
     useEffect(() => {
-        if(user){
+        if (user) {
             fetchDireccionesUsuario()
-            //console.log(direcciones);
+
+            //Asigno los datos del usuario para mercado pago
+            setUsuarioMP({
+                nombre: user?.name || "Nombre",
+                apellido: user?.middle_name || "Apellido",
+                email: user?.email || "email"
+            })
+
         }
-        
-        //Asigno los datos del usuario para mercado pago
-        setUsuarioMP({
-            nombre: user?.name || "Nombre",
-            apellido: user?.middle_name || "Apellido",
-            email: user?.email || "email"
-        })
-        
+
+        if (localStorageValues) {
+            //Para sacar la fecha del pedido
+            let hp = new Date();
+            //Para sacar la hora estimada
+            let he = new Date();
+            //Timepo que sumo para calcular la hora estimada final
+            let hSuma: string = "00"
+            let mSuma: string = "00"
+
+            localStorageValues.map((val) => {
+
+                let tiempoCocina = val.producto.tiempoCocina!
+
+                if (tiempoCocina) {
+                    if (parseInt(hSuma) < parseInt(tiempoCocina.substring(0, 2))) {
+                        hSuma = tiempoCocina.substring(0, 2);
+                        he.setHours(he.getHours() + parseInt(tiempoCocina.substring(0, 2)))
+                        return;
+
+                    } else if (parseInt(mSuma) < parseInt(tiempoCocina.substring(3, 5))) {
+                        mSuma = tiempoCocina.substring(3, 5);
+                        he.setMinutes(he.getMinutes() + parseInt(tiempoCocina.substring(3, 5)))
+                    }
+                }
+            })
+
+            setPedido((prevPedid: Pedido) => ({
+                ...prevPedid,
+                horaEstimada: `${he.getHours()}:${he.getMinutes()}:${he.getSeconds()}`,
+                fechaPedido: `${hp.getFullYear()}-${hp.getMonth() + 1}-${hp.getDay()} ${hp.getHours()}:${hp.getMinutes()}:${hp.getSeconds()}`
+
+            }))
+
+            console.log(pedido);
+        }
+
+
+
     }, [user])
+
+    //Asigna el descuento al pedido si es envio o no
+    useEffect(() => {
+        //console.log("Es envio: " + pedido.esEnvio);
+        if (!pedido.esEnvio) {
+            setPedido((prevPedid: Pedido) => ({
+                ...prevPedid,
+                precioTotal: valorTotal * 0.9,
+            }))
+        } else {
+            setPedido((prevPedid: Pedido) => ({
+                ...prevPedid,
+                precioTotal: valorTotal,
+            }))
+        }
+
+    }, [pedido.esEnvio])
 
 
     useEffect(() => {
-        console.log(direcciones);
+        // console.log(direcciones);
     }, [direcciones])
 
     useEffect(() => {
-        console.log(usuarioMP);
+        // console.log(usuarioMP);
     }, [usuarioMP])
 
-    if(!user){
+    if (!user) {
         return <PageLoader />
     }
 
@@ -104,8 +171,8 @@ const Checkout: FC<CheckoutProps> = () => {
                                 estadoCompra={estadoCompra}
                                 direcciones={direcciones}
 
-
-                                // setPedido={setPedido}
+                                pedido={pedido}
+                                setPedido={setPedido}
 
                                 usuarioMP={usuarioMP}
                                 localStorageValues={localStorageValues}
@@ -129,6 +196,7 @@ const Checkout: FC<CheckoutProps> = () => {
                     <OrderInformation
                         valorTotal={valorTotal}
                         localStorageValues={localStorageValues}
+                        esEnvio={pedido.esEnvio}
                     />
                 </div>
 

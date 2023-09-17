@@ -49,9 +49,9 @@ const OrderSelections: FC<OrderSelectionsProps> = ({ estadoCompra, direcciones, 
 
     }
 
-    useEffect(() => {
-        console.log(pedido);
-    }, [pedido])
+    // useEffect(() => {
+    //     console.log(pedido);
+    // }, [pedido])
 
     if (estadoCompra === 1) {
         return (

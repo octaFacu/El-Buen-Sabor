@@ -11,6 +11,8 @@ import PageLoader from "../../components/pageLoader/PageLoader";
 import Pedido from "../../context/interfaces/Pedido";
 import { Cliente } from "../../context/interfaces/Cliente";
 import PedidoHasProductos from "../../context/interfaces/PedidoHasProductos";
+import { ClienteService } from "../../services/ClienteService";
+import { pedidoService } from "../../services/PedidoService";
 
 
 interface CheckoutProps {
@@ -19,15 +21,17 @@ interface CheckoutProps {
 
 const Checkout: FC<CheckoutProps> = () => {
 
-    const direccionService = new DireccionService()
+    const pedidoSrv = new pedidoService();
+    const direccionSrv = new DireccionService();
+    const clienteSrv = new ClienteService();
 
     //Consigo el usuario para conseguir sus direcciones y metodos de pago
     const { user } = useAuth0();
 
     //Informacion traida desde el carrito
     const location = useLocation();
-    const [valorTotal, setValorTotal] = useState<number>(location.state.valorTotal);
-    //const valorTotal: number = location.state.valorTotal;
+    //const [valorTotal, setValorTotal] = useState<number>(location.state.valorTotal);
+    const valorTotal: number = location.state.valorTotal;
     const localStorageValues: ProductoParaPedido[] = location.state.localStorageValues;
 
     //Estado de los pasos de compra representados por numeros del 1 al 3
@@ -57,29 +61,46 @@ const Checkout: FC<CheckoutProps> = () => {
 
     //Cargar las direcciones del usuario logueado
     const [direcciones, setDirecciones] = useState<Direccion[]>([]);
-
-    const fetchDireccionesUsuario = async () => {
-        const data = await direccionService.getDireccionesByusuarioId(user!.userId)
+    const fetchDireccionesUsuario = async (userId: string) => {
+        const data = await direccionSrv.getDireccionesByusuarioId(userId)
         await setDirecciones(data);
     }
 
-    //Funcion para terminar de generar el pedido
-    const generarPedido = () => {
-        console.log("genero el pedido");
+    //Trae el cliente y lo asigna al pedido
+    const fetchCliente = async (userId: string) => {
+        const data: Cliente = await clienteSrv.getClienteByUsuarioId(userId)
 
+        if(data){
+            setPedido((prevPedid: Pedido) => ({
+                ...prevPedid,
+                cliente: data,
+            }))
+
+            //Asigno los datos del usuario para mercado pago
+            setUsuarioMP({
+                nombre: data.usuario.nombre || user?.name || "Nombre",
+                apellido: data.usuario.nombre || user?.middle_name || "Apellido",
+                email: user?.email || "email"
+            })
+
+        }
+    }
+
+    //Funcion para terminar de generar el pedido
+    const generarPedido = async () => {
+        console.log("genero el pedido: ");
+
+        const data = await pedidoSrv.createEntity(pedido)
+        //SEGUIR ACA, CREAR PEDIDO HAS PRODUCTO
     }
 
     //Se reenderiza cuando cambia "user" porque al recargar la pagina, se necesita al usuario para cargar sus direcciones
     useEffect(() => {
         if (user) {
-            fetchDireccionesUsuario()
 
-            //Asigno los datos del usuario para mercado pago
-            setUsuarioMP({
-                nombre: user?.name || "Nombre",
-                apellido: user?.middle_name || "Apellido",
-                email: user?.email || "email"
-            })
+            fetchDireccionesUsuario(user.userId)
+
+            fetchCliente(user.userId)
 
         }
 
@@ -116,10 +137,11 @@ const Checkout: FC<CheckoutProps> = () => {
 
             }))
 
-            console.log(pedido);
+            //Creo pedidos has productos para el pedido
+
+            
+
         }
-
-
 
     }, [user])
 
@@ -141,13 +163,17 @@ const Checkout: FC<CheckoutProps> = () => {
     }, [pedido.esEnvio])
 
 
-    useEffect(() => {
-        // console.log(direcciones);
-    }, [direcciones])
+    // useEffect(() => {
+    //     console.log(direcciones);
+    // }, [direcciones])
 
-    useEffect(() => {
-        // console.log(usuarioMP);
-    }, [usuarioMP])
+    // useEffect(() => {
+    //     console.log(usuarioMP);
+    // }, [usuarioMP])
+
+    // useEffect(() => {
+    //     console.log(pedido);
+    // }, [pedido])
 
     if (!user) {
         return <PageLoader />

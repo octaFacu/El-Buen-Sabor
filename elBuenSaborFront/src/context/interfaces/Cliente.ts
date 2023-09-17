@@ -1,10 +1,13 @@
 import { Usuario } from "./interfaces";
 
-export class Cliente{
-    id: number = 0;
-    usuario: Usuario = {  id: '',
+export class Cliente {
+    idCliente: number = 0;
+    activo: boolean = true;
+    usuario: Usuario = {
+        id: '',
         nombre: '',
         apellido: '',
         telefono: '',
-        activo: true};
-  }
+        activo: true
+    };
+}

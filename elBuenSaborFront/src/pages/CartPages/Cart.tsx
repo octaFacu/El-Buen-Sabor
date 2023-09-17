@@ -52,6 +52,7 @@ export const Cart = () => {
 
     useEffect(() => {
         localStorage.setItem('carritoArreglo', JSON.stringify(localStorageValues));
+        // console.log(localStorageValues);
     }, [localStorageValues])
 
 
@@ -71,37 +72,41 @@ export const Cart = () => {
                     handleValorTotalChange={handleValorTotalChange}
                 />
 
-                <div className="my-4 d-flex justify-content-evenly align-items-center">
-                    <div className="mx-5"></div>
+                {localStorageValues.length > 0
+                    &&
+                    <div className="my-4 d-flex justify-content-evenly align-items-center">
+                        <div className="mx-5"></div>
 
-                    {/* Valida si el usuario esta logueado apra ver a que vista mandarlo */}
-                    {isAuthenticated
-                        ? <NavLink
-                            className="px-5 py-2 btn btn-add-order d-flex"
-                            to={"/checkout"}
-                            state={{
-                                valorTotal: valorTotal,
-                                localStorageValues: localStorageValues
-                            }}
-                        >Continuar</NavLink>
-                        : <NavLink
-                            className="px-5 py-2 btn btn-add-order d-flex"
-                            onClick={() => loginWithRedirect({
-                                authorizationParams: {
-                                    screen_hint: 'signup',
-                                    redirect_uri: 'http://localhost:5173/informacionAdicional',
-                                },
-                            })}
-                            to={"#"}
-                        >Continuar</NavLink>
-                    }
+                        {/* Valida si el usuario esta logueado para ver a que vista mandarlo */}
+                        {isAuthenticated
+                            ? <NavLink
+                                className="px-5 py-2 btn btn-add-order d-flex"
+                                to={"/checkout"}
+                                state={{
+                                    valorTotal: valorTotal,
+                                    localStorageValues: localStorageValues
+                                }}
+                            >Continuar</NavLink>
+                            : <NavLink
+                                className="px-5 py-2 btn btn-add-order d-flex"
+                                onClick={() => loginWithRedirect({
+                                    authorizationParams: {
+                                        screen_hint: 'signup',
+                                        redirect_uri: 'http://localhost:5173/informacionAdicional',
+                                    },
+                                })}
+                                to={"#"}
+                            >Continuar</NavLink>
+                        }
 
-                    <div className="container-valor-total">
-                        <span className="txt-Total">Total: </span>
-                        <span className="txt-valorTotal">${valorTotal}</span>
+                        <div className="container-valor-total">
+                            <span className="txt-Total">Total: </span>
+                            <span className="txt-valorTotal">${valorTotal}</span>
+                        </div>
+
                     </div>
+                }
 
-                </div>
 
             </GenericContainer>
 

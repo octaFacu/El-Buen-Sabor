@@ -1,6 +1,7 @@
 import { FC, useEffect, useState } from "react";
 import { ProductoParaPedido } from "../../../context/interfaces/interfaces";
 import CartCard from "../cartCard/CartCard";
+import "./CartListCard.css"
 
 interface CartListCardProps {
     localStorageValues: ProductoParaPedido[]
@@ -15,8 +16,8 @@ const CartListCard: FC<CartListCardProps> = ({ localStorageValues, actualizarCan
 
     if (localStorageValues.length === 0) {
         return (
-            <div className="py-5 d-flex justify-content-center ">
-                <span className="cart-no-content">Tu carrito está vacío</span>
+            <div className="py-5 my-5 d-flex justify-content-center ">
+                <span className="cart-no-content fs-1">Tu carrito está vacío</span>
             </div>
         );
     }

@@ -73,24 +73,42 @@ export class ClienteService extends ServiceBasicos {
   ): Promise<PageProyeccionHistorialPedido<ProyeccionHistorialPedido>> {
     try {
       let parametros = `?page=${page}&size=${size}&campoOrden=${orderBy}&direccionOrden=${direccion}`;
-      
+
       if (fechaInicio !== null && fechaFin !== null) {
         parametros += `&fechaInicio=${fechaInicio}&fechaFin=${fechaFin}`;
       }
-      
+
       const res = await fetch(`${this.url}/obtener-estadisticas-pedido${parametros}`);
-  
+
       if (!res.ok) {
         const respuesta: ExcepcionesVerificaUsuario = await res.json();
         throw respuesta;
       }
-      
+
       const jsonRes = await res.json();
       return jsonRes;
     } catch (err: any) {
       return err;
     }
   }
+
+  async getClienteByUsuarioId(usuarioId: string){
+
+    try {
+      let res = await fetch(this.url + "/clienteXUsuarioId/" + usuarioId);
+
+      if (!res.ok) {
+        throw { status: res.status, statusText: res.statusText };
+      }
+
+      let jsonRes = await res.json();
+      return jsonRes;
+    } catch (err: any) {
+      console.log(`Error ${err.status}: ${err.statusText}`);
+    }
+
+  }
   
+
 
 }

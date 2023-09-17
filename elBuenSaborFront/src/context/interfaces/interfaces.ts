@@ -2,20 +2,20 @@ import { Rubro } from "../../components/compIngrediente/Rubro";
 import Producto from "./Producto";
 
 export type unidadDeMedida = {
-  id: Number;
-  denominacion: String;
-  unidadesParaPadre?: Number;
+  id: number;
+  denominacion: string;
+  unidadesParaPadre?: number;
   padre?: unidadDeMedida;
 };
 
 export type Ingrediente = {
-  id?: Number;
+  id?: number;
   activo: boolean;
   nombre: string;
-  precioCompra: Number;
+  precioCompra: number;
   stockActual: number;
-  stockMaximo: Number;
-  stockMinimo: Number;
+  stockMaximo: number;
+  stockMinimo: number;
   unidadmedida: unidadDeMedida;
   categoriaIngrediente: Rubro;
 };
@@ -27,8 +27,8 @@ export type CategoriaProducto = {
 };
 
 export type IngredienteDeProducto = {
-  id?: Number;
-  cantidad: Number;
+  id?: number;
+  cantidad: number;
   producto: Producto;
   ingrediente: Ingrediente;
   unidadmedida: unidadDeMedida;

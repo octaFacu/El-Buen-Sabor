@@ -29,6 +29,8 @@ export const CajeroPedidosPage = () => {
 
     const getPedidosEstado = async() => {
         const estadoString = EstadoPedido[estadoDePedidos];
+
+
         const filteredPedidos = allPedidos.filter(pedido => pedido.estado.toString() === estadoString);
         await setPedidos(filteredPedidos);
     }

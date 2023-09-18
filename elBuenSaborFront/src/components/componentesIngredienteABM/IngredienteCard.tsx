@@ -42,7 +42,14 @@ const IngredienteCard: React.FunctionComponent<IngrCardProps> = ({ingrediente, c
 
     return (
         
-        <tr className="mb-5" style={botonActivo ? {backgroundColor: '#659355', borderRadius: "25px"} : {backgroundColor: '#C34942', borderRadius: "25px"}}  >
+        <tr className="mb-5" style={
+            botonActivo 
+            ? (ingrediente.stockActual <= ingrediente.stockMinimo 
+              ? { backgroundColor: '#eb5f0e', borderRadius: '25px' } // Orange background
+              : { backgroundColor: '#659355', borderRadius: '25px' } // Green background
+              )
+            : { backgroundColor: '#C34942', borderRadius: '25px' } // Red background
+          }  >
             <td></td>
             <td>{ingrediente.nombre}</td>
             <td>{ingrediente.categoriaIngrediente.denominacion}</td>

@@ -1,4 +1,6 @@
 import { Rubro } from "../../components/compIngrediente/Rubro";
+import Pedido from "./Pedido";
+import PedidoHasProductos from "./PedidoHasProductos";
 import Producto from "./Producto";
 
 export type unidadDeMedida = {
@@ -62,7 +64,7 @@ export interface ExcepcionesVerificaUsuario{
   msj: string
 }
 
-//Esta interfaz no es una entidad en si, solo lo uso apra dar formato a la informacion que sera pasada para crear un pedido (producto y cantidad del mismo) --- Tambien se usa para mercado pago
+//Esta interfaz no es una entidad en si, solo lo uso para dar formato a la informacion que sera pasada para crear un pedido (producto y cantidad del mismo) --- Tambien se usa para mercado pago
 export interface ProductoParaPedido{
   producto: Producto,
   cantidad: number
@@ -77,4 +79,10 @@ export interface UserAuth0{
 export interface RequestDataMP{
   usuario: UserAuth0
   productos: ProductoParaPedido[]
+}
+
+//Esta interface se usa para generar un objeto que luego sera persisitido en la base de datos, creando el pedido y guardando los productos del mismo pedido
+export interface RequestPedido{
+  pedido: Pedido;
+  pedidoHasProducto: PedidoHasProductos[];
 }

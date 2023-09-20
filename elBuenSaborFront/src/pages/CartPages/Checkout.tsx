@@ -1,6 +1,6 @@
 import { FC, useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-import { Direccion, ProductoParaPedido, UserAuth0 } from "../../context/interfaces/interfaces";
+import { Direccion, ProductoParaPedido, RequestPedido, UserAuth0 } from "../../context/interfaces/interfaces";
 import OrderInformation from "../../components/checkout/orderInformation/OrderInformation";
 import PurchaseSteps from "../../components/checkout/purchaseSteps/PurchaseSteps";
 import ButtonsNextPrev from "../../components/checkout/buttonsNextPrev/ButtonsNextPrev";
@@ -49,7 +49,7 @@ const Checkout: FC<CheckoutProps> = () => {
         activo: true,
         numeroPedidoDia: 0,
         esEnvio: false,
-        horaEstimada: "",
+        horaEstimada: "00:00:00",
         fechaPedido: "",
         cliente: new Cliente(),
         direccion: undefined
@@ -70,7 +70,7 @@ const Checkout: FC<CheckoutProps> = () => {
     const fetchCliente = async (userId: string) => {
         const data: Cliente = await clienteSrv.getClienteByUsuarioId(userId)
 
-        if(data){
+        if (data) {
             setPedido((prevPedid: Pedido) => ({
                 ...prevPedid,
                 cliente: data,
@@ -90,8 +90,17 @@ const Checkout: FC<CheckoutProps> = () => {
     const generarPedido = async () => {
         console.log("genero el pedido: ");
 
-        const data = await pedidoSrv.createEntity(pedido)
-        //SEGUIR ACA, CREAR PEDIDO HAS PRODUCTO
+        const requestPedido: RequestPedido = {
+            pedido: pedido,
+            pedidoHasProducto: pedidoHasProductos
+        };
+
+        console.log(requestPedido);
+
+        const data = await pedidoSrv.createPedidoAndPedidoHasProdcuto(requestPedido)
+        console.log("Pedido guardado");
+        console.log(data);
+
     }
 
     //Se reenderiza cuando cambia "user" porque al recargar la pagina, se necesita al usuario para cargar sus direcciones
@@ -105,41 +114,22 @@ const Checkout: FC<CheckoutProps> = () => {
         }
 
         if (localStorageValues) {
-            //Para sacar la fecha del pedido
-            let hp = new Date();
-            //Para sacar la hora estimada
-            let he = new Date();
-            //Timepo que sumo para calcular la hora estimada final
-            let hSuma: string = "00"
-            let mSuma: string = "00"
+
+            //Arreglo que se le va a asignar a pedidoHasProductos
+            const nuevoArregloPedidoHasProducto: PedidoHasProductos[] = [];
 
             localStorageValues.map((val) => {
 
-                let tiempoCocina = val.producto.tiempoCocina!
+                const nuevoPedidoHasProducto: PedidoHasProductos = {
+                    cantidad: val.cantidad,
+                    producto: val.producto
+                };
+                nuevoArregloPedidoHasProducto.push(nuevoPedidoHasProducto);
 
-                if (tiempoCocina) {
-                    if (parseInt(hSuma) < parseInt(tiempoCocina.substring(0, 2))) {
-                        hSuma = tiempoCocina.substring(0, 2);
-                        he.setHours(he.getHours() + parseInt(tiempoCocina.substring(0, 2)))
-                        return;
-
-                    } else if (parseInt(mSuma) < parseInt(tiempoCocina.substring(3, 5))) {
-                        mSuma = tiempoCocina.substring(3, 5);
-                        he.setMinutes(he.getMinutes() + parseInt(tiempoCocina.substring(3, 5)))
-                    }
-                }
             })
 
-            setPedido((prevPedid: Pedido) => ({
-                ...prevPedid,
-                horaEstimada: `${he.getHours()}:${he.getMinutes()}:${he.getSeconds()}`,
-                fechaPedido: `${hp.getFullYear()}-${hp.getMonth() + 1}-${hp.getDay()} ${hp.getHours()}:${hp.getMinutes()}:${hp.getSeconds()}`
-
-            }))
-
-            //Creo pedidos has productos para el pedido
-
-            
+            //Creo pedidosHasProductos para el pedido
+            setPedidoHasProductos(nuevoArregloPedidoHasProducto)
 
         }
 
@@ -162,18 +152,9 @@ const Checkout: FC<CheckoutProps> = () => {
 
     }, [pedido.esEnvio])
 
-
     // useEffect(() => {
     //     console.log(direcciones);
     // }, [direcciones])
-
-    // useEffect(() => {
-    //     console.log(usuarioMP);
-    // }, [usuarioMP])
-
-    // useEffect(() => {
-    //     console.log(pedido);
-    // }, [pedido])
 
     if (!user) {
         return <PageLoader />

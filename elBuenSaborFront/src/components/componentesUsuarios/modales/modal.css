@@ -117,11 +117,12 @@
     background-color: #864E1B;
     color: white;
     width: 15vh;
-    margin: 3vh 3vh 3vh 3vh;
+    margin: 1vh 1vh 3vh 1vh;
   }
   
   .modal-pedido:hover {
-    color: white !important;
+    background-color: #fda859 !important;
+
   }
 .contedorBotonesContraseña{
   padding-top: 1rem;
@@ -148,5 +149,5 @@
 }
 
 .centrado-denominacion {
-  text-align: center; /* Centrar horizontalmente */
+  text-align: center; 
 }

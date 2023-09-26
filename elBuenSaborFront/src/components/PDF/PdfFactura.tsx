@@ -1,0 +1,106 @@
+import { useState, useEffect } from 'react';
+import { Document, Page, Text, View, StyleSheet, Image, PDFDownloadLink  } from '@react-pdf/renderer';
+import logoImage from "../../assets/logo.png";
+import { ProyeccionDatosFactura } from '../../context/interfaces/Proyecciones/ProyeccionDatosFactura';
+import { pedidoService } from '../../services/PedidoService';
+import { format, parseISO } from 'date-fns';
+import { ProyeccionProductosPedido } from '../../context/interfaces/Proyecciones/ProyeccionPedidoUsuario';
+import {styles} from "../PDF/Estilos"
+interface Props {
+  pedido_Id: number;
+}
+
+
+export default function PdfFactura({pedido_Id}: Props) {
+
+  const [datosFactura, setDatosFactura] = useState<ProyeccionDatosFactura>();
+  const [datosProductosPedido, setDatosProductosPedido] = useState<ProyeccionProductosPedido[]>();
+
+  const servicio = new pedidoService();
+  const getDatos = async () => {
+    const traerdatos = await servicio.getDatosFacturas(pedido_Id);
+    const traerDatosProductos = await servicio.getProductosPedido(pedido_Id);
+    setDatosFactura(traerdatos)
+    setDatosProductosPedido(traerDatosProductos)
+  }
+
+  useEffect(() => {
+    getDatos();
+    console.log(pedido_Id)
+  }, []);
+
+  const formatearFecha = () => {
+    if (datosFactura && datosFactura.fecha_pedido) {
+      const fechaParseada = parseISO(datosFactura.fecha_pedido); // Parsear la cadena de fecha
+      return format(fechaParseada, 'dd/MM/yyyy HH:mm:ss'); 
+    } else {
+      return ''; 
+    }
+  }
+
+  const formateoNumeroFactura = ()=>{
+    const numeroFormateado = datosFactura?.numero_factura.toString().padStart(4, '0'); // agrego 0 al numero de la factura segun la cantidad de digitos que tiene
+    return numeroFormateado;      
+  }
+
+  const myDocumento =(
+    <Document>
+    <Page size="A4" style={styles.pagina}>
+      <View>
+        <Text>#{datosFactura?.tipo}-{formateoNumeroFactura()}{datosFactura?.id}-{datosFactura?.numero_pedido_dia}</Text>
+      </View>
+      <View style={styles.seccion}>
+        <View style={styles.logoContainer}>
+          <Image src={logoImage} style={styles.logo} />
+        </View>
+        <View style={styles.row}>
+          <Text style={styles.label}>Cliente:</Text>
+          <Text style={styles.datos}>{datosFactura?.nombre + " " + datosFactura?.apellido} </Text>
+        </View>
+        <View style={styles.row}>
+          <Text style={styles.label}>Fecha:</Text>
+          <Text style={styles.datos}>{formatearFecha()}</Text>
+        </View>
+      </View>
+      <View style={styles.seccion}>
+        <Text style={styles.cabecera}>Detalle</Text>
+        <View style={styles.row}>
+          <View style={{ flex: 1, alignItems: 'center', marginRight: 50 }}>
+            <Text style={styles.label}>Descripción</Text>
+            {datosProductosPedido?.map((productos) => (
+              <Text style={styles.datos}>{productos.denominacion}</Text>
+            ))}
+          </View>
+          <View style={{ flex: 1, alignItems: 'center', marginRight: 5 }}>
+            <Text style={styles.label}>Cantidad</Text>
+            {datosProductosPedido?.map((productos) => (
+              <Text style={styles.datos}>{productos.cantidad}</Text>
+            ))}
+          </View>
+          <View style={{ flex: 1, alignItems: 'center', marginLeft: 50 }}>
+            <Text style={styles.label}>Precio</Text>
+            {datosProductosPedido?.map((productos) => (
+              <Text style={styles.datos}>${productos.precio_total}</Text>
+            ))}
+          </View>
+        </View>
+      </View>
+      <View style={styles.seccion}>
+        <View style={styles.row}>
+          <Text style={styles.label}>Total:</Text>
+          <Text style={styles.total}>${datosFactura?.precio_total}</Text>
+        </View>
+      </View>
+      <View>
+        <Text>Gracias por su compra! disfrute su comida</Text>
+      </View>
+    </Page>
+  </Document>
+  )
+
+  return (
+    <div>
+      <PDFDownloadLink document={myDocumento} fileName="Factura-BuenSabor" className='btn modal-pedido'>Ver Factura</PDFDownloadLink>
+    </div>
+  );
+}

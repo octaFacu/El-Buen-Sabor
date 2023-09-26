@@ -16,6 +16,7 @@ import InformeGanancias from '../pages/AdminPages/EstadisticasPages/InformeGanan
 import { CajeroPedidosPage } from '../pages/CajeroPages/CajeroPedidosPage';
 import CocineroPedidosPage from '../pages/CocineroPages/CocineroPedidosPage';
 import DeliveryPedidosPage from '../pages/DeliveryPages/DeliveryPedidosPage';
+import RegistroEmpleado from '../pages/AdminPages/ABMEmpleados/RegistroEmpleado';
 
 
 export const routesConfig = [
@@ -86,6 +87,10 @@ export const routesConfig = [
     {
         path: '/admin/estadisticas/InformeGanancias',
         component: InformeGanancias,
+    },
+    {
+        path: '/Admin/Administrar/Empleados',
+        component: RegistroEmpleado,
     },
     {
         path: '*',

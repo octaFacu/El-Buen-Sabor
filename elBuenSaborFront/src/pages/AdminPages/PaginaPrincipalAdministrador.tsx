@@ -7,6 +7,9 @@ export default function PaginaPrincipalAdministrador() {
 
   const handleClick = (opcion: number) => {
     switch (opcion) {
+      case 2: 
+      navigate('/Admin/Administrar/Empleados')
+      break;
       case 3: 
         navigate('/admin/estadisticas/InformeGanancias')
         break;
@@ -27,8 +30,8 @@ export default function PaginaPrincipalAdministrador() {
         </div>
         <div className="card-body d-flex flex-column">
           <div className="d-flex flex-column mb-3 btn-separador">
-            <button className='btn btn-administrar text-white mb-2 '>Administrar Clientes</button>
-            <button className='btn btn-administrar text-white mb-2'>Administrar Empleados</button>
+            <button className='btn btn-administrar text-white mb-2' >Administrar Clientes</button>
+            <button className='btn btn-administrar text-white mb-2' onClick={()=> handleClick(2)}>Administrar Empleados</button>
             <button className='btn btn-administrar text-white mb-2'>Gestionar Rubros - Insumos - Productos</button>
           </div>
           <div className="d-flex justify-content-between btn-separador btn-AñadirPadding">

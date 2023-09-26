@@ -2,6 +2,9 @@ import { useState, useEffect } from "react";
 import "./modal.css";
 import { ProyeccionProductosPedido } from "../../../context/interfaces/Proyecciones/ProyeccionPedidoUsuario";
 import { pedidoService } from "../../../services/PedidoService";
+import PdfFactura from "../../PDF/PdfFactura";
+
+
 
 interface Props {
   mostrarModal: boolean;
@@ -26,13 +29,13 @@ const ModalPedido: React.FC<Props> = ({
   const traerPedidos = async () => {
     setPedidoUsuario(await servicioPedio.getProductosPedido(idPedido));
   };
-
   const total = pedidoUsuario?.reduce(
     (precio, actual) => precio + actual.precio_total,
     0
   );
 
   useEffect(() => {
+    
     traerPedidos();
   }, []);
 
@@ -47,7 +50,8 @@ const ModalPedido: React.FC<Props> = ({
             </button>
           </div>
           <div className="modal-body">
-            {pedidoUsuario?.map((pedido) => (
+            {pedidoUsuario?.map((pedido) => {
+              return(
               <div
                 key={pedido.pedido_id + pedido.producto_id}
                 className="pedido-item"
@@ -69,7 +73,8 @@ const ModalPedido: React.FC<Props> = ({
                   </div>
                 </div>
               </div>
-            ))}
+              )
+        })}
             <div className="d-flex justify-content-center texto-blanco mt-2">
               <p>Total ${total}</p>
             </div>
@@ -78,6 +83,7 @@ const ModalPedido: React.FC<Props> = ({
             <button className="btn  modal-pedido" onClick={cerrarModal}>
               Cerrar
             </button>
+            <PdfFactura pedido_Id={idPedido}/>
             <button className="btn modal-pedido" onClick={cerrarModal}>
               Añadir al carrito
             </button>

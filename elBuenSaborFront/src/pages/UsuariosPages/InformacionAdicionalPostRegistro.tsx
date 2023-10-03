@@ -14,6 +14,7 @@ export default function InformacionAdicionalPostRegistro() {
     apellido: "",
     telefono: "",
     activo: true,
+    email: ""
   });
 
   useEffect(() => {
@@ -21,6 +22,7 @@ export default function InformacionAdicionalPostRegistro() {
       setUsuario((prevUsuario) => ({
         ...prevUsuario,
         id: user.userId,
+        email: user.email || '',
       }));
     }
   }, [user]);

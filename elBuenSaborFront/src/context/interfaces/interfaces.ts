@@ -40,6 +40,7 @@ export interface Usuario {
   apellido: string;
   telefono: string;
   activo: boolean;
+  email: string;
 }
 
 export interface Direccion {

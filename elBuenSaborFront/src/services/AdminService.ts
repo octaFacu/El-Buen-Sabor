@@ -1,8 +1,9 @@
+import { ExcepcionesVerificaUsuario } from "../context/interfaces/interfaces";
 import { ServiceBasicos } from "./ServiceBasicos";
 
 export class AdminService extends ServiceBasicos {
   url = "http://localhost:8080/admin/estadisticas";
-
+  urlEmpleado = "http://localhost:8080/usuario";
   constructor() {
     super("admin/estadisticas");
   }
@@ -49,6 +50,21 @@ export class AdminService extends ServiceBasicos {
     }
   }
 
+  async traerEmpleado(){
+    try {
+      const response = await fetch(this.urlEmpleado + "/traerEmpleados")
+      const reponseJSON = await response.json();
+      if (!response.ok) {
+        if (response.status === 500) {
+          const respuesta: ExcepcionesVerificaUsuario = await response.json();
+          throw respuesta;
+        } 
+      }
+      return reponseJSON;
 
+    } catch (error: any) {
+      throw new Error("Error en la descarga del archivo: " + error.message);
+    }
+  }
 
 }

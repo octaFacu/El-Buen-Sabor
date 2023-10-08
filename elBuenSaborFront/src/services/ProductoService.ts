@@ -198,7 +198,7 @@ export class ProductoService extends ServiceBasicos {
     try {
       //Pasarle a la direccion con un put la info
       let res = await fetch(
-        this.baseUrl + this.url + `/${datos.id}`,
+         this.url + `/${datos.id}`,
         {
           method: "PUT",
           headers: {
@@ -285,7 +285,7 @@ export class ProductoService extends ServiceBasicos {
     try {
       //Pasarle a la direccion con un put la info
       let res = await fetch(
-        this.baseUrl + this.url + `/${datos.id}`,
+        this.url + `/${datos.id}`,
         {
           method: "PUT",
           headers: {

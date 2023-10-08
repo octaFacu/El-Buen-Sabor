@@ -8,6 +8,8 @@ import GrupoBotones from "../genericos/GrupoBotones";
 import IngredienteDeProducto from "../../context/interfaces/IngredienteDeProducto";
 import ModalAgregarIngrediente from "./ModalAgregarIngrediente";
 import TablaIngredientesMostrar from "./TablaIngredientesMostrar";
+import { CategoriaProducto } from "../../context/interfaces/interfaces";
+import { IngredientesService } from "../../services/IngredientesService";
 
 
 interface ProdFormProps {
@@ -15,22 +17,21 @@ interface ProdFormProps {
     //De categoriaIngrABM, cambio su estado
     estado: boolean,
     cambiarEstado: (estado: boolean) => void,
-
     datos?: Producto,
-
     categorias: Rubro[];
 }
 
 const ModalCreacionProd: React.FC<ProdFormProps> = ({ estado, cambiarEstado, categorias, datos}) => {
 
     const productoService = new ProductoService();
+    const ingredienteService = new IngredientesService();
     // const serviceBasicos = new ServiceBasicos("unidadmedida");
   
 
     let Productonuevo: Producto = new Producto();
     const [modalIngr, setModalIngr] = useState<boolean>(false);
     const [selectedTime, setSelectedTime] = useState<string>('');
-    const [categoriaElegida, setCategoriaElegida] = useState<String>();
+    const [categoriaElegida, setCategoriaElegida] = useState<CategoriaProducto>();
     const [ingredientesProducto, setIngredientesProducto] = useState<IngredienteDeProducto[]>([]);
     const [ingredientesGuardados, setIngredientesGuardados] = useState<boolean>(false);
 
@@ -75,8 +76,20 @@ const ModalCreacionProd: React.FC<ProdFormProps> = ({ estado, cambiarEstado, cat
     }, [datos, estado])
 
     useEffect(() => {
-        setBotonManufacturado(productoSelect.esManufacturado);
-        setCategoriaElegida(productoSelect.categoriaProducto.toString());
+
+        if(datos){
+            setBotonManufacturado(datos.esManufacturado);
+            
+        }else{
+            setBotonManufacturado(productoSelect.esManufacturado);
+        }
+        
+        if(datos){
+            setCategoriaElegida(datos.categoriaProducto);
+        }else{
+            setCategoriaElegida(productoSelect.categoriaProducto);
+        }
+        
 
         if(!ingredientesGuardados){
             getIngredientes();
@@ -151,6 +164,30 @@ const ModalCreacionProd: React.FC<ProdFormProps> = ({ estado, cambiarEstado, cat
         setIngredientesGuardados(false);
         
     }
+
+    //------------------ CAMBIO DE CATEGORIA -----------------
+    const categoriaCambio = (id: string) => {
+    
+        const selectedCategoryId = parseInt(id, 10); // Parse the selected value to an integer
+        const selectedCategory = categorias.find((cat) => cat.id === selectedCategoryId);
+        console.log(JSON.stringify(selectedCategory));
+        return selectedCategory;
+        
+    }
+
+    // ------------------- CALCULAR COSTOS ----------------------------
+    const calcularCosto = () => {
+        var costo: number = 0;
+        
+        ingredientesProducto.forEach(async (ing) =>{
+            costo += ing.cantidad * await ingredienteService.getCosto(ing);
+          }); 
+
+          return costo;
+    }
+
+
+
     const handleFormSubmit = () => {
         
         setModalIngr(true);
@@ -241,10 +278,10 @@ const ModalCreacionProd: React.FC<ProdFormProps> = ({ estado, cambiarEstado, cat
                                             <textarea style={{borderRadius: "25px", backgroundColor: "#FDA859", color: "white"}} className="form-control me-2" id="stockMin" name="stockMin" required value={productoSelect.descripcion.toString()} onChange={e => {Productonuevo.descripcion =(e.target.value); setProductoSelect({ ...productoSelect, descripcion: (e.target.value) })}}/>
                                         </div>
                                         
-                                            {   botonManufacturado &&
+                                            {   botonManufacturado && (productoSelect.esManufacturado || datos?.esManufacturado) &&
                                             <div className="mb-3">
                                                 <label htmlFor="stockMaximo" className="form-label">Receta</label>
-                                                <textarea style={{borderRadius: "25px", backgroundColor: "#FDA859", color: "white"}} className="form-control ms-2" id="stockMax" name="stockMax" required value={productoSelect.receta!.toString()} onChange={e => {Productonuevo.receta =(e.target.value); setProductoSelect({ ...productoSelect, receta: (e.target.value) })}}/>
+                                                <textarea style={{borderRadius: "25px", backgroundColor: "#FDA859", color: "white"}} className="form-control ms-2" id="stockMax" name="stockMax" required value={productoSelect.receta?.toString()} onChange={e => {Productonuevo.receta =(e.target.value); setProductoSelect({ ...productoSelect, receta: (e.target.value) })}}/>
                                             
                                             </div>
                                             }
@@ -255,7 +292,7 @@ const ModalCreacionProd: React.FC<ProdFormProps> = ({ estado, cambiarEstado, cat
                                      <div className="container" style={{display: "flex", justifyContent: "space-evenly"}}>
                                     <div className="text-center" style={{display: "flex"}}>
 
-                                    {   botonManufacturado &&
+                                    {   botonManufacturado && (productoSelect.esManufacturado || datos?.esManufacturado) &&
                                         <div className="mb-3">
 
                                             <label htmlFor="stockMinimo" className="form-label">Tiempo de Preparacion</label>
@@ -282,12 +319,12 @@ const ModalCreacionProd: React.FC<ProdFormProps> = ({ estado, cambiarEstado, cat
                                      <div className="container" style={{display: "flex", justifyContent: "space-evenly"}}>
                                 <div className="mb-4" style={{display: "flex", maxWidth: "70%", maxHeight: "40%", alignItems: "center", justifyContent: "center" }}>
                                     <label htmlFor="rubro" className="form-label">Categoria</label>
-                                    <select style={{borderRadius: "25px", backgroundColor: "#FDA859", color: "white"}} className="form-select" name="categorias" onChange={e =>{  setProductoSelect({ ...productoSelect, categoriaProducto: (JSON.parse(e.target.value)) }); setCategoriaElegida(e.target.value); Productonuevo.categoriaProducto = JSON.parse(categoriaElegida!.valueOf());}}>
-                                    <option selected value={JSON.stringify(Productonuevo.categoriaProducto)}>{Productonuevo.categoriaProducto.denominacion}</option>
+                                    <select style={{borderRadius: "25px", backgroundColor: "#FDA859", color: "white"}} className="form-select" name="categorias" onChange={e =>{  setProductoSelect({ ...productoSelect, categoriaProducto: categoriaCambio(e.target.value)! }); setCategoriaElegida(categoriaCambio(e.target.value)); Productonuevo.categoriaProducto = categoriaCambio(e.target.value)!;console.log(JSON.stringify(categoriaCambio(e.target.value)))}}>
+                                    <option selected value={Productonuevo.categoriaProducto.id}>{Productonuevo.categoriaProducto.denominacion}</option>
                                         {categorias.map(cat => (
 
                                             cat.denominacion !== Productonuevo.categoriaProducto.denominacion &&
-                                            <option value={JSON.stringify(cat)}>{cat.denominacion}</option>
+                                            <option value={cat.id}>{cat.denominacion}</option>
                                         ))}
                                     </select>
 
@@ -323,18 +360,20 @@ const ModalCreacionProd: React.FC<ProdFormProps> = ({ estado, cambiarEstado, cat
                                         //console.log("ID DEL PRODUCTO "+ productoSelect.id);
                                         console.log("Entro en la segunda condicion")
                                         if(categoriaElegida !== undefined){
-                                            Productonuevo.categoriaProducto = JSON.parse(categoriaElegida!.valueOf());
+                                            console.log("CATEGORIA "+categoriaElegida.toString());
+                                            Productonuevo.categoriaProducto = categoriaElegida!;
+                                            productoSelect.categoriaProducto = categoriaElegida!;
                                         }
                                                       
-                                        console.log("hola");
+                                        productoSelect.costoTotal = calcularCosto();
 
                                         if(prodId !== 0){
 
                                             console.log("Entro a actualizar el producto");
                                             //pasar los datos guardados al metodo de update
                                             updateProducto();
-                                            //cambiarEstado(!estado);
-                                            //window.location.reload();
+                                            cambiarEstado(!estado);
+                                            window.location.reload();
 
                                         }else{
 

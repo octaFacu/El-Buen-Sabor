@@ -64,7 +64,7 @@ export class pedidoService extends ServiceBasicos {
     }
   }
 
-  async createPedidoAndPedidoHasProdcuto(pedido: RequestPedido) {
+  async createPedidoAndPedidoHasProducto(pedido: RequestPedido) {
     try {
       let res = await fetch(this.url + "/createPedidoAndProducto", {
         method: "POST",

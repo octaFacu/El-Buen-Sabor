@@ -36,6 +36,8 @@ const Checkout: FC<CheckoutProps> = () => {
 
     //Estado de los pasos de compra representados por numeros del 1 al 3
     const [estadoCompra, setEstadoCompra] = useState<number>(1);
+    //Estado para saber si se paga con mercado pago o no
+    const [pagoMercadoPago, setPagoMercadoPago] = useState<boolean>(false);
     //Estado para usuario de Mercado Pago
     const [usuarioMP, setUsuarioMP] = useState<UserAuth0>({});
 
@@ -80,7 +82,8 @@ const Checkout: FC<CheckoutProps> = () => {
             setUsuarioMP({
                 nombre: data.usuario.nombre || user?.name || "Nombre",
                 apellido: data.usuario.nombre || user?.middle_name || "Apellido",
-                email: user?.email || "email"
+                email: user?.email || "email",
+                idCliente: data.idCliente
             })
 
         }
@@ -97,9 +100,12 @@ const Checkout: FC<CheckoutProps> = () => {
 
         console.log(requestPedido);
 
-        const data = await pedidoSrv.createPedidoAndPedidoHasProdcuto(requestPedido)
+        const data = await pedidoSrv.createPedidoAndPedidoHasProducto(requestPedido)
         console.log("Pedido guardado");
         console.log(data);
+
+        //localStorage.removeItem('carritoArreglo');
+        localStorage.setItem('carritoArreglo', "");
 
     }
 
@@ -176,13 +182,13 @@ const Checkout: FC<CheckoutProps> = () => {
 
                             <OrderSelections
                                 estadoCompra={estadoCompra}
+                                setEstadoCompra={setEstadoCompra}
                                 direcciones={direcciones}
+                                setPagoMercadoPago={setPagoMercadoPago}
+                                pagoMercadoPago={pagoMercadoPago}
 
                                 pedido={pedido}
                                 setPedido={setPedido}
-
-                                usuarioMP={usuarioMP}
-                                localStorageValues={localStorageValues}
 
                             />
 
@@ -190,9 +196,16 @@ const Checkout: FC<CheckoutProps> = () => {
                     </div >
 
                     <ButtonsNextPrev
+                        pagoMercadoPago={pagoMercadoPago}
                         estadoCompra={estadoCompra}
                         setEstadoCompra={setEstadoCompra}
                         generarPedido={generarPedido}
+
+                        usuarioMP={usuarioMP}
+                        localStorageValues={localStorageValues}
+
+                        pedidoHasProductos={pedidoHasProductos}
+                        pedido={pedido}
                     />
 
                 </div>

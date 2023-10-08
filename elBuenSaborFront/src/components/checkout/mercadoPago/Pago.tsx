@@ -1,24 +1,48 @@
-import { FC, useEffect, useState } from "react";
+import { FC, useEffect, useRef, useState } from "react";
 import { initMercadoPago, Wallet } from '@mercadopago/sdk-react'
-import { ProductoParaPedido, RequestDataMP, UserAuth0 } from "../../../context/interfaces/interfaces";
-import ListLoader from "../../Landing/listLoader/ListLoader";
+import { ProductoParaPedido, RequestDataMP, RequestPedido, UserAuth0 } from "../../../context/interfaces/interfaces";
+import listLoader from "../../../assets/listLoader.gif";
 import "./Pago.css"
+import PedidoHasProductos from "../../../context/interfaces/PedidoHasProductos";
+import Pedido from "../../../context/interfaces/Pedido";
+import { pedidoService } from "../../../services/PedidoService";
 
 interface PagoProps {
     usuarioMP: UserAuth0
     localStorageValues: ProductoParaPedido[]
+
+    pedidoHasProductos: PedidoHasProductos[]
+    pedido: Pedido
 }
 
-const Pago: FC<PagoProps> = ({ usuarioMP, localStorageValues }) => {
+const Pago: FC<PagoProps> = ({ usuarioMP, localStorageValues, pedidoHasProductos, pedido }) => {
 
     initMercadoPago(import.meta.env.VITE_MP_PUBLIC_KEY! as string);
     //initMercadoPago(import.meta.env.VITE_MP_TEST_PUBLIC_KEY! as string);
+    const pedidoSrv = new pedidoService();
 
-    const [preferenceId, setPreferenceId] = useState<string>("");
+    const [preferenceId, setPreferenceId] = useState<string | null>(null);
 
     const requestData: RequestDataMP = {
         usuario: usuarioMP,
-        productos: localStorageValues
+        productos: localStorageValues,
+        esEnvio: pedido.esEnvio
+    }
+
+    //Este metodo va a guardar el pedido en el localStorage, para que luego se genere despues del pego
+    const generoPedidoMP = async () => {
+
+        const requestPedido: RequestPedido = {
+            pedido: pedido,
+            pedidoHasProducto: pedidoHasProductos
+        };
+
+        requestPedido.pedido.activo = false;
+
+        await pedidoSrv.createPedidoAndPedidoHasProducto(requestPedido)
+
+        localStorage.removeItem("carritoArreglo");
+
     }
 
     const fetchCheckout = async () => {
@@ -43,19 +67,18 @@ const Pago: FC<PagoProps> = ({ usuarioMP, localStorageValues }) => {
     useEffect(() => {
 
         fetchCheckout()
-
     }, [])
 
-    if (preferenceId != "") {
+    if (preferenceId != "" && preferenceId != null) {
         return (
-            <div className="btn-mp">
+            <div className="btn-mp" onClick={generoPedidoMP}>
                 <Wallet initialization={{ preferenceId: preferenceId! }} />
             </div>
         );
     }
 
     return (
-        <ListLoader />
+        <img src={listLoader} alt="Loading..." className="list-loader-gif" />
     );
 
 }

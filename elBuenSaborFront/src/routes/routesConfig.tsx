@@ -16,6 +16,9 @@ import InformeGanancias from '../pages/AdminPages/EstadisticasPages/InformeGanan
 import { CajeroPedidosPage } from '../pages/CajeroPages/CajeroPedidosPage';
 import CocineroPedidosPage from '../pages/CocineroPages/CocineroPedidosPage';
 import DeliveryPedidosPage from '../pages/DeliveryPages/DeliveryPedidosPage';
+import SuccessPage from '../pages/CartPages/MercadoPagoBackURLS/SuccessPage';
+import PendingPage from '../pages/CartPages/MercadoPagoBackURLS/PendingPage';
+import FailurePage from '../pages/CartPages/MercadoPagoBackURLS/FailurePage';
 
 
 export const routesConfig = [
@@ -42,6 +45,18 @@ export const routesConfig = [
     {
         path: '/checkout',
         component: Checkout,
+    },
+    {
+        path: '/success',
+        component: SuccessPage,
+    },
+    {
+        path: '/pending',
+        component: PendingPage,
+    },
+    {
+        path: '/failure',
+        component: FailurePage,
     },
     {
         path: '/usuarios',

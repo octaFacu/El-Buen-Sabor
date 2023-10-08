@@ -73,16 +73,34 @@ export interface ProductoParaPedido{
 export interface UserAuth0{
   nombre?: string,
   apellido?: string,
-  email?: string
+  email?: string,
+  idCliente?: number
 }
 //Se usa para mercado pago
 export interface RequestDataMP{
   usuario: UserAuth0
   productos: ProductoParaPedido[]
+  esEnvio: boolean
 }
 
 //Esta interface se usa para generar un objeto que luego sera persisitido en la base de datos, creando el pedido y guardando los productos del mismo pedido
 export interface RequestPedido{
   pedido: Pedido;
   pedidoHasProducto: PedidoHasProductos[];
+}
+
+export interface MetodoDePago{
+  id?: number;
+  tipo: string;
+  activo: boolean;
+}
+
+export interface Factura{
+  id?: number;
+  tipo: string;
+  montoDescuento: number;
+  numeroFactura: string;
+  pedido: Pedido;
+  MetodoDePago?: MetodoDePago;
+  activo: boolean;
 }

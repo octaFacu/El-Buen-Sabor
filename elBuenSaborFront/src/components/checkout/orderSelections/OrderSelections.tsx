@@ -13,9 +13,11 @@ interface OrderSelectionsProps {
 
     pedido: Pedido;
     setPedido: (valor: any) => void;
+
+    agregoNuevaDireccion: () => void;
 }
 
-const OrderSelections: FC<OrderSelectionsProps> = ({ estadoCompra, setEstadoCompra, pagoMercadoPago, setPagoMercadoPago, direcciones, setPedido, pedido }) => {
+const OrderSelections: FC<OrderSelectionsProps> = ({ estadoCompra, setEstadoCompra, pagoMercadoPago, setPagoMercadoPago, direcciones, setPedido, pedido, agregoNuevaDireccion }) => {
 
     //Asigna la direccion y el metodo de pago al pedido
     const handlePedidoDireccion = (opcion: Direccion | null) => {
@@ -34,12 +36,6 @@ const OrderSelections: FC<OrderSelectionsProps> = ({ estadoCompra, setEstadoComp
                 esEnvio: false
             }));
         }
-
-    }
-
-    //HACER ESTOOOOOOOOOOOOOOOOOOOOOOOOOO
-    const agregoNuevaDireccion = () => {
-        console.log("Agrego nueva direccion");
 
     }
 

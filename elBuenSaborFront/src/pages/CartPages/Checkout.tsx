@@ -1,6 +1,6 @@
 import { FC, useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-import { Direccion, ProductoParaPedido, RequestPedido, UserAuth0 } from "../../context/interfaces/interfaces";
+import { Direccion, ProductoParaPedido, RequestPedido, UserAuth0, Usuario } from "../../context/interfaces/interfaces";
 import OrderInformation from "../../components/checkout/orderInformation/OrderInformation";
 import PurchaseSteps from "../../components/checkout/purchaseSteps/PurchaseSteps";
 import ButtonsNextPrev from "../../components/checkout/buttonsNextPrev/ButtonsNextPrev";
@@ -13,6 +13,8 @@ import { Cliente } from "../../context/interfaces/Cliente";
 import PedidoHasProductos from "../../context/interfaces/PedidoHasProductos";
 import { ClienteService } from "../../services/ClienteService";
 import { pedidoService } from "../../services/PedidoService";
+import ModalEdicionDireccion from "../../components/componentesUsuarios/modales/ModalEdicionDireccion";
+import { UsuarioService } from "../../services/UsuarioService";
 
 
 interface CheckoutProps {
@@ -24,6 +26,7 @@ const Checkout: FC<CheckoutProps> = () => {
     const pedidoSrv = new pedidoService();
     const direccionSrv = new DireccionService();
     const clienteSrv = new ClienteService();
+    const usuarioSrv = new UsuarioService();
 
     //Consigo el usuario para conseguir sus direcciones y metodos de pago
     const { user } = useAuth0();
@@ -40,6 +43,39 @@ const Checkout: FC<CheckoutProps> = () => {
     const [pagoMercadoPago, setPagoMercadoPago] = useState<boolean>(false);
     //Estado para usuario de Mercado Pago
     const [usuarioMP, setUsuarioMP] = useState<UserAuth0>({});
+
+    //Estados para poder persistir una direccion en el caso que se necesite
+    const [modalDireccion, setModalDireccion] = useState<boolean>(false);
+    const [usuario, setUsuario] = useState<Usuario>({
+        id: "0",
+        nombre: "",
+        apellido: "",
+        telefono: "",
+        activo: true
+    });
+    const [direccionPersist, setDireccionPersist] = useState<Direccion>();
+
+    const fetchUsuario = async (userId: string) => {
+        const data = await usuarioSrv.getOne(userId)
+        await setUsuario(data);
+    }
+
+    const agregoNuevaDireccion = () => {
+        setDireccionPersist({
+            idDireccion: 0,
+            calle: "",
+            nroCasa: 0,
+            pisoDpto: "",
+            usuario: usuario,
+            activo: true
+        })
+        setModalDireccion(true)
+    }
+
+    const cerrarModal = () => {
+        setModalDireccion(false);
+        fetchDireccionesUsuario(user!.userId)
+    };
 
     //---------------------------------------------------------------------------------
 
@@ -117,6 +153,8 @@ const Checkout: FC<CheckoutProps> = () => {
 
             fetchCliente(user.userId)
 
+            fetchUsuario(user.userId)
+
         }
 
         if (localStorageValues) {
@@ -158,70 +196,80 @@ const Checkout: FC<CheckoutProps> = () => {
 
     }, [pedido.esEnvio])
 
-    // useEffect(() => {
-    //     console.log(direcciones);
-    // }, [direcciones])
-
     if (!user) {
         return <PageLoader />
     }
 
     return (
-        <div className="container">
-            <div className="row mt-5">
+        <>
+            <div className="container">
+                <div className="row mt-5">
 
-                {/* Contenido del espacio izquierdo */}
-                <div className="col-md-8">
+                    {/* Contenido del espacio izquierdo */}
+                    <div className="col-md-8">
 
-                    <PurchaseSteps
-                        estadoCompra={estadoCompra}
-                    />
+                        <PurchaseSteps
+                            estadoCompra={estadoCompra}
+                        />
 
-                    <div className="container mt-5" style={{ minHeight: "400px", background: "#f99132", borderRadius: "25px" }}>
-                        <div className="m-auto pt-1" style={{ width: "90%" }}>
+                        <div className="container mt-5" style={{ minHeight: "400px", background: "#f99132", borderRadius: "25px" }}>
+                            <div className="m-auto pt-1" style={{ width: "90%" }}>
 
-                            <OrderSelections
-                                estadoCompra={estadoCompra}
-                                setEstadoCompra={setEstadoCompra}
-                                direcciones={direcciones}
-                                setPagoMercadoPago={setPagoMercadoPago}
-                                pagoMercadoPago={pagoMercadoPago}
+                                <OrderSelections
+                                    estadoCompra={estadoCompra}
+                                    setEstadoCompra={setEstadoCompra}
+                                    direcciones={direcciones}
+                                    setPagoMercadoPago={setPagoMercadoPago}
+                                    pagoMercadoPago={pagoMercadoPago}
 
-                                pedido={pedido}
-                                setPedido={setPedido}
+                                    pedido={pedido}
+                                    setPedido={setPedido}
 
-                            />
+                                    agregoNuevaDireccion={agregoNuevaDireccion}
+                                />
 
-                        </div>
-                    </div >
+                            </div>
+                        </div >
 
-                    <ButtonsNextPrev
-                        pagoMercadoPago={pagoMercadoPago}
-                        estadoCompra={estadoCompra}
-                        setEstadoCompra={setEstadoCompra}
-                        generarPedido={generarPedido}
+                        <ButtonsNextPrev
+                            pagoMercadoPago={pagoMercadoPago}
+                            estadoCompra={estadoCompra}
+                            setEstadoCompra={setEstadoCompra}
+                            generarPedido={generarPedido}
 
-                        usuarioMP={usuarioMP}
-                        localStorageValues={localStorageValues}
+                            usuarioMP={usuarioMP}
+                            localStorageValues={localStorageValues}
 
-                        pedidoHasProductos={pedidoHasProductos}
-                        pedido={pedido}
-                    />
+                            pedidoHasProductos={pedidoHasProductos}
+                            pedido={pedido}
+                        />
 
-                </div>
+                    </div>
 
-                {/* Contenido del espacio derecho */}
-                <div className="col-md-4">
+                    {/* Contenido del espacio derecho */}
+                    <div className="col-md-4">
 
-                    <OrderInformation
-                        valorTotal={valorTotal}
-                        localStorageValues={localStorageValues}
-                        esEnvio={pedido.esEnvio}
-                    />
+                        <OrderInformation
+                            valorTotal={valorTotal}
+                            localStorageValues={localStorageValues}
+                            esEnvio={pedido.esEnvio}
+                        />
+                    </div>
+
                 </div>
 
             </div>
-        </div>
+
+            {modalDireccion && (
+                <ModalEdicionDireccion
+                    cerrarModal={cerrarModal}
+                    modo="agregar"
+                    direccion={direccionPersist!}
+                />
+            )}
+
+
+        </>
     );
 }
 

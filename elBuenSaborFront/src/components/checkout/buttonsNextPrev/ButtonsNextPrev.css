@@ -1,0 +1,34 @@
+.btn-checkout-format {
+  font-family: var(--letra-btn);
+}
+
+.btn-checkout-back {
+  margin-top: 16px;
+  background-color: var(--main-color);
+  color: white;
+  border-radius: 25px;
+  padding: 12px;
+}
+
+.btn-checkout-back:hover {
+  background-color: var(--input-text);
+}
+
+.btn-checkout-forward {
+  margin-top: 16px;
+  background-color: #0d6efd;
+  color: white;
+  border-radius: 25px;
+  padding: 12px;
+}
+
+.btn-checkout-forward:hover {
+  background-color: #0a58ca;
+}
+
+/* Cuando la pantalla tenga una anchura de 767px o menos */
+@media (max-width: 767px) {
+  .ocultar-btn-checkout-back {
+    display: none;
+  }
+}

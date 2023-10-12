@@ -69,10 +69,19 @@ const Pago: FC<PagoProps> = ({ usuarioMP, localStorageValues, pedidoHasProductos
         fetchCheckout()
     }, [])
 
+    const customization = {
+        visual: {
+            buttonBackground: 'black',
+            borderRadius: '6px',
+        },
+    }
+
     if (preferenceId != "" && preferenceId != null) {
         return (
             <div className="btn-mp" onClick={generoPedidoMP}>
-                <Wallet initialization={{ preferenceId: preferenceId! }} />
+                <Wallet
+                    initialization={{ preferenceId: preferenceId! }}
+                />
             </div>
         );
     }

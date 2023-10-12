@@ -1,3 +1,10 @@
-.btn-mp{
-    width: 20%;
+/* Cuando la pantalla tenga una anchura de 767px o menos */
+@media (max-width: 767px) {
+  .btn-mp {
+    /* width: 40%; */
+  }
+}
+
+/* Cuando la pantalla tenga una anchura de 767px o menos */
+@media (max-width: 575px) {
 }

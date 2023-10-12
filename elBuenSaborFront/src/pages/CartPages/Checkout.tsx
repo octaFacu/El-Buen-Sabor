@@ -140,7 +140,6 @@ const Checkout: FC<CheckoutProps> = () => {
         console.log("Pedido guardado");
         console.log(data);
 
-        //localStorage.removeItem('carritoArreglo');
         localStorage.setItem('carritoArreglo', "");
 
     }

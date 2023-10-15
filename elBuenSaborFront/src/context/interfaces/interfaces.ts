@@ -1,4 +1,5 @@
 import { Rubro } from "../../components/compIngrediente/Rubro";
+import { Cliente } from "./Cliente";
 import Pedido from "./Pedido";
 import PedidoHasProductos from "./PedidoHasProductos";
 import Producto from "./Producto";
@@ -103,4 +104,11 @@ export interface Factura{
   pedido: Pedido;
   MetodoDePago?: MetodoDePago;
   activo: boolean;
+}
+
+export interface Favorito{
+  id: number;
+  activo: boolean;
+  cliente: Cliente;
+  producto: Producto;
 }

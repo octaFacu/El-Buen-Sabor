@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import ImgLogo from '../../components/Landing/imgLogo/ImgLogo'
 import { useUnidadContext } from "../../context/GlobalContext"
 import CarruselCategorias from '../../components/Landing/carruselCategorias/CarruselCategorias'
 import "../pagesStyles/landing.css"
-import { CategoriaProducto, ProductoParaPedido } from '../../context/interfaces/interfaces'
+import { CategoriaProducto, Favorito, ProductoParaPedido } from '../../context/interfaces/interfaces'
 import { CategoriaProductoService } from "../../services/CategoriaProductoService";
 import { ProductoService } from "../../services/ProductoService";
 import ListCard from '../../components/Landing/listCard/ListCard'
@@ -13,11 +13,15 @@ import Footer from '../../components/Landing/footer/Footer'
 import DetalleProducto from '../../components/Landing/detalleProducto/DetalleProducto'
 import ListLoader from '../../components/Landing/listLoader/ListLoader'
 import CartNotification from "../../components/Landing/cartNotification/CartNotification"
+import { FavoritoService } from '../../services/FavoritoService'
+import { useAuth0 } from '@auth0/auth0-react'
+import { log } from 'console'
 
 export const Landing = () => {
 
   const categoriaProductoService = new CategoriaProductoService()
   const productoService = new ProductoService()
+  const favoritoService = new FavoritoService()
 
   //PARA MOSTRAR NOTIFICACION DE AÑADIDO AL CARRITO
   const [showNotification, setShowNotification] = useState(false);
@@ -166,6 +170,36 @@ export const Landing = () => {
   //VENTANA MODAL PARA DETALLE PRODUCTO
   const [modalDetalleProducto, setModalDetalleProducto] = useState<boolean>(false)
   const [productoSeleccionado, setProductoSeleccionado] = useState<Producto>()
+  const [favoritos, setFavoritos] = useState<Favorito[]>([])
+  const { user } = useAuth0();
+
+  //Traigo los favoritos del cliente si es que esta logueado
+  const fetchDataFavoritos = async (usuarioId: string) => {
+    const data = await favoritoService.getAllByUsuarioId(usuarioId);
+    console.log("Favoritos:");
+    console.log(data);
+    await setFavoritos(data);
+  };
+
+  const agregarFavorito = async (usuarioId: string, producto: Producto) => {
+    await favoritoService.saveFavorito(usuarioId, producto);
+    await fetchDataFavoritos(usuarioId)
+  };
+
+  const quitarFavorito = async (usuarioId: string, productoId: number) => {
+    await favoritoService.deleteFavorito(usuarioId, productoId);
+    await fetchDataFavoritos(usuarioId)
+  };
+
+  useEffect(() => {
+
+    if (user) {
+      fetchDataFavoritos(user.userId)
+      console.log("Favoritos:");
+      console.log(favoritos);
+    }
+
+  }, [user])
 
   //--------------------
 
@@ -249,11 +283,6 @@ export const Landing = () => {
             }}>Volver al inicio</button>
           </div>
 
-          {/* <CarruselCategorias
-            categorias={categorias}
-            setCategoriaSeleccionada={setCategoriaSeleccionada}
-          /> */}
-
           {/* Si busco por categoria */}
           {categoriaSeleccionada &&
             <div>
@@ -299,6 +328,10 @@ export const Landing = () => {
           setModalDetalleProducto={setModalDetalleProducto}
           producto={productoSeleccionado}
           handleAddToCart={handleAddToCart}
+
+          agregarFavorito={agregarFavorito}
+          quitarFavorito={quitarFavorito}
+          favoritos={favoritos}
         />
 
         {/* Notificacion de añadido al carrito */}
@@ -348,6 +381,10 @@ export const Landing = () => {
         setModalDetalleProducto={setModalDetalleProducto}
         producto={productoSeleccionado}
         handleAddToCart={handleAddToCart}
+
+        agregarFavorito={agregarFavorito}
+        quitarFavorito={quitarFavorito}
+        favoritos={favoritos}
       />
 
       {/* Notificacion de añadido al carrito */}

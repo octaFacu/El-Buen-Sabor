@@ -1,49 +1,81 @@
-.estilo-cart-card{
-    background-color: var(--input-text) !important;
-    border-radius: 11px !important;
-    color: white;
-    margin: 0;
-    /* width: 80%; */
-    /* margin-left: 5vh;
+.estilo-cart-card {
+  background-color: var(--input-text) !important;
+  border-radius: 11px !important;
+  color: white;
+  margin: 0;
+  /* width: 80%; */
+  /* margin-left: 5vh;
     margin-top: 10vh; */
 }
 
-.cart-total-product-price{
-    font-size: 1.2rem;
-    font-family: var(--letra-inputs);
-    padding: 8px;
-    background-color: var(--btn-color);
-    border-radius: 11px;
+.cart-total-product-price {
+  font-size: 1.2rem;
+  font-family: var(--letra-inputs);
+  padding: 8px;
+  background-color: var(--btn-color-light);
+  border-radius: 11px;
 }
 
-.cart-product-price{
-    font-family: var(--letra-inputs);
-    font-size: 1.2rem;
+.cart-product-price {
+  font-family: var(--letra-inputs);
+  font-size: 1.2rem;
 }
 
-.cart-denominacion{
-    font-size: 1.2rem;
-    font-family: var(--letra-titulo);
+.cart-denominacion {
+  font-size: 1.2rem;
+  font-family: var(--letra-titulo);
 }
 
-.bg-cart-cancel-btn{
-    font-size: 1.3rem;
-    font-weight: bold;
+.bg-cart-cancel-btn {
+  font-size: 1.3rem;
+  font-weight: bold;
 
-    border-radius: 11px;
-    padding-left: 17px; 
-    padding-right: 17px;
-    padding-top: 11px;
-    padding-bottom: 11px;
-    color: white;
-    background-color: var(--red-color)
+  border-radius: 11px;
+  padding-left: 17px;
+  padding-right: 17px;
+  padding-top: 11px;
+  padding-bottom: 11px;
+  color: white;
+  background-color: var(--red-color);
 }
 
-.bg-cart-cant{
-    background-color: var(--main-color);
-    border-radius: 0.6rem;
+.resp-cart-cancel-btn {
+  display: none;
 }
 
-/* --letra-titulo: "Alfa Slab One", cursive;
---letra-btn: "ABeeZee", sans-serif;
---letra-inputs: "Varela Round", sans-serif; */
+.bg-cart-cant {
+  background-color: var(--main-color);
+  border-radius: 0.6rem;
+}
+
+.cart-cant {
+  padding-left: 3rem;
+  padding-right: 3rem;
+}
+
+/* Cuando la pantalla tenga una anchura de 992px o menos */
+@media (max-width: 992px) {
+  .cart-cant {
+    padding-left: 1.2rem;
+    padding-right: 1.2rem;
+  }
+}
+
+/* Cuando la pantalla tenga una anchura de 767px o menos */
+@media (max-width: 767px) {
+  .bg-cart-cancel-btn {
+    display: none;
+  }
+
+  .resp-cart-cancel-btn {
+    display: block;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 1; 
+  }
+
+  .resp-cart-cant {
+    margin-bottom: 1rem;
+  }
+}

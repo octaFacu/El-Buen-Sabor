@@ -1,0 +1,9 @@
+@media (max-width: 767px) {
+  .checkout-col-md-8 {
+    order: 2; /* Cambia el orden de PurchaseSteps en la versión móvil */
+  }
+
+  .checkout-col-md-4 {
+    order: 1; /* Cambia el orden de OrderInformation en la versión móvil */
+  }
+}

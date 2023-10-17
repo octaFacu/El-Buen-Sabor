@@ -15,6 +15,7 @@ import { ClienteService } from "../../services/ClienteService";
 import { pedidoService } from "../../services/PedidoService";
 import ModalEdicionDireccion from "../../components/componentesUsuarios/modales/ModalEdicionDireccion";
 import { UsuarioService } from "../../services/UsuarioService";
+import "../pagesStyles/checkout.css"
 
 
 interface CheckoutProps {
@@ -205,7 +206,7 @@ const Checkout: FC<CheckoutProps> = () => {
                 <div className="row mt-5">
 
                     {/* Contenido del espacio izquierdo */}
-                    <div className="col-md-8">
+                    <div className="checkout-col-md-8 col-md-8">
 
                         <PurchaseSteps
                             estadoCompra={estadoCompra}
@@ -246,7 +247,7 @@ const Checkout: FC<CheckoutProps> = () => {
                     </div>
 
                     {/* Contenido del espacio derecho */}
-                    <div className="col-md-4">
+                    <div className="checkout-col-md-4 col-md-4">
 
                         <OrderInformation
                             valorTotal={valorTotal}

@@ -123,16 +123,7 @@ const DetalleProducto: FC<DetalleProductoProps> = ({ producto, modalDetalleProdu
 
                         <div className="d-flex justify-content-between">
                             {/* Lado Izquierdo: Ingredientes */}
-                            <div>
-                                {/* <p>Ingredientes: {producto.ingredientes.join(", ")}</p> */}
-                                <p>Ingredientes:</p>
-                                <ul>
-                                    <li>Queso</li>
-                                    <li>Harina</li>
-                                    <li>Salsa de tomate</li>
-                                    <li>No seeeeeeeeeeeeeeeeee</li>
-                                </ul>
-                            </div>
+                            <div></div>
                             {/* Lado Derecho: Precio */}
                             <div>
                                 <p className="productPrice">Precio: ${producto.precioTotal}</p>

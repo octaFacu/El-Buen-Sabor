@@ -138,7 +138,7 @@ const OrderSelections: FC<OrderSelectionsProps> = ({ estadoCompra, setEstadoComp
                         <div className="d-flex justify-content-between align-items-center">
                             <div>
                                 <h4>Direccion</h4>
-                                <label className="form-check-label">{pedido.direccion?.calle} {pedido.direccion?.calle} - {pedido.direccion?.pisoDpto}</label>
+                                <label className="form-check-label">{pedido.direccion?.calle} {pedido.direccion?.nroCasa} - {pedido.direccion?.pisoDpto}</label>
                             </div>
                             <button className="order-selection-btn p-2" onClick={() => setEstadoCompra(1)}>Editar</button>
                         </div>
@@ -151,7 +151,7 @@ const OrderSelections: FC<OrderSelectionsProps> = ({ estadoCompra, setEstadoComp
                 <div className="d-flex justify-content-between align-items-center">
                     <div>
                         <h4>Forma de pago</h4>
-                        <label className="form-check-label">forma de pago....</label>
+                        <label className="form-check-label">{pagoMercadoPago ? "Merado pago" : "Efectivo"}</label>
                     </div>
                     <button className="order-selection-btn p-2" onClick={() => setEstadoCompra(2)}>Editar</button>
 

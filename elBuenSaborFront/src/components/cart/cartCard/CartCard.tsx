@@ -24,6 +24,12 @@ const CartCard: FC<CartCardProps> = ({ product, actualizarCantidad, eliminarProd
                 <div className="row g-0 d-flex align-items-center">
 
                     <div className="col-md-3">
+                    
+                            <button className="resp-cart-cancel-btn bg-cart-cancel-btn" onClick={() => {
+                                eliminarProducto(index)
+                                handleValorTotalChange(product.producto.precioTotal * product.cantidad, false)
+                                }}>X</button>
+                        
                         <img src={product.producto.imagen} className="img-fluid rounded-start" alt={product.producto.denominacion} />
                     </div>
 
@@ -39,13 +45,13 @@ const CartCard: FC<CartCardProps> = ({ product, actualizarCantidad, eliminarProd
                         </div>
                     </div>
 
-                    <div className="col-md-4 d-flex justify-content-evenly align-items-center">
+                    <div className="resp-cart-cant col-md-4 d-flex justify-content-evenly align-items-center">
                         <div className="bg-cart-cant d-flex align-items-center">
                             <button className="cant-btn-resta bg-cant-btn" onClick={() => {
                                 actualizarCantidad(index, product.cantidad - 1)
                                 handleValorTotalChange(product.producto.precioTotal, false)
                             }} disabled={product.cantidad === 1}>-</button>
-                            <span className="px-5 fs-5">{product.cantidad}</span>   {/*PARA RESPONSIVIDAD PASAR DE "px-5" A "px-3"*/}
+                            <span className="cart-cant fs-5">{product.cantidad}</span>   {/*PARA RESPONSIVIDAD PASAR DE "px-5" A "px-3"*/}
                             <button className="bg-cant-btn" onClick={() => {
                                 actualizarCantidad(index, product.cantidad + 1)
                                 handleValorTotalChange(product.producto.precioTotal, true)

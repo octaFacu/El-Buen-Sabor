@@ -34,7 +34,7 @@ const ButtonsNextPrev: FC<ButtonsNextPrevProps> = (
     //SEGUIR ACA CON SI EL PAGO ES CON MERCADO PAGO REENDERIZO UN BOTON U OTRO
     return (
         <div className="btn-checkout-format d-flex justify-content-between align-items-start">
-            {estadoCompra > 1 ? <button className=" btn-checkout-back ocultar-btn-checkout-back" onClick={() => setEstadoCompra(estadoCompra - 1)}>Paso Anterior</button> : <div className="ocultar-btn-checkout-back"></div>}
+            {estadoCompra > 1 ? <button className={`btn-checkout-back ${estadoCompra === 3 && 'ocultar-btn-checkout-back'}`} onClick={() => setEstadoCompra(estadoCompra - 1)}>Paso Anterior</button> : <div></div>}
             {pagoMercadoPago && estadoCompra === 3
                 ?
                 <Pago

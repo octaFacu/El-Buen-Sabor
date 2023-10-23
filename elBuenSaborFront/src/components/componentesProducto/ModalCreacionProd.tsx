@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react"
+import { useContext, useEffect, useRef, useState } from "react"
 import "../../css/ventanaModal.css"
 import { Rubro } from "../compIngrediente/Rubro";
 import { GlobalContext } from "../../context/GlobalContext";
@@ -77,10 +77,8 @@ const ModalCreacionProd: React.FC<ProdFormProps> = ({ estado, cambiarEstado, cat
 
     useEffect(() => {
 
-        if(datos){
-            setBotonManufacturado(datos.esManufacturado);
+        if(botonManufacturado !== productoSelect.esManufacturado){
             
-        }else{
             setBotonManufacturado(productoSelect.esManufacturado);
         }
         
@@ -143,8 +141,8 @@ const ModalCreacionProd: React.FC<ProdFormProps> = ({ estado, cambiarEstado, cat
     const crearProducto = async () => {
 
 
-        // console.log(JSON.stringify(productoSelect));
-        // console.log(productoSelect.tiempoCocina);
+        console.log(JSON.stringify(productoSelect));
+       //console.log(productoSelect.tiempoCocina);
 
         ingredientesProducto.forEach((ing) => {
             console.log(JSON.stringify(ing)); // This will log each number in the array
@@ -353,17 +351,17 @@ const ModalCreacionProd: React.FC<ProdFormProps> = ({ estado, cambiarEstado, cat
                                    if(categoriaElegida !== undefined && productoSelect.categoriaProducto.id !== 0 && (ingredientesProducto?.length > 0 || productoSelect.esManufacturado == false)){
                                     console.log("Entro en la primera condicion")
                                     // setProductoSelect({...productoSelect, tiempoCocina: selectedTime});
+                                    setCategoriaElegida(productoSelect.categoriaProducto);
 
-                                    if((productoSelect.receta != '' && productoSelect.tiempoCocina != '') || productoSelect.esManufacturado == false){
+                                    if(((productoSelect.receta != '' && productoSelect.tiempoCocina != '') || productoSelect.esManufacturado == false) && categoriaElegida.denominacion !== ""){
                                         
                                         var prodId = productoSelect.id;
-                                        //console.log("ID DEL PRODUCTO "+ productoSelect.id);
                                         console.log("Entro en la segunda condicion")
-                                        if(categoriaElegida !== undefined){
-                                            console.log("CATEGORIA "+categoriaElegida.toString());
-                                            Productonuevo.categoriaProducto = categoriaElegida!;
-                                            productoSelect.categoriaProducto = categoriaElegida!;
-                                        }
+                                        
+                                        console.log("CATEGORIA "+JSON.stringify(categoriaElegida));
+                                        Productonuevo.categoriaProducto = categoriaElegida!;
+                                        productoSelect.categoriaProducto = categoriaElegida!;
+
                                                       
                                         productoSelect.costoTotal = calcularCosto();
 
@@ -376,11 +374,10 @@ const ModalCreacionProd: React.FC<ProdFormProps> = ({ estado, cambiarEstado, cat
                                             window.location.reload();
 
                                         }else{
-
+                                            console.log("Entro a crear el producto");
                                             crearProducto();
-                                             cambiarEstado(!estado);
-                                             window.location.reload();
-
+                                            cambiarEstado(!estado);
+                                            //window.location.reload();
                                             
                                         }
                                         setIngredientesProducto([]);

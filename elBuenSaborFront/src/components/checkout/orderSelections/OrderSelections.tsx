@@ -151,7 +151,7 @@ const OrderSelections: FC<OrderSelectionsProps> = ({ estadoCompra, setEstadoComp
                 <div className="d-flex justify-content-between align-items-center">
                     <div>
                         <h4>Forma de pago</h4>
-                        <label className="form-check-label">{pagoMercadoPago ? "Merado pago" : "Efectivo"}</label>
+                        <label className="form-check-label">{pagoMercadoPago ? "Mercado Pago" : "Efectivo"}</label>
                     </div>
                     <button className="order-selection-btn p-2" onClick={() => setEstadoCompra(2)}>Editar</button>
 

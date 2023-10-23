@@ -7,6 +7,7 @@ import './CajeroPagesStyle.css';
 import { Stomp } from "@stomp/stompjs";
 import * as SockJS from 'sockjs-client';
 import * as Socket from 'socket.io-client';
+import SortListComponent from "./SortListComponent";
 
 
 export const CajeroPedidosPage = () => {
@@ -29,6 +30,8 @@ export const CajeroPedidosPage = () => {
 
     const getPedidosEstado = async() => {
         const estadoString = EstadoPedido[estadoDePedidos];
+
+
         const filteredPedidos = allPedidos.filter(pedido => pedido.estado.toString() === estadoString);
         await setPedidos(filteredPedidos);
     }
@@ -125,7 +128,8 @@ export const CajeroPedidosPage = () => {
     }, [estadoDePedidos]); 
 
     useEffect(() => {
-        //getPedidosEstado();
+        console.log("PEDIDOS HAN CAMBIADO");
+        //HERE I NEED TO RE RENDER WITH WHAT THE CURRENT LIST HAS, NO CHANGES
     }, [pedidos]);
 
     const handleChangeEstado = (estadoDePedido: EstadoPedido, pedidoChanged: Pedido) => {
@@ -167,11 +171,12 @@ export const CajeroPedidosPage = () => {
         <div>
              <div className="container my-5 pb-1 mb-3 " style={{ background: "#f99132", borderRadius: "25px" }}>
 
-       
+            
             <div className="titleAndAddButton">
                 <div className="text-center pt-4 px-3 d-flex">
                     <h1 style={{ margin: "auto", color: "white" }}> Pedidos</h1>
                 </div>
+                <SortListComponent key={pedidos.length} list={pedidos} setList={setPedidos}></SortListComponent>
                 <div className="circleButtons py-1 px-1">
                 {listaPendientes.map((num) => (
                     <div key={num} className="circleButton">

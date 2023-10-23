@@ -22,6 +22,7 @@ export const IngredientesABM = () => {
     const [estadoModal, setEstadoModal] = useState(false);
     const [estadoModalVista, setEstadoModalVista] = useState(false);
     const [estadoModalCompra, setEstadoModalCompra] = useState(false);
+    
     const [categorias, setCategorias] = useState<Rubro[]>([]);
     const [datos, setDatos] = useState<Ingrediente>({
         id: 0,
@@ -76,20 +77,7 @@ export const IngredientesABM = () => {
 
 
     return (
-        <div>
-
-            {/* <GlobalContext.Consumer>
-                {(context) => (
-                <div>
-                    {context.ingredientes.map((ingrediente) => (
-                    <div key={ingrediente.id.toString()}>{ingrediente.nombre} {ingrediente.precioCompra.toString()} {ingrediente.unidadmedida.denominacion} {ingrediente.categoriaIngrediente.denominacion}</div>
-                    ))}
-                </div>
-                )}
-            </GlobalContext.Consumer> */}
-
-
-        
+        <div>    
         <ListaCartasABM 
         titulo="Ingredientes"
         estado={estadoModal}

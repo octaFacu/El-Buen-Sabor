@@ -83,8 +83,7 @@ const Checkout: FC<CheckoutProps> = () => {
     //Estado para generar el pedido
     const [pedido, setPedido] = useState<Pedido>({
         precioTotal: 0,
-        //String que diga AConfirmar
-        estado: 0,
+        estado: "AConfirmar",
         activo: true,
         numeroPedidoDia: 0,
         esEnvio: false,

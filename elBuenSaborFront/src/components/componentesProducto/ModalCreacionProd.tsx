@@ -10,6 +10,7 @@ import ModalAgregarIngrediente from "./ModalAgregarIngrediente";
 import TablaIngredientesMostrar from "./TablaIngredientesMostrar";
 import { CategoriaProducto } from "../../context/interfaces/interfaces";
 import { IngredientesService } from "../../services/IngredientesService";
+import { CloudinaryService } from "../../services/CloudinaryService";
 
 
 interface ProdFormProps {
@@ -21,12 +22,12 @@ interface ProdFormProps {
     categorias: Rubro[];
 }
 
-const ModalCreacionProd: React.FC<ProdFormProps> = ({ estado, cambiarEstado, categorias, datos}) => {
+const ModalCreacionProd: React.FC<ProdFormProps> = ({ estado, cambiarEstado, categorias, datos }) => {
 
     const productoService = new ProductoService();
     const ingredienteService = new IngredientesService();
     // const serviceBasicos = new ServiceBasicos("unidadmedida");
-  
+
 
     let Productonuevo: Producto = new Producto();
     const [modalIngr, setModalIngr] = useState<boolean>(false);
@@ -35,41 +36,53 @@ const ModalCreacionProd: React.FC<ProdFormProps> = ({ estado, cambiarEstado, cat
     const [ingredientesProducto, setIngredientesProducto] = useState<IngredienteDeProducto[]>([]);
     const [ingredientesGuardados, setIngredientesGuardados] = useState<boolean>(false);
 
-    const [productoSelect, setProductoSelect] = useState<Producto>( new Producto());
+    const [productoSelect, setProductoSelect] = useState<Producto>(new Producto());
     const [botonManufacturado, setBotonManufacturado] = useState<boolean>(true);
-    
+
     /*const { categoria } = useContext(GlobalContext);*/
 
     const handleSelectChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        
-        Productonuevo.denominacion =(event.target.value)
+
+        Productonuevo.denominacion = (event.target.value)
 
         setProductoSelect({ ...productoSelect, denominacion: (event.target.value) });
     }
 
-    const cargarDatos = async () =>{
-        if(datos !== undefined){
-                    console.log("Antes de guardar los datos: "+productoSelect.denominacion);
+    const cargarDatos = async () => {
+        if (datos !== undefined) {
+            console.log("Antes de guardar los datos: " + productoSelect.denominacion);
 
-                    await setProductoSelect(datos!);
-                    console.log("Despues de guardar los datos: "+productoSelect.denominacion);
-                    console.log("los datos: "+datos.denominacion);
+            await setProductoSelect(datos!);
+            console.log("Despues de guardar los datos: " + productoSelect.denominacion);
+            console.log("los datos: " + datos.denominacion);
 
-                    if(datos.esManufacturado === true){
-                        setSelectedTime(datos.tiempoCocina!);
-                    }
-                    
-                    
-                    //setIngredientesProducto(ingredientesParam!);
-                    
-                    
-                    
-                }
+            if (datos.esManufacturado === true) {
+                setSelectedTime(datos.tiempoCocina!);
+            }
+
+
+            //setIngredientesProducto(ingredientesParam!);
+
+
+
+        }
     }
+
+    //Parte de cloudinary
+    const cloudinaryService = new CloudinaryService();
+
+    const [file, setFile] = useState<File | null>(null);
+
+    const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+        const selectedFile = e.target.files && e.target.files[0];
+        if (selectedFile) {
+            setFile(selectedFile);
+        }
+    };
 
     useEffect(() => {
 
-        if(estado){
+        if (estado) {
             cargarDatos();
         }
 
@@ -77,39 +90,39 @@ const ModalCreacionProd: React.FC<ProdFormProps> = ({ estado, cambiarEstado, cat
 
     useEffect(() => {
 
-        if(botonManufacturado !== productoSelect.esManufacturado){
-            
+        if (botonManufacturado !== productoSelect.esManufacturado) {
+
             setBotonManufacturado(productoSelect.esManufacturado);
         }
-        
-        if(datos){
+
+        if (datos) {
             setCategoriaElegida(datos.categoriaProducto);
-        }else{
+        } else {
             setCategoriaElegida(productoSelect.categoriaProducto);
         }
-        
 
-        if(!ingredientesGuardados){
+
+        if (!ingredientesGuardados) {
             getIngredientes();
         }
-        
+
     }, [productoSelect])
 
-    const getIngredientes = async() => {
+    const getIngredientes = async () => {
         await productoService.getIngredientes(productoSelect.id!).then((data) => setIngredientesProducto(castIngredientesIds(data)));
         setIngredientesGuardados(true);
-        
+
     }
 
 
     //CASTEAR INGREDIENTES A SOLO ATRIBUTOS ID
-    const castIngredientesIds = (ingredientes: any[]): IngredienteDeProducto[] =>{
+    const castIngredientesIds = (ingredientes: any[]): IngredienteDeProducto[] => {
         const castIngredientes: IngredienteDeProducto[] = [];
 
-        for(let i=0; i<ingredientes.length; i++) {
+        for (let i = 0; i < ingredientes.length; i++) {
 
             console.log(JSON.stringify(ingredientes[i]));
-            
+
 
             let nuevoIng: IngredienteDeProducto = new IngredienteDeProducto();
 
@@ -123,7 +136,7 @@ const ModalCreacionProd: React.FC<ProdFormProps> = ({ estado, cambiarEstado, cat
             castIngredientes.push(nuevoIng);
         }
 
-        return(castIngredientes);
+        return (castIngredientes);
     }
 
     const handleCancelling = async () => {
@@ -132,7 +145,7 @@ const ModalCreacionProd: React.FC<ProdFormProps> = ({ estado, cambiarEstado, cat
         ingredientesProducto.forEach(ing => {
             console.log(ing);
         });
-        
+
         cambiarEstado(!estado);
         setIngredientesGuardados(false);
     }
@@ -140,19 +153,19 @@ const ModalCreacionProd: React.FC<ProdFormProps> = ({ estado, cambiarEstado, cat
 
     const crearProducto = async () => {
 
-
-        console.log(JSON.stringify(productoSelect));
-       //console.log(productoSelect.tiempoCocina);
+        // console.log(productoSelect);
+        //console.log(JSON.stringify(productoSelect));
+        //console.log(productoSelect.tiempoCocina);
 
         ingredientesProducto.forEach((ing) => {
             console.log(JSON.stringify(ing)); // This will log each number in the array
-          });
+        });
 
         await productoService.crearEntity(productoSelect, ingredientesProducto);
         setIngredientesProducto([]);
         setIngredientesGuardados(false);
-        
-        
+
+
     }
 
     const updateProducto = async () => {
@@ -160,254 +173,289 @@ const ModalCreacionProd: React.FC<ProdFormProps> = ({ estado, cambiarEstado, cat
         await productoService.actualizarEntity(productoSelect, ingredientesProducto);
         setIngredientesProducto([]);
         setIngredientesGuardados(false);
-        
+
     }
 
     //------------------ CAMBIO DE CATEGORIA -----------------
     const categoriaCambio = (id: string) => {
-    
+
         const selectedCategoryId = parseInt(id, 10); // Parse the selected value to an integer
         const selectedCategory = categorias.find((cat) => cat.id === selectedCategoryId);
         console.log(JSON.stringify(selectedCategory));
         return selectedCategory;
-        
+
     }
 
     // ------------------- CALCULAR COSTOS ----------------------------
     const calcularCosto = () => {
         var costo: number = 0;
-        
-        ingredientesProducto.forEach(async (ing) =>{
-            costo += ing.cantidad * await ingredienteService.getCosto(ing);
-          }); 
 
-          return costo;
+        ingredientesProducto.forEach(async (ing) => {
+            costo += ing.cantidad * await ingredienteService.getCosto(ing);
+        });
+
+        return costo;
     }
 
 
 
     const handleFormSubmit = () => {
-        
+
         setModalIngr(true);
         return false; // Prevent the default form submission behavior
-      };
+    };
 
-      const handleTimeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const handleTimeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setSelectedTime(event.target.value);
         setProductoSelect({ ...productoSelect, tiempoCocina: (event.target.value) })
-      };
-    
+    };
+
 
 
     if (/*datos === undefined ||*/ categorias === undefined) {
 
-            return (
-                <>
-                    {estado &&
-                        <h1>LOADING!</h1>
-                    }
-                </>
-            )
-    }else if(categorias === undefined){
-        return(
+        return (
             <>
-            {estado &&
-            <div>
-                <div className="overlay">
-                    <div className="container my-5 contenedorModal" style={{borderRadius: "25px", backgroundColor: "#f99132", color: "white"}}>
-                        <div className="" style={{textAlign: "center"}}>
+                {estado &&
+                    <h1>LOADING!</h1>
+                }
+            </>
+        )
+    } else if (categorias === undefined) {
+        return (
+            <>
+                {estado &&
+                    <div>
+                        <div className="overlay">
+                            <div className="container my-5 contenedorModal" style={{ borderRadius: "25px", backgroundColor: "#f99132", color: "white" }}>
+                                <div className="" style={{ textAlign: "center" }}>
 
-                            <h1>¡DEBE CREAR CATEGORIAS PRIMERO!</h1>
+                                    <h1>¡DEBE CREAR CATEGORIAS PRIMERO!</h1>
 
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div>
-            </div>}
+                    </div>}
             </>
         )
     }
 
 
-    
+
 
     return (
         <>
-        <ModalAgregarIngrediente estado={modalIngr}
-             cambiarEstado={setModalIngr} ingredientesList={ingredientesProducto}
-              setIngredientesList={setIngredientesProducto} cambiarEstadoFormProd={cambiarEstado}/> 
+            <ModalAgregarIngrediente estado={modalIngr}
+                cambiarEstado={setModalIngr} ingredientesList={ingredientesProducto}
+                setIngredientesList={setIngredientesProducto} cambiarEstadoFormProd={cambiarEstado} />
             {estado && !modalIngr /*&& productoSelect !== undefined*/ &&
-            
+
 
                 <div className="overlay">
-                    <div className="container my-5 contenedorModal modaloverflow" style={{borderRadius: "25px", backgroundColor: "#f99132", color: "white", maxWidth: "50%"}}>
-                        <div className="childmodaloverflow" style={{textAlign: "center", alignContent: "center"}}>
+                    <div className="container my-5 contenedorModal modaloverflow" style={{ borderRadius: "25px", backgroundColor: "#f99132", color: "white", maxWidth: "50%" }}>
+                        <div className="childmodaloverflow" style={{ textAlign: "center", alignContent: "center" }}>
                             <form onSubmit={(e) => {
                                 e.preventDefault()
-                               
+
                             }}>
                                 <h3 className="mb-3">Nuevo Producto</h3>
-                                
-                                <div className="container" style={{display: "flex", justifyContent: "space-evenly"}}>
-                                    <div className="mb-3" style={{maxWidth: "50%"}}>
+
+                                <div className="container" style={{ display: "flex", justifyContent: "space-evenly" }}>
+                                    <div className="mb-3" style={{ maxWidth: "50%" }}>
                                         <label htmlFor="nombre" className="form-label">Nombre</label>
-                                        <input style={{borderRadius: "25px", backgroundColor: "#FDA859", color: "white"}} type="text" className="form-control" id="nombre" name="nombre" required value={productoSelect.denominacion.toString()} onChange={
+                                        <input style={{ borderRadius: "25px", backgroundColor: "#FDA859", color: "white" }} type="text" className="form-control" id="nombre" name="nombre" required value={productoSelect.denominacion.toString()} onChange={
                                             handleSelectChange
-                                        }  />
+                                        } />
                                     </div>
-                                    </div>
-                                    <div className="container" style={{display: "flex", justifyContent: "space-evenly"}}>
-                                    <div style={{display: "flex"}}>
+                                </div>
+                                <div className="container" style={{ display: "flex", justifyContent: "space-evenly" }}>
+                                    <div style={{ display: "flex" }}>
                                         <div className="mb-3">
                                             <label htmlFor="stockActual" className="form-label">Costo Total</label>
-                                            <input type="number" min="0" style={{borderRadius: "25px", backgroundColor: "#FDA859", color: "white"}} className="form-control me-2" id="precioCompra" name="precioCompra" required value={productoSelect.costoTotal.toString()} onChange={e => {Productonuevo.costoTotal =(+e.target.value); setProductoSelect({ ...productoSelect, costoTotal: (+e.target.value) })}}/>
+                                            <input type="number" min="0" style={{ borderRadius: "25px", backgroundColor: "#FDA859", color: "white" }} className="form-control me-2" id="precioCompra" name="precioCompra" required value={productoSelect.costoTotal.toString()} onChange={e => { Productonuevo.costoTotal = (+e.target.value); setProductoSelect({ ...productoSelect, costoTotal: (+e.target.value) }) }} />
                                         </div>
                                         <div className="mb-3">
                                             <label htmlFor="stockActual" className="form-label">Precio Total</label>
-                                            <input type="number" min="0" style={{borderRadius: "25px", backgroundColor: "#FDA859", color: "white"}}  className="form-control ms-2" id="stockActual" name="stockActual" required value={productoSelect.precioTotal} onChange={e => {Productonuevo.precioTotal =(+e.target.value); setProductoSelect({ ...productoSelect, precioTotal: (+e.target.value) })}}/>
+                                            <input type="number" min="0" style={{ borderRadius: "25px", backgroundColor: "#FDA859", color: "white" }} className="form-control ms-2" id="stockActual" name="stockActual" required value={productoSelect.precioTotal} onChange={e => { Productonuevo.precioTotal = (+e.target.value); setProductoSelect({ ...productoSelect, precioTotal: (+e.target.value) }) }} />
                                         </div>
                                     </div>
-                                    </div>
-                                    
+                                </div>
 
-                                    <div className="container" style={{display: "flex", justifyContent: "space-evenly"}}>
-                                    <div className="text-center" style={{display: "flex"}}>
+
+                                <div className="container" style={{ display: "flex", justifyContent: "space-evenly" }}>
+                                    <div className="text-center" style={{ display: "flex" }}>
                                         <div className="mb-3">
                                             <label htmlFor="stockMinimo" className="form-label">Descripcion</label>
-                                            <textarea style={{borderRadius: "25px", backgroundColor: "#FDA859", color: "white"}} className="form-control me-2" id="stockMin" name="stockMin" required value={productoSelect.descripcion.toString()} onChange={e => {Productonuevo.descripcion =(e.target.value); setProductoSelect({ ...productoSelect, descripcion: (e.target.value) })}}/>
+                                            <textarea style={{ borderRadius: "25px", backgroundColor: "#FDA859", color: "white" }} className="form-control me-2" id="stockMin" name="stockMin" required value={productoSelect.descripcion.toString()} onChange={e => { Productonuevo.descripcion = (e.target.value); setProductoSelect({ ...productoSelect, descripcion: (e.target.value) }) }} />
                                         </div>
-                                        
-                                            {   botonManufacturado && (productoSelect.esManufacturado || datos?.esManufacturado) &&
+
+                                        {botonManufacturado && (productoSelect.esManufacturado || datos?.esManufacturado) &&
                                             <div className="mb-3">
                                                 <label htmlFor="stockMaximo" className="form-label">Receta</label>
-                                                <textarea style={{borderRadius: "25px", backgroundColor: "#FDA859", color: "white"}} className="form-control ms-2" id="stockMax" name="stockMax" required value={productoSelect.receta?.toString()} onChange={e => {Productonuevo.receta =(e.target.value); setProductoSelect({ ...productoSelect, receta: (e.target.value) })}}/>
-                                            
+                                                <textarea style={{ borderRadius: "25px", backgroundColor: "#FDA859", color: "white" }} className="form-control ms-2" id="stockMax" name="stockMax" required value={productoSelect.receta?.toString()} onChange={e => { Productonuevo.receta = (e.target.value); setProductoSelect({ ...productoSelect, receta: (e.target.value) }) }} />
+
                                             </div>
-                                            }
-                                            
+                                        }
+
                                     </div>
-                                    </div>
+                                </div>
 
-                                     <div className="container" style={{display: "flex", justifyContent: "space-evenly"}}>
-                                    <div className="text-center" style={{display: "flex"}}>
+                                <div className="container" style={{ display: "flex", justifyContent: "space-evenly" }}>
+                                    <div className="text-center" style={{ display: "flex" }}>
 
-                                    {   botonManufacturado && (productoSelect.esManufacturado || datos?.esManufacturado) &&
-                                        <div className="mb-3">
+                                        {botonManufacturado && (productoSelect.esManufacturado || datos?.esManufacturado) &&
+                                            <div className="mb-3">
 
-                                            <label htmlFor="stockMinimo" className="form-label">Tiempo de Preparacion</label>
-                                            <input id="settime" type="time" step="1" style={{borderRadius: "25px", backgroundColor: "#FDA859", color: "white"}} className="form-control" value={selectedTime} onChange={handleTimeChange}/> 
-                                           </div>
-                                    }
+                                                <label htmlFor="stockMinimo" className="form-label">Tiempo de Preparacion</label>
+                                                <input id="settime" type="time" step="1" style={{ borderRadius: "25px", backgroundColor: "#FDA859", color: "white" }} className="form-control" value={selectedTime} onChange={handleTimeChange} />
+                                            </div>
+                                        }
                                         <div className="mb-3">
                                             <label htmlFor="stockMaximo" className="form-label">¿Es manufacturado?</label>
                                             <GrupoBotones estado={botonManufacturado}
-                                            cambiarEstado={setBotonManufacturado}></GrupoBotones>
+                                                cambiarEstado={setBotonManufacturado}></GrupoBotones>
                                         </div>
 
                                         <div className="mb-3">
-                                            <label htmlFor="stockActual" className="form-label">Inserte Link de su Imagen</label>
-                                            <input type="text" style={{borderRadius: "25px", backgroundColor: "#FDA859", color: "white"}}  className="form-control" name="precio" required value={productoSelect.imagen.toString()} onChange={e => {Productonuevo.imagen =(e.target.value); setProductoSelect({ ...productoSelect, imagen: (e.target.value) })}}/>
+                                            <label htmlFor="stockActual" className="form-label">Inserte su Imagen</label>
+                                            <input
+                                                type="file"
+                                                id="imagen"
+                                                name="imagen"
+                                                className="form-control"
+                                                onChange={handleFileChange}
+                                                multiple={false}
+                                            />
+                                            {/* Si la imagen del producto seleccionado existe, muestro la imagen */}
+                                            {datos?.imagen &&
+                                                <img className="mt-1" style={{ maxWidth: "150px" }} src={datos.imagen} alt="img" />
+                                            }
+
                                         </div>
+
                                     </div>
+                                </div>
+
+
+
+
+
+                                <div className="container" style={{ display: "flex", justifyContent: "space-evenly" }}>
+                                    <div className="mb-4" style={{ display: "flex", maxWidth: "70%", maxHeight: "40%", alignItems: "center", justifyContent: "center" }}>
+                                        <label htmlFor="rubro" className="form-label">Categoria</label>
+                                        <select style={{ borderRadius: "25px", backgroundColor: "#FDA859", color: "white" }} className="form-select" name="categorias" onChange={e => { setProductoSelect({ ...productoSelect, categoriaProducto: categoriaCambio(e.target.value)! }); setCategoriaElegida(categoriaCambio(e.target.value)); Productonuevo.categoriaProducto = categoriaCambio(e.target.value)!; console.log(JSON.stringify(categoriaCambio(e.target.value))) }}>
+
+                                            <option selected value={Productonuevo.categoriaProducto.id}>{Productonuevo.categoriaProducto.denominacion}</option>
+                                            {/* {datos ?
+                                                categorias.map(cat => (
+                                                        cat.denominacion !== Productonuevo.categoriaProducto.denominacion &&
+                                                        <option selected={datos.categoriaProducto.id === cat.id ? true : false} value={cat.id}>{cat.denominacion}</option>
+                                                ))
+                                                :
+                                                categorias.map(cat => (
+                                                        cat.denominacion !== Productonuevo.categoriaProducto.denominacion &&
+                                                        <option value={cat.id}>{cat.denominacion}</option>
+                                                ))
+                                            } */}
+                                            {categorias.map(cat => (
+                                                cat.denominacion !== Productonuevo.categoriaProducto.denominacion &&
+                                                <option value={cat.id}>{cat.denominacion}</option>
+                                            ))}
+
+                                        </select>
+
                                     </div>
-                                
-
-                                
-                                
-                                
-                                     <div className="container" style={{display: "flex", justifyContent: "space-evenly"}}>
-                                <div className="mb-4" style={{display: "flex", maxWidth: "70%", maxHeight: "40%", alignItems: "center", justifyContent: "center" }}>
-                                    <label htmlFor="rubro" className="form-label">Categoria</label>
-                                    <select style={{borderRadius: "25px", backgroundColor: "#FDA859", color: "white"}} className="form-select" name="categorias" onChange={e =>{  setProductoSelect({ ...productoSelect, categoriaProducto: categoriaCambio(e.target.value)! }); setCategoriaElegida(categoriaCambio(e.target.value)); Productonuevo.categoriaProducto = categoriaCambio(e.target.value)!;console.log(JSON.stringify(categoriaCambio(e.target.value)))}}>
-                                    <option selected value={Productonuevo.categoriaProducto.id}>{Productonuevo.categoriaProducto.denominacion}</option>
-                                        {categorias.map(cat => (
-
-                                            cat.denominacion !== Productonuevo.categoriaProducto.denominacion &&
-                                            <option value={cat.id}>{cat.denominacion}</option>
-                                        ))}
-                                    </select>
-
-                                </div> 
-                                </div> 
-
-
-                                
+                                </div>
 
 
 
 
-                                <button className="btn btn-danger mx-3" onClick={() =>{
+
+
+
+                                <button className="btn btn-danger mx-3" onClick={() => {
                                     setIngredientesProducto([]);
                                     handleCancelling();
-                                 }}><i className="material-icons" style={{fontSize: "30px", cursor:"pointer"}}>highlight_off</i></button>
+                                }}><i className="material-icons" style={{ fontSize: "30px", cursor: "pointer" }}>highlight_off</i></button>
 
-                                <button type="submit" className="btn" style={{backgroundColor: "#864e1b", color: "white"}} onClick={(event) => {
+                                <button type="submit" className="btn" style={{ backgroundColor: "#864e1b", color: "white" }} onClick={async (event) => {
 
                                     event.preventDefault();
 
                                     productoSelect.esManufacturado = botonManufacturado;
-                                    
-                                    
 
-                                   if(categoriaElegida !== undefined && productoSelect.categoriaProducto.id !== 0 && (ingredientesProducto?.length > 0 || productoSelect.esManufacturado == false)){
-                                    console.log("Entro en la primera condicion")
-                                    // setProductoSelect({...productoSelect, tiempoCocina: selectedTime});
-                                    setCategoriaElegida(productoSelect.categoriaProducto);
 
-                                    if(((productoSelect.receta != '' && productoSelect.tiempoCocina != '') || productoSelect.esManufacturado == false) && categoriaElegida.denominacion !== ""){
-                                        
-                                        var prodId = productoSelect.id;
-                                        console.log("Entro en la segunda condicion")
-                                        
-                                        console.log("CATEGORIA "+JSON.stringify(categoriaElegida));
-                                        Productonuevo.categoriaProducto = categoriaElegida!;
-                                        productoSelect.categoriaProducto = categoriaElegida!;
 
-                                                      
-                                        productoSelect.costoTotal = calcularCosto();
+                                    if (categoriaElegida !== undefined && productoSelect.categoriaProducto.id !== 0 && (ingredientesProducto?.length > 0 || productoSelect.esManufacturado == false)) {
+                                        console.log("Entro en la primera condicion")
+                                        // setProductoSelect({...productoSelect, tiempoCocina: selectedTime});
+                                        setCategoriaElegida(productoSelect.categoriaProducto);
 
-                                        if(prodId !== 0){
+                                        if (((productoSelect.receta != '' && productoSelect.tiempoCocina != '') || productoSelect.esManufacturado == false) && categoriaElegida.denominacion !== "") {
 
-                                            console.log("Entro a actualizar el producto");
-                                            //pasar los datos guardados al metodo de update
-                                            updateProducto();
-                                            cambiarEstado(!estado);
-                                            window.location.reload();
+                                            var prodId = productoSelect.id;
+                                            console.log("Entro en la segunda condicion")
 
-                                        }else{
-                                            console.log("Entro a crear el producto");
-                                            crearProducto();
-                                            cambiarEstado(!estado);
-                                            //window.location.reload();
-                                            
+                                            console.log("CATEGORIA " + JSON.stringify(categoriaElegida));
+                                            Productonuevo.categoriaProducto = categoriaElegida!;
+                                            productoSelect.categoriaProducto = categoriaElegida!;
+
+
+                                            productoSelect.costoTotal = calcularCosto();
+
+                                            if (file) {
+                                                const urlImagen = await cloudinaryService.uploadImage(file);
+                                                console.log(urlImagen);
+                                                if (urlImagen) {
+                                                    productoSelect.imagen = urlImagen
+                                                }
+                                                setFile(null);
+                                            }
+
+                                            if (prodId !== 0) {
+
+                                                console.log("Entro a actualizar el producto");
+                                                //pasar los datos guardados al metodo de update
+                                                updateProducto();
+                                                cambiarEstado(!estado);
+                                                window.location.reload();
+
+                                            } else {
+                                                console.log("Entro a crear el producto");
+                                                crearProducto();
+                                                cambiarEstado(!estado);
+                                                //window.location.reload();
+
+                                            }
+                                            setIngredientesProducto([]);
+
                                         }
-                                        setIngredientesProducto([]);
- 
-                                    }}
-                                }}> <i className="material-icons" style={{fontSize: "30px", cursor:"pointer"}}>check</i></button>
+                                    }
+                                }}> <i className="material-icons" style={{ fontSize: "30px", cursor: "pointer" }}>check</i></button>
                             </form>
-                            {   botonManufacturado /*&& (ingredientesProducto.length != 0 || productoSelect.id == 0)*/ &&
-                            <div>
-                                {   datos == undefined &&
-                                    <TablaIngredientesMostrar ingredientesProd={ingredientesProducto} setIngredientesProd={setIngredientesProducto} edicion={true}/>
-                                }
-                                {
-                                    datos != undefined &&
-                                    <TablaIngredientesMostrar productoId={productoSelect.id!} ingredientesProd={ingredientesProducto} setIngredientesProd={setIngredientesProducto} edicion={true}/>
-                                }
-                            
-                            <div className="container" style={{display: "flex", justifyContent: "space-evenly"}}>
-                                <div className="mt-4" style={{display: "flex", maxWidth: "70%", maxHeight: "40%", alignItems: "center", justifyContent: "center" }}>
-                                    
-                                    <button className="btn btn-success" onClick={() => handleFormSubmit()}>Agregar Ingrediente</button>
-                                </div> 
-                                
-                                </div>
-                                </div> }
+                            {botonManufacturado /*&& (ingredientesProducto.length != 0 || productoSelect.id == 0)*/ &&
+                                <div>
+                                    {datos == undefined &&
+                                        <TablaIngredientesMostrar ingredientesProd={ingredientesProducto} setIngredientesProd={setIngredientesProducto} edicion={true} />
+                                    }
+                                    {
+                                        datos != undefined &&
+                                        <TablaIngredientesMostrar productoId={productoSelect.id!} ingredientesProd={ingredientesProducto} setIngredientesProd={setIngredientesProducto} edicion={true} />
+                                    }
+
+                                    <div className="container" style={{ display: "flex", justifyContent: "space-evenly" }}>
+                                        <div className="mt-4" style={{ display: "flex", maxWidth: "70%", maxHeight: "40%", alignItems: "center", justifyContent: "center" }}>
+
+                                            <button className="btn btn-success" onClick={() => handleFormSubmit()}>Agregar Ingrediente</button>
+                                        </div>
+
+                                    </div>
+                                </div>}
                         </div>
                     </div>
                 </div>
             }
-            
+
         </>
 
     );

@@ -1,0 +1,60 @@
+.card-EmpleadoReg {
+  border-radius: 11px !important;
+  margin-left: 5vh;
+  margin-top: 10vh;
+  background-color: #f99132 !important;
+  color: white;
+  min-height: 33rem;
+}
+
+.contenedor-tituloRegEmpleado {
+  border-radius: 11px;
+  background: #864e1b;
+  margin: -0.25rem -0.05rem 0 -0.05rem;
+  padding-top: 0.25rem;
+}
+
+.btn-ModEmpleado {
+  border-radius: 11px;
+  background-color: #864e1b;
+  width: 5rem;
+  height: 2rem;
+}
+
+.btn-ModEmpleado:hover {
+  background-color: #f99132 !important;
+}
+
+.btn-DesactivarEmpleado {
+  background-color: #CB3234;
+  border-radius: 11px;
+  width: 6rem;
+  height: 2rem;
+}
+.btn-DesactivarEmpleado:hover{
+  background-color: red;
+}
+
+.btn-habilitado {
+  background-color: green;
+  color: white;
+  border-radius: 11px;
+  width: 6rem;
+  height: 2rem;
+}
+
+.btn-habilitado:hover{
+  background-color: #00C040;
+}
+
+.btnAtras{
+  background-color: #864e1b;
+  color: white;
+  border-radius: 16px;
+  width: 6rem;
+  height: 2rem;
+  text-align: center;
+}
+.btnAtras:hover{
+  background-color: #fda859;
+}

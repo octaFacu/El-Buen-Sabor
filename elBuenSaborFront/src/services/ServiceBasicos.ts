@@ -136,7 +136,7 @@ export class ServiceBasicos {
 
   //Metodo para activar o desactivar los objetos de manera logica
 
-  async softDelete(id: number):Promise<void> {
+  async softDelete(id: any):Promise<void> {
    try{
     let res = await fetch(this.baseUrl+this._urlEspecifico+"/soft/"+id ,{
       method: 'PATCH',

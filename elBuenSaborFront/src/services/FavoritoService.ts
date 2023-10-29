@@ -7,9 +7,15 @@ export class FavoritoService extends ServiceBasicos {
   }
 
 
-  async getFavoritosDeUsuario(usuarioId: number) {
+  async getFavoritosDeUsuario(usuarioId: number, rol: string) {
     try {
-      let res = await fetch(this.url + "/buscar/" + usuarioId);
+      let res = await fetch(this.url + "/buscar/" + usuarioId, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          'X-Role': rol
+        },
+      });
 
       if (!res.ok) {
         throw { status: res.status, statusText: res.statusText };

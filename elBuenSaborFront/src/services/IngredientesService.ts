@@ -9,11 +9,17 @@ export class IngredientesService extends ServiceBasicos{
       }
 
     //Trae todas categorias de ingrediente que no tengan padre
-    async getByCategoriaId(categoriaid: Number) {
+    async getByCategoriaId(categoriaid: Number, rol: string) {
 
         try {
 
-            let res = await fetch(this.url + "/porCategoria/"+ categoriaid)
+            let res = await fetch(this.url + "/porCategoria/"+ categoriaid, {
+                method: "GET",
+                headers: {
+                  "Content-Type": "application/json",
+                  'X-Role': rol
+                },
+              })
 
             if (!res.ok) {
                 throw { status: res.status, statusText: res.statusText }
@@ -27,7 +33,7 @@ export class IngredientesService extends ServiceBasicos{
         }
     }
 
-    async getCosto(ingrediente: IngredienteDeProducto) {
+    async getCosto(ingrediente: IngredienteDeProducto, rol: string) {
 
         try {
 
@@ -35,6 +41,7 @@ export class IngredientesService extends ServiceBasicos{
                 method: "POST",
                 headers: {
                   "Content-Type": "application/json",
+                  'X-Role': rol
                 },
                 body: JSON.stringify(ingrediente),
               });

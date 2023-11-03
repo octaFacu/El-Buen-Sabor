@@ -17,7 +17,9 @@
   background-color: #864e1b !important;
   border-radius: 30px !important;
 }
-
+.btn-administrar-tam{
+  width: 20rem;
+}
 .btn-separador button {
   margin-top: 1.5rem;
   height: 2.5rem;
@@ -70,6 +72,35 @@
   background-color: #864e1b !important;
   margin: 1rem 1rem 1.5rem 3rem !important;
   width: 10rem;
+}
+
+.btn-ranking {
+  border-radius: 11px !important;
+  background-color: #864e1b !important;
+  margin: 1rem 1rem 1.5rem 1rem !important;
+  width: 5rem;
+  color: white !important;
+}
+
+.card-ranking {
+  border-radius: 11px !important;
+  background-color: #f99132 !important;
+  color: white;
+}
+
+.estilos_pie{
+  max-width: 1000px;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.estilos_barras{
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .btn-excel:hover {

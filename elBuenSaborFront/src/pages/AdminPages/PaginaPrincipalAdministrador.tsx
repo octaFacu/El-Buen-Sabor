@@ -30,14 +30,14 @@ export default function PaginaPrincipalAdministrador() {
         </div>
         <div className="card-body d-flex flex-column">
           <div className="d-flex flex-column mb-3 btn-separador">
-            <button className='btn btn-administrar text-white mb-2' >Administrar Clientes</button>
+          
             <button className='btn btn-administrar text-white mb-2' onClick={()=> handleClick(2)}>Administrar Empleados</button>
+            <button className='btn btn-administrar text-white  mb-2' onClick={()=> handleClick(3)}>ver informe ganancias</button>
             <button className='btn btn-administrar text-white mb-2'>Gestionar Rubros - Insumos - Productos</button>
           </div>
           <div className="d-flex justify-content-between btn-separador btn-AñadirPadding">
-            <button className='btn btn-administrar text-white btn-margenDerecho' onClick={()=> handleClick(4)}>Ver ranking comidas</button>
-            <button className='btn btn-administrar text-white btn-margenDerecho' onClick={() => handleClick(5)}>Ver ranking clientes</button>
-            <button className='btn btn-administrar text-white' onClick={()=> handleClick(3)}>ver informe ganancias</button>
+            <button className='btn btn-administrar btn-administrar-tam text-white btn-margenDerecho' onClick={()=> handleClick(4)}>Ver ranking comidas</button>
+            <button className='btn btn-administrar btn-administrar-tam text-white btn-margenDerecho' onClick={() => handleClick(5)}>Ver ranking clientes</button>
           </div>
         </div>
       </div>

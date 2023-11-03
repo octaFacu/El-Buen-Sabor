@@ -68,9 +68,11 @@ export default function InformeGananciaComponent() {
     };
     
     return (
-        <div style={{ maxWidth: '10000px' }}>
+        <div className='estilos_pie'>
+            <div >
             <h2 className='text-center'>histórico de ventas</h2>
             <OrdenamientoFechas criteriosOrdenamiento={actualizarCriteriosDeOrdenamiento}/>
+            </div>
             <Pie data={data} options={options} />
         </div>
     );

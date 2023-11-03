@@ -59,7 +59,7 @@ export default function BotonExcelYAtrasComponent({informe, nombre}: Props) {
     return (
         <div className="d-flex justify-content-between">
             <button className="btn btn-atras text-white" onClick={handleAtras}>
-                Atrás
+                Inicio Admin
             </button>
             <button className="btn btn-excel text-white" onClick={()=>handleExcel(informe)}>Excel</button>
         </div>

@@ -49,7 +49,7 @@ export default function InformeRentabiliadadComponent() {
 };
 
 return (
-    <div>
+    <div className='estilos_barras'>
         <h2 className='text-center'>Rentabilidad Total</h2>
         <OrdenamientoFechas criteriosOrdenamiento={actualizarCriteriosDeOrdenamiento}/>
         <Bar data={data} />

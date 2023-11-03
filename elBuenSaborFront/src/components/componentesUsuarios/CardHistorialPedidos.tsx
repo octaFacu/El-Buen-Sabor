@@ -3,7 +3,7 @@ import { ProyeccionPedidoUsuario } from '../../context/interfaces/Proyecciones/P
 import { format } from 'date-fns'; 
 import { es } from "date-fns/locale";
 import ModalPedido from './modales/ModalPedido';
-
+import "../../css/favoritos.css";
 
 interface Props {
   historial: ProyeccionPedidoUsuario
@@ -25,18 +25,17 @@ export default function CardHistorialPedidos({historial}: Props) {
 
   return (
     <>
-    <div className="card card-cliente" onClick={()=>abrirModall(historial.pedido_id)}>
-      <div className="card-body d-inline-flex justify-content-between text-white">
-        <p className="card-text">{historial.es_envio ? "Envio" : "Retiro local"}</p>
-        <p className="card-text">Cantidad de pedidos: {historial.total_pedidos}</p>
-        <p className="card-text">Total Gastado: {historial.precio_total}</p>
-        <p className="card-text">{format(new Date(historial.fecha_pedido), 'dd MMMM yyyy', { locale: es })}</p>
+    <div className="card card-cliente" onClick={()=>abrirModall(historial.pedido_id)} >
+      <div className="card-body d-md-block d-md-inline-flex justify-content-between text-white">
+        <p className="card-text text-pantallaPequeña">{historial.es_envio ? "Envio" : "Retiro local"}</p>
+        <p className="card-text text-pantallaPequeña">Cantidad de pedidos: {historial.total_pedidos}</p>
+        <p className="card-text text-pantallaPequeña">Total: {historial.precio_total}</p>
+        <p className="card-text text-pantallaPequeña fecha-text">{format(new Date(historial.fecha_pedido), 'dd MMMM yyyy', { locale: es })}</p>
       </div>
     </div>
     { abrirModal && (
         <ModalPedido mostrarModal={abrirModal} cerrarModal={cerrarModal} idPedido={idPedido}/>
       )}
     </>
-    
   )
 }

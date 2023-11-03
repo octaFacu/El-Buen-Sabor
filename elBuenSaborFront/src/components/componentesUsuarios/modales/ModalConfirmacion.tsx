@@ -22,9 +22,9 @@ const ModalConfirmacion: React.FC<ModalConfirmacionProps> = ({ mostrarModal, cer
   }
 
   return (
-    <div className="modal" style={{ display: "block" }}>
+    <div className="modal modal-overlay" style={{ display: "block" }}>
       <div className="modal-dialog d-flex align-items-center justify-content-center modal-dialog-centered modal-sm">
-        <div className="modal-content">
+        <div className="modal-content modal-confirmarCambios">
           <div className="modal-body text-center text-white">
             <p>¿Estás seguro de que deseas guardar los cambios?</p>
           </div>

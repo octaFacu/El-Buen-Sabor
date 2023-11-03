@@ -7,17 +7,33 @@
 }
 
 .cardFormularioConitnuacion {
-    background-color: #F99132 !important;
-    max-width: 70vh;
-    margin: 0 auto;
-    margin-top: 15vh;
-    text-align: center;
-    padding: 2rem;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    max-height: 90vh !important; 
-    color: white;
+  background-color: #F99132 !important;
+  max-width: 70vh;
+  margin: 0 auto;
+  margin-top: 15vh;
+  text-align: center;
+  padding: 2rem;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  max-height: 90vh !important;
+  color: white;
+}
+
+/* Estilos para pantallas más pequeñas (por ejemplo, pantallas de 768px o menos) */
+@media (max-width: 768px) {
+  .cardFormularioConitnuacion {
+      max-width: 90%; 
+      margin-top: 10vh; 
   }
-  
+}
+
+
+@media (max-width: 480px) {
+  .cardFormularioConitnuacion {
+      max-width: 95%;
+      margin-top: 17vh;
+      padding: 1rem; 
+  }
+}
 .inputsControlador{
     border-radius: 30px !important;
     text-align: center;

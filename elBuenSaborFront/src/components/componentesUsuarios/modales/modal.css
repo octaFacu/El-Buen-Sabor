@@ -2,7 +2,7 @@
     border-radius: 30px !important;
     background-color: #864E1B;    
 }
-.modal-content{
+.modal-infoUsu{
     background-color: #F99132 !important;
 }
 
@@ -13,9 +13,7 @@
 .bold{
     font-weight: bold
 }
-.modal-header {
-  margin-top: 1rem;
-}
+
 .parrafo{
     margin-top: 10px;
 }
@@ -31,6 +29,8 @@
     border: none !important;
 }
 
+
+
 .btn.eliminar{
     border-radius: 30px !important;
     background-color: #864E1B !important;   
@@ -44,7 +44,7 @@
 .btn.enviar{
     border-radius: 30px ;
     background-color: #864E1B ;   
-    width: 40vh;
+
 }
 
 .btn.enviar:hover{
@@ -116,14 +116,24 @@
     border-radius: 30px;
     background-color: #864E1B;
     color: white;
-    width: 15vh;
+  
     margin: 1vh 1vh 3vh 1vh;
   }
-  
+
+  @media (min-width: 768px) {
+    .btn.modal-pedido {
+      width: 15vh;
+    }
+  }
+ 
+  .modal-overlay {
+    background-color: rgba(0, 0, 0, 0.6); /* Ajusta la opacidad según tus preferencias (0.6 en este ejemplo) */
+  }
+
   .modal-pedido:hover {
     background-color: #fda859 !important;
-
   }
+  
 .contedorBotonesContraseña{
   padding-top: 1rem;
 }
@@ -140,6 +150,18 @@
   color: white;
 }
 
+.card-modalPedido {
+  border-radius: 11px !important;
+  background-color: #f99132 !important;
+  color: white;
+}
+
+.modal-confirmarCambios{
+  border-radius: 11px ;
+  background-color: #f99132 !important;
+  color: white;
+}
+
 .imagenes-pedidos-usuario{
   border-radius: 15%;
   width: 5rem !important; 
@@ -150,4 +172,11 @@
 
 .centrado-denominacion {
   text-align: center; 
+}
+
+@media (max-width: 576px) {
+  /* Estilos específicos para pantallas pequeñas */
+  .modal-dialog {
+    max-width: 80%;
+  }
 }

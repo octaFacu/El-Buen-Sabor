@@ -41,7 +41,7 @@ export interface Usuario {
   telefono: string;
   activo: boolean;
   email: string;
-  nombreRol: string;
+  nombreRol?: string;
 }
 
 export interface Direccion {

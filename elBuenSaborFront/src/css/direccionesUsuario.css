@@ -9,8 +9,40 @@
   .direccion-texto {
     text-align: center; 
     font-size: large;
-    margin-left: 10%;
   }
+
   .btn-margen{
     margin: 0.625em;
+  }
+
+  @media (max-width: 768px) {
+    .btn-margen {
+      margin: 0 0.25em 0 0.25em; 
+    }
+  }
+
+  @media (max-width: 768px) {
+    .contenedor-cel {
+    
+      display: flex; 
+    }
+  }  
+
+  .btn-color-dir{
+    background-color: #864e1b !important;
+  }
+
+  .card-direcciones{
+    border-radius: 11px !important;
+    background-color:  #f99132 !important;
+    color: white;
+  }
+
+  .scrollable-container {
+    max-height: 32rem !important; 
+    overflow-y: auto;
+  }
+
+  .mt-6 {
+    margin-top: 6rem !important;
   }

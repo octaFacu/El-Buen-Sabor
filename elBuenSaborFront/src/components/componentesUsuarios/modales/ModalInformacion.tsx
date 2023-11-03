@@ -7,45 +7,30 @@ import { Usuario } from "../../../context/interfaces/interfaces";
 
 interface ModalProps {
   cerrarModal: () => void;
+  usuario: Usuario
 }
 
-const ModalInformacion: React.FC<ModalProps> = ({ cerrarModal }) => {
+export default function ModalInformacion({ cerrarModal, usuario }: ModalProps) {
+
+
   const { user, isLoading } = useAuth0();
-  const [usuario, setUsuario] = useState<Usuario>({
-    id: "",
-    nombre: "",
-    apellido: "",
-    telefono: "",
-    activo: true,
+  const [usuarioTemp, setUsuarioTemp] = useState<Usuario>({
+    id: usuario.id,
+    nombre: usuario.nombre,
+    apellido: usuario.apellido,
+    telefono: usuario.telefono,
+    activo: usuario.activo,
+    email: usuario.email,
+    nombreRol: usuario.nombreRol
   });
+
   const [mostrarConfirmacion, setMostrarConfirmacion] =
     useState<boolean>(false);
 
-  const traeUsuario = async () => {
-    const servicioUsuarios = new ServiceBasicos("usuario");
-    try {
-      const usuarioGuardado = await servicioUsuarios.getOne(traerId());
-      setUsuario(usuarioGuardado);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  const traerId = (): string => {
-    if (user) {
-      return user.userId;
-    } else {
-      return ""; // nunca llega
-    }
-  };
-
-  useEffect(() => {
-    traeUsuario();
-  }, []);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = event.target;
-    setUsuario((prevUsuario) => ({ ...prevUsuario, [id]: value }));
+    setUsuarioTemp((prevUsuario) => ({ ...prevUsuario, [id]: value }));
   };
 
   const handleGuardarClick = () => {
@@ -58,7 +43,7 @@ const ModalInformacion: React.FC<ModalProps> = ({ cerrarModal }) => {
   const handleConfirmarGuardar = async () => {
     const servicioUsuarios = new ServiceBasicos("usuario");
     try {
-      await servicioUsuarios.updateEntity(usuario);
+      await servicioUsuarios.updateEntity(usuarioTemp);
       cerrarModal();
     } catch (error) {
       console.error(error);
@@ -70,11 +55,11 @@ const ModalInformacion: React.FC<ModalProps> = ({ cerrarModal }) => {
   }
 
   return (
-    <div className="modal" style={{ display: "block" }}>
-      <div className="modal-dialog d-flex align-items-center justify-content-center modal-dialog-centered modal-lg">
-        <div className="modal-content">
-          <div className="modal-header text-center">
-            <h3 className="modal-title text-center text-white bold ">Información Personal</h3>
+    <div className="modal modal-overlay" style={{ display: "block" }}>
+      <div className="modal-dialog modal-dialog-scrollable d-flex align-items-center justify-content-center modal-lg ">
+        <div className="modal-content modal-infoUsu">
+          <div className="modal-header mt-3 text-center">
+            <h3 className="modal-title text-center text-white bold">Información Personal</h3>
             <button type="button" className="close" onClick={cerrarModal}>
               <span>&times;</span>
             </button>
@@ -111,18 +96,20 @@ const ModalInformacion: React.FC<ModalProps> = ({ cerrarModal }) => {
               <div className="modal-footer justify-content-center text-center">
                 <button
                   type="button"
-                  className="btn modal-usuario text-white altura mx-5"
-                  onClick={cerrarModal}
-                >
-                  Cerrar
-                </button>
-                <button
-                  type="button"
-                  className="btn modal-usuario text-white altura mx-5"
+                  className="btn modal-usuario text-white altura mx-2 mx-md-5"
                   onClick={handleGuardarClick}
                 >
                   Guardar
                 </button>
+
+                <button
+                  type="button"
+                  className="btn modal-usuario text-white altura mx-2 mx-md-5"
+                  onClick={cerrarModal}
+                >
+                  Cerrar
+                </button>{/*  */}
+
               </div>
             </form>
           </div>
@@ -137,4 +124,4 @@ const ModalInformacion: React.FC<ModalProps> = ({ cerrarModal }) => {
   );
 };
 
-export default ModalInformacion;
+

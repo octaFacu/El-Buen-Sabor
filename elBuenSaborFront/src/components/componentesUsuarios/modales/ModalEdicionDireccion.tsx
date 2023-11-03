@@ -52,9 +52,9 @@ const ModalEdicionDireccion: React.FC<ModalProps> = ({
   }
 
   return (
-    <div className="modal" style={{ display: "block" }}>
-      <div className="modal-dialog d-flex align-items-center justify-content-center modal-dialog-centered modal-lg">
-        <div className="modal-content">
+    <div className="modal modal-overlay" style={{ display: "block" }}>
+      <div className="modal-dialog d-flex align-items-center justify-content-center modal-dialog-centered modal-lg ">
+        <div className="modal-content card-generica">
           <div className="modal-header text-center">
             <h3
               className="modal-title text-center text-white bold"

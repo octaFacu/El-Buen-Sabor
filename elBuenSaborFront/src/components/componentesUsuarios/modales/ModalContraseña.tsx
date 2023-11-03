@@ -40,14 +40,11 @@ const ModalContraseña: React.FC<ModalProps> = ({ cerrarModal }) => {
   };
 
   return (
-    <div className="modal" style={{ display: "block" }}>
+    <div className="modal modal-overlay" style={{ display: "block" }}>
       <div className="modal-dialog modal-dialog-centered">
-        <div className="modal-content">
+        <div className="modal-content modal-confirmarCambios">
           <div className="modal-header">
             <h5 className="modal-title text-white">Cambiar contraseña</h5>
-            <button type="button" className="close altura" onClick={cerrarModal}>
-              <span>&times;</span>
-            </button>
           </div>
           <div className="contedorBotonesContraseña">
             {!envio ? (

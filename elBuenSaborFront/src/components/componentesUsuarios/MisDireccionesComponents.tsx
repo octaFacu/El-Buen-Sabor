@@ -89,8 +89,8 @@ export default function MisDireccionesComponents({ usuario }: Props) {
   const direccionesActivas = direcciones?.filter((dir) => dir.activo);
   
   return (
-    <div className="card card-generica">
-      <div className="card-body">
+    <div className="card card-direcciones mt-6">
+      <div className="card-body scrollable-container">
         <h1 className="card-title text-center">Direcciones</h1>
         {direccionesActivas?.map((dir, index) => (
           <div
@@ -115,15 +115,15 @@ export default function MisDireccionesComponents({ usuario }: Props) {
                 </p>
               )}
             </div>
-            <div>
+            <div className="contenedor-cel">
               <button
-                className="btn btn-color ml-2 btn-margen"
+                className="btn btn-color-dir ml-2 btn-margen"
                 onClick={() => abrirModalEdicion(dir.idDireccion)}
               >
                 <i className="material-icons text-white">edit</i>
               </button>
               <button
-                className="btn btn-color"
+                className="btn btn-color-dir  btn-margen"
                 onClick={() => abrirModalConfirmacion(dir.idDireccion)}
               >
                 <i className="material-icons text-white">delete</i>

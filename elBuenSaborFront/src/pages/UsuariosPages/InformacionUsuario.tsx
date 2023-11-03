@@ -7,6 +7,7 @@ import MisPedidosComponent from '../../components/componentesUsuarios/MisPedidos
 import {useAuth0} from '@auth0/auth0-react'
 import { ServiceBasicos } from "../../services/ServiceBasicos";
 import { Usuario } from "../../context/interfaces/interfaces";
+import PageLoader from "../../components/pageLoader/PageLoader";
 
 export default function InformacionUsuario() {
   const [mostrarCarta, setMostrarCarta] = useState(false);
@@ -17,6 +18,7 @@ export default function InformacionUsuario() {
     apellido: "",
     telefono: "",
     activo: true,
+    email: ""
   });
 
   const handleBoton = (numeroBoton: number) => {
@@ -67,36 +69,56 @@ export default function InformacionUsuario() {
     }
   };
   if (isLoading) {
-    return <div>Cargando...</div>;     // Se podria cambiar poner algun snippet o algo para indicar la carga de una mejor manera
+    return <PageLoader/>;     // Se podria cambiar poner algun snippet o algo para indicar la carga de una mejor manera
   }
 
   return (
-    <div className="row mx-auto my-4">
-      <div className="col-md-4">
-        <div className="card card-generica d-flex flex-column align-items-center h-100 principal w-75">
-          <img style={{ width: "200px", height: "200px" }}
-           src={user?.picture} alt="Descripción de la imagen" className="card-img-top  rounded-circle card-img-custom mt-5" />
-          <div className="card-body text-center  d-flex flex-column align-items-center w-100">
-            <h5 className="card-title">{usuario.nombre}</h5>
-            <p className="card-text">{user?.email}</p>
-            <button
-              className="btn btn-hover text-white mr-2 mb-2 d-block w-100 d-flex align-items-center justify-content-center"
-              onClick={() => handleBoton(1)}> <i className="material-icons text-black ubicacion mr-2 text-white" > face </i> Mi Cuenta </button>
+<div className="container">
+  <div className="row mx-auto my-4">
+    <div className="col-md-4 col-sm-12 mt-md-5">
+      <div className="card-InfoUsu mt-md-5  pb-5 d-flex flex-column align-items-center">
+        <img
+          style={{ maxWidth: "200px", maxHeight: "200px" }} 
+          src={user?.picture}
+          alt="Descripción de la imagen"
+          className="card-img-top rounded-circle card-img-custom mt-5"
+        />
+        <div className="card-body text-center  d-flex flex-column align-items-center w-100">
+          <h5 className="card-title">{usuario.nombre}</h5>
+          <p className="card-text">{user?.email}</p>
+          <button
+            className="btn-tam text-white mr-2 mb-md-3 d-block w-100 d-flex align-items-center justify-content-center"
+            onClick={() => handleBoton(1)}
+          >
+            <i className="material-icons text-black tam-icono mr-2 text-white">face</i> Mi Cuenta
+          </button>
 
-            <button
-              className="btn btn-hover text-white mr-2 mb-2 d-block w-100 d-flex align-items-center justify-content-center"
-              onClick={() => handleBoton(2)} > <i className="material-icons text-black ubicacion mr-2 text-white"> location_on </i> Mis Direcciones </button>
+          <button
+            className="btn-tam  text-white mr-2 mb-md-3 d-block w-100 d-flex align-items-center justify-content-center"
+            onClick={() => handleBoton(2)}
+          >
+            <i className="material-icons text-black tam-icono mr-2 text-white">location_on</i> Mis Direcciones
+          </button>
 
-            <button
-              className="btn btn-hover text-white mr-2 mb-2 d-block w-100 d-flex align-items-center justify-content-center"
-              onClick={() => handleBoton(3)}> <i className="material-icons text-black ubicacion mr-2 text-white"> local_dining </i> Mis Pedidos </button>
-            <button
-              className="btn btn-hover text-white mr-2 mb-2 d-block w-100 d-flex align-items-center justify-content-center"
-              onClick={() => handleBoton(4)}> <i className="material-icons text-black ubicacion mr-2 text-white"> favorite_border </i> Mis Favoritos </button>
-          </div>
+          <button
+            className="btn-tam text-white mr-2 mb-md-3 d-block w-100 d-flex align-items-center justify-content-center"
+            onClick={() => handleBoton(3)}
+          >
+            <i className="material-icons text-black tam-icono mr-2 text-white">local_dining</i> Mis Pedidos
+          </button>
+          <button
+            className="btn-tam text-white mr-2 mb-md-3 d-block w-100 d-flex align-items-center justify-content-center"
+            onClick={() => handleBoton(4)}
+          >
+            <i className="material-icons text-black tam-icono mr-2 text-white">favorite_border</i> Mis Favoritos
+          </button>
         </div>
       </div>
-      <div className="col-md-7">{mostrarCarta && renderCard()}</div>
     </div>
+    <div className="col-md-8 col-sm-12">
+      {mostrarCarta && renderCard()}
+    </div>
+  </div>
+</div>
   );
 }

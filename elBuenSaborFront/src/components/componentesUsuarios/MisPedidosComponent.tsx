@@ -5,7 +5,7 @@ import { ClienteService } from "../../services/ClienteService";
 import CardHistorialPedidos from "./CardHistorialPedidos";
 import { PageProyeccionHistorialPedido } from "../../context/interfaces/Proyecciones/ProyeccionHistorialPedidoCliente";
 import Paginacion from "../genericos/Paginacion";
-
+import "../../css/favoritos.css";
 
 interface Props {
   usuario: Usuario;
@@ -21,8 +21,9 @@ export default function MisPedidosComponent({ usuario }: Props) {
 
   const traerPedidos = async (pageNumber: number) => {
     try {
+      const idCliente = await servicioCliente.getIdCliente(usuario.id)
       const pedido = await servicioCliente.getPedidosUsuario(
-        await servicioCliente.getIdCliente(usuario.id), pageNumber
+       idCliente, pageNumber
       );
       setPedidos(pedido);
     } catch (error) {
@@ -44,11 +45,11 @@ export default function MisPedidosComponent({ usuario }: Props) {
 
   return (
     <div className="container mx-auto">
-      <div className="card card-generica">
-        <div className="contenedor-tituloEstadistica text-white">
+      <div className="card card-favoritos mt-6">
+        <div className="contenedor-titulo text-white">
           <h3 className="card-title text-center">Historial de pedidos</h3>
         </div>
-        <div className="card-body d-flex flex-column">
+        <div className="card-body d-flex flex-column scrollable-container">
           <div className="d-flex flex-column mb-3">
             {
               pedidos.content.length === 0 ? (

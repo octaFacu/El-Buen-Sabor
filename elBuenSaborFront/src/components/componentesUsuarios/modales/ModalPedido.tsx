@@ -40,9 +40,9 @@ const ModalPedido: React.FC<Props> = ({
   }, []);
 
   return (
-    <div className="modal modal-custom" style={{ display: "block" }}>
+    <div className="modal modal-custom modal-overlay"  style={{ display: "block" }}>
       <div className="modal-dialog d-flex align-items-center justify-content-center modal-dialog-centered ">
-        <div className="modal-content">
+        <div className="modal-content card-modalPedido">
           <div className="modal-body text-center">
             <h2 className="texto-blanco">Tu Pedido</h2>
             <button type="button" className="close centrado" onClick={cerrarModal}>
@@ -80,7 +80,7 @@ const ModalPedido: React.FC<Props> = ({
             </div>
           </div>
           <div className="d-flex justify-content-center">
-            <button className="btn  modal-pedido" onClick={cerrarModal}>
+            <button className="btn modal-pedido" onClick={cerrarModal}>
               Cerrar
             </button>
             <PdfFactura pedido_Id={idPedido}/>

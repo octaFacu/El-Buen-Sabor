@@ -6,6 +6,7 @@ import { PageProyeccionHistorialPedido } from '../../../context/interfaces/Proye
 import Paginacion from '../../../components/genericos/Paginacion';
 import '../../../css/EmpleadoRegistro.css'
 import { useNavigate } from 'react-router-dom';
+import PageLoader from '../../../components/pageLoader/PageLoader';
 
 export default function RegistroEmpleado() {
 
@@ -45,7 +46,7 @@ export default function RegistroEmpleado() {
   
 
   if (empleados === undefined) {
-    return <div>Cargando...</div>;
+    return <PageLoader/>;
 }
   const volverAtras = () =>{
     navigate(-1);

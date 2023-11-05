@@ -2,6 +2,7 @@ import React, { useState, ChangeEvent } from 'react'
 import { Usuario } from '../../context/interfaces/interfaces';
 import { AdminService } from '../../services/AdminService';
 import { ServiceBasicos } from '../../services/ServiceBasicos';
+import ModalConfirmacion from '../componentesUsuarios/modales/ModalConfirmacion';
 
 
 interface Props {
@@ -20,7 +21,18 @@ export default function EmpleadoModal({ show, onHide, empleado, actualizarEmplea
     const serviceEmp = new ServiceBasicos("usuario")
 
     const [idRol, setIdRol] = useState<string>("");
-    const [nombreRol, setNombreRol] = useState<string>("");
+    const [nombreRol, setNombreRol] = useState<string>(empleado.nombreRol);
+
+    const [mostrarConfirmacion, setMostrarConfirmacion] = useState<boolean>(false);
+
+
+    const handleBorrar = () => {
+        setMostrarConfirmacion(true);
+    };
+
+    const handleCancelar = () => {
+        setMostrarConfirmacion(false);
+    };
 
     const [datosEmpleado, setDatosEmpleado] = useState({
         nombre: empleado.nombre || "",
@@ -44,29 +56,30 @@ export default function EmpleadoModal({ show, onHide, empleado, actualizarEmplea
     }
 
 
-    const ObtenerRolAnterior = () =>{
+    const ObtenerRolAnterior = () => {
         const roles: Record<string, string> = { // record es para indicar clave valor con cadenas
             "Administrador": "rol_UHjavuD1G5l0c7oE",
             "Cajero": "rol_T1Ab2sNIhNLw9dXm",
             "Cocinero": "rol_iZcV6RkmERma4CwD",
             "delivery": "rol_0Z5rG7VtWJ7W1hiP"
-          };
-          const valorRol = roles[empleado.nombreRol];
+        };
+        const valorRol = roles[empleado.nombreRol];
 
-          return valorRol;
+        return valorRol;
     }
 
-    
+
 
     const GuardarEmpleado = async () => {
-        if (empleado.nombreRol != null && empleado.nombreRol != nombreRol) 
-        {    
+        if (empleado.nombreRol != null && empleado.nombreRol != nombreRol) {
+            console.log("actualizar rol")
             await service.borrarRolUsuario(empleado.id, ObtenerRolAnterior())
             await service.agregarRolUsuario(empleado.id, idRol, nombreRol);
-        } else if(empleado.nombreRol == null){
+        } else if (empleado.nombreRol == null) {
             service.agregarRolUsuario(empleado.id, idRol, nombreRol);
-          
-        }else{
+            console.log("voy a agregar un rol")
+
+        } else {
             console.log("el mismo rol")
         }
         //const empleadoModificado = { ...empleado, nombreRol: nombreRol };
@@ -83,8 +96,8 @@ export default function EmpleadoModal({ show, onHide, empleado, actualizarEmplea
 
     return (
         <div className={`modal ${show ? 'show' : ''}`} role="dialog" style={{ display: show ? 'block' : 'none' }} >
-            <div className="modal-dialog modal-dialog-centered" role="document" >
-                <div className="modal-content">
+            <div className="modal-dialog modal-dialog-centered " role="document" >
+                <div className="modal-content card-modal-emp ">
                     <div className="modal-header">
                         <h5 className="modal-title">Ver Empleado</h5>
                         <button type="button" className="close" data-dismiss="modal" onClick={onHide} aria-label="Close">
@@ -111,7 +124,7 @@ export default function EmpleadoModal({ show, onHide, empleado, actualizarEmplea
                         </div>
                         <div className="form-group">
                             <label htmlFor="telefono">Teléfono:</label>
-                            <input type="text" className="form-control text-white" id="telefono" value={datosEmpleado.telefono} onChange={handleInputChange} />
+                            <input type="number" maxLength={11} className="form-control text-white" id="telefono" value={datosEmpleado.telefono} onChange={handleInputChange} />
                         </div>
                         <div className="form-group">
                             <label htmlFor="rol">Rol:</label>
@@ -127,10 +140,15 @@ export default function EmpleadoModal({ show, onHide, empleado, actualizarEmplea
                     <div className="modal-footer">
                         <button type="button" className="btn btn-secondary" onClick={onHide}>Cerrar</button>
                         <button type="button" className="btn btn-primary" onClick={GuardarEmpleado}>Guardar Cambios</button>
-                        <button type="button" className="btn btn-primary" onClick={BorrarEmpleado}>Borrar Rol</button>
+                        <button type="button" className="btn btn-primary" onClick={handleBorrar}>Borrar Rol</button>
                     </div>
                 </div>
             </div>
+            <ModalConfirmacion
+                mostrarModal={mostrarConfirmacion}
+                cerrarModal={handleCancelar}
+                confirmar={BorrarEmpleado}
+            />
         </div>
     );
 }

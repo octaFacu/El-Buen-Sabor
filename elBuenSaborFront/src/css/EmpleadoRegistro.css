@@ -6,6 +6,11 @@
   color: white;
   min-height: 33rem;
 }
+.card-modal-emp{
+  border-radius: 11px !important;
+  background-color: #f99132 !important;
+  color: white;
+}
 
 .contenedor-tituloRegEmpleado {
   border-radius: 11px;

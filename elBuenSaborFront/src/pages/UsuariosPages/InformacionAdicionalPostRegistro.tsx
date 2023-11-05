@@ -4,6 +4,7 @@ import "../../css/InformacionUsuario.css";
 import { useAuth0 } from "@auth0/auth0-react";
 import { ServiceBasicos } from "../../services/ServiceBasicos";
 import { Usuario } from "../../context/interfaces/interfaces";
+import PageLoader from "../../components/pageLoader/PageLoader";
 
 export default function InformacionAdicionalPostRegistro() {
   const { user, isLoading } = useAuth0();
@@ -52,7 +53,7 @@ export default function InformacionAdicionalPostRegistro() {
   };
 
   if (isLoading) {
-    return <div>Cargando...</div>;
+    return <PageLoader/>;
   }
 
   if (user && user.login_count === 1) {

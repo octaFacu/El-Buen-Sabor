@@ -61,7 +61,7 @@ export default function MiCuentaComponent() {
         <div className="col-md-11">
 
           <button
-            className="card-InfoUsu mt-extra-md pb-3 w-100 text-black text-decoration-none"
+            className="card-InfoUsu mt-extra-md pb-3 w-100 text-black text-decoration-none btn-hover-cuenta"
             onClick={abrirModalInformacion}
           >
             <div className='card-body d-flex align-items-center pt-3 ps-3'>
@@ -78,7 +78,7 @@ export default function MiCuentaComponent() {
         <div className="col-md-11">
 
           <button
-            className="card-InfoUsu mt-extra-md pb-3 w-100 text-black text-decoration-none"
+            className="card-InfoUsu mt-extra-md pb-3 w-100 text-black text-decoration-none btn-hover-cuenta"
             onClick={abrirModalContraseña}
           >
             <div className='card-body d-flex align-items-center pt-3 ps-3'>
@@ -86,7 +86,7 @@ export default function MiCuentaComponent() {
                 face
               </i>
               <h5 className="card-title mb-0 text-white">
-                Editar Información Personal
+                Cambiar Contraseña
               </h5>
             </div>
           </button>

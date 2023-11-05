@@ -71,3 +71,7 @@
 .bold {
   font-weight: bold;
 }
+
+.btn-hover-cuenta:hover{
+  background-color: #864e1b ;
+}

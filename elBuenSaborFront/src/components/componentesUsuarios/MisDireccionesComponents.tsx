@@ -117,13 +117,13 @@ export default function MisDireccionesComponents({ usuario }: Props) {
             </div>
             <div className="contenedor-cel">
               <button
-                className="btn btn-color-dir ml-2 btn-margen"
+                className="btn btn-color-direccion ml-2 btn-margen"
                 onClick={() => abrirModalEdicion(dir.idDireccion)}
               >
                 <i className="material-icons text-white">edit</i>
               </button>
               <button
-                className="btn btn-color-dir  btn-margen"
+                className="btn btn-color-direccion  btn-margen"
                 onClick={() => abrirModalConfirmacion(dir.idDireccion)}
               >
                 <i className="material-icons text-white">delete</i>
@@ -134,7 +134,7 @@ export default function MisDireccionesComponents({ usuario }: Props) {
       </div>
       <div className="card-footer text-center">
         <button
-          className="btn btn-color text-white"
+          className="btn btn-color-direccion text-white"
           onClick={abrirModalAgregar}
         >
           Agregar dirección

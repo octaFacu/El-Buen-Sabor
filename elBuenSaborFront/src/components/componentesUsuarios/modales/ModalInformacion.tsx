@@ -31,6 +31,7 @@ export default function ModalInformacion({ cerrarModal, usuario }: ModalProps) {
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = event.target;
     setUsuarioTemp((prevUsuario) => ({ ...prevUsuario, [id]: value }));
+    console.log("asdlj")
   };
 
   const handleGuardarClick = () => {
@@ -72,7 +73,7 @@ export default function ModalInformacion({ cerrarModal, usuario }: ModalProps) {
                 id="nombre"
                 className="form-control text-center text-white"
                 placeholder="Nombre"
-                value={usuario.nombre}
+                value={usuarioTemp.nombre}
                 onChange={handleChange}
               />
               <p className="text-white parrafo bold">Apellido:</p>
@@ -81,16 +82,16 @@ export default function ModalInformacion({ cerrarModal, usuario }: ModalProps) {
                 id="apellido"
                 className="form-control text-center text-white"
                 placeholder="Apellido"
-                value={usuario.apellido}
+                value={usuarioTemp.apellido}
                 onChange={handleChange}
               />
               <p className="text-white parrafo bold">Número de Teléfono:</p>
               <input
-                type="text"
+                type="number"
                 id="telefono"
                 className="form-control text-center text-white"
                 placeholder="Número de Teléfono"
-                value={usuario.telefono}
+                value={usuarioTemp.telefono}
                 onChange={handleChange}
               />
               <div className="modal-footer justify-content-center text-center">
@@ -108,8 +109,7 @@ export default function ModalInformacion({ cerrarModal, usuario }: ModalProps) {
                   onClick={cerrarModal}
                 >
                   Cerrar
-                </button>{/*  */}
-
+                </button>
               </div>
             </form>
           </div>

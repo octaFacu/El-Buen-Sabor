@@ -29,7 +29,7 @@ export default function PaginaPrincipalAdministrador() {
           <h3 className="card-title text-center">Pagina principal administrador</h3>
         </div>
         <div className="card-body d-flex flex-column">
-          <div className="d-flex flex-column mb-3 btn-separador">
+          <div className="d-flex flex-column mb-4 btn-separador">
           
             <button className='btn btn-administrar text-white mb-2' onClick={()=> handleClick(2)}>Administrar Empleados</button>
             <button className='btn btn-administrar text-white  mb-2' onClick={()=> handleClick(3)}>ver informe ganancias</button>

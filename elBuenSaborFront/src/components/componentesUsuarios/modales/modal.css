@@ -2,6 +2,15 @@
     border-radius: 30px !important;
     background-color: #864E1B;    
 }
+
+
+.btn.modal-usuario:hover{
+
+  background-color: #FDA859;    
+}
+
+
+
 .modal-infoUsu{
     background-color: #F99132 !important;
 }

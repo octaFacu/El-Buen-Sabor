@@ -5,6 +5,7 @@ import "../../css/ventanaModal.css"
 import { CategoriaIngredienteService } from "../../services/CategoriaIngredienteService";
 import { ServiceBasicos } from "../../../../../../Programación - S4/Laboratorio de Computación IV/importante/parcialN1-LabIV/src/services/ServiceBasicos";
 import { CategoriaProductoService } from "../../services/CategoriaProductoService";
+import { useUnidadContext } from "../../context/GlobalContext";
 
 
 interface CategProductoFormProps {
@@ -20,6 +21,7 @@ interface CategProductoFormProps {
 const CategProductoForm: React.FunctionComponent<CategProductoFormProps> = ({ estado, cambiarEstado, datos, setDatos }) => {
 
     const categoriaProductoService = new CategoriaProductoService();
+    const { rol } = useUnidadContext();
 
     const [id, setId] = useState('')
     const [nombre, setNombre] = useState('')
@@ -37,16 +39,8 @@ const CategProductoForm: React.FunctionComponent<CategProductoFormProps> = ({ es
         setId(datos.id);
 
 
-
-        
-
         
     }, [datos.id, datos.denominacion, datos.activo])
-
-    
-    
-    
-        
 
     
 
@@ -104,13 +98,13 @@ const CategProductoForm: React.FunctionComponent<CategProductoFormProps> = ({ es
                                         
 
                                         //pasar los datos guardados al metodo de update
-                                        categoriaProductoService.updateEntity(datos)
+                                        categoriaProductoService.updateEntity(datos, rol)
 
                                     }else{
                                         
                                          
                                         //Creacion de nueva categoria sin un padre
-                                        categoriaProductoService.createEntity({denominacion: nombre, activo: activo });
+                                        categoriaProductoService.createEntity({denominacion: nombre, activo: activo }, rol);
                                         
                                     }
                                     //Cambiar el estado para que se cierre el formulario

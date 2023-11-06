@@ -14,7 +14,7 @@ interface ProdFormProps {
 
 }
 
-const CardPedidoDelivery: React.FC<ProdFormProps> = ({ pedido }) => {
+const CardPedidoDeliveryPropio: React.FC<ProdFormProps> = ({ pedido }) => {
 
     const { user } = useAuth0();
     const { rol } = useUnidadContext();
@@ -22,8 +22,7 @@ const CardPedidoDelivery: React.FC<ProdFormProps> = ({ pedido }) => {
     const [productos, setProductos] = useState<PedidoHasProductos[]>([]);
 
     const handleChangeEstado = () => {
-        pedido.estado = "EnDelivery";
-        pedido.delivery = user!["id"].toString();
+        pedido.estado = "Entregado";
         servicePedido.updateEntity(pedido, rol);
         window.location.reload();
     };
@@ -70,4 +69,4 @@ const CardPedidoDelivery: React.FC<ProdFormProps> = ({ pedido }) => {
         </div>
     )
 }
-export default CardPedidoDelivery;
+export default CardPedidoDeliveryPropio;

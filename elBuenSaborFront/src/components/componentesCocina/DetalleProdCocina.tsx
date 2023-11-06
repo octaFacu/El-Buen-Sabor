@@ -5,6 +5,7 @@ import { ProductoService } from "../../services/ProductoService";
 
 import "./CocinaComponentesStyle.css";
 import IngredientesDetComponent from "./IngredientesDetComponent";
+import { useUnidadContext } from "../../context/GlobalContext";
 
 interface ProdFormProps {
 
@@ -16,13 +17,15 @@ interface ProdFormProps {
 }
 const DetalleProdCocina: React.FC<ProdFormProps> = ({ producto, estado, changeEstado }) => {
 
+    const { rol } = useUnidadContext();
+
     const prodService = new ProductoService();
     const [ingredientes, setIngredientes] = useState<IngredienteDeProducto[]>([]); 
     const [loading, setLoading] = useState(true);
     
     const getIngredientes = async() => {
         try {
-            await prodService.getIngredientes(producto.id!).then((data) => {
+            await prodService.getIngredientes(producto.id!, rol).then((data) => {
                 console.log("Id del producto: "+producto.id)
                 setIngredientes(data);
                 setLoading(false);

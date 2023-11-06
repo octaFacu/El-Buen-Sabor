@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { ProductoService } from "../../services/ProductoService"
 import { Producto } from "../../context/interfaces/Producto"
+import { useUnidadContext } from "../../context/GlobalContext"
 
 interface ProductoCardProps {
 
@@ -23,6 +24,7 @@ interface ProductoCardProps {
 const ProductoCard: React.FunctionComponent<ProductoCardProps> = ({producto, cambiarEstado, estado, cambiarEstadoVista, estadoVista, setearDatos, datos }) => {
     
     const [botonActivo, setbotonActivo] = useState<Boolean>(producto.activo)
+    const { rol } = useUnidadContext();
 
     const productoService = new ProductoService();
 
@@ -60,7 +62,7 @@ const ProductoCard: React.FunctionComponent<ProductoCardProps> = ({producto, cam
                     let productoNuevo: Producto = producto;
                     productoNuevo.activo = !(producto.activo);
                    
-                    await productoService.actualizarEntityActivo(productoNuevo);
+                    await productoService.actualizarEntityActivo(productoNuevo, rol);
 
                     }}
                     >{botonActivo 

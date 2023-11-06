@@ -1,5 +1,5 @@
 import { Cliente } from "./Cliente";
-import { Direccion } from "./interfaces";
+import { Direccion, Usuario } from "./interfaces";
 
 
 export class Pedido {
@@ -24,6 +24,13 @@ export class Pedido {
       telefono: '',
       activo: true
     },
+    activo: true
+  };
+  delivery?: Usuario = {
+    id: '',
+    nombre: '',
+    apellido: '',
+    telefono: '',
     activo: true
   };
 }

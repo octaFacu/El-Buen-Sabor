@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import { Rubro } from "./Rubro";
 import { PadreRubro } from "./PadreRubro";
 import { CategoriaIngredienteService } from "../../services/CategoriaIngredienteService";
+import { useUnidadContext } from "../../context/GlobalContext";
 
 interface CateIngrCardProps {
 
@@ -24,11 +25,12 @@ const CateIngrCard: React.FunctionComponent<CateIngrCardProps> = ({denominacion,
     
     const [botonActivo, setbotonActivo] = useState<Boolean>(activo)
     const categoriaIngredienteService = new CategoriaIngredienteService();
+    const { rol } = useUnidadContext();
 
     useEffect(() => {
         if(datos.id){
             // categoriaIngredienteService.updateActivoRubro(datos)
-            categoriaIngredienteService.updateEntity(datos)
+            categoriaIngredienteService.updateEntity(datos, rol)
             
         }
         

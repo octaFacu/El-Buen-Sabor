@@ -1,7 +1,7 @@
 import { useContext, useEffect, useRef, useState } from "react"
 import "../../css/ventanaModal.css"
 import { Rubro } from "../compIngrediente/Rubro";
-import { GlobalContext } from "../../context/GlobalContext";
+import { GlobalContext, useUnidadContext } from "../../context/GlobalContext";
 import { ProductoService } from "../../services/ProductoService";
 import Producto from "../../context/interfaces/Producto";
 import GrupoBotones from "../genericos/GrupoBotones";
@@ -26,6 +26,7 @@ const ModalCreacionProd: React.FC<ProdFormProps> = ({ estado, cambiarEstado, cat
     const productoService = new ProductoService();
     const ingredienteService = new IngredientesService();
     // const serviceBasicos = new ServiceBasicos("unidadmedida");
+    const { rol } = useUnidadContext();
   
 
     let Productonuevo: Producto = new Producto();
@@ -96,7 +97,7 @@ const ModalCreacionProd: React.FC<ProdFormProps> = ({ estado, cambiarEstado, cat
     }, [productoSelect])
 
     const getIngredientes = async() => {
-        await productoService.getIngredientes(productoSelect.id!).then((data) => setIngredientesProducto(castIngredientesIds(data)));
+        await productoService.getIngredientes(productoSelect.id!, rol).then((data) => setIngredientesProducto(castIngredientesIds(data)));
         setIngredientesGuardados(true);
         
     }
@@ -148,7 +149,7 @@ const ModalCreacionProd: React.FC<ProdFormProps> = ({ estado, cambiarEstado, cat
             console.log(JSON.stringify(ing)); // This will log each number in the array
           });
 
-        await productoService.crearEntity(productoSelect, ingredientesProducto);
+        await productoService.crearEntity(productoSelect, ingredientesProducto, rol);
         setIngredientesProducto([]);
         setIngredientesGuardados(false);
         
@@ -157,7 +158,7 @@ const ModalCreacionProd: React.FC<ProdFormProps> = ({ estado, cambiarEstado, cat
 
     const updateProducto = async () => {
 
-        await productoService.actualizarEntity(productoSelect, ingredientesProducto);
+        await productoService.actualizarEntity(productoSelect, ingredientesProducto, rol);
         setIngredientesProducto([]);
         setIngredientesGuardados(false);
         
@@ -178,7 +179,7 @@ const ModalCreacionProd: React.FC<ProdFormProps> = ({ estado, cambiarEstado, cat
         var costo: number = 0;
         
         ingredientesProducto.forEach(async (ing) =>{
-            costo += ing.cantidad * await ingredienteService.getCosto(ing);
+            costo += ing.cantidad * await ingredienteService.getCosto(ing, rol);
           }); 
 
           return costo;

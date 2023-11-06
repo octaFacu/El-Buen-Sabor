@@ -7,6 +7,7 @@ import { ListaCartasABM } from "../../components/genericos/ListaCartasABM";
 import { Producto } from "../../context/interfaces/Producto";
 import ModalVistaDetalleProd from "../../components/componentesProducto/ModalVistaDetalleProd";
 import ModalCreacionProd from "../../components/componentesProducto/ModalCreacionProd";
+import { useUnidadContext } from "../../context/GlobalContext";
 
 export const ProductosABM = () => {
 
@@ -14,6 +15,8 @@ export const ProductosABM = () => {
     //const { unidadesDeMedida, ingredientes } = useUnidadContext();
     const categoriaProductoService = new CategoriaProductoService();
     const productoService = new ProductoService();
+
+    const { rol } = useUnidadContext();
 
 
     //Para la ventana modal del formulario
@@ -25,13 +28,13 @@ export const ProductosABM = () => {
 
     useEffect(() => {
        
-        categoriaProductoService.getAllBasic()
+        categoriaProductoService.getAllBasic(rol)
             .then(data => {
                 console.log("CARGANDO CATEGORIAS "+ data);
                 setCategorias(data)
             })
 
-            productoService.getAllBasic()
+            productoService.getAllBasic(rol)
             .then(data => {
                 console.log("CARGANDO PRODUCTOS "+ data);
                 setProductos(data)

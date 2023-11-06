@@ -3,6 +3,7 @@ import IngredienteDeProducto from "../../context/interfaces/IngredienteDeProduct
 import { IngredientesService } from "../../services/IngredientesService";
 import { ServiceBasicos } from "../../services/ServiceBasicos";
 import { Ingrediente, unidadDeMedida } from "../../context/interfaces/interfaces";
+import { useUnidadContext } from "../../context/GlobalContext";
 
 
 interface TablaIngredientesProdProps {
@@ -22,12 +23,14 @@ interface TablaIngredientesProdProps {
       const [ingrediente, setIngrediente] = useState<Ingrediente>();
       const [loading, setLoading] = useState(true);
 
+      const { rol } = useUnidadContext();
+
       const getIngrediente = async() => {
 
-        await ingredienteService.getOne(productoId).then((data) => {
+        await ingredienteService.getOne(productoId, rol).then((data) => {
           setIngrediente(data)
           console.log("Id de la medida: "+ingredienteProd.idMedida) //esto cuando lo llamo desde
-          medidaService.getOne(ingredienteProd.idMedida).then((data) => {
+          medidaService.getOne(ingredienteProd.idMedida, rol).then((data) => {
             console.log("DATA MEDIDA "+data)
             setMedidaIng(data)
             setLoading(false);

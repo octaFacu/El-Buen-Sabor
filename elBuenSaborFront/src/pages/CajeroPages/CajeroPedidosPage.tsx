@@ -8,9 +8,11 @@ import { Stomp } from "@stomp/stompjs";
 import * as SockJS from 'sockjs-client';
 import * as Socket from 'socket.io-client';
 import SortListComponent from "./SortListComponent";
+import { useUnidadContext } from "../../context/GlobalContext";
 
 
 export const CajeroPedidosPage = () => {
+    const { rol } = useUnidadContext();
 
     (window as any).global = window
     const [estadoModal, setEstadoModal] = useState(false);
@@ -22,7 +24,7 @@ export const CajeroPedidosPage = () => {
 
     const getPedidos = async() => {
         //servicePedido.getByEstado(EstadoPedido[estadoDePedidos])
-        servicePedido.getAllBasic()
+        servicePedido.getAllBasic(rol)
         .then(data => {
             setAllPedidos(data)
         })
@@ -133,8 +135,8 @@ export const CajeroPedidosPage = () => {
     }, [pedidos]);
 
     const handleChangeEstado = (estadoDePedido: EstadoPedido, pedidoChanged: Pedido) => {
-        pedidoChanged.estado = estadoDePedido;
-        servicePedido.updateEntity(pedidoChanged);
+        pedidoChanged.estado = estadoDePedido.toString();
+        servicePedido.updateEntity(pedidoChanged, rol);
         window.location.reload();
     }
 

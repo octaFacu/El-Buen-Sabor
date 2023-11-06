@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from "react"
 import "../../css/ventanaModal.css"
 import { Ingrediente, unidadDeMedida } from "../../context/interfaces/interfaces";
 import { Rubro } from "../compIngrediente/Rubro";
-import { GlobalContext } from "../../context/GlobalContext";
+import { GlobalContext, useUnidadContext } from "../../context/GlobalContext";
 import { ProductoService } from "../../services/ProductoService";
 import Producto from "../../context/interfaces/Producto";
 import GrupoBotones from "../genericos/GrupoBotones";
@@ -28,6 +28,7 @@ const ModalAgregarIngrediente: React.FC<ProdFormProps> = ({ estado, cambiarEstad
 
     const ingredienteService = new IngredientesService()
     const serviceMedida = new ServiceBasicos("unidadDeMedida");
+    const { rol } = useUnidadContext();
   
     const [Ingredientenuevo, setIngredienteNuevo] = useState<IngredienteDeProducto>(new IngredienteDeProducto());
 
@@ -65,9 +66,9 @@ const ModalAgregarIngrediente: React.FC<ProdFormProps> = ({ estado, cambiarEstad
 
     const getMedidasYIngredientes = async () => {
 
-        setMedidas(await serviceMedida.getAllBasic());
+        setMedidas(await serviceMedida.getAllBasic(rol));
 
-        setIngredientes(await ingredienteService.getAllBasic()); 
+        setIngredientes(await ingredienteService.getAllBasic(rol)); 
     }
 
     useEffect(() => {

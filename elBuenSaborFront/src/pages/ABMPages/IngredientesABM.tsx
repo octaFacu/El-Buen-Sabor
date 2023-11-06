@@ -14,7 +14,7 @@ import { CategoriaIngredienteService } from "../../services/CategoriaIngrediente
 
 export const IngredientesABM = () => {
 
-    const { unidadesDeMedida, ingredientes } = useUnidadContext();
+    const { unidadesDeMedida, ingredientes, rol } = useUnidadContext();
     const categoriaIngredienteService = new CategoriaIngredienteService();
 
 
@@ -38,7 +38,7 @@ export const IngredientesABM = () => {
 
     useEffect(() => {
        
-        categoriaIngredienteService.getAllBasic()
+        categoriaIngredienteService.getAllBasic(rol)
             .then(data => {
                 console.log("CARGANDO CATEGORIAS "+ data);
                 setCategorias(data)

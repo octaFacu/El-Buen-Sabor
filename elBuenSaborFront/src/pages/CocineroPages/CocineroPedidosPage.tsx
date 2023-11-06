@@ -9,6 +9,7 @@ import * as Socket from 'socket.io-client';
 import CardPedidoCocina from "../../components/componentesCocina/CardPedidoCocina";
 import DetalleProdCocina from "../../components/componentesCocina/DetalleProdCocina";
 import Producto from "../../context/interfaces/Producto";
+import { useUnidadContext } from "../../context/GlobalContext";
 
 
 export const CocineroPedidosPage = () => {
@@ -19,12 +20,12 @@ export const CocineroPedidosPage = () => {
     const [pedidos, setPedidos] = useState<Pedido[]>([]);
     const servicePedido = new pedidoService();
     const [notificacion, setNotificacion] = useState(false);
-
+    const { rol } = useUnidadContext();
 
 
     const getPedidos = async() => {
         //servicePedido.getByEstado(EstadoPedido[estadoDePedidos])
-        servicePedido.getByEstado("EnCocina")
+        servicePedido.getByEstado("EnCocina", rol)
         .then(data => {
             setPedidos(data)
         }) 

@@ -14,6 +14,7 @@ interface PropsCategoriaIngrABM { }
 // const CategoriaIngrABM: React.FunctionComponent<PropsCategoriaIngrABM> = () => {
 const CategoriaIngrABM = () => {
     // const { unidadesDeMedida } = useUnidadContext();
+    const { rol } = useUnidadContext();
 
 
     const categoriaIngredienteService = new CategoriaIngredienteService();
@@ -37,14 +38,14 @@ const CategoriaIngrABM = () => {
 
     useEffect(() => {
         // categoriaIngredienteService.getAll()
-        categoriaIngredienteService.getPaged(page, size)
+        categoriaIngredienteService.getPaged(page, size, rol)
             .then(data => {
                 // console.log(data);
                 setRubros(data.content)
                 setTotalPages(data.totalPages)
             })
 
-        categoriaIngredienteService.getAllPadres()
+        categoriaIngredienteService.getAllPadres(rol)
             .then(data => {
                 // console.log(data);
                 setRubrosPadre(data)

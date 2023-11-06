@@ -3,6 +3,7 @@ import { useEffect, useState } from "react"
 import { Ingrediente } from "../../context/interfaces/interfaces";
 import { Rubro } from "../compIngrediente/Rubro";
 import { IngredientesService } from "../../services/IngredientesService";
+import { useUnidadContext } from "../../context/GlobalContext";
 
 interface IngrCardProps {
 
@@ -28,6 +29,7 @@ interface IngrCardProps {
 const IngredienteCard: React.FunctionComponent<IngrCardProps> = ({ingrediente, cambiarEstado, estado, cambiarEstadoVista, estadoVista, cambiarEstadoCompra, estadoCompra, setearDatos, datos }) => {
     
     const [botonActivo, setbotonActivo] = useState<Boolean>(ingrediente.activo)
+    const { rol } = useUnidadContext();
 
     const ingredientesService = new IngredientesService();
 
@@ -79,7 +81,7 @@ const IngredienteCard: React.FunctionComponent<IngrCardProps> = ({ingrediente, c
                     ingredienteNuevo.activo = !(ingrediente.activo);
                     // await setearDatos(ingredienteNuevo)
                    
-                    await ingredientesService.updateEntity(ingredienteNuevo);
+                    await ingredientesService.updateEntity(ingredienteNuevo, rol);
 
                     //console.log(ingredienteNuevo);
                     // window.location.reload();

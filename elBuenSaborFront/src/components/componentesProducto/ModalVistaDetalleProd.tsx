@@ -4,6 +4,7 @@ import { IngredienteDeProducto } from "../../context/interfaces/IngredienteDePro
 import { ProductoService } from "../../services/ProductoService";
 import './Dropdown.css';
 import TablaIngredientesMostrar from "./TablaIngredientesMostrar";
+import { useUnidadContext } from "../../context/GlobalContext";
 
 interface ModalVistaDetalleProps{
     producto: Producto,
@@ -15,11 +16,12 @@ interface ModalVistaDetalleProps{
 
     const prodService = new ProductoService();
      const [ingredientes, setIngredientes] = useState<IngredienteDeProducto[]>([]); ;
+     const { rol } = useUnidadContext();
 
 
     const getIngredientes = async() => {
         setIngredientes([]);
-        await prodService.getIngredientes(producto.id!).then((data) => setIngredientes(castIngredientesIds(data)));
+        await prodService.getIngredientes(producto.id!, rol).then((data) => setIngredientes(castIngredientesIds(data)));
         
         
     }

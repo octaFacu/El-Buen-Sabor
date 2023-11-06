@@ -20,6 +20,9 @@ export interface UnidadContextInteface{
     categoriasProductos: CategoriaProducto[],
     setCategoriasProductos: Dispatch<SetStateAction<CategoriaProducto[]>>
 
+    rol: string,
+    setRol: Dispatch<SetStateAction<string>>
+
 }
 
 // const serviceBasicos = new ServiceBasicos();
@@ -35,7 +38,9 @@ export const GlobalContext = createContext<UnidadContextInteface>({
     productos: [],
     setProductos: () => {},
     categoriasProductos: [],
-    setCategoriasProductos: () => {}
+    setCategoriasProductos: () => {},
+    rol: "",
+    setRol: () => {},
 });
 
 export const useUnidadContext = () => useContext(GlobalContext);

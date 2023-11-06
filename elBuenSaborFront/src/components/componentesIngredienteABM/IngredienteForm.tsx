@@ -4,7 +4,7 @@ import { CategoriaIngredienteService } from "../../services/CategoriaIngrediente
 import { Ingrediente, unidadDeMedida } from "../../context/interfaces/interfaces";
 import { IngredientesService } from "../../services/IngredientesService";
 import { Rubro } from "../compIngrediente/Rubro";
-import { GlobalContext } from "../../context/GlobalContext";
+import { GlobalContext, useUnidadContext } from "../../context/GlobalContext";
 
 interface IngredienteFormProps {
 
@@ -20,6 +20,7 @@ interface IngredienteFormProps {
 
 const IngredienteForm: React.FunctionComponent<IngredienteFormProps> = ({ estado, cambiarEstado, datos, setDatos, categorias}) => {
 
+    const { rol } = useUnidadContext();
     const ingredientesService = new IngredientesService();
     // const serviceBasicos = new ServiceBasicos("unidadmedida");
   
@@ -189,11 +190,11 @@ const IngredienteForm: React.FunctionComponent<IngredienteFormProps> = ({ estado
                                         if(Ingredientenuevo.id !== 0){
 
                                             //pasar los datos guardados al metodo de update
-                                            ingredientesService.updateEntity(Ingredientenuevo);
+                                            ingredientesService.updateEntity(Ingredientenuevo, rol);
                                             cambiarEstado(!estado);
 
                                         }else{
-                                            ingredientesService.createEntity(Ingredientenuevo);
+                                            ingredientesService.createEntity(Ingredientenuevo, rol);
                                             cambiarEstado(!estado);
                                             window.location.reload();
                                             

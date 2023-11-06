@@ -29,7 +29,7 @@ export class pedidoService extends ServiceBasicos {
     }
   }
 
-  //Trae todas categorias de ingrediente que no tengan padre
+
   async getByEstado(estado: string, rol: string) {
 
 
@@ -51,6 +51,34 @@ export class pedidoService extends ServiceBasicos {
       console.log(`Error ${err.status}: ${err.statusText}`);
     }
   }
+
+
+
+async getByDelivery(idDelivery: string, rol: string) {
+
+  console.log("EL USUARIO DE DELIVERY QUE LE ESTOY PASANDO AL SERVICIO ES: "+ idDelivery);
+
+  try {
+
+      let res = await fetch(this.url + "/delivery/"+ idDelivery, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          'X-Role': rol
+        },
+      })
+
+      if (!res.ok) {
+          throw { status: res.status, statusText: res.statusText }
+      }
+
+      let jsonRes = await res.json()
+      return jsonRes
+
+  } catch (err: any) {
+      console.log(`Error ${err.status}: ${err.statusText}`);
+  }
+}
 
 async getProductosByPedido(idPedido: number, rol: string) {
 

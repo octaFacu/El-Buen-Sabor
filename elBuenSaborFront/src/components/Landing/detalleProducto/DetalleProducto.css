@@ -34,7 +34,7 @@
 /* ---------------------------- */
 /* Estilos para el precio del producto */
 .productPrice {
-  background-color: var(--btn-color);
+  background-color: var(--btn-color-light);
   padding: 7px;
   border-radius: 10px;
 }
@@ -57,7 +57,7 @@
 }
 
 .btn-go-back {
-  background-color: var(--btn-color) !important;
+  background-color: var(--btn-color-light) !important;
 }
 .btn-go-back:hover {
   background-color: var(--btn-color-light) !important;
@@ -90,7 +90,7 @@
 /* ---------------------------- */
 /* Seccion para agregar o restar productos */
 .bg-cant {
-  background-color: var(--btn-color-light) !important;
+  background-color: var(--secondary-btn-color-light) !important;
   border-radius: 0.6rem;
 }
 
@@ -101,7 +101,7 @@
   padding-left: 10px;
   padding-right: 10px;
 
-  background-color: var(--btn-color);
+  background-color: var(--btn-color-light);
   color: white ;
 }
 .cant-btn-resta{

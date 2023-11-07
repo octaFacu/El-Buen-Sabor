@@ -18,7 +18,7 @@ const CardPedidoDelivery: React.FC<ProdFormProps> = ({ pedido }) => {
     const [productos, setProductos] = useState<PedidoHasProductos[]>([]);
 
     const handleChangeEstado = () => {
-        pedido.estado = EstadoPedido["Listo"];
+        pedido.estado = "Listo";
         servicePedido.updateEntity(pedido);
         window.location.reload();
     };
@@ -57,6 +57,7 @@ const CardPedidoDelivery: React.FC<ProdFormProps> = ({ pedido }) => {
 
 
             </div>
+            <div className="text-pedido">{pedido.horaEstimada}hs</div>
             <hr className="separator-white"></hr>
             <div className="mx-2 mb-3">
                 <div className="btn btn-success" onClick={()=> handleChangeEstado()}><i className="material-icons" style={{fontSize: "30px", cursor:"pointer"}}>check</i></div>

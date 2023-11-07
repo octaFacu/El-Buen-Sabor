@@ -35,34 +35,34 @@ export class ProductoService extends ServiceBasicos {
   }
 
 
-  async saveIngredienteProd(ingredienteProd: IngredienteDeProducto){
+  async saveIngredienteProd(ingredienteProd: IngredienteDeProducto) {
 
-    console.log("Ingrediente pasado al servicio: "+JSON.stringify(ingredienteProd));
+    console.log("Ingrediente pasado al servicio: " + JSON.stringify(ingredienteProd));
 
-    
-      try{
 
-            
-            const requestOptions = {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json'
-              },
-              body: JSON.stringify(ingredienteProd)
-            };
-            
+    try {
 
-          let res = await fetch("http://localhost:8080" + "/ingredienteProd/save", requestOptions);
 
-        if (!res.ok) {
-            throw { status: res.status, statusText: res.statusText }
-        }
+      const requestOptions = {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(ingredienteProd)
+      };
 
-        let jsonRes = await res.json()
-        return jsonRes
 
-      }catch (err: any) {
-        console.log(`Error ${err.status}: ${err.statusText}`);
+      let res = await fetch("http://localhost:8080" + "/ingredienteProd/save", requestOptions);
+
+      if (!res.ok) {
+        throw { status: res.status, statusText: res.statusText }
+      }
+
+      let jsonRes = await res.json()
+      return jsonRes
+
+    } catch (err: any) {
+      console.log(`Error ${err.status}: ${err.statusText}`);
     }
   }
 
@@ -198,7 +198,7 @@ export class ProductoService extends ServiceBasicos {
     try {
       //Pasarle a la direccion con un put la info
       let res = await fetch(
-        this.baseUrl + this.url + `/${datos.id}`,
+        this.url + `/${datos.id}`,
         {
           method: "PUT",
           headers: {
@@ -214,13 +214,13 @@ export class ProductoService extends ServiceBasicos {
 
       let jsonRes = await res.json();
 
-      for(var ingr of ing){
+      for (var ingr of ing) {
         console.log("Ingrediente a guardar: " + JSON.stringify(ingr))
         ingr.idProducto = datos.id;
         await this.saveIngredienteProd(ingr)
       }
 
-      
+
 
       return jsonRes;
     } catch (err: any) {
@@ -236,10 +236,10 @@ export class ProductoService extends ServiceBasicos {
     Object.assign(nuevoProducto, datos);
 
     //Si el producto no es manufacturado setear vacios los campos no correpondientes
-    if(nuevoProducto.esManufacturado === false) { 
+    if (nuevoProducto.esManufacturado === false) {
       nuevoProducto.receta = '';
       nuevoProducto.tiempoCocina = undefined;
-      
+
     }
 
     try {
@@ -258,16 +258,16 @@ export class ProductoService extends ServiceBasicos {
 
       let jsonRes = await res.json();
 
-      if(nuevoProducto.esManufacturado === true){
+      if (nuevoProducto.esManufacturado === true) {
 
         console.log("nuevos ingredientes: ")
 
-        for(var ingr of ing){
+        for (var ingr of ing) {
           console.log(ingr.idIngrediente);
           ingr.idProducto = jsonRes.id;
           await this.saveIngredienteProd(ingr)
         }
-      } 
+      }
 
       return jsonRes;
     } catch (err: any) {
@@ -285,7 +285,7 @@ export class ProductoService extends ServiceBasicos {
     try {
       //Pasarle a la direccion con un put la info
       let res = await fetch(
-        this.baseUrl + this.url + `/${datos.id}`,
+        this.url + `/${datos.id}`,
         {
           method: "PUT",
           headers: {
@@ -301,16 +301,16 @@ export class ProductoService extends ServiceBasicos {
 
       let jsonRes = await res.json();
 
-      for(var ingr of ingredientes){
+      for (var ingr of ingredientes) {
         await this.saveIngredienteProd(ingr)
       }
 
-      
+
 
       return jsonRes;
     } catch (err: any) {
       console.log(`Error ${err.status}: ${err.statusText}`);
     }
-  } 
+  }
 
 }

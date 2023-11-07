@@ -1,22 +1,23 @@
-import { FC, useEffect } from "react";
+import { FC, useEffect, useState } from "react";
 import { Direccion, ProductoParaPedido, UserAuth0 } from "../../../context/interfaces/interfaces";
 import "./OrderSelections.css"
-import Pago from "../mercadoPago/Pago";
 import mp_logo from "../../../assets/mp_logo.png";
 import Pedido from "../../../context/interfaces/Pedido";
 
 interface OrderSelectionsProps {
     estadoCompra: number;
+    setEstadoCompra: (valor: number) => void;
     direcciones: Direccion[]
+    setPagoMercadoPago: (valor: boolean) => void;
+    pagoMercadoPago: boolean
 
     pedido: Pedido;
     setPedido: (valor: any) => void;
 
-    usuarioMP: UserAuth0
-    localStorageValues: ProductoParaPedido[]
+    agregoNuevaDireccion: () => void;
 }
 
-const OrderSelections: FC<OrderSelectionsProps> = ({ estadoCompra, direcciones, usuarioMP, localStorageValues, setPedido, pedido }) => {
+const OrderSelections: FC<OrderSelectionsProps> = ({ estadoCompra, setEstadoCompra, pagoMercadoPago, setPagoMercadoPago, direcciones, setPedido, pedido, agregoNuevaDireccion }) => {
 
     //Asigna la direccion y el metodo de pago al pedido
     const handlePedidoDireccion = (opcion: Direccion | null) => {
@@ -38,23 +39,9 @@ const OrderSelections: FC<OrderSelectionsProps> = ({ estadoCompra, direcciones, 
 
     }
 
-    const handlePagoPedido = () => {
-
-
-    }
-
-    //HACER ESTOOOOOOOOOOOOOOOOOOOOOOOOOO
-    const agregoNuevaDireccion = () => {
-        console.log("Agrego nueva direccion");
-
-    }
-
-    // useEffect(() => {
-    //     console.log(pedido);
-    // }, [pedido])
-
     if (estadoCompra === 1) {
         return (
+
             <div className="fomat-order-selection mt-4">
                 <h4>Entrega</h4>
                 {direcciones.map((dir, index) => (
@@ -84,7 +71,6 @@ const OrderSelections: FC<OrderSelectionsProps> = ({ estadoCompra, direcciones, 
                     <input
                         className="form-check-input"
                         type="checkbox"
-                        // value={99}
                         onChange={() => handlePedidoDireccion(null)}
                         checked={pedido.direccion === undefined}
                     />
@@ -106,8 +92,8 @@ const OrderSelections: FC<OrderSelectionsProps> = ({ estadoCompra, direcciones, 
                         className="form-check-input"
                         type="checkbox"
                         value="mp"
-                        onChange={handlePagoPedido}
-                        // checked={dir === opcionSeleccionada}
+                        onChange={() => setPagoMercadoPago(true)}
+                        checked={pagoMercadoPago === true}
                     />
                     <img style={{ width: "30px" }} src={mp_logo} alt="mp_logo" />
                     <label className="form-check-label">Mercado pago</label>
@@ -123,8 +109,8 @@ const OrderSelections: FC<OrderSelectionsProps> = ({ estadoCompra, direcciones, 
                         className="form-check-input"
                         type="checkbox"
                         value="efectivo"
-                        onChange={handlePagoPedido}
-                        // checked={dir === opcionSeleccionada}
+                        onChange={() => setPagoMercadoPago(false)}
+                        checked={pagoMercadoPago === false}
                     />
                     <label className="form-check-label">Efectivo</label>
 
@@ -134,11 +120,14 @@ const OrderSelections: FC<OrderSelectionsProps> = ({ estadoCompra, direcciones, 
         );
     } else {
         return (
-            <div className="fomat-order-selection mt-4">
+            <div className="fomat-order-selection mt-4 ">
 
-                <div>
-                    <h4>Tipo de entrega </h4>
-                    <label className="form-check-label">{pedido.esEnvio ? "Delivery" : "Retiro en el local"}</label>
+                <div className="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h4>Tipo de entrega </h4>
+                        <label className="form-check-label">{pedido.esEnvio ? "Delivery" : "Retiro en el local"}</label>
+                    </div>
+                    <button className="order-selection-btn p-2" onClick={() => setEstadoCompra(1)}>Editar</button>
                 </div>
 
                 <div className="separator-line-selections my-2" />
@@ -149,34 +138,26 @@ const OrderSelections: FC<OrderSelectionsProps> = ({ estadoCompra, direcciones, 
                         <div className="d-flex justify-content-between align-items-center">
                             <div>
                                 <h4>Direccion</h4>
-                                <label className="form-check-label">{pedido.direccion?.calle} {pedido.direccion?.calle} - {pedido.direccion?.pisoDpto}</label>
+                                <label className="form-check-label">{pedido.direccion?.calle} {pedido.direccion?.nroCasa} - {pedido.direccion?.pisoDpto}</label>
                             </div>
-                            <button className="order-selection-btn p-2">Editar</button>
+                            <button className="order-selection-btn p-2" onClick={() => setEstadoCompra(1)}>Editar</button>
                         </div>
 
                         <div className="separator-line-selections my-2" />
                     </>
                 }
-
-
                 {/* ----------- */}
+
                 <div className="d-flex justify-content-between align-items-center">
                     <div>
                         <h4>Forma de pago</h4>
-                        <label className="form-check-label">forma de pago....</label>
+                        <label className="form-check-label">{pagoMercadoPago ? "Mercado Pago" : "Efectivo"}</label>
                     </div>
-                    <button className="order-selection-btn p-2">Editar</button>
+                    <button className="order-selection-btn p-2" onClick={() => setEstadoCompra(2)}>Editar</button>
 
                 </div>
 
                 <div className="separator-line-selections my-2" />
-
-
-                <Pago
-                    usuarioMP={usuarioMP}
-                    localStorageValues={localStorageValues}
-                />
-
 
             </div>
         );

@@ -87,7 +87,7 @@ interface ModalVistaDetalleProps{
                         <h4>Costo: ${producto.costoTotal.toString()}</h4>
                         <h4>Descripcion:</h4> <p>{producto.descripcion}</p>
 
-                        { producto.esManufacturado &&
+                        { producto.esManufacturado && producto.receta != "" && producto.receta != null &&
                         <div>
                             <hr style={{marginRight: "2%", marginLeft: "2%"}}></hr>
                             <h4>Tiempo de Preparación: {producto.tiempoCocina}</h4>

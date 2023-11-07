@@ -1,4 +1,7 @@
 import { Rubro } from "../../components/compIngrediente/Rubro";
+import { Cliente } from "./Cliente";
+import Pedido from "./Pedido";
+import PedidoHasProductos from "./PedidoHasProductos";
 import Producto from "./Producto";
 
 export type unidadDeMedida = {
@@ -64,7 +67,7 @@ export interface ExcepcionesVerificaUsuario{
   msj: string
 }
 
-//Esta interfaz no es una entidad en si, solo lo uso apra dar formato a la informacion que sera pasada para crear un pedido (producto y cantidad del mismo) --- Tambien se usa para mercado pago
+//Esta interfaz no es una entidad en si, solo lo uso para dar formato a la informacion que sera pasada para crear un pedido (producto y cantidad del mismo) --- Tambien se usa para mercado pago
 export interface ProductoParaPedido{
   producto: Producto,
   cantidad: number
@@ -73,10 +76,41 @@ export interface ProductoParaPedido{
 export interface UserAuth0{
   nombre?: string,
   apellido?: string,
-  email?: string
+  email?: string,
+  idCliente?: number
 }
 //Se usa para mercado pago
 export interface RequestDataMP{
   usuario: UserAuth0
   productos: ProductoParaPedido[]
+  esEnvio: boolean
+}
+
+//Esta interface se usa para generar un objeto que luego sera persisitido en la base de datos, creando el pedido y guardando los productos del mismo pedido
+export interface RequestPedido{
+  pedido: Pedido;
+  pedidoHasProducto: PedidoHasProductos[];
+}
+
+export interface MetodoDePago{
+  id?: number;
+  tipo: string;
+  activo: boolean;
+}
+
+export interface Factura{
+  id?: number;
+  tipo: string;
+  montoDescuento: number;
+  numeroFactura: string;
+  pedido: Pedido;
+  MetodoDePago?: MetodoDePago;
+  activo: boolean;
+}
+
+export interface Favorito{
+  id: number;
+  activo: boolean;
+  cliente: Cliente;
+  producto: Producto;
 }

@@ -1,10 +1,12 @@
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import Producto from '../../../context/interfaces/Producto';
 import "./DetalleProducto.css";
 import leftArrow from "../../../assets/left-arrow.png";
 import heart from "../../../assets/heart.png";
 import filledHeart from "../../../assets/filledHeart.png";
-import { ProductoParaPedido } from "../../../context/interfaces/interfaces";
+import { Favorito, ProductoParaPedido } from "../../../context/interfaces/interfaces";
+import { NavLink } from "react-router-dom";
+import { useAuth0 } from "@auth0/auth0-react";
 
 interface DetalleProductoProps {
     modalDetalleProducto: boolean
@@ -13,18 +15,34 @@ interface DetalleProductoProps {
     producto: Producto | undefined;
 
     handleAddToCart: (value: ProductoParaPedido) => void;
+
+    agregarFavorito: (usuarioId: string, producto: Producto) => void;
+    quitarFavorito: (usuarioId: string, productoId: number) => void;
+    favoritos: Favorito[]
 }
 
-const DetalleProducto: FC<DetalleProductoProps> = ({ producto, modalDetalleProducto, setModalDetalleProducto, handleAddToCart }) => {
+const DetalleProducto: FC<DetalleProductoProps> = ({ producto, modalDetalleProducto, setModalDetalleProducto, handleAddToCart, agregarFavorito, quitarFavorito, favoritos }) => {
 
+    const { user, isAuthenticated, loginWithRedirect } = useAuth0()
     const [cant, setCant] = useState<number>(1)
+    const [existeFav, setExisteFav] = useState<boolean>(false)
 
-    //AGREGAR FUNCION PARA AGREGAR A FAVORITOS
-    const handleAddToFavorites = () => {
-        console.log("Agrego a favoritos");
+    useEffect(() => {
 
+        if(existeFav){
+            setExisteFav(false);
+        }
 
-    }
+        if (producto) {
+            favoritos.map(fav => {
+                if (producto.id === fav.producto.id) {
+                    setExisteFav(true);
+                    console.log("Es favorito");
+                }
+            })
+        }
+
+    }, [producto, favoritos])
 
 
     if (producto === undefined) {
@@ -72,26 +90,40 @@ const DetalleProducto: FC<DetalleProductoProps> = ({ producto, modalDetalleProdu
 
                         <div className="d-flex align-items-center justify-content-center position-relative">
                             <img src={producto.imagen} alt={producto.denominacion} className="img-fluid mb-3 imgModalProduct" />
-                            <button className="position-absolute top-0 end-0 btn-fav" onClick={handleAddToFavorites}>
-                                {/* AGREGA LOGICA PARA SABER SI EL PRODUCTO ESTA EN FAVORITOS O NO Y AGREGAR IMAGENDE CORAZON */}
-                                <img className="btn-fav-icon" src={filledHeart} alt="." />
-                            </button>
+                            {
+                                isAuthenticated && user
+                                    ?
+                                    existeFav
+                                        ?
+                                        <button className="position-absolute top-0 end-0 btn-fav" onClick={() => quitarFavorito(user.userId, producto.id!)}>
+                                            <img className="btn-fav-icon" src={filledHeart} alt="." />
+                                        </button>
+                                        :
+                                        <button className="position-absolute top-0 end-0 btn-fav" onClick={() => agregarFavorito(user.userId, producto)}>
+                                            <img className="btn-fav-icon" src={heart} alt="." />
+                                        </button>
+                                    :
+                                    <NavLink
+                                        className="position-absolute top-0 end-0 btn-fav"
+                                        onClick={() => loginWithRedirect({
+                                            authorizationParams: {
+                                                screen_hint: 'signup',
+                                                redirect_uri: 'http://localhost:5173/informacionAdicional',
+                                            },
+                                        })}
+                                        to={"#"}
+                                    >
+                                        <img className="btn-fav-icon" src={heart} alt="." />
+                                    </NavLink>
+
+                            }
                         </div>
 
                         <p>{producto.descripcion}</p>
 
                         <div className="d-flex justify-content-between">
                             {/* Lado Izquierdo: Ingredientes */}
-                            <div>
-                                {/* <p>Ingredientes: {producto.ingredientes.join(", ")}</p> */}
-                                <p>Ingredientes:</p>
-                                <ul>
-                                    <li>Queso</li>
-                                    <li>Harina</li>
-                                    <li>Salsa de tomate</li>
-                                    <li>No seeeeeeeeeeeeeeeeee</li>
-                                </ul>
-                            </div>
+                            <div></div>
                             {/* Lado Derecho: Precio */}
                             <div>
                                 <p className="productPrice">Precio: ${producto.precioTotal}</p>

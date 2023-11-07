@@ -26,12 +26,9 @@ export class pedidoService extends ServiceBasicos {
   async getByEstado(estado: string) {
     console.log("EL ESTADO QUE LE ESTOY PASANDO AL SERVICIO ES: " + estado);
 
-    console.log("EL ESTADO QUE LE ESTOY PASANDO AL SERVICIO ES: " + estado);
 
     try {
       let res = await fetch(this.url + "/estado/" + estado);
-
-      let res = await fetch(this.url + "/estado/" + estado)
 
       if (!res.ok) {
         throw { status: res.status, statusText: res.statusText };
@@ -42,8 +39,7 @@ export class pedidoService extends ServiceBasicos {
 
       let jsonRes = await res.json();
       return jsonRes;
-      let jsonRes = await res.json()
-      return jsonRes
+      
 
     } catch (err: any) {
       console.log(`Error ${err.status}: ${err.statusText}`);
@@ -56,17 +52,11 @@ export class pedidoService extends ServiceBasicos {
     try {
       let res = await fetch(this.url + "/productos/" + idPedido);
 
-      let res = await fetch(this.url + "/productos/" + idPedido);
-
+     
       if (!res.ok) {
         throw { status: res.status, statusText: res.statusText };
       }
-      if (!res.ok) {
-        throw { status: res.status, statusText: res.statusText }
-      }
-
-      let jsonRes = await res.json();
-      return jsonRes;
+     
       let jsonRes = await res.json();
       return jsonRes;
 
@@ -74,7 +64,7 @@ export class pedidoService extends ServiceBasicos {
       console.log(`Error ${err.status}: ${err.statusText}`);
     }
   }
-  }
+  
 
   async createPedidoAndPedidoHasProducto(pedido: RequestPedido) {
     try {
@@ -114,3 +104,4 @@ export class pedidoService extends ServiceBasicos {
     }
   }
 
+}

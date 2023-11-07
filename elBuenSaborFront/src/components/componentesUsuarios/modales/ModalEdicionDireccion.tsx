@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { ServiceBasicos } from "../../../services/ServiceBasicos";
 import { DireccionService } from "../../../services/DireccionService";
 import { Direccion, ExcepcionesVerificaUsuario } from "../../../context/interfaces/interfaces";
+import "./modal.css";
 
 interface ModalProps {
   cerrarModal: () => void;
@@ -52,9 +53,9 @@ const ModalEdicionDireccion: React.FC<ModalProps> = ({
   }
 
   return (
-    <div className="modal" style={{ display: "block" }}>
-      <div className="modal-dialog d-flex align-items-center justify-content-center modal-dialog-centered modal-lg">
-        <div className="modal-content">
+    <div className="modal " style={{ display: "block" }}>
+      <div className="modal-dialog d-flex align-items-center justify-content-center modal-dialog-centered modal-lg ">
+        <div className="modal-content card-modalPedido ">
           <div className="modal-header text-center">
             <h3
               className="modal-title text-center text-white bold"

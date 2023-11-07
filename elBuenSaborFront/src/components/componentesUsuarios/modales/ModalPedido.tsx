@@ -29,6 +29,7 @@ const ModalPedido: React.FC<Props> = ({
   const traerPedidos = async () => {
     setPedidoUsuario(await servicioPedio.getProductosPedido(idPedido));
   };
+  
   const total = pedidoUsuario?.reduce(
     (precio, actual) => precio + actual.precio_total,
     0
@@ -58,7 +59,7 @@ const ModalPedido: React.FC<Props> = ({
               >
                 <div className="col-3">
                   <div>
-                    <img src={`/img/${pedido.imagen}`}  alt={pedido.denominacion} className="imagenes-pedidos-usuario"/>
+                    <img src={pedido.imagen}  alt={pedido.denominacion} className="imagenes-pedidos-usuario"/>
                   </div>
                 </div>
                 <div className="col-6 centrado-denominacion">

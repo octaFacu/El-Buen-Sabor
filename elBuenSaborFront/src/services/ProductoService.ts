@@ -16,11 +16,17 @@ export class ProductoService extends ServiceBasicos {
   }
 
   //Trae todos los ingredientes de un producto
-  async getIngredientes(productoid: Number) {
+  async getIngredientes(productoid: Number, rol: string) {
 
     try {
 
-      let res = await fetch(this.url + "/ingredientes/" + productoid)
+      let res = await fetch(this.url + "/ingredientes/" + productoid, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          'X-Role': rol
+        },
+      })
 
       if (!res.ok) {
         throw { status: res.status, statusText: res.statusText }
@@ -35,21 +41,21 @@ export class ProductoService extends ServiceBasicos {
   }
 
 
-  async saveIngredienteProd(ingredienteProd: IngredienteDeProducto) {
+  async saveIngredienteProd(ingredienteProd: IngredienteDeProducto, rol: string){
 
     console.log("Ingrediente pasado al servicio: " + JSON.stringify(ingredienteProd));
 
 
-    try {
-
-
-      const requestOptions = {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(ingredienteProd)
-      };
+        try{    
+            const requestOptions = {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                'X-Role': rol
+              },
+              body: JSON.stringify(ingredienteProd)
+            };
+          
 
 
       let res = await fetch("http://localhost:8080" + "/ingredienteProd/save", requestOptions);
@@ -66,9 +72,15 @@ export class ProductoService extends ServiceBasicos {
     }
   }
 
-  async getProductoXCategoria(id: number) {
+  async getProductoXCategoria(id: number, rol: string) {
     try {
-      let res = await fetch(this.url + "/filtroCategoria" + "?filter=" + id);
+      let res = await fetch(this.url + "/filtroCategoria" + "?filter=" + id, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          'X-Role': rol
+        },
+      });
 
       if (!res.ok) {
         throw { status: res.status, statusText: res.statusText };
@@ -81,9 +93,15 @@ export class ProductoService extends ServiceBasicos {
     }
   }
 
-  async getProductoXFiltro(text: string) {
+  async getProductoXFiltro(text: string, rol: string) {
     try {
-      let res = await fetch(this.url + "/filtro" + "?filter=" + text);
+      let res = await fetch(this.url + "/filtro" + "?filter=" + text, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          'X-Role': rol
+        },
+      });
 
       if (!res.ok) {
         throw { status: res.status, statusText: res.statusText };
@@ -96,9 +114,15 @@ export class ProductoService extends ServiceBasicos {
     }
   }
 
-  async getProductoXFiltroPaginado(text: string, page: number = 0, size: number = 6) {
+  async getProductoXFiltroPaginado(text: string, page: number = 0, size: number = 6, rol: string) {
     try {
-      let res = await fetch(this.url + "/filtroPaginado" + "?filter=" + text + "&page=" + page + "&size=" + size);
+      let res = await fetch(this.url + "/filtroPaginado" + "?filter=" + text + "&page=" + page + "&size=" + size, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          'X-Role': rol
+        },
+      });
 
       if (!res.ok) {
         throw { status: res.status, statusText: res.statusText };
@@ -111,7 +135,7 @@ export class ProductoService extends ServiceBasicos {
     }
   }
 
-  async getRankingProductosComida(fechaInicio: Date | null = null, fechaFin: Date | null = null, direccion: string, size: number = 3, page: number = 0
+  async getRankingProductosComida(fechaInicio: Date | null = null, fechaFin: Date | null = null, direccion: string, size: number = 3, page: number = 0, rol: string
   ): Promise<PageProyeccionHistorialPedido<rankingProductos>> {
     try {
       let parametros = `?page=${page}&size=${size}&direccionOrden=${direccion}`;
@@ -120,7 +144,13 @@ export class ProductoService extends ServiceBasicos {
         parametros += `&fechaInicio=${fechaInicio}&fechaFin=${fechaFin}`;
       }
 
-      const res = await fetch(`${this.url}/rankingProductos/comida${parametros}`);
+      const res = await fetch(`${this.url}/rankingProductos/comida${parametros}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          'X-Role': rol
+        },
+      });
 
       const jsonRes = await res.json();
       return jsonRes;
@@ -129,7 +159,7 @@ export class ProductoService extends ServiceBasicos {
     }
   }
 
-  async getRankingProductosBebida(fechaInicio: Date | null = null, fechaFin: Date | null = null, direccion: string, size: number = 3, page: number = 0
+  async getRankingProductosBebida(fechaInicio: Date | null = null, fechaFin: Date | null = null, direccion: string, size: number = 3, page: number = 0, rol: string
   ): Promise<PageProyeccionHistorialPedido<rankingProductos>> {
     try {
       let parametros = `?page=${page}&size=${size}&direccionOrden=${direccion}`;
@@ -138,7 +168,13 @@ export class ProductoService extends ServiceBasicos {
         parametros += `&fechaInicio=${fechaInicio}&fechaFin=${fechaFin}`;
       }
 
-      const res = await fetch(`${this.url}/rankingProductos/bebida${parametros}`);
+      const res = await fetch(`${this.url}/rankingProductos/bebida${parametros}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          'X-Role': rol
+        },
+      });
 
       const jsonRes = await res.json();
       return jsonRes;
@@ -147,7 +183,7 @@ export class ProductoService extends ServiceBasicos {
     }
   }
 
-  async getInformeGananciasGrafico(fechaInicio: Date | null = null, fechaFin: Date | null = null) {
+  async getInformeGananciasGrafico(fechaInicio: Date | null = null, fechaFin: Date | null = null, rol: string) {
     try {
       let parametros = "";
 
@@ -155,7 +191,13 @@ export class ProductoService extends ServiceBasicos {
         parametros += `?fechaInicio=${fechaInicio}&fechaFin=${fechaFin}`;
       }
 
-      const res = await fetch(`${this.url}/informeGanancias/grafico${parametros}`);
+      const res = await fetch(`${this.url}/informeGanancias/grafico${parametros}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          'X-Role': rol
+        },
+      });
 
       const jsonRes = await res.json();
       return jsonRes;
@@ -165,7 +207,7 @@ export class ProductoService extends ServiceBasicos {
   }
 
 
-  async getInformeRentabilidad(fechaInicio: Date | null = null, fechaFin: Date | null = null) {
+  async getInformeRentabilidad(fechaInicio: Date | null = null, fechaFin: Date | null = null, rol: string) {
     try {
       let parametros = "";
 
@@ -173,7 +215,13 @@ export class ProductoService extends ServiceBasicos {
         parametros += `?fechaInicio=${fechaInicio}&fechaFin=${fechaFin}`;
       }
 
-      const res = await fetch(`${this.url}/informeGanancias/graficoRentabilidad${parametros}`);
+      const res = await fetch(`${this.url}/informeGanancias/graficoRentabilidad${parametros}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          'X-Role': rol
+        },
+      });
 
       const jsonRes = await res.json();
       return jsonRes;
@@ -182,10 +230,16 @@ export class ProductoService extends ServiceBasicos {
     }
   }
 
-  async getInformeGananciasMes() {
+  async getInformeGananciasMes(rol: string) {
     try {
 
-      const res = await fetch(`${this.url}/informeGanancias/graficoGananciaMes`);
+      const res = await fetch(`${this.url}/informeGanancias/graficoGananciaMes`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          'X-Role': rol
+        },
+      });
 
       const jsonRes = await res.json();
       return jsonRes;
@@ -194,7 +248,7 @@ export class ProductoService extends ServiceBasicos {
     }
   }
 
-  async actualizarEntity(datos: any, ing: IngredienteDeProducto[]) {
+  async actualizarEntity(datos: any, ing: IngredienteDeProducto[], rol: string) {
     try {
       //Pasarle a la direccion con un put la info
       let res = await fetch(
@@ -203,6 +257,7 @@ export class ProductoService extends ServiceBasicos {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
+            'X-Role': rol
           },
           body: JSON.stringify(datos),
         }
@@ -217,7 +272,7 @@ export class ProductoService extends ServiceBasicos {
       for (var ingr of ing) {
         console.log("Ingrediente a guardar: " + JSON.stringify(ingr))
         ingr.idProducto = datos.id;
-        await this.saveIngredienteProd(ingr)
+        await this.saveIngredienteProd(ingr, rol)
       }
 
 
@@ -229,7 +284,7 @@ export class ProductoService extends ServiceBasicos {
   }
 
 
-  async crearEntity(datos: {}, ing: IngredienteDeProducto[]) {
+  async crearEntity(datos: {}, ing: IngredienteDeProducto[], rol: string) {
 
     const nuevoProducto = new Producto();
     //Asignar los datos que se traen en un nuevo producto
@@ -248,6 +303,7 @@ export class ProductoService extends ServiceBasicos {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          'X-Role': rol
         },
         body: JSON.stringify(datos),
       });
@@ -265,7 +321,7 @@ export class ProductoService extends ServiceBasicos {
         for (var ingr of ing) {
           console.log(ingr.idIngrediente);
           ingr.idProducto = jsonRes.id;
-          await this.saveIngredienteProd(ingr)
+          await this.saveIngredienteProd(ingr, rol)
         }
       }
 
@@ -278,9 +334,9 @@ export class ProductoService extends ServiceBasicos {
 
 
 
-  async actualizarEntityActivo(datos: any) {
+  async actualizarEntityActivo(datos: any, rol: string) {
 
-    var ingredientes = await this.getIngredientes(datos.id);
+    var ingredientes = await this.getIngredientes(datos.id, rol);
 
     try {
       //Pasarle a la direccion con un put la info
@@ -290,6 +346,7 @@ export class ProductoService extends ServiceBasicos {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
+            'X-Role': rol
           },
           body: JSON.stringify(datos),
         }
@@ -301,8 +358,8 @@ export class ProductoService extends ServiceBasicos {
 
       let jsonRes = await res.json();
 
-      for (var ingr of ingredientes) {
-        await this.saveIngredienteProd(ingr)
+      for(var ingr of ingredientes){
+        await this.saveIngredienteProd(ingr, rol)
       }
 
 

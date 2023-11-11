@@ -10,11 +10,17 @@ export class CategoriaIngredienteService extends ServiceBasicos{
       }
 
     //Trae todas categorias de ingrediente que no tengan padre
-    async getAllPadres() {
+    async getAllPadres(rol: string) {
 
         try {
 
-            let res = await fetch(this.url + "/padres")
+            let res = await fetch(this.url + "/padres", {
+                method: "GET",
+                headers: {
+                  "Content-Type": "application/json",
+                  'X-Role': rol
+                },
+              })
 
             if (!res.ok) {
                 throw { status: res.status, statusText: res.statusText }
@@ -29,11 +35,17 @@ export class CategoriaIngredienteService extends ServiceBasicos{
     }
 
     //Trae todas categorias de ingrediente que no tengan padre
-    async getAllPadresConHijos() {
+    async getAllPadresConHijos(rol: string) {
 
         try {
 
-            let res = await fetch(this.url + "/padresConHijos")
+            let res = await fetch(this.url + "/padresConHijos", {
+                method: "GET",
+                headers: {
+                  "Content-Type": "application/json",
+                  'X-Role': rol
+                },
+              })
 
             if (!res.ok) {
                 throw { status: res.status, statusText: res.statusText }

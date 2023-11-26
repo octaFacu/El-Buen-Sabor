@@ -1,17 +1,25 @@
 import { useContext, useEffect, useRef, useState } from "react"
 import "../../css/ventanaModal.css"
 import { Rubro } from "../compIngrediente/Rubro";
-import { GlobalContext, useUnidadContext } from "../../context/GlobalContext";
-import { ProductoService } from "../../services/ProductoService";
 import Producto from "../../context/interfaces/Producto";
-import GrupoBotones from "../genericos/GrupoBotones";
-import IngredienteDeProducto from "../../context/interfaces/IngredienteDeProducto";
-import ModalAgregarIngrediente from "./ModalAgregarIngrediente";
-import TablaIngredientesMostrar from "./TablaIngredientesMostrar";
-import { CategoriaProducto } from "../../context/interfaces/interfaces";
+import { useUnidadContext } from "../../context/GlobalContext";
+import { ProductoService } from "../../services/ProductoService";
 import { IngredientesService } from "../../services/IngredientesService";
+import GrupoBotones from "../genericos/GrupoBotones";
+import ModalAgregarIngrediente from "./ModalAgregarIngrediente";
 import { CloudinaryService } from "../../services/CloudinaryService";
+import IngredienteDeProducto from "../../context/interfaces/IngredienteDeProducto";
+import TablaIngredientesMostrar from "./TablaIngredientesMostrar";
 
+
+//Interfaz que 
+interface State {
+    productoSelect: Producto;
+    botonManufacturado: boolean;
+    ingredientesProducto: IngredienteDeProducto[];
+    modalIngr: boolean;
+    ingredientesGuardados: boolean;
+  }
 
 interface ProdFormProps {
 
@@ -23,106 +31,20 @@ interface ProdFormProps {
 }
 
 const ModalCreacionProd: React.FC<ProdFormProps> = ({ estado, cambiarEstado, categorias, datos }) => {
+    const { rol } = useUnidadContext();
 
+    //Servicios
     const productoService = new ProductoService();
     const ingredienteService = new IngredientesService();
-    // const serviceBasicos = new ServiceBasicos("unidadmedida");
-<<<<<<< HEAD
 
-=======
-    const { rol } = useUnidadContext();
-  
->>>>>>> cd3e269 (Roles en servicios y delivery agregado)
-
-    let Productonuevo: Producto = new Producto();
-    const [modalIngr, setModalIngr] = useState<boolean>(false);
-    const [selectedTime, setSelectedTime] = useState<string>('');
-    const [categoriaElegida, setCategoriaElegida] = useState<CategoriaProducto>();
-    const [ingredientesProducto, setIngredientesProducto] = useState<IngredienteDeProducto[]>([]);
-    const [ingredientesGuardados, setIngredientesGuardados] = useState<boolean>(false);
-
-    const [productoSelect, setProductoSelect] = useState<Producto>(new Producto());
-    const [botonManufacturado, setBotonManufacturado] = useState<boolean>(true);
-
-    /*const { categoria } = useContext(GlobalContext);*/
-
-    const handleSelectChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-
-        Productonuevo.denominacion = (event.target.value)
-
-        setProductoSelect({ ...productoSelect, denominacion: (event.target.value) });
-    }
-
-    const cargarDatos = async () => {
-        if (datos !== undefined) {
-            console.log("Antes de guardar los datos: " + productoSelect.denominacion);
-
-            await setProductoSelect(datos!);
-            console.log("Despues de guardar los datos: " + productoSelect.denominacion);
-            console.log("los datos: " + datos.denominacion);
-
-            if (datos.esManufacturado === true) {
-                setSelectedTime(datos.tiempoCocina!);
-            }
-
-
-            //setIngredientesProducto(ingredientesParam!);
-
-
-
-        }
-    }
-
-    //Parte de cloudinary
-    const cloudinaryService = new CloudinaryService();
-
-    const [file, setFile] = useState<File | null>(null);
-
-    const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-        const selectedFile = e.target.files && e.target.files[0];
-        if (selectedFile) {
-            setFile(selectedFile);
-        }
-    };
-
-    useEffect(() => {
-
-        if (estado) {
-            cargarDatos();
-        }
-
-    }, [datos, estado])
-
-    useEffect(() => {
-
-        if (botonManufacturado !== productoSelect.esManufacturado) {
-
-            setBotonManufacturado(productoSelect.esManufacturado);
-        }
-
-        if (datos) {
-            setCategoriaElegida(datos.categoriaProducto);
-        } else {
-            setCategoriaElegida(productoSelect.categoriaProducto);
-        }
-
-
-        if (!ingredientesGuardados) {
-            getIngredientes();
-        }
-
-    }, [productoSelect])
-
-<<<<<<< HEAD
-    const getIngredientes = async () => {
-        await productoService.getIngredientes(productoSelect.id!).then((data) => setIngredientesProducto(castIngredientesIds(data)));
-=======
-    const getIngredientes = async() => {
-        await productoService.getIngredientes(productoSelect.id!, rol).then((data) => setIngredientesProducto(castIngredientesIds(data)));
->>>>>>> cd3e269 (Roles en servicios y delivery agregado)
-        setIngredientesGuardados(true);
-
-    }
+    //ESTADOS PARA EL COMPONENTE
+    const [state, setState] = useState<State>({
+        productoSelect: new Producto(), //Producto a modificar y guardar
+        botonManufacturado: true, //Estado de manufacturacion del producto
+        ingredientesProducto: [], //Ingredientes pertenecientes al producto
+        modalIngr: false, //Estado de vista de modal incluir ingrediente
+        ingredientesGuardados: false, //Bandera para guardado de ingredientes
+      });
 
 
     //CASTEAR INGREDIENTES A SOLO ATRIBUTOS ID
@@ -149,103 +71,132 @@ const ModalCreacionProd: React.FC<ProdFormProps> = ({ estado, cambiarEstado, cat
         return (castIngredientes);
     }
 
-    const handleCancelling = async () => {
-        await setIngredientesProducto([]);
-        console.log("Ingredientes que deberian haber sido eliminador: ");
-        ingredientesProducto.forEach(ing => {
-            console.log(ing);
-        });
 
-        cambiarEstado(!estado);
-        setIngredientesGuardados(false);
+      /*
+            SETTERS
+      */
+    const setBotonManufacturado = async (value: boolean) => {
+        await setState((prevState) => ({
+            ...prevState,
+            botonManufacturado: value,
+          }));
+    };
+
+    const setIngredientesProducto = async (value: IngredienteDeProducto[]) =>{
+        await setState((prevState) => ({
+            ...prevState,
+            ingredientesProducto: value
+        }));
     }
 
+    const handleChangeProducto = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const { name, value } = e.target;
+        setState((prevState) => ({
+          ...prevState,
+          productoSelect: {
+            ...prevState.productoSelect,
+            [name]: value,
+          },
+        }));
+      };
+      
+      const handleChangeProductoArea = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+        const { name, value } = e.target;
+        setState((prevState) => ({
+          ...prevState,
+          productoSelect: {
+            ...prevState.productoSelect,
+            [name]: value,
+          },
+        }));
+      };
+      
 
-    const crearProducto = async () => {
+      const cambiarModalIngr = (value: boolean) => {
+        setState((prevState) => ({
+            ...prevState,
+            modalIngr: value
+        }));
+      };
+    //----------------------------------------------------------------
 
-        // console.log(productoSelect);
-        //console.log(JSON.stringify(productoSelect));
-        //console.log(productoSelect.tiempoCocina);
+    const handleFormSubmit = async () => {
 
-        ingredientesProducto.forEach((ing) => {
-            console.log(JSON.stringify(ing)); // This will log each number in the array
-        });
-
-        await productoService.crearEntity(productoSelect, ingredientesProducto, rol);
-        setIngredientesProducto([]);
-        setIngredientesGuardados(false);
-
-
-    }
-
-    const updateProducto = async () => {
-
-        await productoService.actualizarEntity(productoSelect, ingredientesProducto, rol);
-        setIngredientesProducto([]);
-        setIngredientesGuardados(false);
-
-    }
-
-    //------------------ CAMBIO DE CATEGORIA -----------------
-    const categoriaCambio = (id: string) => {
-
-        const selectedCategoryId = parseInt(id, 10); // Parse the selected value to an integer
-        const selectedCategory = categorias.find((cat) => cat.id === selectedCategoryId);
-        console.log(JSON.stringify(selectedCategory));
-        return selectedCategory;
-
-    }
-
-    // ------------------- CALCULAR COSTOS ----------------------------
-    const calcularCosto = () => {
-        var costo: number = 0;
-<<<<<<< HEAD
-=======
-        
-        ingredientesProducto.forEach(async (ing) =>{
-            costo += ing.cantidad * await ingredienteService.getCosto(ing, rol);
-          }); 
->>>>>>> cd3e269 (Roles en servicios y delivery agregado)
-
-        ingredientesProducto.forEach(async (ing) => {
-            costo += ing.cantidad * await ingredienteService.getCosto(ing);
-        });
-
-        return costo;
-    }
-
-
-
-    const handleFormSubmit = () => {
-
-        setModalIngr(true);
+        //setModalIngr(true);
+        await setState((prevState) => ({
+            ...prevState,
+            modalIngr: true
+        }));
         return false; // Prevent the default form submission behavior
     };
 
-    const handleTimeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setSelectedTime(event.target.value);
-        setProductoSelect({ ...productoSelect, tiempoCocina: (event.target.value) })
+      //Cargar los datos que pueden venir para edicion
+    const cargarDatos = async () => {
+        if (datos !== undefined) {
+            await setState((prevState) => ({
+                ...prevState,
+                productoSelect: { ...datos },
+              }));
+        }
+    }
+
+    const getIngredientes = async() => {
+        await productoService.getIngredientes(state.productoSelect.id!, rol).then((data) => setIngredientesProducto(castIngredientesIds(data)));
+        await setState((prevState) => ({
+            ...prevState,
+            ingredientesGuardados: true
+        }));
+
+    }
+
+    //Parte de cloudinary
+    const cloudinaryService = new CloudinaryService();
+
+    const [file, setFile] = useState<File | null>(null);
+
+    const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+        const selectedFile = e.target.files && e.target.files[0];
+        if (selectedFile) {
+            setFile(selectedFile);
+        }
     };
 
+    //Seteo de costos
+    const calcularCosto = async () => {
+        var costo = 0;
+      
+        // Use Promise.all to wait for all asynchronous calls to complete
+        await Promise.all(
+          state.ingredientesProducto.map(async (ing) => {
+
+            console.log("ingrediente pasado a costo: " + JSON.stringify(ing));
+            const costoIngrediente = await ingredienteService.getCosto(ing, rol);
+            costo += costoIngrediente;
+            
+          })
+        );
+        console.log("COSTO: " + JSON.stringify(costo));
+        return costo;
+      };
 
 
-    if (/*datos === undefined ||*/ categorias === undefined) {
+    useEffect(() => {
+        if(estado) {
+            cargarDatos();
+        }
 
-        return (
-            <>
-                {estado &&
-                    <h1>LOADING!</h1>
-                }
-            </>
-        )
-    } else if (categorias === undefined) {
+    }, [datos, estado]);
+
+
+    //si las categorias aun no han cargado...
+    if (categorias === undefined || categorias.length === 0) {
         return (
             <>
                 {estado &&
                     <div>
                         <div className="overlay">
-                            <div className="container my-5 contenedorModal" style={{ borderRadius: "25px", backgroundColor: "#f99132", color: "white" }}>
-                                <div className="" style={{ textAlign: "center" }}>
+                            <div className="container my-5 contenedorModal containermain">
+                                <div className="center-align">
 
                                     <h1>¡DEBE CREAR CATEGORIAS PRIMERO!</h1>
 
@@ -257,59 +208,54 @@ const ModalCreacionProd: React.FC<ProdFormProps> = ({ estado, cambiarEstado, cat
         )
     }
 
-
-
-
-    return (
-        <>
-            <ModalAgregarIngrediente estado={modalIngr}
-                cambiarEstado={setModalIngr} ingredientesList={ingredientesProducto}
+    return(
+        <div>
+            <ModalAgregarIngrediente estado={state.modalIngr}
+                cambiarEstado={cambiarModalIngr} ingredientesList={state.ingredientesProducto}
                 setIngredientesList={setIngredientesProducto} cambiarEstadoFormProd={cambiarEstado} />
-            {estado && !modalIngr /*&& productoSelect !== undefined*/ &&
+            {estado && !state.modalIngr  &&
 
 
                 <div className="overlay">
                     <div className="container my-5 contenedorModal modaloverflow" style={{ borderRadius: "25px", backgroundColor: "#f99132", color: "white", maxWidth: "50%" }}>
-                        <div className="childmodaloverflow" style={{ textAlign: "center", alignContent: "center" }}>
+                        <div className="childmodaloverflow center-align" style={{ alignContent: "center", overflowY: 'auto' }}>
                             <form onSubmit={(e) => {
                                 e.preventDefault()
 
                             }}>
                                 <h3 className="mb-3">Nuevo Producto</h3>
 
-                                <div className="container" style={{ display: "flex", justifyContent: "space-evenly" }}>
+                                <div className="container d-flex justify-content-around">
                                     <div className="mb-3" style={{ maxWidth: "50%" }}>
                                         <label htmlFor="nombre" className="form-label">Nombre</label>
-                                        <input style={{ borderRadius: "25px", backgroundColor: "#FDA859", color: "white" }} type="text" className="form-control" id="nombre" name="nombre" required value={productoSelect.denominacion.toString()} onChange={
-                                            handleSelectChange
-                                        } />
+                                        <input className="form-input form-control" type="text" id="nombre" name="denominacion" required value={state.productoSelect.denominacion} onChange={handleChangeProducto} />
                                     </div>
                                 </div>
-                                <div className="container" style={{ display: "flex", justifyContent: "space-evenly" }}>
-                                    <div style={{ display: "flex" }}>
+                                <div className="container d-flex justify-content-around">
+                                    <div className="d-flex">
                                         <div className="mb-3">
                                             <label htmlFor="stockActual" className="form-label">Costo Total</label>
-                                            <input type="number" min="0" style={{ borderRadius: "25px", backgroundColor: "#FDA859", color: "white" }} className="form-control me-2" id="precioCompra" name="precioCompra" required value={productoSelect.costoTotal.toString()} onChange={e => { Productonuevo.costoTotal = (+e.target.value); setProductoSelect({ ...productoSelect, costoTotal: (+e.target.value) }) }} />
+                                            <input type="number" min="0"  className="form-control me-2 form-input" id="precioCompra" name="costoTotal" required value={state.productoSelect.costoTotal.toString()} onChange={handleChangeProducto} />
                                         </div>
                                         <div className="mb-3">
                                             <label htmlFor="stockActual" className="form-label">Precio Total</label>
-                                            <input type="number" min="0" style={{ borderRadius: "25px", backgroundColor: "#FDA859", color: "white" }} className="form-control ms-2" id="stockActual" name="stockActual" required value={productoSelect.precioTotal} onChange={e => { Productonuevo.precioTotal = (+e.target.value); setProductoSelect({ ...productoSelect, precioTotal: (+e.target.value) }) }} />
+                                            <input type="number" min="0"  className="form-control ms-2 form-input" id="precioTotal" name="precioTotal" required value={state.productoSelect.precioTotal} onChange={handleChangeProducto} />
                                         </div>
                                     </div>
                                 </div>
 
 
-                                <div className="container" style={{ display: "flex", justifyContent: "space-evenly" }}>
-                                    <div className="text-center" style={{ display: "flex" }}>
+                                <div className="container d-flex justify-content-around">
+                                    <div className="text-center d-flex">
                                         <div className="mb-3">
                                             <label htmlFor="stockMinimo" className="form-label">Descripcion</label>
-                                            <textarea style={{ borderRadius: "25px", backgroundColor: "#FDA859", color: "white" }} className="form-control me-2" id="stockMin" name="stockMin" required value={productoSelect.descripcion.toString()} onChange={e => { Productonuevo.descripcion = (e.target.value); setProductoSelect({ ...productoSelect, descripcion: (e.target.value) }) }} />
+                                            <textarea className="form-control me-2 form-input" id="descripcion" name="descripcion" required value={state.productoSelect.descripcion.toString()} onChange={handleChangeProductoArea} />
                                         </div>
 
-                                        {botonManufacturado && (productoSelect.esManufacturado || datos?.esManufacturado) &&
+                                        {state.botonManufacturado && (state.productoSelect.esManufacturado ) &&
                                             <div className="mb-3">
                                                 <label htmlFor="stockMaximo" className="form-label">Receta</label>
-                                                <textarea style={{ borderRadius: "25px", backgroundColor: "#FDA859", color: "white" }} className="form-control ms-2" id="stockMax" name="stockMax" required value={productoSelect.receta?.toString()} onChange={e => { Productonuevo.receta = (e.target.value); setProductoSelect({ ...productoSelect, receta: (e.target.value) }) }} />
+                                                <textarea className="form-control ms-2 form-input" id="receta" name="receta" required value={state.productoSelect.receta?.toString()} onChange={handleChangeProductoArea} />
 
                                             </div>
                                         }
@@ -317,19 +263,19 @@ const ModalCreacionProd: React.FC<ProdFormProps> = ({ estado, cambiarEstado, cat
                                     </div>
                                 </div>
 
-                                <div className="container" style={{ display: "flex", justifyContent: "space-evenly" }}>
-                                    <div className="text-center" style={{ display: "flex" }}>
+                                <div className="container d-flex justify-content-around">
+                                    <div className="text-center d-flex">
 
-                                        {botonManufacturado && (productoSelect.esManufacturado || datos?.esManufacturado) &&
+                                        {state.botonManufacturado && (state.productoSelect.esManufacturado) &&
                                             <div className="mb-3">
 
-                                                <label htmlFor="stockMinimo" className="form-label">Tiempo de Preparacion</label>
-                                                <input id="settime" type="time" step="1" style={{ borderRadius: "25px", backgroundColor: "#FDA859", color: "white" }} className="form-control" value={selectedTime} onChange={handleTimeChange} />
+                                                <label htmlFor="tiempo-preparacion" className="form-label">Tiempo de Preparacion</label>
+                                                <input id="settime" type="time" step="1"  className="form-control form-input" name="tiempoCocina" value={state.productoSelect.tiempoCocina} onChange={handleChangeProducto} />
                                             </div>
                                         }
                                         <div className="mb-3">
                                             <label htmlFor="stockMaximo" className="form-label">¿Es manufacturado?</label>
-                                            <GrupoBotones estado={botonManufacturado}
+                                            <GrupoBotones estado={state.botonManufacturado}
                                                 cambiarEstado={setBotonManufacturado}></GrupoBotones>
                                         </div>
 
@@ -357,12 +303,12 @@ const ModalCreacionProd: React.FC<ProdFormProps> = ({ estado, cambiarEstado, cat
 
 
 
-                                <div className="container" style={{ display: "flex", justifyContent: "space-evenly" }}>
-                                    <div className="mb-4" style={{ display: "flex", maxWidth: "70%", maxHeight: "40%", alignItems: "center", justifyContent: "center" }}>
+                                <div className="container d-flex justify-content-around">
+                                    <div className="mb-4 d-flex justify-content-center" style={{ maxWidth: "70%", maxHeight: "40%", alignItems: "center" }}>
                                         <label htmlFor="rubro" className="form-label">Categoria</label>
-                                        <select style={{ borderRadius: "25px", backgroundColor: "#FDA859", color: "white" }} className="form-select" name="categorias" onChange={e => { setProductoSelect({ ...productoSelect, categoriaProducto: categoriaCambio(e.target.value)! }); setCategoriaElegida(categoriaCambio(e.target.value)); Productonuevo.categoriaProducto = categoriaCambio(e.target.value)!; console.log(JSON.stringify(categoriaCambio(e.target.value))) }}>
+                                        <select className="form-select select-style" name="categoriaProducto" onChange={e => { }}>
 
-                                            <option selected value={Productonuevo.categoriaProducto.id}>{Productonuevo.categoriaProducto.denominacion}</option>
+                                            <option selected value={state.productoSelect.categoriaProducto.id}>{state.productoSelect.categoriaProducto.denominacion}</option>
                                             {/* {datos ?
                                                 categorias.map(cat => (
                                                         cat.denominacion !== Productonuevo.categoriaProducto.denominacion &&
@@ -375,7 +321,7 @@ const ModalCreacionProd: React.FC<ProdFormProps> = ({ estado, cambiarEstado, cat
                                                 ))
                                             } */}
                                             {categorias.map(cat => (
-                                                cat.denominacion !== Productonuevo.categoriaProducto.denominacion &&
+                                                cat.denominacion !== state.productoSelect.categoriaProducto.denominacion &&
                                                 <option value={cat.id}>{cat.denominacion}</option>
                                             ))}
 
@@ -392,76 +338,57 @@ const ModalCreacionProd: React.FC<ProdFormProps> = ({ estado, cambiarEstado, cat
 
                                 <button className="btn btn-danger mx-3" onClick={() => {
                                     setIngredientesProducto([]);
-                                    handleCancelling();
+                                    //handleCancelling();
                                 }}><i className="material-icons" style={{ fontSize: "30px", cursor: "pointer" }}>highlight_off</i></button>
 
                                 <button type="submit" className="btn" style={{ backgroundColor: "#864e1b", color: "white" }} onClick={async (event) => {
 
                                     event.preventDefault();
 
-                                    productoSelect.esManufacturado = botonManufacturado;
-
-
-
-                                    if (categoriaElegida !== undefined && productoSelect.categoriaProducto.id !== 0 && (ingredientesProducto?.length > 0 || productoSelect.esManufacturado == false)) {
-                                        console.log("Entro en la primera condicion")
-                                        // setProductoSelect({...productoSelect, tiempoCocina: selectedTime});
-                                        setCategoriaElegida(productoSelect.categoriaProducto);
-
-                                        if (((productoSelect.receta != '' && productoSelect.tiempoCocina != '') || productoSelect.esManufacturado == false) && categoriaElegida.denominacion !== "") {
-
-                                            var prodId = productoSelect.id;
-                                            console.log("Entro en la segunda condicion")
-
-                                            console.log("CATEGORIA " + JSON.stringify(categoriaElegida));
-                                            Productonuevo.categoriaProducto = categoriaElegida!;
-                                            productoSelect.categoriaProducto = categoriaElegida!;
-
-
-                                            productoSelect.costoTotal = calcularCosto();
+                                    
 
                                             if (file) {
                                                 const urlImagen = await cloudinaryService.uploadImage(file);
                                                 console.log(urlImagen);
                                                 if (urlImagen) {
-                                                    productoSelect.imagen = urlImagen
+                                                    state.productoSelect.imagen = urlImagen
                                                 }
                                                 setFile(null);
                                             }
 
-                                            if (prodId !== 0) {
+                                            if (state.productoSelect.id !== 0 && state.productoSelect.id !== null) {
 
                                                 console.log("Entro a actualizar el producto");
                                                 //pasar los datos guardados al metodo de update
-                                                updateProducto();
+                                                //updateProducto();
                                                 cambiarEstado(!estado);
                                                 window.location.reload();
 
                                             } else {
                                                 console.log("Entro a crear el producto");
-                                                crearProducto();
+                                                //crearProducto();
                                                 cambiarEstado(!estado);
-                                                //window.location.reload();
+                                                window.location.reload();
 
                                             }
                                             setIngredientesProducto([]);
 
                                         }
                                     }
-                                }}> <i className="material-icons" style={{ fontSize: "30px", cursor: "pointer" }}>check</i></button>
+                                > <i className="material-icons" style={{ fontSize: "30px", cursor: "pointer" }}>check</i></button>
                             </form>
-                            {botonManufacturado /*&& (ingredientesProducto.length != 0 || productoSelect.id == 0)*/ &&
+                            {state.botonManufacturado &&
                                 <div>
                                     {datos == undefined &&
-                                        <TablaIngredientesMostrar ingredientesProd={ingredientesProducto} setIngredientesProd={setIngredientesProducto} edicion={true} />
+                                        <TablaIngredientesMostrar ingredientesProd={state.ingredientesProducto} setIngredientesProd={setIngredientesProducto} edicion={true} />
                                     }
                                     {
                                         datos != undefined &&
-                                        <TablaIngredientesMostrar productoId={productoSelect.id!} ingredientesProd={ingredientesProducto} setIngredientesProd={setIngredientesProducto} edicion={true} />
+                                        <TablaIngredientesMostrar productoId={state.productoSelect.id!} ingredientesProd={state.ingredientesProducto} setIngredientesProd={setIngredientesProducto} edicion={true} />
                                     }
 
-                                    <div className="container" style={{ display: "flex", justifyContent: "space-evenly" }}>
-                                        <div className="mt-4" style={{ display: "flex", maxWidth: "70%", maxHeight: "40%", alignItems: "center", justifyContent: "center" }}>
+                                    <div className="container d-flex justify-content-around">
+                                        <div className="mt-4 d-flex justify-content-center" style={{ maxWidth: "70%", maxHeight: "40%", alignItems: "center"}}>
 
                                             <button className="btn btn-success" onClick={() => handleFormSubmit()}>Agregar Ingrediente</button>
                                         </div>
@@ -472,11 +399,8 @@ const ModalCreacionProd: React.FC<ProdFormProps> = ({ estado, cambiarEstado, cat
                     </div>
                 </div>
             }
-
-        </>
-
+        </div>
     );
-
 }
 
 export default ModalCreacionProd;

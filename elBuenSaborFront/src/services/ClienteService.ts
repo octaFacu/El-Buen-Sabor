@@ -32,11 +32,7 @@ export class ClienteService extends ServiceBasicos {
   }
 
 
-<<<<<<< HEAD
-  async getPedidosUsuario(clienteId: number, page: number = 0, size: number = 4, fechaInicio: Date | null = null, fechaFin: Date | null = null): Promise<PageProyeccionHistorialPedido<ProyeccionPedidoUsuario>> {
-=======
   async getPedidosUsuario(clienteId: number, page: number = 0, size: number = 1, fechaInicio: Date | null = null, fechaFin: Date | null = null, rol: string): Promise<PageProyeccionHistorialPedido<ProyeccionPedidoUsuario>> {
->>>>>>> 112eeb8 (Envio de roles en requests)
     try {
       let parametros = `?page=${page}&size=${size}`;
       if (fechaInicio !== null && fechaFin !== null) {

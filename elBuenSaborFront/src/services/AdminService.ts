@@ -68,11 +68,17 @@ export class AdminService extends ServiceBasicos {
     }
   }
 
-  async traerEmpleado(page: number = 0, size: number = 3) {
+  async traerEmpleado(page: number = 0, size: number = 3, rol: string) {
     try {
       const parametros = `?page=${page}&size=${size}`;
       const response = await fetch(
-        this.urlEmpleado + `/traerEmpleados${parametros}`
+        this.urlEmpleado + `/traerEmpleados${parametros}`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            'X-Role': rol
+          },
+        }
       );
       const reponseJSON = await response.json();
       if (!response.ok) {

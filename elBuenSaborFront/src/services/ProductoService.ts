@@ -19,7 +19,7 @@ export class ProductoService extends ServiceBasicos {
   async getIngredientes(productoid: Number, rol: string) {
 
     try {
-
+      console.log("ROL: "+rol);
       let res = await fetch(this.url + "/ingredientes/" + productoid, {
         method: "GET",
         headers: {
@@ -29,6 +29,7 @@ export class ProductoService extends ServiceBasicos {
       })
 
       if (!res.ok) {
+        console.log(res)
         throw { status: res.status, statusText: res.statusText }
       }
 

@@ -42,7 +42,7 @@ export const CategoriaProductosABM = () => {
     return (
 
         <ListaCartasABM 
-        titulo="Rubro de ingredientes"
+        titulo="Categorias de Productos"
         estado={estadoModal}
         setEstadoModal={setEstadoModal}
         recetDatos={recetDatos}

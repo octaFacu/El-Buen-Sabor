@@ -53,7 +53,7 @@ export const ProductosABM = () => {
     }
     
 
-    if(productos.length === 0){
+    if(productos.length === 0 || rol == null){
         return <div style={{textAlign: "center"}}>
             Loading...
         </div>
@@ -66,18 +66,6 @@ export const ProductosABM = () => {
 
     return (
         <div>
-
-            {/* <GlobalContext.Consumer>
-                {(context) => (
-                <div>
-                    {context.ingredientes.map((ingrediente) => (
-                    <div key={ingrediente.id.toString()}>{ingrediente.nombre} {ingrediente.precioCompra.toString()} {ingrediente.unidadmedida.denominacion} {ingrediente.categoriaIngrediente.denominacion}</div>
-                    ))}
-                </div>
-                )}
-            </GlobalContext.Consumer> */}
-
-
         
         <ListaCartasABM
         titulo="Productos"

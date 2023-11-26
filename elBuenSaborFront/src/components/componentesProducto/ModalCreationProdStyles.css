@@ -1,0 +1,15 @@
+.containermain{
+    border-radius: 25px,;
+    background-color: #f99132;
+    color: white;
+}
+
+.center-align{
+    text-align: center;
+}
+
+.form-input{
+    border-radius: "25px";
+    background-color: #FDA859;
+    color: white
+}

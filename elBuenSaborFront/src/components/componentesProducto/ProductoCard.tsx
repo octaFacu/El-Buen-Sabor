@@ -56,16 +56,6 @@ const ProductoCard: React.FunctionComponent<ProductoCardProps> = ({ producto, ca
                 ><i className="material-icons" style={{ fontSize: "30px", cursor: "pointer", color: "white" }}>create</i></button>
 
                 {/* <button className={`btn btn-sm ${botonActivo ? "btn-danger" : "btn-success"}`} onClick={async() => { */}
-<<<<<<< HEAD
-                <button className="btn btn-sm" style={{ backgroundColor: "#864e1b", color: "white" }}
-                    onClick={async () => {
-                        setbotonActivo(!botonActivo)
-
-                        let productoNuevo: Producto = producto;
-                        productoNuevo.activo = !(producto.activo);
-
-                        await productoService.actualizarEntityActivo(productoNuevo);
-=======
                 <button className="btn btn-sm" style={{backgroundColor: "#864e1b", color: "white"}} 
                 onClick={async() => { 
                     setbotonActivo(!botonActivo)
@@ -74,7 +64,6 @@ const ProductoCard: React.FunctionComponent<ProductoCardProps> = ({ producto, ca
                     productoNuevo.activo = !(producto.activo);
                    
                     await productoService.actualizarEntityActivo(productoNuevo, rol);
->>>>>>> cd3e269 (Roles en servicios y delivery agregado)
 
                     }}
                 >{botonActivo

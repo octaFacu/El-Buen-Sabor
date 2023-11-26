@@ -36,28 +36,26 @@ export class IngredientesService extends ServiceBasicos{
     async getCosto(ingrediente: IngredienteDeProducto, rol: string) {
 
         try {
-
             let res = await fetch(this.url + "/costo", {
-                method: "POST",
-                headers: {
-                  "Content-Type": "application/json",
-                  'X-Role': rol
-                },
-                body: JSON.stringify(ingrediente),
-              });
-        
-
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                'X-Role': rol
+              },
+              body: JSON.stringify(ingrediente),
+            });
+          
             if (!res.ok) {
-                throw { status: res.status, statusText: res.statusText }
+              throw { status: res.status, statusText: res.statusText };
             }
-
-            console.log("COSTO "+res.json())
-            let jsonRes = await res.json()
-            return jsonRes
-
-        } catch (err: any) {
+          
+            let jsonRes = await res.json();
+            console.log("COSTO ", jsonRes); // Log the resolved value, not the Promise
+            return jsonRes;
+          } catch (err: any) {
             console.log(`Error ${err.status}: ${err.statusText}`);
-        }
+          }
+          
     }
 
 }

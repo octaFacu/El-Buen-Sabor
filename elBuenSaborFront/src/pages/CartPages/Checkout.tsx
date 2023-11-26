@@ -16,6 +16,7 @@ import { pedidoService } from "../../services/PedidoService";
 import ModalEdicionDireccion from "../../components/componentesUsuarios/modales/ModalEdicionDireccion";
 import { UsuarioService } from "../../services/UsuarioService";
 import "../pagesStyles/checkout.css"
+import { useUnidadContext } from "../../context/GlobalContext";
 
 
 interface CheckoutProps {
@@ -28,6 +29,7 @@ const Checkout: FC<CheckoutProps> = () => {
     const direccionSrv = new DireccionService();
     const clienteSrv = new ClienteService();
     const usuarioSrv = new UsuarioService();
+    const { rol } = useUnidadContext();
 
     //Consigo el usuario para conseguir sus direcciones y metodos de pago
     const { user } = useAuth0();
@@ -52,12 +54,14 @@ const Checkout: FC<CheckoutProps> = () => {
         nombre: "",
         apellido: "",
         telefono: "",
-        activo: true
+        email: "",
+        activo: true,
+        
     });
     const [direccionPersist, setDireccionPersist] = useState<Direccion>();
 
     const fetchUsuario = async (userId: string) => {
-        const data = await usuarioSrv.getOne(userId)
+        const data = await usuarioSrv.getOne(userId, rol)
         await setUsuario(data);
     }
 
@@ -100,13 +104,13 @@ const Checkout: FC<CheckoutProps> = () => {
     //Cargar las direcciones del usuario logueado
     const [direcciones, setDirecciones] = useState<Direccion[]>([]);
     const fetchDireccionesUsuario = async (userId: string) => {
-        const data = await direccionSrv.getDireccionesByusuarioId(userId)
+        const data = await direccionSrv.getDireccionesByusuarioId(userId, rol)
         await setDirecciones(data);
     }
 
     //Trae el cliente y lo asigna al pedido
     const fetchCliente = async (userId: string) => {
-        const data: Cliente = await clienteSrv.getClienteByUsuarioId(userId)
+        const data: Cliente = await clienteSrv.getClienteByUsuarioId(userId, rol)
 
         if (data) {
             setPedido((prevPedid: Pedido) => ({

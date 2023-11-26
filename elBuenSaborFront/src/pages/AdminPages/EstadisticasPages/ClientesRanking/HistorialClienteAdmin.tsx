@@ -5,11 +5,13 @@ import CardHistorialPedidos from '../../../../components/componentesUsuarios/Car
 import { PageProyeccionHistorialPedido } from '../../../../context/interfaces/Proyecciones/ProyeccionHistorialPedidoCliente';
 import Paginacion from '../../../../components/genericos/Paginacion';
 import { ClienteService } from '../../../../services/ClienteService';
+import { useUnidadContext } from '../../../../context/GlobalContext';
 
 
 
 export default function HistorialClienteAdmin() {
   const navigate = useNavigate();
+  const { rol } = useUnidadContext();
 
   const { clienteId } = useParams();
   const [historial, setHistorial] = useState<PageProyeccionHistorialPedido<ProyeccionPedidoUsuario>>();
@@ -27,7 +29,7 @@ export default function HistorialClienteAdmin() {
           pageNumber,
           1,
           startDate,
-          endDate
+          endDate, rol
         );
 
         setHistorial(historialFiltrado);
@@ -35,7 +37,11 @@ export default function HistorialClienteAdmin() {
         
         const historial = await servicioPedido.getPedidosUsuario(
           parseInt(clienteId ?? '0'),
-          pageNumber
+          pageNumber,
+          undefined,
+          null,
+          null,    
+          rol
         );
         setHistorial(historial);
       }

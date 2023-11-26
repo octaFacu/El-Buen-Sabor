@@ -60,7 +60,7 @@ const CategoriaIngrABM = () => {
     return (
 
         <ListaCartasABM
-            titulo="Rubro de ingredientes"
+            titulo="Categorias de ingredientes"
             estado={estadoModal}
             setEstadoModal={setEstadoModal}
             recetDatos={recetDatos}

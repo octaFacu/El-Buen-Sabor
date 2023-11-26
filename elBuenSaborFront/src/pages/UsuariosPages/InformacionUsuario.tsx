@@ -8,9 +8,11 @@ import {useAuth0} from '@auth0/auth0-react'
 import { ServiceBasicos } from "../../services/ServiceBasicos";
 import { Usuario } from "../../context/interfaces/interfaces";
 import PageLoader from "../../components/pageLoader/PageLoader";
+import { useUnidadContext } from "../../context/GlobalContext";
 
 export default function InformacionUsuario() {
   const [mostrarCarta, setMostrarCarta] = useState(false);
+  const { rol } = useUnidadContext();
   const [boton, setBoton] = useState<number | null>(null);
   const [usuario, setUsuario] = useState<Usuario>({
     id: "",
@@ -32,7 +34,7 @@ export default function InformacionUsuario() {
     const servicioUsuarios = new ServiceBasicos("usuario");
     try {
       const id = await traerId();
-      const usuarioGuardado = await servicioUsuarios.getOne(id);
+      const usuarioGuardado = await servicioUsuarios.getOne(id, rol);
       setUsuario(usuarioGuardado);
     } catch (error) {
       console.error(error);

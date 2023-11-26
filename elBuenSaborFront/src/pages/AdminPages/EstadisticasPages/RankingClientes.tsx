@@ -6,10 +6,12 @@ import '../../../css/estilosEstadistias.css'
 import Paginacion from '../../../components/genericos/Paginacion';
 import OrdenamientosClienteComponent from '../../../components/ComponentesRanking/ComponenteRankingCliente/OrdenamientosClienteComponent';
 import BotonExcelYAtrasComponent from '../../../components/ComponentesRanking/BotonExcelYAtrasComponent';
+import { useUnidadContext } from '../../../context/GlobalContext';
 
 
 export default function RankingClientes() {
 
+    const { rol } = useUnidadContext();
     const [page, setPage] = useState<number>(0);
     const [rankingCliente, setRankingCliente] = useState<PageProyeccionHistorialPedido<ProyeccionHistorialPedido>>();
     const servicioCliente = new ClienteService();
@@ -17,10 +19,11 @@ export default function RankingClientes() {
     const [direccion, setDireccion] = useState<string>("DESC");
     const [startDate, setStartDate] = useState<Date | null>(null);
     const [endDate, setEndDate] = useState<Date | null>(null); // 
+    
 
     const traerClientesConOrden = async (pageNumber: number) => {
         try {
-            const clientes = await servicioCliente.getRankingClientess(pageNumber, 3, orderBy, direccion, startDate, endDate);
+            const clientes = await servicioCliente.getRankingClientess(pageNumber, 3, orderBy, direccion, startDate, endDate, rol);
             setRankingCliente(clientes);
         } catch (error) {
             console.error(error);

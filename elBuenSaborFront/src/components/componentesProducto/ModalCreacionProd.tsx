@@ -1,4 +1,4 @@
-import { useContext, useEffect, useRef, useState } from "react"
+import { SelectHTMLAttributes, useContext, useEffect, useRef, useState } from "react"
 import "../../css/ventanaModal.css"
 import { Rubro } from "../compIngrediente/Rubro";
 import Producto from "../../context/interfaces/Producto";
@@ -19,6 +19,8 @@ interface State {
     ingredientesProducto: IngredienteDeProducto[];
     modalIngr: boolean;
     ingredientesGuardados: boolean;
+    idCategoria: number;
+    llamarGuardado: boolean;
   }
 
 interface ProdFormProps {
@@ -44,6 +46,8 @@ const ModalCreacionProd: React.FC<ProdFormProps> = ({ estado, cambiarEstado, cat
         ingredientesProducto: [], //Ingredientes pertenecientes al producto
         modalIngr: false, //Estado de vista de modal incluir ingrediente
         ingredientesGuardados: false, //Bandera para guardado de ingredientes
+        idCategoria: 0, //Id de la categoria de producto
+        llamarGuardado: false
       });
 
 
@@ -130,24 +134,158 @@ const ModalCreacionProd: React.FC<ProdFormProps> = ({ estado, cambiarEstado, cat
         return false; // Prevent the default form submission behavior
     };
 
+    //GUARDAR LOS PRODUCTOS
+
+    const crearProducto = async () => {
+
+        state.ingredientesProducto.forEach((ing) => {
+            console.log(JSON.stringify(ing)); // This will log each number in the array
+        });
+
+        await productoService.crearEntity(state.productoSelect, state.ingredientesProducto, rol);
+        setIngredientesProducto([]);
+        await setState((prevState) => ({
+            ...prevState,
+            ingredientesGuardados: false
+        }));
+
+
+    }
+
+    const updateProducto = async () => {
+
+        await productoService.actualizarEntity(state.productoSelect, state.ingredientesProducto, rol);
+        setIngredientesProducto([]);
+        await setState((prevState) => ({
+            ...prevState,
+            ingredientesGuardados: false
+        }));
+
+    }
+
+    //------------------------------------------------------------------
+
+
       //Cargar los datos que pueden venir para edicion
     const cargarDatos = async () => {
         if (datos !== undefined) {
             await setState((prevState) => ({
                 ...prevState,
-                productoSelect: { ...datos },
+                productoSelect: { ...datos! },
+                botonManufacturado: datos!.esManufacturado,
+                idCategoria: datos!.categoriaProducto.id!
               }));
+
+              if(!state.ingredientesGuardados){
+                setIngredientesProducto([]);
+
+              }
         }
     }
 
     const getIngredientes = async() => {
-        await productoService.getIngredientes(state.productoSelect.id!, rol).then((data) => setIngredientesProducto(castIngredientesIds(data)));
+        await productoService.getIngredientes(state.productoSelect.id!, rol).then((data) =>{
+            console.log(JSON.stringify(data));
+            setIngredientesProducto(castIngredientesIds(data));
+        })
         await setState((prevState) => ({
             ...prevState,
             ingredientesGuardados: true
         }));
 
     }
+
+
+    const handleSaving = async() => {
+        console.log("Entro a guardado... guardando imagen...");
+        await handleFileUpload();
+    
+        console.log("Buscando costo...");
+        var costo: number = await calcularCosto();
+
+        console.log("Entrando al seteo de categoria...");
+        console.log("Categorias: "+JSON.stringify(categorias));
+        var categoria = await categoriaCambio(state.idCategoria);
+
+        if(categoria != undefined){
+            
+            console.log("CATEGORIA ELEGIDA" + JSON.stringify(categoria));
+
+        // Use Promise.all to wait for both costo and categoria to resolve
+        await Promise.all([
+            setState((prevState) => ({
+                ...prevState,
+                productoSelect: {
+                    ...prevState.productoSelect,
+                    costoTotal: costo,
+                    categoriaProducto: categoria!
+                },
+                llamarGuardado: true
+            })),
+        ]);
+          
+
+        
+        }
+        
+    };
+
+    const callSave = async () => {
+        console.log("Antes de entrar al guardado...");
+        console.log("PRODUCTO DESPUES DE CATEGORIA Y COSTO: "+JSON.stringify(state.productoSelect));
+        if (state.productoSelect.id !== 0 && state.productoSelect.id !== null) {
+
+            updateProducto();
+            setIngredientesProducto([]);
+            
+            setState((prevState) => ({
+                ...prevState,
+                llamarGuardado: false
+            }))
+            //cambiarEstado(!estado);
+            //window.location.reload();
+
+        } else {
+            console.log("Entro a crear el producto");
+            console.log("PRODUCTO A CREAR: " + JSON.stringify(state.productoSelect))
+            crearProducto();
+            setIngredientesProducto([]);
+
+            setState((prevState) => ({
+                ...prevState,
+                llamarGuardado: false
+            }))
+            //cambiarEstado(!estado);
+            //window.location.reload();
+
+        }
+
+  
+    };
+
+
+    const handleFileUpload = async () => {
+        if (file) {
+          try {
+            const urlImagen = await cloudinaryService.uploadImage(file);
+            console.log(urlImagen);
+            if (urlImagen) {
+              setState((prevState) => ({
+                ...prevState,
+                productoSelect: {
+                  ...prevState.productoSelect,
+                  imagen: urlImagen,
+                },
+              }));
+            }
+          } catch (error) {
+            console.error("Error uploading image:", error);
+            // Handle the error as needed
+          } finally {
+            setFile(null); // Reset the file after upload, regardless of success or failure
+          }
+        }
+      };
 
     //Parte de cloudinary
     const cloudinaryService = new CloudinaryService();
@@ -179,6 +317,37 @@ const ModalCreacionProd: React.FC<ProdFormProps> = ({ estado, cambiarEstado, cat
         return costo;
       };
 
+      const handleCancelling = () => {
+
+        setIngredientesProducto([]);
+        cambiarEstado(!estado);
+        setState((prevState) => ({
+            ...prevState,
+            ingredientesGuardados: false
+        }));
+        datos = new Producto();
+    }
+
+
+    //------------------ CAMBIO DE CATEGORIA -----------------
+    const categoriaCambio = (id: number) => {
+
+        const selectedCategory = categorias.find((cat) => cat.id === id);
+        console.log(JSON.stringify(selectedCategory));
+        return selectedCategory;
+    
+    }
+
+    const handleCategoriaCambio = async(e: React.ChangeEvent<HTMLSelectElement>) => {
+        console.log("CAMBIANDO CATEGORIA, ID:"+JSON.stringify(e.target.value));
+
+        setState((prevState) => ({
+          ...prevState,
+          idCategoria: parseInt(e.target.value)
+        }));
+        
+    }
+
 
     useEffect(() => {
         if(estado) {
@@ -186,6 +355,18 @@ const ModalCreacionProd: React.FC<ProdFormProps> = ({ estado, cambiarEstado, cat
         }
 
     }, [datos, estado]);
+
+    useEffect(() => {
+        if (!state.ingredientesGuardados) {
+          getIngredientes();
+        }
+      }, [state.productoSelect, state.ingredientesGuardados]);
+
+      useEffect(() => {
+        if(state.llamarGuardado){
+            callSave();
+        }
+      }, [state.llamarGuardado]);
 
 
     //si las categorias aun no han cargado...
@@ -226,6 +407,7 @@ const ModalCreacionProd: React.FC<ProdFormProps> = ({ estado, cambiarEstado, cat
                                 <h3 className="mb-3">Nuevo Producto</h3>
 
                                 <div className="container d-flex justify-content-around">
+                                
                                     <div className="mb-3" style={{ maxWidth: "50%" }}>
                                         <label htmlFor="nombre" className="form-label">Nombre</label>
                                         <input className="form-input form-control" type="text" id="nombre" name="denominacion" required value={state.productoSelect.denominacion} onChange={handleChangeProducto} />
@@ -306,7 +488,7 @@ const ModalCreacionProd: React.FC<ProdFormProps> = ({ estado, cambiarEstado, cat
                                 <div className="container d-flex justify-content-around">
                                     <div className="mb-4 d-flex justify-content-center" style={{ maxWidth: "70%", maxHeight: "40%", alignItems: "center" }}>
                                         <label htmlFor="rubro" className="form-label">Categoria</label>
-                                        <select className="form-select select-style" name="categoriaProducto" onChange={e => { }}>
+                                        <select className="form-select select-style" name="categoriaProducto" onChange={handleCategoriaCambio}>
 
                                             <option selected value={state.productoSelect.categoriaProducto.id}>{state.productoSelect.categoriaProducto.denominacion}</option>
                                             {/* {datos ?
@@ -337,41 +519,13 @@ const ModalCreacionProd: React.FC<ProdFormProps> = ({ estado, cambiarEstado, cat
 
 
                                 <button className="btn btn-danger mx-3" onClick={() => {
-                                    setIngredientesProducto([]);
-                                    //handleCancelling();
+                                    handleCancelling();
                                 }}><i className="material-icons" style={{ fontSize: "30px", cursor: "pointer" }}>highlight_off</i></button>
 
                                 <button type="submit" className="btn" style={{ backgroundColor: "#864e1b", color: "white" }} onClick={async (event) => {
 
                                     event.preventDefault();
-
-                                    
-
-                                            if (file) {
-                                                const urlImagen = await cloudinaryService.uploadImage(file);
-                                                console.log(urlImagen);
-                                                if (urlImagen) {
-                                                    state.productoSelect.imagen = urlImagen
-                                                }
-                                                setFile(null);
-                                            }
-
-                                            if (state.productoSelect.id !== 0 && state.productoSelect.id !== null) {
-
-                                                console.log("Entro a actualizar el producto");
-                                                //pasar los datos guardados al metodo de update
-                                                //updateProducto();
-                                                cambiarEstado(!estado);
-                                                window.location.reload();
-
-                                            } else {
-                                                console.log("Entro a crear el producto");
-                                                //crearProducto();
-                                                cambiarEstado(!estado);
-                                                window.location.reload();
-
-                                            }
-                                            setIngredientesProducto([]);
+                                    handleSaving();
 
                                         }
                                     }

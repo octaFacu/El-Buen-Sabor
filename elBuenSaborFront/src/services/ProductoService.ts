@@ -295,11 +295,11 @@ export class ProductoService extends ServiceBasicos {
     if (nuevoProducto.esManufacturado === false) {
       nuevoProducto.receta = '';
       nuevoProducto.tiempoCocina = undefined;
-
+      ing = [];
     }
 
     try {
-      console.log(JSON.stringify(nuevoProducto));
+      console.log("ENTRANDO A CREAR METHOD SERVICE "+JSON.stringify(nuevoProducto));
       let res = await fetch(this.url, {
         method: "POST",
         headers: {

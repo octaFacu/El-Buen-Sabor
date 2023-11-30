@@ -121,8 +121,6 @@ export const ProductosABM = () => {
                 cambiarEstado={setEstadoModal}
 
                 datos={datos}
-                
-
                 categorias={categorias}
             />
             <ModalVistaDetalleProd producto= {datos} estadoVista={estadoModalVista} cambiarEstadoVista={setEstadoModalVista}/> 

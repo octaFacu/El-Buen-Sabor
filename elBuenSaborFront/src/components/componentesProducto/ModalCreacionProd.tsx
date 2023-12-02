@@ -184,6 +184,7 @@ const ModalCreacionProd: React.FC<ProdFormProps> = ({ estado, cambiarEstado, cat
     }
 
     const getIngredientes = async() => {
+        await setIngredientesProducto([]);
         await productoService.getIngredientes(state.productoSelect.id!, rol).then((data) =>{
             console.log(JSON.stringify(data));
             setIngredientesProducto(castIngredientesIds(data));
@@ -242,8 +243,8 @@ const ModalCreacionProd: React.FC<ProdFormProps> = ({ estado, cambiarEstado, cat
                 ...prevState,
                 llamarGuardado: false
             }))
-            //cambiarEstado(!estado);
-            //window.location.reload();
+            cambiarEstado(!estado);
+            window.location.reload();
 
         } else {
             console.log("Entro a crear el producto");
@@ -255,8 +256,8 @@ const ModalCreacionProd: React.FC<ProdFormProps> = ({ estado, cambiarEstado, cat
                 ...prevState,
                 llamarGuardado: false
             }))
-            //cambiarEstado(!estado);
-            //window.location.reload();
+            cambiarEstado(!estado);
+            window.location.reload();
 
         }
 
@@ -358,6 +359,8 @@ const ModalCreacionProd: React.FC<ProdFormProps> = ({ estado, cambiarEstado, cat
 
     useEffect(() => {
         if (!state.ingredientesGuardados) {
+
+        
           getIngredientes();
         }
       }, [state.productoSelect, state.ingredientesGuardados]);
@@ -398,13 +401,13 @@ const ModalCreacionProd: React.FC<ProdFormProps> = ({ estado, cambiarEstado, cat
 
 
                 <div className="overlay">
-                    <div className="container my-5 contenedorModal modaloverflow" style={{ borderRadius: "25px", backgroundColor: "#f99132", color: "white", maxWidth: "50%" }}>
-                        <div className="childmodaloverflow center-align" style={{ alignContent: "center", overflowY: 'auto' }}>
-                            <form onSubmit={(e) => {
+                    <div className="container my-5 contenedorModal modaloverflow modal-dialog-scrollable" style={{ borderRadius: "25px", backgroundColor: "#f99132", color: "white", maxWidth: "50%" }}>
+                        <div className="childmodaloverflow center-align" style={{ alignContent: "center", overflowY: 'auto', maxHeight: '650px' }}>
+                            <form className="text-center d-flex flex-column align-items-center" onSubmit={(e) => {
                                 e.preventDefault()
 
                             }}>
-                                <h3 className="mb-3">Nuevo Producto</h3>
+                                <h3 className="mb-3 ps-3 pe-3 rounded" style={{textAlign: "center", backgroundColor: "#864e1b", minWidth: "100%"}}>Nuevo Producto</h3>
 
                                 <div className="container d-flex justify-content-around">
                                 
@@ -517,7 +520,7 @@ const ModalCreacionProd: React.FC<ProdFormProps> = ({ estado, cambiarEstado, cat
 
 
 
-
+                                <div>
                                 <button className="btn btn-danger mx-3" onClick={() => {
                                     handleCancelling();
                                 }}><i className="material-icons" style={{ fontSize: "30px", cursor: "pointer" }}>highlight_off</i></button>
@@ -530,6 +533,7 @@ const ModalCreacionProd: React.FC<ProdFormProps> = ({ estado, cambiarEstado, cat
                                         }
                                     }
                                 > <i className="material-icons" style={{ fontSize: "30px", cursor: "pointer" }}>check</i></button>
+                                </div>
                             </form>
                             {state.botonManufacturado &&
                                 <div>

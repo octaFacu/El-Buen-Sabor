@@ -54,6 +54,7 @@ export class pedidoService extends ServiceBasicos {
 
 
 
+
 async getByDelivery(idDelivery: string, rol: string) {
 
   console.log("EL USUARIO DE DELIVERY QUE LE ESTOY PASANDO AL SERVICIO ES: "+ idDelivery);

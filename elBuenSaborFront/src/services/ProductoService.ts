@@ -73,26 +73,8 @@ export class ProductoService extends ServiceBasicos {
     }
   }
 
-  async getProductoXCategoria(id: number, rol: string) {
-    try {
-      let res = await fetch(this.url + "/filtroCategoria" + "?filter=" + id, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          'X-Role': rol
-        },
-      });
 
-      if (!res.ok) {
-        throw { status: res.status, statusText: res.statusText };
-      }
-
-      let jsonRes = await res.json();
-      return jsonRes;
-    } catch (err: any) {
-      console.log(`Error ${err.status}: ${err.statusText}`);
-    }
-  }
+ 
 
   async getProductoXFiltro(text: string, rol: string) {
     try {

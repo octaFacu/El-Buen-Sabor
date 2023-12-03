@@ -24,7 +24,7 @@ export default function PaginaPrincipalAdministrador() {
 
   return (
     <div className="container mx-auto">
-      <div className="card card-generica ancho-card">
+      <div className="card card-admin ">
         <div className="contenedor-tituloEstadistica text-white">
           <h3 className="card-title text-center">Pagina principal administrador</h3>
         </div>

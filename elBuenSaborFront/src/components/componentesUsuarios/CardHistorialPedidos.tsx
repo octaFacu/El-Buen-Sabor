@@ -25,7 +25,7 @@ export default function CardHistorialPedidos({historial}: Props) {
 
   return (
     <>
-    <div className="card card-cliente" onClick={()=>abrirModall(historial.pedido_id)} >
+    <div className="card card-pedidos" onClick={()=>abrirModall(historial.pedido_id)} >
       <div className="card-body d-md-block d-md-inline-flex justify-content-between text-white">
         <p className="card-text text-pantallaPequeña">{historial.es_envio ? "Envio" : "Retiro local"}</p>
         <p className="card-text text-pantallaPequeña">Cantidad de pedidos: {historial.total_pedidos}</p>

@@ -91,46 +91,51 @@ export default function MisDireccionesComponents({ usuario }: Props) {
   return (
     <div className="card card-direcciones mt-6">
       <div className="card-body scrollable-container">
+      <div className="card-header">
         <h1 className="card-title text-center">Direcciones</h1>
-        {direccionesActivas?.map((dir, index) => (
-          <div
-            className={`direccion-container d-flex align-items-center justify-content-between ${
-              index !== direccionesActivas.length - 1 ? "border-bottom pb-2 mb-2" : ""
-            }`}
-            key={dir.idDireccion}
-          >
-            <div className="d-flex align-items-center">
-              <i className="material-icons text-white ubicacion mr-2">
-                location_on
-              </i>
+      </div>        {direccionesActivas?.length === 0 ? (
+          <h1 className="text-center">No ha ingresado ninguna dirección</h1>
+        ) : (
+          direccionesActivas?.map((dir, index) => (
+            <div
+              className={`direccion-container d-flex align-items-center justify-content-between ${
+                index !== direccionesActivas.length - 1 ? "border-bottom pb-2 mb-2" : ""
+              }`}
+              key={dir.idDireccion}
+            >
+              <div className="d-flex align-items-center">
+                <i className="material-icons text-white ubicacion mr-2">
+                  location_on
+                </i>
+              </div>
+              <div className="direccion-texto">
+                {dir.pisoDpto === "" ? (
+                  <p>{dir.calle + " " + dir.nroCasa}</p>
+                ) : dir.nroCasa === null ? (
+                  <p>{dir.calle + " " + dir.pisoDpto}</p>
+                ) : (
+                  <p>
+                    {dir.calle + " " + dir.nroCasa + " piso: " + dir.pisoDpto}
+                  </p>
+                )}
+              </div>
+              <div className="contenedor-cel">
+                <button
+                  className="btn btn-color-direccion ml-2 btn-margen"
+                  onClick={() => abrirModalEdicion(dir.idDireccion)}
+                >
+                  <i className="material-icons text-white">edit</i>
+                </button>
+                <button
+                  className="btn btn-color-direccion  btn-margen"
+                  onClick={() => abrirModalConfirmacion(dir.idDireccion)}
+                >
+                  <i className="material-icons text-white">delete</i>
+                </button>
+              </div>
             </div>
-            <div className="direccion-texto">
-              {dir.pisoDpto === "" ? (
-                <p>{dir.calle + " " + dir.nroCasa}</p>
-              ) : dir.nroCasa === null ? (
-                <p>{dir.calle + " " + dir.pisoDpto}</p>
-              ) : (
-                <p>
-                  {dir.calle + " " + dir.nroCasa + " piso: " + dir.pisoDpto}
-                </p>
-              )}
-            </div>
-            <div className="contenedor-cel">
-              <button
-                className="btn btn-color-direccion ml-2 btn-margen"
-                onClick={() => abrirModalEdicion(dir.idDireccion)}
-              >
-                <i className="material-icons text-white">edit</i>
-              </button>
-              <button
-                className="btn btn-color-direccion  btn-margen"
-                onClick={() => abrirModalConfirmacion(dir.idDireccion)}
-              >
-                <i className="material-icons text-white">delete</i>
-              </button>
-            </div>
-          </div>
-        ))}
+          ))
+        )}
       </div>
       <div className="card-footer text-center">
         <button
@@ -156,4 +161,4 @@ export default function MisDireccionesComponents({ usuario }: Props) {
       )}
     </div>
   );
-};
+      }  

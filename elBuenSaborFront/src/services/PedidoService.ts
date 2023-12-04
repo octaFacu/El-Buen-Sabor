@@ -7,7 +7,7 @@ export class pedidoService extends ServiceBasicos {
     super("pedido");
   }
 
-  async getProductosPedido(pedidoId: number)  {
+  async getProductosPedido(pedidoId: number) {
     try {
       let res = await fetch(this.url + "/producto/" + pedidoId);
 
@@ -33,30 +33,25 @@ export class pedidoService extends ServiceBasicos {
       if (!res.ok) {
         throw { status: res.status, statusText: res.statusText };
       }
-      if (!res.ok) {
-        throw { status: res.status, statusText: res.statusText }
-      }
 
       let jsonRes = await res.json();
       return jsonRes;
-      
 
     } catch (err: any) {
       console.log(`Error ${err.status}: ${err.statusText}`);
     }
   }
 
-    async getProductosByPedido(idPedido: number) {
-    console.log("LOS PRODUCTOS DE ESTE PEDIDO: "  + idPedido);
+  async getProductosByPedido(idPedido: number) {
+    console.log("LOS PRODUCTOS DE ESTE PEDIDO: " + idPedido);
 
     try {
       let res = await fetch(this.url + "/productos/" + idPedido);
 
-     
       if (!res.ok) {
         throw { status: res.status, statusText: res.statusText };
       }
-     
+
       let jsonRes = await res.json();
       return jsonRes;
 
@@ -64,7 +59,7 @@ export class pedidoService extends ServiceBasicos {
       console.log(`Error ${err.status}: ${err.statusText}`);
     }
   }
-  
+
 
   async createPedidoAndPedidoHasProducto(pedido: RequestPedido) {
     try {

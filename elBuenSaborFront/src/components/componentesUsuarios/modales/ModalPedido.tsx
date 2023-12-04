@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
 import "./modal.css";
-import { ProyeccionProductosPedido } from "../../../context/interfaces/Proyecciones/ProyeccionPedidoUsuario";
 import { pedidoService } from "../../../services/PedidoService";
 import PdfFactura from "../../PDF/PdfFactura";
-
-
+import PedidoHasProductos from "../../../context/interfaces/PedidoHasProductos";
+import { ProductoParaPedido } from "../../../context/interfaces/interfaces";
+import { useNavigate } from "react-router-dom";
 
 interface Props {
   mostrarModal: boolean;
@@ -17,31 +17,50 @@ const ModalPedido: React.FC<Props> = ({
   cerrarModal,
   idPedido,
 }) => {
-  const [pedidoUsuario, setPedidoUsuario] =
-    useState<ProyeccionProductosPedido[]>();
+  const [pedidoUsuario, setPedidoUsuario] = useState<PedidoHasProductos[]>([]);
 
   if (!mostrarModal) {
     return null;
   }
 
   const servicioPedio = new pedidoService();
+  const navigate = useNavigate();
 
   const traerPedidos = async () => {
-    setPedidoUsuario(await servicioPedio.getProductosPedido(idPedido));
+    const productosPedido = await servicioPedio.getProductosByPedido(idPedido);
+    setPedidoUsuario(productosPedido)
   };
-  
-  const total = pedidoUsuario?.reduce(
-    (precio, actual) => precio + actual.precio_total,
-    0
-  );
 
   useEffect(() => {
-    
     traerPedidos();
   }, []);
 
+  const handleAddToCart = () => {
+
+    const carrito: ProductoParaPedido[] = [];
+
+    localStorage.setItem("carritoArreglo", "");
+
+    //Cargo la variable "carrito" con los prodcutos y sus cantidades para poder subirla al carrito del lolcalStorage
+    pedidoUsuario.forEach((elemento: PedidoHasProductos, index: number) => {
+
+      const pedidoParaCarrito: ProductoParaPedido = {
+        cantidad: elemento.cantidad,
+        producto: elemento.producto
+      };
+
+      carrito.push(pedidoParaCarrito)
+
+    });
+
+    localStorage.setItem("carritoArreglo", JSON.stringify(carrito));
+    cerrarModal();
+    navigate('/carrito');
+
+  }
+
   return (
-    <div className="modal modal-custom modal-overlay"  style={{ display: "block" }}>
+    <div className="modal modal-custom modal-overlay" style={{ display: "block" }}>
       <div className="modal-dialog d-flex align-items-center justify-content-center modal-dialog-centered ">
         <div className="modal-content card-modalPedido">
           <div className="modal-body text-center">
@@ -51,41 +70,41 @@ const ModalPedido: React.FC<Props> = ({
             </button>
           </div>
           <div className="modal-body">
-            {pedidoUsuario?.map((pedido) => {
-              return(
-              <div
-                key={pedido.pedido_id + pedido.producto_id}
-                className="pedido-item"
-              >
-                <div className="col-3">
-                  <div>
-                    <img src={pedido.imagen}  alt={pedido.denominacion} className="imagenes-pedidos-usuario"/>
+            {pedidoUsuario?.map((pedidoHasProd, index) => {
+              return (
+                <div
+                  key={index}
+                  className="pedido-item"
+                >
+                  <div className="col-3">
+                    <div>
+                      <img src={pedidoHasProd.producto.imagen} alt={pedidoHasProd.producto.denominacion} className="imagenes-pedidos-usuario" />
+                    </div>
+                  </div>
+                  <div className="col-6 centrado-denominacion">
+                    <span className="texto-blanco">{pedidoHasProd.producto.denominacion}</span>
+                  </div>
+                  <div className="col-3 contenedor-derecho">
+                    <div className="texto-blanco">
+                      <span className="separador">x{pedidoHasProd.cantidad}</span>
+                    </div>
+                    <div className="pedido-item-derecho texto-blanco">
+                      <span className="precio">${pedidoHasProd.producto.precioTotal * pedidoHasProd.cantidad}</span>
+                    </div>
                   </div>
                 </div>
-                <div className="col-6 centrado-denominacion">
-                  <span className="texto-blanco">{pedido.denominacion}</span>
-                </div>
-                <div className="col-3 contenedor-derecho">
-                  <div className="texto-blanco">
-                    <span className="separador">x{pedido.cantidad}</span>
-                  </div>
-                  <div className="pedido-item-derecho texto-blanco">
-                    <span className="precio">${pedido.precio_total}</span>
-                  </div>
-                </div>
-              </div>
               )
-        })}
+            })}
             <div className="d-flex justify-content-center texto-blanco mt-2">
-              <p>Total ${total}</p>
+              <p>Total actualizado ${ }</p>
             </div>
           </div>
           <div className="d-flex justify-content-center">
             <button className="btn modal-pedido" onClick={cerrarModal}>
               Cerrar
             </button>
-            <PdfFactura pedido_Id={idPedido}/>
-            <button className="btn modal-pedido" onClick={cerrarModal}>
+            <PdfFactura pedido_Id={idPedido} />
+            <button className="btn modal-pedido" onClick={handleAddToCart}>
               Añadir al carrito
             </button>
           </div>

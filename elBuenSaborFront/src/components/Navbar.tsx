@@ -1,19 +1,39 @@
 import { useAuth0 } from '@auth0/auth0-react'
-import LogoutBtn from './LogoutBtn';
 import LoginBtn from './LoginBtn';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import logoSimple from "../assets/logoSimple.png";
 import { useUnidadContext } from '../context/GlobalContext';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import DropdownMenu from './navbar/dropdownMenu/DropdownMenu';
+import MenuHamburguesa from './navbar/menuHamburguesa/MenuHamburguesa';
 
 
 const Navbar: React.FC = () => {
 
   const { user, isAuthenticated, isLoading } = useAuth0();
-  const navigate = useNavigate();
 
   const { setBusquedaXNombre } = useUnidadContext();
   const [filterText, setFilterText] = useState<string>("");
+
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 700);
+
+  const toggleDropdown = () => {
+    setIsDropdownOpen(!isDropdownOpen);
+  };
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 767);
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
 
   const filterHandler = () => {
     setBusquedaXNombre(filterText);
@@ -30,56 +50,55 @@ const Navbar: React.FC = () => {
   }
 
   console.log(isAuthenticated);
+  console.log(user);
 
   if (isAuthenticated) {
     return (
-      <header className="headerLogo" style={{ justifyContent: "space-around", flexDirection: "row", color: "white" }}>
+      <header className="headerLogo" style={{ flexDirection: "row", color: "white" }}>
         <div className="logo" style={{ display: "inline-flex", alignItems: "center" }}>
 
           <NavLink to="/" >
             <img src={logoSimple} alt="logo" />
           </NavLink>
 
-          <form onSubmit={(e) => { e.preventDefault() }}>
-            <div className='searchBar'>
-              <button onClick={filterHandler} className='mt-2'>
-                <i className="material-icons" style={{ fontSize: "30px", color: "white" }}> search</i>
-              </button>
-              <input className="inputSearchBar" type="text" placeholder="Buscar producto" value={filterText} onChange={e => setFilterText(e.target.value)}></input>
-            </div>
-          </form>
-
-        </div>
-        {/*<div style={{flexDirection: "row", justifyContent: "flex-end"}}>*/}
-
-        <div className='mt-3'>
-          <NavLink to="/carrito" className={"m-1"}>
-            <i className="material-icons" style={{ fontSize: "30px", color: "white" }}> shopping_cart</i>
-          </NavLink>
-          <NavLink to="/favoritos">
-            <i className="material-icons" style={{ fontSize: "30px", color: "white" }}> favorite</i>
-          </NavLink>
+          {!isMobile
+            &&
+            <form onSubmit={(e) => { e.preventDefault() }}>
+              <div className='searchBar'>
+                <button onClick={filterHandler} className='mt-2'>
+                  <i className="material-icons" style={{ fontSize: "30px", color: "white" }}> search</i>
+                </button>
+                <input className="inputSearchBar" type="text" placeholder="Buscar producto" value={filterText} onChange={e => setFilterText(e.target.value)}></input>
+              </div>
+            </form>}
         </div>
 
-        <div>
-          <h5 className="mt-3" >{user!.name}</h5>
+        <div className='d-flex'>
+          {isMobile ?
+            <MenuHamburguesa
+              isDropdownOpen={isDropdownOpen}
+              toggleDropdown={toggleDropdown}
+
+              filterHandler={filterHandler}
+              filterText={filterText}
+              setFilterText={setFilterText}
+            />
+            :
+            <DropdownMenu
+              user={user}
+              isDropdownOpen={isDropdownOpen}
+              toggleDropdown={toggleDropdown}
+              filterHandler={filterHandler}
+              filterText={filterText}
+              setFilterText={setFilterText}
+            />
+          }
 
         </div>
-        <div>
-          <><img onClick={() => {
-            navigate("/usuarios/");
-          }} style={{ borderRadius: "50%", maxWidth: "60%", maxHeight: "60%", cursor: "pointer" }} src={user!.picture} alt="imagen de perfil" /></>
-        </div>
-        <div><LogoutBtn /></div>
-        {/*</div>*/}
-
 
       </header>
     )
   } else {
-
-
-
     return (
       <header className="headerLogo">
         <div className="logo mx-3 mt-2" style={{ display: "inline-flex", alignItems: "center" }}>

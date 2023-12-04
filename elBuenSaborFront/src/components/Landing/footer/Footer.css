@@ -11,6 +11,7 @@
 .social-logo {
   max-width: 25px; /* Ajusta el valor según el tamaño máximo que desees */
   height: auto; /* Para mantener la proporción de aspecto de la imagen */
+  margin-bottom: 5px;
 }
 
 .social-link {

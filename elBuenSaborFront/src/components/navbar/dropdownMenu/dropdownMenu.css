@@ -1,0 +1,8 @@
+.dropdown-toggle-style{
+    color: white !important;
+    background-color: var(--input-text) !important;
+}
+
+/* .dropdown-menu-style{
+    background-color: var(--main-color);
+} */

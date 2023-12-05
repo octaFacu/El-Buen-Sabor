@@ -8,8 +8,13 @@ import {useAuth0} from '@auth0/auth0-react'
 import { ServiceBasicos } from "../../services/ServiceBasicos";
 import { Usuario } from "../../context/interfaces/interfaces";
 import PageLoader from "../../components/pageLoader/PageLoader";
+import { BrowserRouter, Route, NavLink } from 'react-router-dom';
 
-export default function InformacionUsuario() {
+interface props{
+  opcion: number
+}
+
+export default function InformacionUsuario({opcion}: props) {
   const [mostrarCarta, setMostrarCarta] = useState(false);
   const [boton, setBoton] = useState<number | null>(null);
   const [usuario, setUsuario] = useState<Usuario>({
@@ -72,7 +77,7 @@ export default function InformacionUsuario() {
     return <PageLoader/>;     // Se podria cambiar poner algun snippet o algo para indicar la carga de una mejor manera
   }
 
-  return (
+return (
 <div className="container">
   <div className="row mx-auto my-4">
     <div className="col-md-4 col-sm-12 mt-md-5">
@@ -86,32 +91,40 @@ export default function InformacionUsuario() {
         <div className="card-body text-center  d-flex flex-column align-items-center w-100">
           <h5 className="card-title">{usuario.nombre}</h5>
           <p className="card-text">{user?.email}</p>
+          <NavLink to="/usuarios/MiCuenta" className="sinDecoracion text-white mr-2 mb-md-3 d-block w-100 ">
           <button
-            className="btn-tam text-white mr-2 mb-md-3 d-block w-100 d-flex align-items-center justify-content-center"
+            className={`btn-tam text-white w-100 d-flex align-items-center justify-content-center ${boton === 1 ? 'btn-activo' : ''}`}
             onClick={() => handleBoton(1)}
           >
             <i className="material-icons text-black tam-icono mr-2 text-white">face</i> Mi Cuenta
           </button>
+          </NavLink>
 
+          <NavLink to="/usuarios/MisDirecciones" className="sinDecoracion text-white mr-2 mb-md-3 d-block w-100 ">
           <button
-            className="btn-tam  text-white mr-2 mb-md-3 d-block w-100 d-flex align-items-center justify-content-center"
+            className={`btn-tam text-white w-100 d-flex align-items-center justify-content-center ${boton === 2 ? 'btn-activo' : ''}`}
             onClick={() => handleBoton(2)}
           >
             <i className="material-icons text-black tam-icono mr-2 text-white">location_on</i> Mis Direcciones
           </button>
+          </NavLink>
 
+          <NavLink to="/usuarios/MisPedidos" className="sinDecoracion text-white mr-2 mb-md-3 d-block w-100 ">
           <button
-            className="btn-tam text-white mr-2 mb-md-3 d-block w-100 d-flex align-items-center justify-content-center"
-            onClick={() => handleBoton(3)}
+            className={`btn-tam text-white w-100 d-flex align-items-center justify-content-center ${boton === 3 ? 'btn-activo' : ''}`}
+             onClick={() => handleBoton(3)}
           >
-            <i className="material-icons text-black tam-icono mr-2 text-white">local_dining</i> Mis Pedidos
-          </button>
+            <i className="material-icons text-black tam-icono mr-2 text-white">local_dining</i> Mis Pedidos</button>
+          </NavLink>
+          
+          <NavLink to="/usuarios/MisFavoritos" className="sinDecoracion text-white mr-2 mb-md-3 d-block w-100 ">
           <button
-            className="btn-tam text-white mr-2 mb-md-3 d-block w-100 d-flex align-items-center justify-content-center"
+            className={`btn-tam text-white w-100 d-flex align-items-center justify-content-center ${boton === 4 ? 'btn-activo' : ''}`}
             onClick={() => handleBoton(4)}
           >
             <i className="material-icons text-black tam-icono mr-2 text-white">favorite_border</i> Mis Favoritos
           </button>
+          </NavLink>
         </div>
       </div>
     </div>

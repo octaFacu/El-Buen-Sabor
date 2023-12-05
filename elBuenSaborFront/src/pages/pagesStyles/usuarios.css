@@ -75,3 +75,12 @@
 .btn-hover-cuenta:hover{
   background-color: #864e1b ;
 }
+
+
+.sinDecoracion {
+  text-decoration: none;
+}
+
+.btn-activo {
+  background-color: #864e1b;
+}

@@ -57,12 +57,17 @@ const MenuHamburguesa: FC<MenuHamburguesaProps> = ({ isDropdownOpen, toggleDropd
 
           <div className="mh-separator"></div>
 
-          <NavLink className="mh-item" onClick={toggleDropdown} to="/usuarios/">
-            Mi perfil
+          <NavLink onClick={toggleDropdown} className="mh-item" to="/usuarios/MiCuenta">
+            <span>Mi perfil</span>
           </NavLink>
-
-          <NavLink className="mh-item" onClick={toggleDropdown} to="/favoritos">
-            Favoritos
+          <NavLink onClick={toggleDropdown} className="mh-item" to="/usuarios/MisFavoritos">
+            <span>Direcciones</span>
+          </NavLink>
+          <NavLink onClick={toggleDropdown} className="mh-item" to="/usuarios/MisPedidos">
+            <span>Pedidos</span>
+          </NavLink>
+          <NavLink onClick={toggleDropdown} className="mh-item" to="/usuarios/MisDirecciones">
+            <span>Favoritos</span>
           </NavLink>
 
           <div className="mh-separator"></div>

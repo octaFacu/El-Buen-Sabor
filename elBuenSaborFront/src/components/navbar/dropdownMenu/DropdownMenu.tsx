@@ -34,10 +34,16 @@ const DropdownMenu: FC<PropsDropdownMenu> = ({ user, toggleDropdown, isDropdownO
 
           {/* <div className="dropdown-divider"></div> */}
 
-          <NavLink onClick={toggleDropdown} className="dropdown-item ddi-margin" to="/usuarios/">
+          <NavLink onClick={toggleDropdown} className="dropdown-item ddi-margin" to="/usuarios/MiCuenta">
             <span>Mi perfil</span>
           </NavLink>
-          <NavLink onClick={toggleDropdown} className="dropdown-item" to="/favoritos">
+          <NavLink onClick={toggleDropdown} className="dropdown-item" to="/usuarios/MisFavoritos">
+            <span>Direcciones</span>
+          </NavLink>
+          <NavLink onClick={toggleDropdown} className="dropdown-item" to="/usuarios/MisPedidos">
+            <span>Pedidos</span>
+          </NavLink>
+          <NavLink onClick={toggleDropdown} className="dropdown-item" to="/usuarios/MisDirecciones">
             <span>Favoritos</span>
           </NavLink>
 

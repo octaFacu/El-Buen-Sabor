@@ -19,7 +19,7 @@ export class ProductoService extends ServiceBasicos {
   async getIngredientes(productoid: Number, rol: string) {
 
     try {
-      console.log("ROL: "+rol);
+      console.log("ROL: " + rol);
       let res = await fetch(this.url + "/ingredientes/" + productoid, {
         method: "GET",
         headers: {
@@ -42,21 +42,21 @@ export class ProductoService extends ServiceBasicos {
   }
 
 
-  async saveIngredienteProd(ingredienteProd: IngredienteDeProducto, rol: string){
+  async saveIngredienteProd(ingredienteProd: IngredienteDeProducto, rol: string) {
 
     console.log("Ingrediente pasado al servicio: " + JSON.stringify(ingredienteProd));
 
 
-        try{    
-            const requestOptions = {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-                'X-Role': rol
-              },
-              body: JSON.stringify(ingredienteProd)
-            };
-          
+    try {
+      const requestOptions = {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-Role': rol
+        },
+        body: JSON.stringify(ingredienteProd)
+      };
+
 
 
       let res = await fetch("http://localhost:8080" + "/ingredienteProd/save", requestOptions);
@@ -74,7 +74,7 @@ export class ProductoService extends ServiceBasicos {
   }
 
 
- 
+
 
   async getProductoXFiltro(text: string, rol: string) {
     try {
@@ -281,7 +281,7 @@ export class ProductoService extends ServiceBasicos {
     }
 
     try {
-      console.log("ENTRANDO A CREAR METHOD SERVICE "+JSON.stringify(nuevoProducto));
+      console.log("ENTRANDO A CREAR METHOD SERVICE " + JSON.stringify(nuevoProducto));
       let res = await fetch(this.url, {
         method: "POST",
         headers: {
@@ -341,13 +341,36 @@ export class ProductoService extends ServiceBasicos {
 
       let jsonRes = await res.json();
 
-      for(var ingr of ingredientes){
+      for (var ingr of ingredientes) {
         await this.saveIngredienteProd(ingr, rol)
       }
 
 
 
       return jsonRes;
+    } catch (err: any) {
+      console.log(`Error ${err.status}: ${err.statusText}`);
+    }
+  }
+
+
+  async getProductoXCategoria(id: number, rol: string) {
+    try {
+      let res = await fetch(this.url + "/filtroCategoria" + "?filter=" + id, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          'X-Role': rol
+        },
+      });
+
+      if (!res.ok) {
+        throw { status: res.status, statusText: res.statusText };
+      }
+
+      let jsonRes = await res.json();
+      return jsonRes;
+      
     } catch (err: any) {
       console.log(`Error ${err.status}: ${err.statusText}`);
     }

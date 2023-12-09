@@ -21,7 +21,7 @@ interface State {
     ingredientesGuardados: boolean;
     idCategoria: number;
     llamarGuardado: boolean;
-  }
+}
 
 interface ProdFormProps {
 
@@ -45,10 +45,10 @@ const ModalCreacionProd: React.FC<ProdFormProps> = ({ estado, cambiarEstado, cat
         botonManufacturado: true, //Estado de manufacturacion del producto
         ingredientesProducto: [], //Ingredientes pertenecientes al producto
         modalIngr: false, //Estado de vista de modal incluir ingrediente
-        ingredientesGuardados: false, //Bandera para guardado de ingredientes
+        ingredientesGuardados: true, //Bandera para guardado de ingredientes
         idCategoria: 0, //Id de la categoria de producto
         llamarGuardado: false
-      });
+    });
 
 
     //CASTEAR INGREDIENTES A SOLO ATRIBUTOS ID
@@ -76,17 +76,17 @@ const ModalCreacionProd: React.FC<ProdFormProps> = ({ estado, cambiarEstado, cat
     }
 
 
-      /*
-            SETTERS
-      */
+    /*
+          SETTERS
+    */
     const setBotonManufacturado = async (value: boolean) => {
         await setState((prevState) => ({
             ...prevState,
             botonManufacturado: value,
-          }));
+        }));
     };
 
-    const setIngredientesProducto = async (value: IngredienteDeProducto[]) =>{
+    const setIngredientesProducto = async (value: IngredienteDeProducto[]) => {
         await setState((prevState) => ({
             ...prevState,
             ingredientesProducto: value
@@ -96,32 +96,32 @@ const ModalCreacionProd: React.FC<ProdFormProps> = ({ estado, cambiarEstado, cat
     const handleChangeProducto = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
         setState((prevState) => ({
-          ...prevState,
-          productoSelect: {
-            ...prevState.productoSelect,
-            [name]: value,
-          },
+            ...prevState,
+            productoSelect: {
+                ...prevState.productoSelect,
+                [name]: value,
+            },
         }));
-      };
-      
-      const handleChangeProductoArea = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    };
+
+    const handleChangeProductoArea = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
         const { name, value } = e.target;
         setState((prevState) => ({
-          ...prevState,
-          productoSelect: {
-            ...prevState.productoSelect,
-            [name]: value,
-          },
+            ...prevState,
+            productoSelect: {
+                ...prevState.productoSelect,
+                [name]: value,
+            },
         }));
-      };
-      
+    };
 
-      const cambiarModalIngr = (value: boolean) => {
+
+    const cambiarModalIngr = (value: boolean) => {
         setState((prevState) => ({
             ...prevState,
             modalIngr: value
         }));
-      };
+    };
     //----------------------------------------------------------------
 
     const handleFormSubmit = async () => {
@@ -166,26 +166,27 @@ const ModalCreacionProd: React.FC<ProdFormProps> = ({ estado, cambiarEstado, cat
     //------------------------------------------------------------------
 
 
-      //Cargar los datos que pueden venir para edicion
+    //Cargar los datos que pueden venir para edicion
     const cargarDatos = async () => {
         if (datos !== undefined) {
             await setState((prevState) => ({
                 ...prevState,
                 productoSelect: { ...datos! },
                 botonManufacturado: datos!.esManufacturado,
-                idCategoria: datos!.categoriaProducto.id!
-              }));
+                idCategoria: datos!.categoriaProducto.id!,
+                ingredientesGuardados: false
+            }));
 
-              if(!state.ingredientesGuardados){
-                setIngredientesProducto([]);
+            //   if(!state.ingredientesGuardados){
+            //     setIngredientesProducto([]);
 
-              }
+            //   }
         }
     }
 
-    const getIngredientes = async() => {
-        await setIngredientesProducto([]);
-        await productoService.getIngredientes(state.productoSelect.id!, rol).then((data) =>{
+    const getIngredientes = async () => {
+        // await setIngredientesProducto([]);
+        await productoService.getIngredientes(state.productoSelect.id!, rol).then((data) => {
             console.log(JSON.stringify(data));
             setIngredientesProducto(castIngredientesIds(data));
         })
@@ -197,48 +198,48 @@ const ModalCreacionProd: React.FC<ProdFormProps> = ({ estado, cambiarEstado, cat
     }
 
 
-    const handleSaving = async() => {
+    const handleSaving = async () => {
         console.log("Entro a guardado... guardando imagen...");
         await handleFileUpload();
-    
+
         console.log("Buscando costo...");
         var costo: number = await calcularCosto();
 
         console.log("Entrando al seteo de categoria...");
-        console.log("Categorias: "+JSON.stringify(categorias));
+        console.log("Categorias: " + JSON.stringify(categorias));
         var categoria = await categoriaCambio(state.idCategoria);
 
-        if(categoria != undefined){
-            
+        if (categoria != undefined) {
+
             console.log("CATEGORIA ELEGIDA" + JSON.stringify(categoria));
 
-        // Use Promise.all to wait for both costo and categoria to resolve
-        await Promise.all([
-            setState((prevState) => ({
-                ...prevState,
-                productoSelect: {
-                    ...prevState.productoSelect,
-                    costoTotal: costo,
-                    categoriaProducto: categoria!
-                },
-                llamarGuardado: true
-            })),
-        ]);
-          
+            // Use Promise.all to wait for both costo and categoria to resolve
+            await Promise.all([
+                setState((prevState) => ({
+                    ...prevState,
+                    productoSelect: {
+                        ...prevState.productoSelect,
+                        costoTotal: costo,
+                        categoriaProducto: categoria!
+                    },
+                    llamarGuardado: true
+                })),
+            ]);
 
-        
+
+
         }
-        
+
     };
 
     const callSave = async () => {
         console.log("Antes de entrar al guardado...");
-        console.log("PRODUCTO DESPUES DE CATEGORIA Y COSTO: "+JSON.stringify(state.productoSelect));
+        console.log("PRODUCTO DESPUES DE CATEGORIA Y COSTO: " + JSON.stringify(state.productoSelect));
         if (state.productoSelect.id !== 0 && state.productoSelect.id !== null) {
 
             updateProducto();
             setIngredientesProducto([]);
-            
+
             setState((prevState) => ({
                 ...prevState,
                 llamarGuardado: false
@@ -261,32 +262,32 @@ const ModalCreacionProd: React.FC<ProdFormProps> = ({ estado, cambiarEstado, cat
 
         }
 
-  
+
     };
 
 
     const handleFileUpload = async () => {
         if (file) {
-          try {
-            const urlImagen = await cloudinaryService.uploadImage(file);
-            console.log(urlImagen);
-            if (urlImagen) {
-              setState((prevState) => ({
-                ...prevState,
-                productoSelect: {
-                  ...prevState.productoSelect,
-                  imagen: urlImagen,
-                },
-              }));
+            try {
+                const urlImagen = await cloudinaryService.uploadImage(file);
+                console.log(urlImagen);
+                if (urlImagen) {
+                    setState((prevState) => ({
+                        ...prevState,
+                        productoSelect: {
+                            ...prevState.productoSelect,
+                            imagen: urlImagen,
+                        },
+                    }));
+                }
+            } catch (error) {
+                console.error("Error uploading image:", error);
+                // Handle the error as needed
+            } finally {
+                setFile(null); // Reset the file after upload, regardless of success or failure
             }
-          } catch (error) {
-            console.error("Error uploading image:", error);
-            // Handle the error as needed
-          } finally {
-            setFile(null); // Reset the file after upload, regardless of success or failure
-          }
         }
-      };
+    };
 
     //Parte de cloudinary
     const cloudinaryService = new CloudinaryService();
@@ -303,22 +304,22 @@ const ModalCreacionProd: React.FC<ProdFormProps> = ({ estado, cambiarEstado, cat
     //Seteo de costos
     const calcularCosto = async () => {
         var costo = 0;
-      
+
         // Use Promise.all to wait for all asynchronous calls to complete
         await Promise.all(
-          state.ingredientesProducto.map(async (ing) => {
+            state.ingredientesProducto.map(async (ing) => {
 
-            console.log("ingrediente pasado a costo: " + JSON.stringify(ing));
-            const costoIngrediente = await ingredienteService.getCosto(ing, rol);
-            costo += costoIngrediente;
-            
-          })
+                console.log("ingrediente pasado a costo: " + JSON.stringify(ing));
+                const costoIngrediente = await ingredienteService.getCosto(ing, rol);
+                costo += costoIngrediente;
+
+            })
         );
         console.log("COSTO: " + JSON.stringify(costo));
         return costo;
-      };
+    };
 
-      const handleCancelling = () => {
+    const handleCancelling = () => {
 
         setIngredientesProducto([]);
         cambiarEstado(!estado);
@@ -336,40 +337,41 @@ const ModalCreacionProd: React.FC<ProdFormProps> = ({ estado, cambiarEstado, cat
         const selectedCategory = categorias.find((cat) => cat.id === id);
         console.log(JSON.stringify(selectedCategory));
         return selectedCategory;
-    
+
     }
 
-    const handleCategoriaCambio = async(e: React.ChangeEvent<HTMLSelectElement>) => {
-        console.log("CAMBIANDO CATEGORIA, ID:"+JSON.stringify(e.target.value));
+    const handleCategoriaCambio = async (e: React.ChangeEvent<HTMLSelectElement>) => {
+        console.log("CAMBIANDO CATEGORIA, ID:" + JSON.stringify(e.target.value));
 
         setState((prevState) => ({
-          ...prevState,
-          idCategoria: parseInt(e.target.value)
+            ...prevState,
+            idCategoria: parseInt(e.target.value)
         }));
-        
+
     }
 
 
     useEffect(() => {
-        if(estado) {
+        if (estado) {
             cargarDatos();
         }
 
     }, [datos, estado]);
 
     useEffect(() => {
+
         if (!state.ingredientesGuardados) {
-
-        
-          getIngredientes();
+            getIngredientes();
+            console.log("LLAMO LOS INGREDIENTES DEL PRODUCTO");
         }
-      }, [state.productoSelect, state.ingredientesGuardados]);
 
-      useEffect(() => {
-        if(state.llamarGuardado){
+    }, [state.productoSelect]);
+
+    useEffect(() => {
+        if (state.llamarGuardado) {
             callSave();
         }
-      }, [state.llamarGuardado]);
+    }, [state.llamarGuardado]);
 
 
     //si las categorias aun no han cargado...
@@ -392,12 +394,12 @@ const ModalCreacionProd: React.FC<ProdFormProps> = ({ estado, cambiarEstado, cat
         )
     }
 
-    return(
+    return (
         <div>
             <ModalAgregarIngrediente estado={state.modalIngr}
                 cambiarEstado={cambiarModalIngr} ingredientesList={state.ingredientesProducto}
                 setIngredientesList={setIngredientesProducto} cambiarEstadoFormProd={cambiarEstado} />
-            {estado && !state.modalIngr  &&
+            {estado && !state.modalIngr &&
 
 
                 <div className="overlay">
@@ -407,10 +409,10 @@ const ModalCreacionProd: React.FC<ProdFormProps> = ({ estado, cambiarEstado, cat
                                 e.preventDefault()
 
                             }}>
-                                <h3 className="mb-3 ps-3 pe-3 rounded" style={{textAlign: "center", backgroundColor: "#864e1b", minWidth: "100%"}}>Nuevo Producto</h3>
+                                <h3 className="mb-3 ps-3 pe-3 rounded" style={{ textAlign: "center", backgroundColor: "#864e1b", minWidth: "100%" }}>Nuevo Producto</h3>
 
                                 <div className="container d-flex justify-content-around">
-                                
+
                                     <div className="mb-3" style={{ maxWidth: "50%" }}>
                                         <label htmlFor="nombre" className="form-label">Nombre</label>
                                         <input className="form-input form-control" type="text" id="nombre" name="denominacion" required value={state.productoSelect.denominacion} onChange={handleChangeProducto} />
@@ -420,11 +422,11 @@ const ModalCreacionProd: React.FC<ProdFormProps> = ({ estado, cambiarEstado, cat
                                     <div className="d-flex">
                                         <div className="mb-3">
                                             <label htmlFor="stockActual" className="form-label">Costo Total</label>
-                                            <input type="number" min="0"  className="form-control me-2 form-input" id="precioCompra" name="costoTotal" required value={state.productoSelect.costoTotal.toString()} onChange={handleChangeProducto} />
+                                            <input type="number" min="0" className="form-control me-2 form-input" id="precioCompra" name="costoTotal" required value={state.productoSelect.costoTotal.toString()} onChange={handleChangeProducto} />
                                         </div>
                                         <div className="mb-3">
                                             <label htmlFor="stockActual" className="form-label">Precio Total</label>
-                                            <input type="number" min="0"  className="form-control ms-2 form-input" id="precioTotal" name="precioTotal" required value={state.productoSelect.precioTotal} onChange={handleChangeProducto} />
+                                            <input type="number" min="0" className="form-control ms-2 form-input" id="precioTotal" name="precioTotal" required value={state.productoSelect.precioTotal} onChange={handleChangeProducto} />
                                         </div>
                                     </div>
                                 </div>
@@ -437,7 +439,7 @@ const ModalCreacionProd: React.FC<ProdFormProps> = ({ estado, cambiarEstado, cat
                                             <textarea className="form-control me-2 form-input" id="descripcion" name="descripcion" required value={state.productoSelect.descripcion.toString()} onChange={handleChangeProductoArea} />
                                         </div>
 
-                                        {state.botonManufacturado && (state.productoSelect.esManufacturado ) &&
+                                        {state.botonManufacturado && (state.productoSelect.esManufacturado) &&
                                             <div className="mb-3">
                                                 <label htmlFor="stockMaximo" className="form-label">Receta</label>
                                                 <textarea className="form-control ms-2 form-input" id="receta" name="receta" required value={state.productoSelect.receta?.toString()} onChange={handleChangeProductoArea} />
@@ -455,7 +457,7 @@ const ModalCreacionProd: React.FC<ProdFormProps> = ({ estado, cambiarEstado, cat
                                             <div className="mb-3">
 
                                                 <label htmlFor="tiempo-preparacion" className="form-label">Tiempo de Preparacion</label>
-                                                <input id="settime" type="time" step="1"  className="form-control form-input" name="tiempoCocina" value={state.productoSelect.tiempoCocina} onChange={handleChangeProducto} />
+                                                <input id="settime" type="time" step="1" className="form-control form-input" name="tiempoCocina" value={state.productoSelect.tiempoCocina} onChange={handleChangeProducto} />
                                             </div>
                                         }
                                         <div className="mb-3">
@@ -521,18 +523,18 @@ const ModalCreacionProd: React.FC<ProdFormProps> = ({ estado, cambiarEstado, cat
 
 
                                 <div>
-                                <button className="btn btn-danger mx-3" onClick={() => {
-                                    handleCancelling();
-                                }}><i className="material-icons" style={{ fontSize: "30px", cursor: "pointer" }}>highlight_off</i></button>
+                                    <button className="btn btn-danger mx-3" onClick={() => {
+                                        handleCancelling();
+                                    }}><i className="material-icons" style={{ fontSize: "30px", cursor: "pointer" }}>highlight_off</i></button>
 
-                                <button type="submit" className="btn" style={{ backgroundColor: "#864e1b", color: "white" }} onClick={async (event) => {
+                                    <button type="submit" className="btn" style={{ backgroundColor: "#864e1b", color: "white" }} onClick={async (event) => {
 
-                                    event.preventDefault();
-                                    handleSaving();
+                                        event.preventDefault();
+                                        handleSaving();
 
-                                        }
                                     }
-                                > <i className="material-icons" style={{ fontSize: "30px", cursor: "pointer" }}>check</i></button>
+                                    }
+                                    > <i className="material-icons" style={{ fontSize: "30px", cursor: "pointer" }}>check</i></button>
                                 </div>
                             </form>
                             {state.botonManufacturado &&
@@ -546,7 +548,7 @@ const ModalCreacionProd: React.FC<ProdFormProps> = ({ estado, cambiarEstado, cat
                                     }
 
                                     <div className="container d-flex justify-content-around">
-                                        <div className="mt-4 d-flex justify-content-center" style={{ maxWidth: "70%", maxHeight: "40%", alignItems: "center"}}>
+                                        <div className="mt-4 d-flex justify-content-center" style={{ maxWidth: "70%", maxHeight: "40%", alignItems: "center" }}>
 
                                             <button className="btn btn-success" onClick={() => handleFormSubmit()}>Agregar Ingrediente</button>
                                         </div>

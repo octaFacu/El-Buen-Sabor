@@ -29,10 +29,12 @@ interface ProdFormProps {
     estado: boolean,
     cambiarEstado: (estado: boolean) => void,
     datos?: Producto,
-    categorias: Rubro[];
+    categorias: Rubro[],
+    cambio: boolean,
+    setCambios:(cambio: boolean) => void
 }
 
-const ModalCreacionProd: React.FC<ProdFormProps> = ({ estado, cambiarEstado, categorias, datos }) => {
+const ModalCreacionProd: React.FC<ProdFormProps> = ({ estado, cambiarEstado, categorias, datos, cambio, setCambios }) => {
     const { rol } = useUnidadContext();
 
     //Servicios
@@ -244,7 +246,8 @@ const ModalCreacionProd: React.FC<ProdFormProps> = ({ estado, cambiarEstado, cat
                 llamarGuardado: false
             }))
             cambiarEstado(!estado);
-            window.location.reload();
+            setCambios(true);
+            //window.location.reload();
 
         } else {
             console.log("Entro a crear el producto");
@@ -257,7 +260,8 @@ const ModalCreacionProd: React.FC<ProdFormProps> = ({ estado, cambiarEstado, cat
                 llamarGuardado: false
             }))
             cambiarEstado(!estado);
-            window.location.reload();
+            setCambios(true);
+            //window.location.reload();
 
         }
 

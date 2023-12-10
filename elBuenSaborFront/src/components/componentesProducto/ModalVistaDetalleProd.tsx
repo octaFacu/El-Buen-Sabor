@@ -81,7 +81,7 @@ interface ModalVistaDetalleProps{
                 <div className="container my-5 contenedorModal modal-dialog-scrollable" style={{borderRadius: "25px", backgroundColor: "#f99132", color: "white", maxWidth: "50%"}} onClick={e => e.stopPropagation()}>
                     <div className="" style={{textAlign: "center", overflowY: 'auto', maxHeight: '650px'}}>
                         <div className="rounded container pb-2 pt-4" style={{textAlign: "center", backgroundColor: "#864e1b", maxWidth: "40%"}}>
-                            <h1>{producto.denominacion}</h1>
+                            <h1>{producto.denominacion}</h1> <img className="imagen-style" src={producto.imagen}></img>
                         </div>
                         <hr style={{marginRight: "2%", marginLeft: "2%"}}></hr>
                         <h3>Categoria: {producto.categoriaProducto.denominacion}</h3>
@@ -110,8 +110,8 @@ interface ModalVistaDetalleProps{
                         }
 
                     </div>
-                    </div>
-                    </div>
+                </div>
+            </div>
                 
             }
         </div>

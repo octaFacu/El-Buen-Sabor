@@ -6,6 +6,8 @@ import { ProductoService } from "../../services/ProductoService";
 import "./CocinaComponentesStyle.css";
 import IngredientesDetComponent from "./IngredientesDetComponent";
 import { useUnidadContext } from "../../context/GlobalContext";
+import PageLoader from "../pageLoader/PageLoader";
+import IngredienteDeProdCompleto from "../../context/interfaces/IngredienteDeProdCompleto";
 
 interface ProdFormProps {
 
@@ -20,7 +22,7 @@ const DetalleProdCocina: React.FC<ProdFormProps> = ({ producto, estado, changeEs
     const { rol } = useUnidadContext();
 
     const prodService = new ProductoService();
-    const [ingredientes, setIngredientes] = useState<IngredienteDeProducto[]>([]); 
+    const [ingredientes, setIngredientes] = useState<IngredienteDeProdCompleto[]>([]); 
     const [loading, setLoading] = useState(true);
     
     const getIngredientes = async() => {
@@ -28,8 +30,7 @@ const DetalleProdCocina: React.FC<ProdFormProps> = ({ producto, estado, changeEs
             await prodService.getIngredientes(producto.id!, rol).then((data) => {
                 console.log("Id del producto: "+producto.id)
                 setIngredientes(data);
-                setLoading(false);
-                ingredientes.map((ing, index) => ("ing: "+console.log(ing)));
+                ingredientes.map((ing, index) => ("ing: "+console.log(ing.ingrediente.id)));
             })
         } catch (error) {
             console.log("Ingredientes no pudieron ser traidos");
@@ -45,12 +46,18 @@ const DetalleProdCocina: React.FC<ProdFormProps> = ({ producto, estado, changeEs
             getIngredientes();
             console.log("Han cambiado los ingredientes...");
         }
-            
-
         
     }, [producto, estado]);
 
+    useEffect(() => {
+        if(ingredientes.length > 0 || producto.esManufacturado == false){
+            setLoading(false);
+        }
+    }, [ingredientes]);
 
+    if(loading && estado) {
+        return <PageLoader></PageLoader>
+    }
 
     if(!loading){
         console.log("ENTRANDO"+ ingredientes.length)
@@ -72,8 +79,8 @@ const DetalleProdCocina: React.FC<ProdFormProps> = ({ producto, estado, changeEs
                         <ul>
                         {ingredientes.map((ing, index) => (
                             <>
-                            <h1>{ing.idIngrediente}</h1>
-                            <IngredientesDetComponent ingredienteProd={ing} cantidad={ing.cantidad} productoId={producto.id!}></IngredientesDetComponent>
+                            {/* <h1>{ing.idIngrediente}</h1> */}
+                            <IngredientesDetComponent ingredienteProd={ing} cantidad={ing.cantidad} productoId={producto.id!} estado={estado}></IngredientesDetComponent>
                         </>
                         ))}
                         </ul>
@@ -93,7 +100,7 @@ const DetalleProdCocina: React.FC<ProdFormProps> = ({ producto, estado, changeEs
             {estado &&
                 <div className="overlay" onClick={() => changeEstado(!estado)}>
                     <div className="container productoContainer my-5 mt-4 mb-4 contenedorModal modaloverflow" onClick={e => e.stopPropagation()} style={{ borderRadius: "25px", backgroundColor: "#f99132", color: "white", maxWidth: "50%" }}>
-                        Cargando...
+                        <PageLoader></PageLoader>
                     </div>
                 </div>}
             </>

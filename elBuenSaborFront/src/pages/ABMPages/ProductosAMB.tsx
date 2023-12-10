@@ -8,6 +8,7 @@ import { Producto } from "../../context/interfaces/Producto";
 import ModalVistaDetalleProd from "../../components/componentesProducto/ModalVistaDetalleProd";
 import ModalCreacionProd from "../../components/componentesProducto/ModalCreacionProd";
 import { useUnidadContext } from "../../context/GlobalContext";
+import PageLoader from "../../components/pageLoader/PageLoader";
 
 export const ProductosABM = () => {
 
@@ -25,6 +26,7 @@ export const ProductosABM = () => {
     const [categorias, setCategorias] = useState<CategoriaProducto[]>([]);
     const [productos, setProductos] = useState<Producto[]>([new Producto()]);
     const [datos, setDatos] = useState<Producto>(new Producto());
+    const [cambiosProd, setCambiosProd] = useState<boolean>(false);
 
     useEffect(() => {
        
@@ -52,16 +54,25 @@ export const ProductosABM = () => {
         setDatos(producto);
     }
     
-
-    if(productos.length === 0 || rol == null){
+   useEffect(() => {
+        if(cambiosProd == true){
+            productoService.getAllBasic(rol)
+            .then(data => {
+                console.log("CARGANDO PRODUCTOS "+ data);
+                setProductos(data)
+            })
+            setCambiosProd(false);
+        }
+    }, [cambiosProd])
+    
+    if(categorias == null || rol == null){
         return <div style={{textAlign: "center"}}>
-            Loading...
+            <PageLoader></PageLoader>
         </div>
     }
 
     
-
-    
+ 
 
 
     return (
@@ -106,6 +117,8 @@ export const ProductosABM = () => {
 
                                     datos={datos}
                                     setearDatos={sendDatos}
+
+                                
                                 />
                                
                                 
@@ -122,6 +135,8 @@ export const ProductosABM = () => {
 
                 datos={datos}
                 categorias={categorias}
+                cambio={cambiosProd}
+                setCambios={setCambiosProd}
             />
             <ModalVistaDetalleProd producto= {datos} estadoVista={estadoModalVista} cambiarEstadoVista={setEstadoModalVista}/> 
             <br></br>

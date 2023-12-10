@@ -2,7 +2,7 @@ import { useState } from "react"
 import { ProductoService } from "../../services/ProductoService"
 import { Producto } from "../../context/interfaces/Producto"
 import { useUnidadContext } from "../../context/GlobalContext"
-
+import "./ModalCreationProdStyles.css"
 interface ProductoCardProps {
 
     //De categoriaIngrABM, cambio su estado
@@ -72,7 +72,7 @@ const ProductoCard: React.FunctionComponent<ProductoCardProps> = ({ producto, ca
 
 
             </td>
-            <td></td>
+            <td><img src={producto.imagen} className="imagen-style"/></td>
 
         </tr>
 

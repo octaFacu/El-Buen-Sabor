@@ -4,30 +4,30 @@ import { IngredientesService } from "../../services/IngredientesService";
 import { ServiceBasicos } from "../../services/ServiceBasicos";
 import { Ingrediente, unidadDeMedida } from "../../context/interfaces/interfaces";
 import { useUnidadContext } from "../../context/GlobalContext";
+import { ProductoService } from "../../services/ProductoService";
+import PageLoader from "../pageLoader/PageLoader";
+import IngredienteDeProdCompleto from "../../context/interfaces/IngredienteDeProdCompleto";
 
 
 interface TablaIngredientesProdProps {
-    ingredienteProd: IngredienteDeProducto;
+    ingredienteProd: IngredienteDeProdCompleto;
     cantidad: number;
     productoId: number;
+    estado: boolean;
   
   }
   
-  const IngredientesDetComponent: React.FC<TablaIngredientesProdProps> = ({ ingredienteProd, cantidad, productoId }) => {
+  const IngredientesDetComponent: React.FC<TablaIngredientesProdProps> = ({ ingredienteProd, cantidad, productoId, estado }) => {
   
-  //const IngredientesDetComponent: React.FC<TablaIngredientesProdProps> = ({ ingredienteProd, cantidad }) => {
 
-      const ingredienteService = new IngredientesService();
-      const medidaService = new ServiceBasicos("unidadDeMedida");
-      const [medidaIng, setMedidaIng] = useState<unidadDeMedida>();
-      const [ingrediente, setIngrediente] = useState<Ingrediente>();
+
       const [loading, setLoading] = useState(true);
 
       const { rol } = useUnidadContext();
 
-      const getIngrediente = async() => {
-
-        await ingredienteService.getOne(productoId, rol).then((data) => {
+      /*const getIngrediente = async() => {
+        console.log("ingrediente id: " + ingredienteProd.idIngrediente);
+        await ingredienteService.getOne(ingredienteProd.idIngrediente, rol).then((data) => {
           setIngrediente(data)
           console.log("Id de la medida: "+ingredienteProd.idMedida) //esto cuando lo llamo desde
           medidaService.getOne(ingredienteProd.idMedida, rol).then((data) => {
@@ -37,27 +37,29 @@ interface TablaIngredientesProdProps {
           });
         }); 
 
-    }
+    }*/
 
     useEffect(() => {
-      console.log("PRODUCTO HA CAMBIADO: "+ingredienteProd.id)
+      if(ingredienteProd != null){
+        setLoading(false);
+      }
     }, [ingredienteProd]);
 
       useEffect(() => {
-        console.log("se van a cargar los ingredientes");
-        getIngrediente();
-        console.log("se cargaron los ingredientes");
+        //console.log("se van a cargar los ingredientes");
+        //getIngrediente();
+        //console.log("se cargaron los ingredientes");
       }, []);
 
-      if(!loading){
+      if(!loading && estado){
         return(
         <p className="fs-5">
-          • {ingrediente?.nombre} {cantidad}{medidaIng?.denominacion}
+          • {ingredienteProd?.ingrediente.nombre} {cantidad} {ingredienteProd?.unidadmedida.denominacion}
         </p>
         )
       }else{
         return(
-        <p>Cargando...</p>)
+        <PageLoader></PageLoader>)
       }
     
 

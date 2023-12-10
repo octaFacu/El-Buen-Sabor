@@ -9,6 +9,7 @@ import ModalCompra from "../../components/componentesIngredienteABM/ModalCompra"
 import { ListaCartasABM } from "../../components/genericos/ListaCartasABM";
 import IngredienteForm from "../../components/componentesIngredienteABM/IngredienteForm";
 import { CategoriaIngredienteService } from "../../services/CategoriaIngredienteService";
+import PageLoader from "../../components/pageLoader/PageLoader";
 
 
 
@@ -64,10 +65,10 @@ export const IngredientesABM = () => {
         setDatos(ingrediente);
     }
     
-
-    if(ingredientes.length === 0){
+    //Cambio de ingredientes a categorias (de ingredientes)
+    if(categorias.length === 0){
         return <div style={{textAlign: "center"}}>
-            Loading...
+            <PageLoader />
         </div>
     }
 

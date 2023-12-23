@@ -22,7 +22,8 @@ export class Pedido {
       nombre: '',
       apellido: '',
       telefono: '',
-      activo: true
+      activo: true,
+      email: '',
     },
     activo: true
   };
@@ -31,7 +32,8 @@ export class Pedido {
     nombre: '',
     apellido: '',
     telefono: '',
-    activo: true
+    activo: true,
+    email: '',
   };
 }
 

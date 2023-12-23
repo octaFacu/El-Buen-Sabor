@@ -64,7 +64,7 @@ const CardPedidoDeliveryPropio: React.FC<ProdFormProps> = ({ pedido }) => {
             <div className="text-pedido">{pedido.horaEstimada}hs</div>
             <hr className="separator-white"></hr>
             <div className="mx-2 mb-3">
-                <div className="btn btn-success" onClick={()=> handleChangeEstado()}><i className="material-icons" style={{fontSize: "30px", cursor:"pointer"}}>check</i></div>
+                <div className="btn btn-success" onClick={()=> handleChangeEstado()}>Entregado <i className="material-icons" style={{fontSize: "14px", cursor:"pointer"}}>check</i></div>
             </div>
         </div>
     )

@@ -71,6 +71,26 @@ export const routesConfig = [
         roles: [],
     },
     {
+        path: '/usuarios/MiCuenta',
+        component: InformacionUsuario,
+        roles: [],
+    },
+    {
+        path: '/usuarios/MisDirecciones',
+        component: InformacionUsuario,
+        roles: [],
+    },
+    {
+        path: '/usuarios/MisPedidos',
+        component: InformacionUsuario,
+        roles: [],
+    },
+    {
+        path: '/usuarios/MisFavoritos',
+        component: InformacionUsuario,
+        roles: [],
+    },
+    {
         path: '/informacionAdicional',
         component: InformacionAdicionalPostRegistro,
         roles: [],

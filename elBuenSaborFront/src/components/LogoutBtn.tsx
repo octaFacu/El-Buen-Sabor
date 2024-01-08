@@ -7,7 +7,8 @@ const LogoutBtn: React.FC = () => {
     const {logout} = useAuth0();
 
     return(
-        <button className='btnIngresoNav' onClick={() => logout({ logoutParams: { returnTo: window.location.origin } })}>Log Out</button>
+        // <button className='btnIngresoNav' onClick={() => logout({ logoutParams: { returnTo: window.location.origin } })}>Log Out</button>
+        <button onClick={() => logout({ logoutParams: { returnTo: window.location.origin } })}>Log Out</button>
     )
 }
 

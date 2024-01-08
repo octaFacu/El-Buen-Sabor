@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Ingrediente } from "../../context/interfaces/interfaces"
 import { IngredientesService } from "../../services/IngredientesService";
+import { useUnidadContext } from "../../context/GlobalContext";
 
 interface ModalCompraProps {
     ingrediente: Ingrediente,
@@ -11,9 +12,10 @@ interface ModalCompraProps {
 const ModalCompra: React.FunctionComponent<ModalCompraProps> = ({ ingrediente, estadoCompra, cambiarEstadoCompra }) => {
 
 
+    const { rol } = useUnidadContext();
     let Ingredientenuevo: Ingrediente;
     const [cantidadAgregar, setCantidadAgregar] = useState<number>(0);
-    const [precio, setPrecio] = useState<Number>(0);
+    const [precio, setPrecio] = useState<number>(0);
     const ingredientesService = new IngredientesService();
 
 
@@ -56,7 +58,7 @@ const ModalCompra: React.FunctionComponent<ModalCompraProps> = ({ ingrediente, e
 
                                 ingrediente.precioCompra = precio;
 
-                                ingredientesService.updateEntity(ingrediente);
+                                ingredientesService.updateEntity(ingrediente, rol);
                                 cambiarEstadoCompra(!estadoCompra);
 
                             }

@@ -7,8 +7,6 @@ import ProductoDeliveryCard from "./ProductoDeliveryCard"
 import MapLocation from "./MapLocation"
 import { useUnidadContext } from "../../context/GlobalContext"
 import { useAuth0 } from "@auth0/auth0-react"
-import PageLoader from "../pageLoader/PageLoader"
-import { UsuarioService } from "../../services/UsuarioService"
 
 interface ProdFormProps {
 
@@ -16,26 +14,17 @@ interface ProdFormProps {
 
 }
 
-const CardPedidoDelivery: React.FC<ProdFormProps> = ({ pedido }) => {
+const CardPedidoDeliveryPropio: React.FC<ProdFormProps> = ({ pedido }) => {
 
-    const { user, isLoading } = useAuth0();
+    const { user } = useAuth0();
     const { rol } = useUnidadContext();
-    const serviceUser = new UsuarioService();
     const servicePedido = new pedidoService();
     const [productos, setProductos] = useState<PedidoHasProductos[]>([]);
 
-    const handleChangeEstado = async () => {
-        if (user) {
-            const userId = await user.userId;
-            if(userId != undefined){
-                pedido.estado = "EnDelivery";
-                serviceUser.getOne(userId, rol).then((result) => {
-                    pedido.delivery = result;
-                    servicePedido.updateEntity(pedido, rol);
-                });
-            }
-        }
-        //window.location.reload();
+    const handleChangeEstado = () => {
+        pedido.estado = "Entregado";
+        servicePedido.updateEntity(pedido, rol);
+        window.location.reload();
     };
 
     const getProductos = async () => {
@@ -53,7 +42,6 @@ const CardPedidoDelivery: React.FC<ProdFormProps> = ({ pedido }) => {
         getProductos();
     }, [pedido]);
 
-    if(!isLoading){
     return ( //mx-5 me-3
         <div className="container my-3 card-pedidos px-2 pt-2 pb-2" style={{ maxWidth: "93%" }}>
             <div className="">
@@ -76,17 +64,9 @@ const CardPedidoDelivery: React.FC<ProdFormProps> = ({ pedido }) => {
             <div className="text-pedido">{pedido.horaEstimada}hs</div>
             <hr className="separator-white"></hr>
             <div className="mx-2 mb-3">
-                <div className="btn btn-success" onClick={()=> handleChangeEstado()}>Tomar pedido <i className="material-icons" style={{fontSize: "14px", cursor:"pointer"}}>check</i></div>
+                <div className="btn btn-success" onClick={()=> handleChangeEstado()}>Entregado <i className="material-icons" style={{fontSize: "14px", cursor:"pointer"}}>check</i></div>
             </div>
         </div>
     )
- }else{
-    return(
-        <>
-            <PageLoader/>
-        </>
-    ) 
-
- }
 }
-export default CardPedidoDelivery;
+export default CardPedidoDeliveryPropio;

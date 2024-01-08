@@ -4,13 +4,14 @@ import CategProductoCard from '../../components/componentesCatProductos/CategPro
 import CategProductoForm from '../../components/componentesCatProductos/CategProductoForm';
 import { ListaCartasABM } from '../../components/genericos/ListaCartasABM';
 import { CategoriaProductoService } from '../../services/CategoriaProductoService';
+import { useUnidadContext } from '../../context/GlobalContext';
 
 
 export const CategoriaProductosABM = () => {
 
     
     // const { unidadesDeMedida } = useUnidadContext();
-
+    const { rol } = useUnidadContext();
 
     const categoriaProductoService = new CategoriaProductoService();
 
@@ -26,7 +27,7 @@ export const CategoriaProductosABM = () => {
 
     useEffect(() => {
         // categoriaIngredienteService.getAll()
-        categoriaProductoService.getAllBasic()
+        categoriaProductoService.getAllBasic(rol)
             .then(data => {
                 // console.log(data);
                 setRubros(data)
@@ -41,7 +42,7 @@ export const CategoriaProductosABM = () => {
     return (
 
         <ListaCartasABM 
-        titulo="Rubro de ingredientes"
+        titulo="Categorias de Productos"
         estado={estadoModal}
         setEstadoModal={setEstadoModal}
         recetDatos={recetDatos}

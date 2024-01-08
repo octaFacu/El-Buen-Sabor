@@ -9,11 +9,17 @@ export class IngredientesService extends ServiceBasicos{
       }
 
     //Trae todas categorias de ingrediente que no tengan padre
-    async getByCategoriaId(categoriaid: Number) {
+    async getByCategoriaId(categoriaid: Number, rol: string) {
 
         try {
 
-            let res = await fetch(this.url + "/porCategoria/"+ categoriaid)
+            let res = await fetch(this.url + "/porCategoria/"+ categoriaid, {
+                method: "GET",
+                headers: {
+                  "Content-Type": "application/json",
+                  'X-Role': rol
+                },
+              })
 
             if (!res.ok) {
                 throw { status: res.status, statusText: res.statusText }
@@ -27,30 +33,29 @@ export class IngredientesService extends ServiceBasicos{
         }
     }
 
-    async getCosto(ingrediente: IngredienteDeProducto) {
+    async getCosto(ingrediente: IngredienteDeProducto, rol: string) {
 
         try {
-
             let res = await fetch(this.url + "/costo", {
-                method: "POST",
-                headers: {
-                  "Content-Type": "application/json",
-                },
-                body: JSON.stringify(ingrediente),
-              });
-        
-
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                'X-Role': rol
+              },
+              body: JSON.stringify(ingrediente),
+            });
+          
             if (!res.ok) {
-                throw { status: res.status, statusText: res.statusText }
+              throw { status: res.status, statusText: res.statusText };
             }
-
-            console.log("COSTO "+res.json())
-            let jsonRes = await res.json()
-            return jsonRes
-
-        } catch (err: any) {
+          
+            let jsonRes = await res.json();
+            console.log("COSTO ", jsonRes); // Log the resolved value, not the Promise
+            return jsonRes;
+          } catch (err: any) {
             console.log(`Error ${err.status}: ${err.statusText}`);
-        }
+          }
+          
     }
 
 }

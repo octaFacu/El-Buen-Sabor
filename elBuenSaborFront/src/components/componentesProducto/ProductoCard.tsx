@@ -1,7 +1,8 @@
 import { useState } from "react"
 import { ProductoService } from "../../services/ProductoService"
 import { Producto } from "../../context/interfaces/Producto"
-
+import { useUnidadContext } from "../../context/GlobalContext"
+import "./ModalCreationProdStyles.css"
 interface ProductoCardProps {
 
     //De categoriaIngrABM, cambio su estado
@@ -23,6 +24,7 @@ interface ProductoCardProps {
 const ProductoCard: React.FunctionComponent<ProductoCardProps> = ({ producto, cambiarEstado, estado, cambiarEstadoVista, estadoVista, setearDatos, datos }) => {
 
     const [botonActivo, setbotonActivo] = useState<Boolean>(producto.activo)
+    const { rol } = useUnidadContext();
 
     const productoService = new ProductoService();
 
@@ -54,14 +56,14 @@ const ProductoCard: React.FunctionComponent<ProductoCardProps> = ({ producto, ca
                 ><i className="material-icons" style={{ fontSize: "30px", cursor: "pointer", color: "white" }}>create</i></button>
 
                 {/* <button className={`btn btn-sm ${botonActivo ? "btn-danger" : "btn-success"}`} onClick={async() => { */}
-                <button className="btn btn-sm" style={{ backgroundColor: "#864e1b", color: "white" }}
-                    onClick={async () => {
-                        setbotonActivo(!botonActivo)
-
-                        let productoNuevo: Producto = producto;
-                        productoNuevo.activo = !(producto.activo);
-
-                        await productoService.actualizarEntityActivo(productoNuevo);
+                <button className="btn btn-sm" style={{backgroundColor: "#864e1b", color: "white"}} 
+                onClick={async() => { 
+                    setbotonActivo(!botonActivo)
+                   
+                    let productoNuevo: Producto = producto;
+                    productoNuevo.activo = !(producto.activo);
+                   
+                    await productoService.actualizarEntityActivo(productoNuevo, rol);
 
                     }}
                 >{botonActivo
@@ -70,7 +72,7 @@ const ProductoCard: React.FunctionComponent<ProductoCardProps> = ({ producto, ca
 
 
             </td>
-            <td></td>
+            <td><img src={producto.imagen} className="imagen-style"/></td>
 
         </tr>
 

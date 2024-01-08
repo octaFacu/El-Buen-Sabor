@@ -3,6 +3,7 @@ import { Rubro } from "./Rubro";
 import "../../css/ventanaModal.css"
 import { PadreRubro } from "./PadreRubro";
 import { CategoriaIngredienteService } from "../../services/CategoriaIngredienteService";
+import { useUnidadContext } from "../../context/GlobalContext";
 
 interface CaracIngrFormProps {
 
@@ -19,6 +20,7 @@ interface CaracIngrFormProps {
 const CaracIngrForm: React.FunctionComponent<CaracIngrFormProps> = ({ estado, cambiarEstado, rubrosPadre, datos, setDatos }) => {
 
     const categoriaIngredienteService = new CategoriaIngredienteService();
+    const { rol } = useUnidadContext();
 
     const [id, setId] = useState('')
     const [nombre, setNombre] = useState('')
@@ -54,7 +56,7 @@ const CaracIngrForm: React.FunctionComponent<CaracIngrFormProps> = ({ estado, ca
 
     const chequearSiPadre = async () => {
 
-        return await categoriaIngredienteService.getAllPadresConHijos().then(data => {
+        return await categoriaIngredienteService.getAllPadresConHijos(rol).then(data => {
             //DICE QUE SON PADRE TODOS LOS QUE SON PADRE Y NO SON HIJOS
             // console.log(data);
             // console.log(datos.id)
@@ -153,7 +155,7 @@ const CaracIngrForm: React.FunctionComponent<CaracIngrFormProps> = ({ estado, ca
                                         }
 
                                         //pasar los datos guardados al metodo de update
-                                        categoriaIngredienteService.updateEntity(datos)
+                                        categoriaIngredienteService.updateEntity(datos, rol)
 
                                     }else{
                                         // chequear si la nueva categoria tiene seleccionado un padre
@@ -165,11 +167,11 @@ const CaracIngrForm: React.FunctionComponent<CaracIngrFormProps> = ({ estado, ca
                                             //Creacion de nueva categoria con un padre
 
                                             // categoriaIngredienteService.createRubro({denominacion: nombre, categoriaPadre: {id: padreAPersistir.id}, activo: activo })
-                                            categoriaIngredienteService.createEntity({denominacion: nombre, categoriaIngredientePadre: {id: padreAPersistir.id}, activo: activo })
+                                            categoriaIngredienteService.createEntity({denominacion: nombre, categoriaIngredientePadre: {id: padreAPersistir.id}, activo: activo }, rol)
 
                                          }else{
                                             //Creacion de nueva categoria sin un padre
-                                            categoriaIngredienteService.createEntity({denominacion: nombre, activo: activo })
+                                            categoriaIngredienteService.createEntity({denominacion: nombre, activo: activo }, rol)
                                             
                                         }
                                         

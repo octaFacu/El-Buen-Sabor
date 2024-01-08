@@ -368,7 +368,7 @@ const ModalCreacionProd: React.FC<ProdFormProps> = ({ estado, cambiarEstado, cat
         
           getIngredientes();
         }
-      }, [state.productoSelect]);
+      }, [state.productoSelect, state.ingredientesGuardados]);
 
       useEffect(() => {
         if(state.llamarGuardado){

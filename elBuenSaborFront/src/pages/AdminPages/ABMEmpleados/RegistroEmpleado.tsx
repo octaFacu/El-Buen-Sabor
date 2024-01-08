@@ -7,17 +7,21 @@ import Paginacion from "../../../components/genericos/Paginacion";
 import "../../../css/EmpleadoRegistro.css";
 import { useNavigate } from "react-router-dom";
 import PageLoader from "../../../components/pageLoader/PageLoader";
+import { useUnidadContext } from '../../../context/GlobalContext';
+
 
 export default function RegistroEmpleado() {
   const navigate = useNavigate();
   const [empleados, setEmpleados] =
     useState<PageProyeccionHistorialPedido<Usuario>>();
   const [page, setPage] = useState<number>(0);
+  const { rol } = useUnidadContext();
 
   const traerEmpleados = async (pageNumber: number) => {
     const servicioUsuario = new AdminService();
-    setEmpleados(await servicioUsuario.traerEmpleado(pageNumber));
-  };
+    setEmpleados(await servicioUsuario.traerEmpleado(pageNumber, 10, rol))
+  }
+
 
   useEffect(() => {
     traerEmpleados(page);

@@ -8,6 +8,8 @@ import { useAuth0 } from '@auth0/auth0-react'
 import { ServiceBasicos } from "../../services/ServiceBasicos";
 import { Usuario } from "../../context/interfaces/interfaces";
 import PageLoader from "../../components/pageLoader/PageLoader";
+import { useUnidadContext } from "../../context/GlobalContext";
+
 import { BrowserRouter, Route, NavLink } from 'react-router-dom';
 
 interface props {
@@ -16,6 +18,7 @@ interface props {
 
 export default function InformacionUsuario({ opcion }: props) {
   const [boton, setBoton] = useState<number | null>(null);
+   const { rol } = useUnidadContext();
   const [usuario, setUsuario] = useState<Usuario>({
     id: "",
     nombre: "",
@@ -35,7 +38,7 @@ export default function InformacionUsuario({ opcion }: props) {
     const servicioUsuarios = new ServiceBasicos("usuario");
     try {
       const id = await traerId();
-      const usuarioGuardado = await servicioUsuarios.getOne(id);
+      const usuarioGuardado = await servicioUsuarios.getOne(id, rol);
       setUsuario(usuarioGuardado);
 
       switch (window.location.pathname) {

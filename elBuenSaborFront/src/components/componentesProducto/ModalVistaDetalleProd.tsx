@@ -4,6 +4,7 @@ import { IngredienteDeProducto } from "../../context/interfaces/IngredienteDePro
 import { ProductoService } from "../../services/ProductoService";
 import './Dropdown.css';
 import TablaIngredientesMostrar from "./TablaIngredientesMostrar";
+import { useUnidadContext } from "../../context/GlobalContext";
 
 interface ModalVistaDetalleProps{
     producto: Producto,
@@ -15,11 +16,12 @@ interface ModalVistaDetalleProps{
 
     const prodService = new ProductoService();
      const [ingredientes, setIngredientes] = useState<IngredienteDeProducto[]>([]); ;
+     const { rol } = useUnidadContext();
 
 
     const getIngredientes = async() => {
         setIngredientes([]);
-        await prodService.getIngredientes(producto.id!).then((data) => setIngredientes(castIngredientesIds(data)));
+        await prodService.getIngredientes(producto.id!, rol).then((data) => setIngredientes(castIngredientesIds(data)));
         
         
     }
@@ -76,10 +78,10 @@ interface ModalVistaDetalleProps{
         <div>
             {estadoVista &&
                 <div className="overlay" onClick={() => cambiarEstadoVista(!estadoVista)}>
-                <div className="container my-5 contenedorModal" style={{borderRadius: "25px", backgroundColor: "#f99132", color: "white", maxWidth: "50%"}} onClick={e => e.stopPropagation()}>
-                    <div className="" style={{textAlign: "center"}}>
+                <div className="container my-5 contenedorModal modal-dialog-scrollable" style={{borderRadius: "25px", backgroundColor: "#f99132", color: "white", maxWidth: "50%"}} onClick={e => e.stopPropagation()}>
+                    <div className="" style={{textAlign: "center", overflowY: 'auto', maxHeight: '650px'}}>
                         <div className="rounded container pb-2 pt-4" style={{textAlign: "center", backgroundColor: "#864e1b", maxWidth: "40%"}}>
-                            <h1>{producto.denominacion}</h1>
+                            <h1>{producto.denominacion}</h1> <img className="imagen-style" src={producto.imagen}></img>
                         </div>
                         <hr style={{marginRight: "2%", marginLeft: "2%"}}></hr>
                         <h3>Categoria: {producto.categoriaProducto.denominacion}</h3>
@@ -108,8 +110,8 @@ interface ModalVistaDetalleProps{
                         }
 
                     </div>
-                    </div>
-                    </div>
+                </div>
+            </div>
                 
             }
         </div>

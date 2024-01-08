@@ -7,6 +7,8 @@ import { ListaCartasABM } from "../../components/genericos/ListaCartasABM";
 import { Producto } from "../../context/interfaces/Producto";
 import ModalVistaDetalleProd from "../../components/componentesProducto/ModalVistaDetalleProd";
 import ModalCreacionProd from "../../components/componentesProducto/ModalCreacionProd";
+import { useUnidadContext } from "../../context/GlobalContext";
+import PageLoader from "../../components/pageLoader/PageLoader";
 
 export const ProductosABM = () => {
 
@@ -15,6 +17,8 @@ export const ProductosABM = () => {
     const categoriaProductoService = new CategoriaProductoService();
     const productoService = new ProductoService();
 
+    const { rol } = useUnidadContext();
+
 
     //Para la ventana modal del formulario
     const [estadoModal, setEstadoModal] = useState(false);
@@ -22,16 +26,17 @@ export const ProductosABM = () => {
     const [categorias, setCategorias] = useState<CategoriaProducto[]>([]);
     const [productos, setProductos] = useState<Producto[]>([new Producto()]);
     const [datos, setDatos] = useState<Producto>(new Producto());
+    const [cambiosProd, setCambiosProd] = useState<boolean>(false);
 
     useEffect(() => {
        
-        categoriaProductoService.getAllBasic()
+        categoriaProductoService.getAllBasic(rol)
             .then(data => {
                 console.log("CARGANDO CATEGORIAS "+ data);
                 setCategorias(data)
             })
 
-            productoService.getAllBasic()
+            productoService.getAllBasic(rol)
             .then(data => {
                 console.log("CARGANDO PRODUCTOS "+ data);
                 setProductos(data)
@@ -49,32 +54,29 @@ export const ProductosABM = () => {
         setDatos(producto);
     }
     
-
-    if(productos.length === 0){
+   useEffect(() => {
+        if(cambiosProd == true){
+            productoService.getAllBasic(rol)
+            .then(data => {
+                console.log("CARGANDO PRODUCTOS "+ data);
+                setProductos(data)
+            })
+            setCambiosProd(false);
+        }
+    }, [cambiosProd])
+    
+    if(categorias == null || rol == null){
         return <div style={{textAlign: "center"}}>
-            Loading...
+            <PageLoader></PageLoader>
         </div>
     }
 
     
-
-    
+ 
 
 
     return (
         <div>
-
-            {/* <GlobalContext.Consumer>
-                {(context) => (
-                <div>
-                    {context.ingredientes.map((ingrediente) => (
-                    <div key={ingrediente.id.toString()}>{ingrediente.nombre} {ingrediente.precioCompra.toString()} {ingrediente.unidadmedida.denominacion} {ingrediente.categoriaIngrediente.denominacion}</div>
-                    ))}
-                </div>
-                )}
-            </GlobalContext.Consumer> */}
-
-
         
         <ListaCartasABM
         titulo="Productos"
@@ -115,6 +117,8 @@ export const ProductosABM = () => {
 
                                     datos={datos}
                                     setearDatos={sendDatos}
+
+                                
                                 />
                                
                                 
@@ -130,9 +134,9 @@ export const ProductosABM = () => {
                 cambiarEstado={setEstadoModal}
 
                 datos={datos}
-                
-
                 categorias={categorias}
+                cambio={cambiosProd}
+                setCambios={setCambiosProd}
             />
             <ModalVistaDetalleProd producto= {datos} estadoVista={estadoModalVista} cambiarEstadoVista={setEstadoModalVista}/> 
             <br></br>

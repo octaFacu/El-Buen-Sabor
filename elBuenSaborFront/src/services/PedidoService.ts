@@ -7,9 +7,16 @@ export class pedidoService extends ServiceBasicos {
     super("pedido");
   }
 
-  async getProductosPedido(pedidoId: number) {
+
+  async getProductosPedido(pedidoId: number, rol: string){
     try {
-      let res = await fetch(this.url + "/producto/" + pedidoId);
+      let res = await fetch(this.url + "/producto/" + pedidoId, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          'X-Role': rol
+        },
+      });
 
       if (!res.ok) {
         throw { status: res.status, statusText: res.statusText };
@@ -22,44 +29,84 @@ export class pedidoService extends ServiceBasicos {
     }
   }
 
-  //Trae todas categorias de ingrediente que no tengan padre
-  async getByEstado(estado: string) {
-    console.log("EL ESTADO QUE LE ESTOY PASANDO AL SERVICIO ES: " + estado);
+
+  async getByEstado(estado: string, rol: string) {
 
 
     try {
-      let res = await fetch(this.url + "/estado/" + estado);
 
-      if (!res.ok) {
-        throw { status: res.status, statusText: res.statusText };
-      }
+        let res = await fetch(this.url + "/estado/"+ estado, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            'X-Role': rol
+          },
+        })
 
       let jsonRes = await res.json();
       return jsonRes;
+      
 
     } catch (err: any) {
       console.log(`Error ${err.status}: ${err.statusText}`);
     }
   }
 
-  async getProductosByPedido(idPedido: number) {
-    console.log("LOS PRODUCTOS DE ESTE PEDIDO: " + idPedido);
 
-    try {
-      let res = await fetch(this.url + "/productos/" + idPedido);
+
+
+async getByDelivery(idDelivery: string, rol: string) {
+
+  console.log("EL USUARIO DE DELIVERY QUE LE ESTOY PASANDO AL SERVICIO ES: "+ idDelivery);
+
+  try {
+
+      let res = await fetch(this.url + "/delivery/"+ idDelivery, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          'X-Role': rol
+        },
+      })
 
       if (!res.ok) {
-        throw { status: res.status, statusText: res.statusText };
+          throw { status: res.status, statusText: res.statusText }
       }
 
-      let jsonRes = await res.json();
-      return jsonRes;
+      let jsonRes = await res.json()
+      return jsonRes
+
+  } catch (err: any) {
+      console.log(`Error ${err.status}: ${err.statusText}`);
+  }
+}
+
+async getProductosByPedido(idPedido: number, rol: string) {
+
+    console.log("LOS PRODUCTOS DE ESTE PEDIDO: "+ idPedido);
+
+    try {
+
+        let res = await fetch(this.url + "/productos/"+ idPedido, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            'X-Role': rol
+          },
+        });
+
+        if (!res.ok) {
+            throw { status: res.status, statusText: res.statusText }
+        }
+
+        let jsonRes = await res.json();
+        return jsonRes;
 
     } catch (err: any) {
       console.log(`Error ${err.status}: ${err.statusText}`);
     }
   }
-
+  
 
   async createPedidoAndPedidoHasProducto(pedido: RequestPedido) {
     try {

@@ -4,6 +4,7 @@ import './CardPedidoCaj.css'
 import PedidoHasProductos from "../../context/interfaces/PedidoHasProductos"
 import { pedidoService } from "../../services/PedidoService"
 import ProductoPedidoCard from "./ProductoPedidoCard"
+import { useUnidadContext } from "../../context/GlobalContext"
 interface ProdFormProps {
 
     pedido: Pedido,
@@ -15,11 +16,12 @@ const CardPedidoCaja: React.FC<ProdFormProps> = ({ pedido, changeEstadoPedido}) 
 
     const servicePedido = new pedidoService();
     const [productos, setProductos] = useState<PedidoHasProductos[]>([]);
+    const { rol } = useUnidadContext();
 
     const getProductos = async() => {
         //servicePedido.getByEstado(EstadoPedido[estadoDePedidos])
         await setProductos([]);
-        await servicePedido.getProductosByPedido(pedido.id!)
+        await servicePedido.getProductosByPedido(pedido.id!, rol)
         
         .then(data => {
             setProductos(data)

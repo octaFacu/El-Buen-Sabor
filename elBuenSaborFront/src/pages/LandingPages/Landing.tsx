@@ -19,6 +19,7 @@ import { log } from 'console'
 
 export const Landing = () => {
 
+  const { rol } = useUnidadContext();
   const categoriaProductoService = new CategoriaProductoService()
   const productoService = new ProductoService()
   const favoritoService = new FavoritoService()
@@ -88,7 +89,7 @@ export const Landing = () => {
 
   //Trae los productos paginados por filtro
   const fetchProductosXFiltroPaginado = async () => {
-    const data = await productoService.getProductoXFiltroPaginado(busquedaXNombre)
+    const data = await productoService.getProductoXFiltroPaginado(busquedaXNombre, undefined, undefined, rol)
     if (data.totalElements) {
       setTotalElements(data.totalElements)
     }
@@ -107,7 +108,7 @@ export const Landing = () => {
 
   //Trae todos los productos por filtro
   const fetchProductosXFiltro = async () => {
-    const data = await productoService.getProductoXFiltro(busquedaXNombre)
+    const data = await productoService.getProductoXFiltro(busquedaXNombre, rol)
     await setProductosPorFiltro(data);
     setTotalElements(0);                                //Para que el boton de "ver mas" desaparezca
   }
@@ -137,13 +138,13 @@ export const Landing = () => {
 
   //Trae los productos filtrados por categoria
   const fetchProductosXCategoria = async () => {
-    const data = await productoService.getProductoXCategoria(categoriaSeleccionada?.id!)
+    const data = await productoService.getProductoXCategoria(categoriaSeleccionada?.id!, rol)
     await setProductosPorCategoria(data);
   }
 
   //Trae las categorias activas 
   const fetchDataCategorias = async () => {
-    const data = await categoriaProductoService.getAllActive();
+    const data = await categoriaProductoService.getAllActive(rol);
     await setCategorias(data);
   };
 

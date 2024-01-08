@@ -8,9 +8,11 @@ import Paginacion from '../../../components/genericos/Paginacion';
 import '../../../css/estilosEstadistias.css'
 import "../../../css/estilosOrdenamientos.css"
 import OrdenamientosComponentProductos from '../../../components/ComponentesRanking/ComponentesRankingProducto/OrdenamientosComponentProductos';
+import { useUnidadContext } from '../../../context/GlobalContext';
 
 export default function RankingProductos() {
 
+    const { rol } = useUnidadContext();
     const [page, setPage] = useState<number>(0);
     const [bebidas, setBebidas] = useState<PageProyeccionHistorialPedido<rankingProductos>>();
     const [comidas, setComidas] = useState<PageProyeccionHistorialPedido<rankingProductos>>();
@@ -22,8 +24,8 @@ export default function RankingProductos() {
 
     const traerProductosRanking = async (pageNumber: number) => {
         try {
-            const comidas = await servicioProducto.getRankingProductosComida(startDate, endDate, direccion, 3, pageNumber);
-            const bebidas = await servicioProducto.getRankingProductosBebida(startDate, endDate, direccion, 3, pageNumber);
+            const comidas = await servicioProducto.getRankingProductosComida(startDate, endDate, direccion, 3, pageNumber, rol);
+            const bebidas = await servicioProducto.getRankingProductosBebida(startDate, endDate, direccion, 3, pageNumber, rol);
             setComidas(comidas)
             setBebidas(bebidas);
 

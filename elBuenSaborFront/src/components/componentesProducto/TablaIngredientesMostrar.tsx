@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import IngredienteDeProducto from '../../context/interfaces/IngredienteDeProducto';
 import { IngredientesService } from '../../services/IngredientesService';
 import { ServiceBasicos } from '../../services/ServiceBasicos';
+import { useUnidadContext } from '../../context/GlobalContext';
 
 interface TablaIngredientesProdProps {
   ingredientesProd: IngredienteDeProducto[];
@@ -18,6 +19,7 @@ const TablaIngredientesMostrar: React.FC<TablaIngredientesProdProps> = ({ ingred
     const medidas = new ServiceBasicos("unidadDeMedida");
     const [ingNombre, setIngNombre] = useState<string[]>([]);
   const [medidaNombre, setMedidaNombre] = useState<string[]>([]);
+  const { rol } = useUnidadContext();
 
     //Get the names of the objects related to the ingredienteProd
     const getNamesMembers = async (ing: IngredienteDeProducto) => {
@@ -28,11 +30,11 @@ const TablaIngredientesMostrar: React.FC<TablaIngredientesProdProps> = ({ ingred
             // const medidaData = await medidas.getOne(ing.unidadMedida);
             // setMedidaNombre((prevMedidaNombre) => [...prevMedidaNombre, medidaData.denominacion]);
 
-            ingredienteService.getOne(ing.idIngrediente as number).then((ingredienteData) => {
+            ingredienteService.getOne(ing.idIngrediente as number, rol).then((ingredienteData) => {
                 setIngNombre((prevIngNombre) => [...prevIngNombre, ingredienteData.nombre]);
               });
           
-              medidas.getOne(ing.idMedida as number).then((medidaData) => {
+              medidas.getOne(ing.idMedida as number, rol).then((medidaData) => {
                 setMedidaNombre((prevMedidaNombre) => [...prevMedidaNombre, medidaData.denominacion]);
               });
 

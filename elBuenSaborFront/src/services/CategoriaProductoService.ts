@@ -7,9 +7,15 @@ export class CategoriaProductoService extends ServiceBasicos {
     super("categoriaProducto");
   }
 
-  async getAllActive() {
+  async getAllActive(rol: string) {
     try {
-      let res = await fetch(this.url + "/getAllActivo");
+      let res = await fetch(this.url + "/getAllActivo", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          'X-Role': rol
+        },
+      });
 
       if (!res.ok) {
         throw { status: res.status, statusText: res.statusText };

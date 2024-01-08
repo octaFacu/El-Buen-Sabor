@@ -5,8 +5,10 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { ServiceBasicos } from "../../services/ServiceBasicos";
 import { Usuario } from "../../context/interfaces/interfaces";
 import PageLoader from "../../components/pageLoader/PageLoader";
+import { useUnidadContext } from "../../context/GlobalContext";
 
 export default function InformacionAdicionalPostRegistro() {
+  const { rol } = useUnidadContext();
   const { user, isLoading } = useAuth0();
   const navigate = useNavigate();
   const [usuario, setUsuario] = useState<Usuario>({
@@ -39,13 +41,13 @@ export default function InformacionAdicionalPostRegistro() {
     const servicioCliente = new ServiceBasicos("cliente");
 
     try {
-      const usuarioGuardado = await servicioUsuarios.createEntity(usuario);  
+      const usuarioGuardado = await servicioUsuarios.createEntity(usuario, rol);  
       const cliente = {
         ...usuario,
         usuario: usuarioGuardado,
       };
   
-      await servicioCliente.createEntity(cliente);
+      await servicioCliente.createEntity(cliente, rol);
        navigate("/");
     } catch (error) {
       console.error(error);

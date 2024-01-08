@@ -8,9 +8,11 @@ import { Stomp } from "@stomp/stompjs";
 import * as SockJS from 'sockjs-client';
 import * as Socket from 'socket.io-client';
 import SortListComponent from "./SortListComponent";
+import { useUnidadContext } from "../../context/GlobalContext";
 
 
 export const CajeroPedidosPage = () => {
+    const { rol } = useUnidadContext();
 
     (window as any).global = window
     const [estadoModal, setEstadoModal] = useState(false);
@@ -18,17 +20,17 @@ export const CajeroPedidosPage = () => {
     const [pedidos, setPedidos] = useState<Pedido[]>([]);
     const [estadoDePedidos, setEstadoDePedidos] = useState<EstadoPedido>(EstadoPedido.AConfirmar);
     const servicePedido = new pedidoService();
-    const[listaPendientes, setListaPendientes] = useState<number[]>([]);
+    const [listaPendientes, setListaPendientes] = useState<number[]>([]);
 
-    const getPedidos = async() => {
+    const getPedidos = async () => {
         //servicePedido.getByEstado(EstadoPedido[estadoDePedidos])
-        servicePedido.getAllBasic()
-        .then(data => {
-            setAllPedidos(data)
-        })
+        servicePedido.getAllBasic(rol)
+            .then(data => {
+                setAllPedidos(data)
+            })
     }
 
-    const getPedidosEstado = async() => {
+    const getPedidosEstado = async () => {
         const estadoString = EstadoPedido[estadoDePedidos];
 
 
@@ -36,49 +38,49 @@ export const CajeroPedidosPage = () => {
         await setPedidos(filteredPedidos);
     }
 
-    async function handleSetListaPendientes(estado: string){
+    async function handleSetListaPendientes(estado: string) {
         console.log("Estoy entrando al setter de lista de pendientes");
-        switch(estado){
-            case "AConfirmar":{
+        switch (estado) {
+            case "AConfirmar": {
                 if (!listaPendientes.includes(0)) {
                     await setListaPendientes([...listaPendientes, 0]);
-                  }
-                  break;
+                }
+                break;
             }
-            case "EnCocina":{
+            case "EnCocina": {
                 if (!listaPendientes.includes(1)) {
                     await setListaPendientes([...listaPendientes, 1]);
-                  }
-                  break;
+                }
+                break;
             }
-            case "Listo":{
+            case "Listo": {
                 if (!listaPendientes.includes(2)) {
                     await setListaPendientes([...listaPendientes, 2]);
-                  }
-                  break;
+                }
+                break;
             }
-            case "EnDelivery":{
+            case "EnDelivery": {
                 if (!listaPendientes.includes(3)) {
                     await setListaPendientes([...listaPendientes, 3]);
-                  }
-                  break;
+                }
+                break;
             }
-            case "Entregado":{
+            case "Entregado": {
                 if (!listaPendientes.includes(4)) {
                     await setListaPendientes([...listaPendientes, 4]);
-                  }
-                  break;
+                }
+                break;
             }
             default: {
                 break;
             };
         }
-       listaPendientes.forEach(num => {
-            console.log("PEDIDOS RECIBIDOS:"+num);
-       });
+        listaPendientes.forEach(num => {
+            console.log("PEDIDOS RECIBIDOS:" + num);
+        });
     }
 
-    async function handleDeSetListaPendientes(estado: EstadoPedido){
+    async function handleDeSetListaPendientes(estado: EstadoPedido) {
         console.log(estado);
         const updatedNumbers = listaPendientes.filter((number) => number == estado);
         await setListaPendientes(updatedNumbers);
@@ -90,12 +92,12 @@ export const CajeroPedidosPage = () => {
         //const socket = Socket.io('/ws-endpoint');
         const stompClient = Stomp.over(socket);
 
-        const handleNotification = async(attributeValue: string) => {
+        const handleNotification = async (attributeValue: string) => {
 
             console.log('Received attribute value:', attributeValue);
             await handleSetListaPendientes(attributeValue);
-            
-            
+
+
             setTimeout(() => {
 
                 handleDeSetListaPendientes(estadoDePedidos);
@@ -118,14 +120,14 @@ export const CajeroPedidosPage = () => {
                 subscription.unsubscribe();
                 stompClient.disconnect();
             };
-            
+
         });
-        
+
     }, [])
 
     useEffect(() => {
         getPedidosEstado();
-    }, [estadoDePedidos]); 
+    }, [estadoDePedidos]);
 
     useEffect(() => {
         console.log("PEDIDOS HAN CAMBIADO");
@@ -133,120 +135,120 @@ export const CajeroPedidosPage = () => {
     }, [pedidos]);
 
     const handleChangeEstado = (estadoDePedido: EstadoPedido, pedidoChanged: Pedido) => {
-        pedidoChanged.estado = estadoDePedido;
-        servicePedido.updateEntity(pedidoChanged);
+        pedidoChanged.estado = estadoDePedido.toString();
+        servicePedido.updateEntity(pedidoChanged, rol);
         window.location.reload();
     }
 
-    
+
     const handleEstadoChange = (newEstado: EstadoPedido) => {
         setEstadoDePedidos(newEstado);
     };
 
     const ConvertEstadoPedido = (num: number) => {
-        switch(num){
-            case 0:{
-                return "AConfirmar";  
+        switch (num) {
+            case 0: {
+                return "AConfirmar";
             }
-            case 1:{
+            case 1: {
                 return "EnCocina";
             }
-            case 2:{
+            case 2: {
                 return "Listo";
             }
-            case 3:{
+            case 3: {
                 return "EnDelivery";
             }
-            case 4:{
+            case 4: {
                 return "Entregado";
             }
-            default:{
+            default: {
                 return "AConfirmar";
             }
         }
     };
 
-    return(
+    return (
         <div>
-        <div>
-             <div className="container my-5 pb-1 mb-3 " style={{ background: "#f99132", borderRadius: "25px" }}>
+            <div>
+                <div className="container my-5 pb-1 mb-3 " style={{ background: "#f99132", borderRadius: "25px" }}>
 
-            
-            <div className="titleAndAddButton">
-                <div className="text-center pt-4 px-3 d-flex">
-                    <h1 style={{ margin: "auto", color: "white" }}> Pedidos</h1>
-                </div>
-                <SortListComponent key={pedidos.length} list={pedidos} setList={setPedidos}></SortListComponent>
-                <div className="circleButtons py-1 px-1">
-                {listaPendientes.map((num) => (
-                    <div key={num} className="circleButton">
-                    <span className="circleButtonText" onClick={() => handleEstadoChange(EstadoPedido[ConvertEstadoPedido(num)])}>{num}</span>
+
+                    <div className="titleAndAddButton">
+                        <div className="text-center pt-4 px-3 d-flex">
+                            <h1 style={{ margin: "auto", color: "white" }}> Pedidos</h1>
+                        </div>
+                        <SortListComponent key={pedidos.length} list={pedidos} setList={setPedidos}></SortListComponent>
+                        <div className="circleButtons py-1 px-1">
+                            {listaPendientes.map((num) => (
+                                <div key={num} className="circleButton">
+                                    <span className="circleButtonText" onClick={() => handleEstadoChange(EstadoPedido[ConvertEstadoPedido(num)])}>{num}</span>
+                                </div>
+                            ))}
+
+
+                        </div>
                     </div>
-                ))}
-                    
 
-                </div>
-            </div>
-            
-            
 
-            <div className="parentPed">
 
-                <div className="childPed">
-                    <input style={{display: "none"}}></input>
-                </div>
-                <div className="childPed">
-                    <select className="dropdown-estado form-select mb-3 mr-3 " id="categoria" name="categoria" onChange={(e) => {handleEstadoChange(EstadoPedido[e.target.value as keyof typeof EstadoPedido]) }}>
-                                     {/* <option selected value={estadoDePedidos.valueOf()}>{estadoDePedidos.valueOf()}</option> */}
-                                    {Object.values(EstadoPedido)
+                    <div className="parentPed">
+
+                        <div className="childPed">
+                            <input style={{ display: "none" }}></input>
+                        </div>
+                        <div className="childPed">
+                            <select className="dropdown-estado form-select mb-3 mr-3 " id="categoria" name="categoria" onChange={(e) => { handleEstadoChange(EstadoPedido[e.target.value as keyof typeof EstadoPedido]) }}>
+                                {/* <option selected value={estadoDePedidos.valueOf()}>{estadoDePedidos.valueOf()}</option> */}
+                                {Object.values(EstadoPedido)
                                     .filter(state => typeof state === "string")
                                     .map((state, index) => (
                                         // estadoDePedidos !== state && (
-                                           ( <option key={index} value={state}>
-                                                {index}- {state}
-                                            </option>
+                                        (<option key={index} value={state}>
+                                            {index}- {state}
+                                        </option>
                                         )
                                     ))}
 
 
 
-                                    </select>
-                </div>
-                
-             
-            </div>
+                            </select>
+                        </div>
 
 
-            {pedidos.length > 0 ? (
-                <div /*className="card-containerPed"*/ className="row">
-                    {pedidos.map(ped => (
-                         <div className="col-sm-6 col-md-4">
-                            <CardPedidoCaja changeEstadoPedido={handleChangeEstado} pedido={ped} ></CardPedidoCaja>
-                            </div>
-                    ))}
-                    
-                </div>
-            ) : (
-                <div className="container">
-                    <h2 style={{color: "white"}} className="no-pedidos-text mt-5 mb-5">No hay Pedidos de esta Categoria!</h2>
-                </div>
-            )
-            
-                
-            }
-                
-            <div>
-            {/*notifications[estadoDePedidos]notificacion && (
+                    </div>
+
+
+                    {pedidos.length > 0 ? (
+                        <div /*className="card-containerPed"*/ className="row">
+                            {pedidos.map(ped => (
+                                <div className="col-sm-6 col-md-4">
+                                    <CardPedidoCaja changeEstadoPedido={handleChangeEstado} pedido={ped} ></CardPedidoCaja>
+                                </div>
+                            ))}
+
+                        </div>
+                    ) : (
+                        <div className="container">
+                            <h2 style={{ color: "white" }} className="no-pedidos-text mt-5 mb-5">No hay Pedidos de esta Categoria!</h2>
+                        </div>
+                    )
+
+
+                    }
+
+                    <div>
+                        {/*notifications[estadoDePedidos]notificacion && (
                 <div>
                     Pedido {EstadoPedido[estadoDePedidos]} pendiente.
                 </div>
             )*/}
 
-            </div>
+                    </div>
 
-        </div >
-        </div>
-        <br></br>
+                </div >
+            </div>
+            <br></br>
         </div>
     )
 }

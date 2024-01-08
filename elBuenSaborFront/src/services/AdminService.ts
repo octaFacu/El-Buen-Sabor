@@ -8,9 +8,15 @@ export class AdminService extends ServiceBasicos {
     super("admin/estadisticas");
   }
 
-  async generarInformeClientes() {
+  async generarInformeClientes(rol: string) {
     try {
-      const response = await fetch(this.url + "/generar-informeClientes");
+      const response = await fetch(this.url + "/generar-informeClientes", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          'X-Role': rol
+        },
+      });
       if (!response.ok) {
         throw new Error("Error al generar el informe");
       }
@@ -21,9 +27,17 @@ export class AdminService extends ServiceBasicos {
     }
   }
 
-  async generarInformeProductos() {
+
+
+  async generarInformeProductos(rol: string) {
     try {
-      const response = await fetch(this.url + "/generar-informeProductos");
+      const response = await fetch(this.url + "/generar-informeProductos", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          'X-Role': rol
+        },
+      });
       if (!response.ok) {
         throw new Error("Error al generar el informe");
       }
@@ -34,9 +48,16 @@ export class AdminService extends ServiceBasicos {
     }
   }
 
-  async generarInformeGanancias() {
+
+  async generarInformeGanancias(rol: string) {
     try {
-      const response = await fetch(this.url + "/generar-informeGanancias");
+      const response = await fetch(this.url + "/generar-informeGanancias", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          'X-Role': rol
+        },
+      });
       if (!response.ok) {
         throw new Error("Error al generar el informe");
       }
@@ -47,11 +68,17 @@ export class AdminService extends ServiceBasicos {
     }
   }
 
-  async traerEmpleado(page: number = 0, size: number = 3) {
+  async traerEmpleado(page: number = 0, size: number = 3, rol: string) {
     try {
       const parametros = `?page=${page}&size=${size}`;
       const response = await fetch(
-        this.urlEmpleado + `/traerEmpleados${parametros}`
+        this.urlEmpleado + `/traerEmpleados${parametros}`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            'X-Role': rol
+          },
+        }
       );
       const reponseJSON = await response.json();
       if (!response.ok) {

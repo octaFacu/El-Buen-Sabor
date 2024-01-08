@@ -17,9 +17,16 @@ export class ServiceBasicos {
 
   //Trae todo
   // async getAllBasic(urlEspecifico: String) {
-  async getAllBasic() {
+  async getAllBasic(rol: string) {
     try {
-      let res = await fetch(this.baseUrl + this._urlEspecifico);
+      let res = await fetch(this.baseUrl + this._urlEspecifico, {
+        method: 'GET', 
+        headers: {
+          'Content-Type': 'application/json',
+          'X-Role': rol
+        },
+
+      });
 
       if (!res.ok) {
         throw { status: res.status, statusText: res.statusText };
@@ -33,9 +40,20 @@ export class ServiceBasicos {
   }
 
   // realiza un getOne con un id que puede ser tipo number o tipo string
-  async getOne(id: number | string) {
+  async getOne(id: number | string, rol: string) {
     try {
-      const res = await fetch(this.baseUrl + this._urlEspecifico + `/${id}`);
+      console.log("Entrando a get one...");
+      console.log("url: " + this.baseUrl + this._urlEspecifico + `/${id}`);
+      console.log("id: " + id);
+      console.log("rol: " + rol);
+      const res = await fetch(this.baseUrl + this._urlEspecifico + `/${id}`, {
+        method: 'GET', 
+        headers: {
+          'Content-Type': 'application/json',
+          'X-Role': rol
+        },
+
+      });
 
       if (!res.ok) {
         throw { status: res.status, statusText: res.statusText };
@@ -47,10 +65,14 @@ export class ServiceBasicos {
       console.log(`Error ${err.status}: ${err.statusText}`);
     }
   }
-  async deleteEntity(id: number | string) {
+  async deleteEntity(id: number | string, rol: string) {
     try {
       const res = await fetch(this.baseUrl + this._urlEspecifico + `/${id}`, {
         method: "DELETE",
+          headers: {
+            'Content-Type': 'application/json',
+            'X-Role': rol
+          },
       });
   
       if (!res.ok) {
@@ -65,7 +87,7 @@ export class ServiceBasicos {
 
   // Metodo para hacer update
   // async updateEntity(urlEspecifico: String, datos: any) {
-  async updateEntity(datos: any) {
+  async updateEntity(datos: any, rol: string) {
     try {
       //Pasarle a la direccion con un put la info
       let res = await fetch(
@@ -74,6 +96,7 @@ export class ServiceBasicos {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
+            'X-Role': rol
           },
           body: JSON.stringify(datos),
         }
@@ -91,12 +114,13 @@ export class ServiceBasicos {
   }
 
   // async createEntity(urlEspecifico: String, datos: {}) {
-  async createEntity(datos: {}) {
+  async createEntity(datos: {}, rol: string) {
     try {
       let res = await fetch(this.baseUrl + this._urlEspecifico, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          'X-Role': rol
         },
         body: JSON.stringify(datos),
       });
@@ -112,7 +136,7 @@ export class ServiceBasicos {
     }
   }
 
-  async getPaged(page: number, size: number) {
+  async getPaged(page: number, size: number, rol: string) {
     try {
       let res = await fetch(
         this.baseUrl +
@@ -120,7 +144,14 @@ export class ServiceBasicos {
           "/paged?page=" +
           page +
           "&size=" +
-          size
+          size,
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              'X-Role': rol
+            },
+          }
       );
 
       if (!res.ok) {
@@ -136,10 +167,14 @@ export class ServiceBasicos {
 
   //Metodo para activar o desactivar los objetos de manera logica
 
-  async softDelete(id: any):Promise<void> {
+  async softDelete(id: number, rol: string):Promise<void> {
    try{
     let res = await fetch(this.baseUrl+this._urlEspecifico+"/soft/"+id ,{
       method: 'PATCH',
+      headers: {
+        "Content-Type": "application/json",
+        'X-Role': rol
+      },
     })
     
     if (!res.ok) {

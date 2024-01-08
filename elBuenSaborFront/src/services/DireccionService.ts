@@ -8,7 +8,7 @@ export class DireccionService extends ServiceBasicos {
     super("direccion");
   }
   
-  async updateEntity(datos: any) {
+  async updateEntity(datos: any, rol: string) {
     try {
       let res = await fetch(
         this.url  + `/${datos.idDireccion}`,
@@ -16,6 +16,7 @@ export class DireccionService extends ServiceBasicos {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
+            'X-Role': rol
           },
           body: JSON.stringify(datos),
         }
@@ -32,9 +33,15 @@ export class DireccionService extends ServiceBasicos {
     }
   }
   //Trae las direcciones de un usuario
-  async getDireccionesByusuarioId(usuarioId: string) {
+  async getDireccionesByusuarioId(usuarioId: string, rol: string) {
     try {
-      let res = await fetch(this.url + "/porUsuario?idUsuario=" + usuarioId);
+      let res = await fetch(this.url + "/porUsuario?idUsuario=" + usuarioId, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          'X-Role': rol
+        },
+      });
 
       if (!res.ok) {
         throw { status: res.status, statusText: res.statusText };
@@ -47,12 +54,13 @@ export class DireccionService extends ServiceBasicos {
     }
   }
   // verificamos si el usuario a crear ya existe en la bd si no existe lo creamos. y si existe verificamos si esta en false. lo cambiamos a true. si esta en true tiramos excepcion
-  async verificarYCrearDireccion(usuarioId: string, direccion: Direccion): Promise<string> {
+  async verificarYCrearDireccion(usuarioId: string, direccion: Direccion, rol: string): Promise<string> {
     try {
       const response = await fetch(this.url + "/verificar-crear-direccion/" + usuarioId, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
+          'X-Role': rol
         },
         body: JSON.stringify(direccion),
       });
@@ -73,12 +81,13 @@ export class DireccionService extends ServiceBasicos {
     }
   }
 
-  async updateDireccion(usuarioId: string, direccion: Direccion): Promise<string> {
+  async updateDireccion(usuarioId: string, direccion: Direccion, rol: string): Promise<string> {
     try {
       const response = await fetch(this.url + "/actualizar/direccion/" +direccion.idDireccion+"?idUsuario="+usuarioId , {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
+          'X-Role': rol
         },
         body: JSON.stringify(direccion),
       });

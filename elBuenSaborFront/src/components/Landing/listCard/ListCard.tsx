@@ -20,16 +20,7 @@ interface ListCardProps {
 
 const ListCard: FC<ListCardProps> = ({ categoria, productos, setModalDetalleProducto, setProductoSeleccionado, isLoading, handleAddToCart }) => {
 
-    //ARREGLAR SI SALE LOADER O NO RESULTADOS
-    
-    if (isLoading) {
-        console.log("LOGGGGGGGGG");
-        return (
-            <ListLoader />
-        );
-    }
-
-    if (productos === null) {
+    if (productos === null || productos.length === 0) {
         console.log("LOGGGGGGGGG");
         return (
             <div className="container-cat" style={{ marginTop: "3%" }}>
@@ -49,33 +40,6 @@ const ListCard: FC<ListCardProps> = ({ categoria, productos, setModalDetalleProd
     }
 
     return (
-
-
-        //     <div style={{ textAlign: "center" }}><h2 style={{ color: "#864e1b" }}>¡MÁS VENDIDOS!</h2></div>
-
-        //     <div className="containerCards">
-        //         <div className="cardNew">
-        //             <img className="imgCard" src="../src/assets/hamburguesa-simple.jpg" alt="Hamburguesa simple" style={{ width: "100%" }}></img>
-        //             <div className="bottom-left">Hamburguesa Simple <i className="material-icons" style={{ fontSize: "30px", marginTop: "5%;" }}> add_shopping_cart</i></div>
-        //         </div>
-        //         <div className="cardNew">
-        //             <img className="imgCard" src="../src/assets/hamburguesa-simple.jpg" alt="Hamburguesa americana" style={{ width: "100%" }}></img>
-        //             <div className="bottom-left">Hamburguesa Americana <i className="material-icons" style={{ fontSize: "30px", marginTop: "5%;" }}> add_shopping_cart</i></div>
-
-        //         </div>
-        //         <div className="cardNew">
-        //             <img className="imgCard" src="../src/assets/hamburguesa-simple.jpg" alt="Hamburguesa doble" style={{ width: "100%" }}></img>
-        //             <div className="bottom-left">Hamburguesa Doble <i className="material-icons" style={{ fontSize: "30px", marginTop: "5%;" }}> add_shopping_cart</i></div>
-
-        //         </div>
-        //     </div>
-
-
-        // <hr></hr>
-
-
-        // <div className="container containerMain">
-
 
         <div className="container-cat" style={{ marginTop: "3%" }}>
 
@@ -101,8 +65,6 @@ const ListCard: FC<ListCardProps> = ({ categoria, productos, setModalDetalleProd
             </div>
 
         </div>
-        // </div>
-
 
     );
 }

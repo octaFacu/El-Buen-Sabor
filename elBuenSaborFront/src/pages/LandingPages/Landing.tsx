@@ -133,6 +133,7 @@ export const Landing = () => {
 
   //PARA CARRUSEL DE CATEGORIAS
   const [categorias, setCategorias] = useState<CategoriaProducto[]>([])
+  const [catLoader, setCatLoader] = useState<boolean>(true)
   const [categoriaSeleccionada, setCategoriaSeleccionada] = useState<CategoriaProducto | null>(null)
   const [productosPorCategoria, setProductosPorCategoria] = useState<Producto[]>([])
 
@@ -146,6 +147,7 @@ export const Landing = () => {
   const fetchDataCategorias = async () => {
     const data = await categoriaProductoService.getAllActive(rol);
     await setCategorias(data);
+    setCatLoader(false)
   };
 
   useEffect(() => {
@@ -212,9 +214,15 @@ export const Landing = () => {
   // Obtención de productos desde la API 
   const fetchProducts = async (filter: number | string): Promise<Producto[]> => {
 
-    const response = await fetch(`http://localhost:8080/producto/filtroCategoria?filter=${filter}`);
-    const data = await response.json();
-    return data;
+    try {
+      const response = await fetch(`http://localhost:8080/producto/filtroCategoria?filter=${filter}`);
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.error("Error, no hay productos para esta categoria")
+      return []
+    }
+    
   };
 
   // Cargar los productos iniciales cuando el componente se monte
@@ -229,8 +237,8 @@ export const Landing = () => {
         setIsLoading(true);
         // fetchProducts(pageNumber).then((data) => {
         fetchProducts(categorias[pageNumber - 1].id!).then((data) => {
-          setProductos((arreglosActuales) => [...arreglosActuales, data]);
-          setIsLoading(false);
+            setProductos((arreglosActuales) => [...arreglosActuales, data]);
+            setIsLoading(false);
 
         });
       }
@@ -269,8 +277,29 @@ export const Landing = () => {
   }
 
   //Loader
-  if (categorias.length === 0) {
+  if (catLoader) {
     return <PageLoader />
+  }
+
+  if (categorias.length === 0) {
+    return (
+      <>
+        <ImgLogo />
+
+        <div className="container containerMain">
+
+          <div className="container-post-mp py-5 mb-5" style={{ background: "#f99132", borderRadius: "25px" }}>
+            <div className="text-center py-4 px-3">
+              <h1 className="title-cart">No hay categorias cargadas!</h1>
+            </div>
+          </div >
+
+        </div>
+
+        <Footer />
+
+      </>
+    )
   }
 
   if (categoriaSeleccionada || busquedaXNombre) {
@@ -370,7 +399,7 @@ export const Landing = () => {
           </div>
         ))}
 
-        {isLoading && <ListLoader />}
+        {/* {isLoading && <ListLoader />} */}
 
       </div>
 

@@ -122,7 +122,7 @@ export default function InformacionAdicionalPostRegistro() {
       </div>
     );
   } else {
-    navigate("/");
-    return null;
+    
+    return navigate("/");
   }
 }

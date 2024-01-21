@@ -44,14 +44,14 @@ export default function InformacionUsuario({ opcion }: props) {
       switch (window.location.pathname) {
         case "/usuarios/MiCuenta":
           return setBoton(1);
-        case "/usuarios/MisFavoritos":
+        case "/usuarios/MisDirecciones":
           return setBoton(2);
         case "/usuarios/MisPedidos":
           return setBoton(3);
-        case "/usuarios/MisDirecciones":
+        case "/usuarios/MisFavoritos":
           return setBoton(4);
         default:
-          return setBoton(0);
+          return setBoton(1);
       }
 
     } catch (error) {

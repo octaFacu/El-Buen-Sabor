@@ -1,4 +1,7 @@
+import Pedido from "../context/interfaces/Pedido";
+import { ProyeccionDatosFactura } from "../context/interfaces/Proyecciones/ProyeccionDatosFactura";
 import { RequestPedido } from "../context/interfaces/interfaces";
+import { FacturaService } from "./FacturaService";
 import { ServiceBasicos } from "./ServiceBasicos";
 export class pedidoService extends ServiceBasicos {
   url = "http://localhost:8080/pedido";
@@ -56,8 +59,6 @@ export class pedidoService extends ServiceBasicos {
 
 
 async getByDelivery(idDelivery: string, rol: string) {
-
-  console.log("EL USUARIO DE DELIVERY QUE LE ESTOY PASANDO AL SERVICIO ES: "+ idDelivery);
 
   try {
 
@@ -145,5 +146,52 @@ async getProductosByPedido(idPedido: number, rol: string) {
       console.log(`Error ${err.status}: ${err.statusText}`);
     }
   }
+
+  async updateEntity(datos: Pedido, rol: string) {
+    try {
+      //Pasarle a la direccion con un put la info
+      let res = await fetch(
+        this.url + `/${datos.id}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            'X-Role': rol
+          },
+          body: JSON.stringify(datos),
+        }
+      );
+
+      if (!res.ok) {
+        throw { status: res.status, statusText: res.statusText };
+      }
+
+      let jsonRes = await res.json();
+
+
+      //Si es pagado en efectivo y fue entregado
+      if(datos.estado == "Entregado" ){
+        let fc: ProyeccionDatosFactura = await this.getDatosFacturas(datos.id!);
+
+        let serviceFC = new FacturaService(); 
+
+        //Crear factura si no existe
+        if(fc == null || fc == undefined){
+          fc = await serviceFC.createFactura(datos, rol);
+        }
+          
+        serviceFC.generarFCPDF(fc.id, rol);
+        
+      }
+
+      return jsonRes;
+    } catch (err: any) {
+      console.log(`Error ${err.status}: ${err.statusText}`);
+    }
+  }
+
+
+
+
 
 }

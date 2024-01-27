@@ -16,6 +16,7 @@ import CartNotification from "../../components/Landing/cartNotification/CartNoti
 import { FavoritoService } from '../../services/FavoritoService'
 import { useAuth0 } from '@auth0/auth0-react'
 import { log } from 'console'
+import MasVendidos from '../../components/Landing/masVendidos/MasVendidos'
 
 export const Landing = () => {
 
@@ -222,7 +223,7 @@ export const Landing = () => {
       console.error("Error, no hay productos para esta categoria")
       return []
     }
-    
+
   };
 
   // Cargar los productos iniciales cuando el componente se monte
@@ -237,8 +238,8 @@ export const Landing = () => {
         setIsLoading(true);
         // fetchProducts(pageNumber).then((data) => {
         fetchProducts(categorias[pageNumber - 1].id!).then((data) => {
-            setProductos((arreglosActuales) => [...arreglosActuales, data]);
-            setIsLoading(false);
+          setProductos((arreglosActuales) => [...arreglosActuales, data]);
+          setIsLoading(false);
 
         });
       }
@@ -380,6 +381,13 @@ export const Landing = () => {
       <ImgLogo />
 
       <div className="container containerMain">
+
+        <MasVendidos
+          rol={rol}
+          setModalDetalleProducto={setModalDetalleProducto}
+          setProductoSeleccionado={setProductoSeleccionado}
+          handleAddToCart={handleAddToCart}
+        />
 
         <CarruselCategorias
           categorias={categorias}

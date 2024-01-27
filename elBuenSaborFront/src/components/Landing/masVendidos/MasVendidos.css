@@ -1,0 +1,5 @@
+.container-mas-vendidos {
+  border-radius: 11px;
+  display: flex;
+  flex-direction: column;
+}

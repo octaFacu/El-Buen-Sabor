@@ -404,8 +404,6 @@ hr {
   border-radius: 11px;
   background-color: #f99132;
   display: flex;
-  /* justify-content: center; */
-  /* display: inline-flex; */
   flex-direction: column;
 }
 

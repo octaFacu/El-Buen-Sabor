@@ -6,6 +6,7 @@ import "./Pago.css"
 import PedidoHasProductos from "../../../context/interfaces/PedidoHasProductos";
 import Pedido from "../../../context/interfaces/Pedido";
 import { pedidoService } from "../../../services/PedidoService";
+import { MercadoPagoService } from "../../../services/MercadoPagoService";
 
 interface PagoProps {
     usuarioMP: UserAuth0
@@ -17,9 +18,12 @@ interface PagoProps {
 
 const Pago: FC<PagoProps> = ({ usuarioMP, localStorageValues, pedidoHasProductos, pedido }) => {
 
-    initMercadoPago(import.meta.env.VITE_MP_PUBLIC_KEY! as string);
+    //initMercadoPago(import.meta.env.VITE_MP_PUBLIC_KEY! as string);
+
+    initMercadoPago(import.meta.env.VITE_MP_PRODUCTION_TEST_PUBLIC_KEY! as string);
     //initMercadoPago(import.meta.env.VITE_MP_TEST_PUBLIC_KEY! as string);
     const pedidoSrv = new pedidoService();
+    const mpSrv = new MercadoPagoService();
 
     const [preferenceId, setPreferenceId] = useState<string | null>(null);
 
@@ -45,28 +49,19 @@ const Pago: FC<PagoProps> = ({ usuarioMP, localStorageValues, pedidoHasProductos
 
     }
 
-    const fetchCheckout = async () => {
+    const fetchCheckout = async (requestData: RequestDataMP) => {
 
-        const res = await fetch("http://localhost:8080/mp/checkout", {
-            method: "POST",
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(
-                requestData
-            )
+        mpSrv.getPreferenceId(requestData).then((data) => {
+            setPreferenceId(data.preferenceId)
         })
-
-        const data = await res.json()
-        setPreferenceId(data.preferenceId)
         console.log("RESPUESTA DE MERCADO PAGO:");
-        console.log(data);
+        console.log(preferenceId);
 
     }
 
     useEffect(() => {
 
-        fetchCheckout()
+        fetchCheckout(requestData)
     }, [])
 
     const customization = {
@@ -76,18 +71,18 @@ const Pago: FC<PagoProps> = ({ usuarioMP, localStorageValues, pedidoHasProductos
         },
     }
 
-    if (preferenceId != "" && preferenceId != null) {
+    if (preferenceId === "" || preferenceId === null || preferenceId === undefined) {
         return (
-            <div className="btn-mp" onClick={generoPedidoMP}>
-                <Wallet
-                    initialization={{ preferenceId: preferenceId! }}
-                />
-            </div>
+            <img src={listLoader} alt="Loading..." className="list-loader-gif" />
         );
     }
 
     return (
-        <img src={listLoader} alt="Loading..." className="list-loader-gif" />
+        <div className="btn-mp" onClick={generoPedidoMP}>
+            <Wallet
+                initialization={{ preferenceId: preferenceId! }}
+            />
+        </div>
     );
 
 }

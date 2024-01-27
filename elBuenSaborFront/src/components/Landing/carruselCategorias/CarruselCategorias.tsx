@@ -107,7 +107,12 @@ const CarruselCategorias: FC<CarruselCategoriasProps> = (props: CarruselCategori
                     </div>
 
                 </div>
+
+                <hr className="hr-title mx-3"></hr>
+
             </div>
+
+            
 
     );
 }

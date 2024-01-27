@@ -23,7 +23,7 @@ export const IngredientesABM = () => {
     const [estadoModal, setEstadoModal] = useState(false);
     const [estadoModalVista, setEstadoModalVista] = useState(false);
     const [estadoModalCompra, setEstadoModalCompra] = useState(false);
-    
+
     const [categorias, setCategorias] = useState<Rubro[]>([]);
     const [datos, setDatos] = useState<Ingrediente>({
         id: 0,
@@ -33,105 +33,107 @@ export const IngredientesABM = () => {
         stockActual: 0,
         stockMaximo: 0,
         stockMinimo: 0,
-        unidadmedida: {id: 0, denominacion: '', unidadesParaPadre: 0, padre: {id: 0, denominacion: '', unidadesParaPadre: 0}},
-        categoriaIngrediente: {id: 0, denominacion: '', activo: true}
+        unidadmedida: { id: 0, denominacion: '', unidadesParaPadre: 0, padre: { id: 0, denominacion: '', unidadesParaPadre: 0 } },
+        categoriaIngrediente: { id: 0, denominacion: '', activo: true }
     })
 
     useEffect(() => {
-       
+
         categoriaIngredienteService.getAllBasic(rol)
             .then(data => {
-                console.log("CARGANDO CATEGORIAS "+ data);
+                console.log("CARGANDO CATEGORIAS " + data);
                 setCategorias(data)
             })
-        
+
     }, [])
 
 
 
     function resetDatos() {
-        setDatos({ id: 0,
+        setDatos({
+            id: 0,
             activo: true,
             nombre: '',
             precioCompra: 0,
             stockActual: 0,
             stockMaximo: 0,
             stockMinimo: 0,
-            unidadmedida: {id: 0, denominacion: '', unidadesParaPadre: 0, padre: {id: 0, denominacion: '', unidadesParaPadre: 0}},
-            categoriaIngrediente: {id: 0, denominacion: '', activo: true} })
+            unidadmedida: { id: 0, denominacion: '', unidadesParaPadre: 0, padre: { id: 0, denominacion: '', unidadesParaPadre: 0 } },
+            categoriaIngrediente: { id: 0, denominacion: '', activo: true }
+        })
     }
 
-    function sendDatos(ingrediente: Ingrediente){
+    function sendDatos(ingrediente: Ingrediente) {
         setDatos(ingrediente);
     }
-    
+
     //Cambio de ingredientes a categorias (de ingredientes)
-    if(categorias.length === 0){
-        return <div style={{textAlign: "center"}}>
+    if (categorias.length === 0) {
+        return <div style={{ textAlign: "center" }}>
             <PageLoader />
         </div>
     }
 
-    
 
-    
+
+
 
 
     return (
-        <div>    
-        <ListaCartasABM 
-        titulo="Ingredientes"
-        estado={estadoModal}
-        setEstadoModal={setEstadoModal}
-        recetDatos={resetDatos}
-        >
-            
-            <div className="row my-3">
+        <div>
+            <ListaCartasABM
+                titulo="Ingredientes"
+                estado={estadoModal}
+                setEstadoModal={setEstadoModal}
+                recetDatos={resetDatos}
+            >
 
-                <div className="">
-                    <table className="table table-striped">
-                        <thead>
-                            <tr>
-                                <th></th>
-                                <th>Nombre</th>
-                                <th>Categoria</th>
-                                <th></th>
-                                <th>Acciones</th>
-                                <th></th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {ingredientes.map(ing => (
-                                
-                                <IngredienteCard
-                                    key={Math.random() * 100}
-                                    ingrediente={ing}
+                <div className="row my-3">
 
-                                    // rubros={rubros}
-                                    // setRubros={setRubros}
+                    <div className="">
+                        <table className="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>Nombre</th>
+                                    <th>Categoria</th>
+                                    <th></th>
+                                    <th>Acciones</th>
+                                    <th></th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {ingredientes.map(ing => (
 
-                                    estado={estadoModal}
-                                    cambiarEstado={setEstadoModal}
-                                    estadoVista={estadoModalVista}
-                                    cambiarEstadoVista={setEstadoModalVista}
+                                    <IngredienteCard
+                                        key={Math.random() * 100}
+                                        ingrediente={ing}
+
+                                        // rubros={rubros}
+                                        // setRubros={setRubros}
+
+                                        estado={estadoModal}
+                                        cambiarEstado={setEstadoModal}
+                                        estadoVista={estadoModalVista}
+                                        cambiarEstadoVista={setEstadoModalVista}
 
 
-                                    estadoCompra={estadoModalCompra}
-                                    cambiarEstadoCompra={setEstadoModalCompra}
-                                    
+                                        estadoCompra={estadoModalCompra}
+                                        cambiarEstadoCompra={setEstadoModalCompra}
 
-                                    datos={datos}
-                                    setearDatos={sendDatos}
-                                />
-                               
-                                
-                            ))}
 
-                        </tbody>
-                    </table>
+                                        datos={datos}
+                                        setearDatos={sendDatos}
+                                    />
+
+
+                                ))}
+
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
-            </div>
             </ListaCartasABM>
             <IngredienteForm
                 estado={estadoModal}
@@ -141,12 +143,12 @@ export const IngredientesABM = () => {
                 setDatos={setDatos}
 
                 categorias={categorias}
-            /> 
-            <ModalVistaDetalle ingrediente= {datos} estadoVista={estadoModalVista} cambiarEstadoVista={setEstadoModalVista}/>
-            <ModalCompra ingrediente= {datos} estadoCompra={estadoModalCompra} cambiarEstadoCompra={setEstadoModalCompra}/>
+            />
+            <ModalVistaDetalle ingrediente={datos} estadoVista={estadoModalVista} cambiarEstadoVista={setEstadoModalVista} />
+            <ModalCompra ingrediente={datos} estadoCompra={estadoModalCompra} cambiarEstadoCompra={setEstadoModalCompra} />
             <br></br>
-            </div >
-        
+        </div >
+
     )
 
 }

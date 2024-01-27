@@ -51,6 +51,7 @@ const CardPedidoCaja: React.FC<ProdFormProps> = ({ pedido, changeEstadoPedido}) 
             </div>
             <hr className="separator-white"></hr>
             <p className="text-pedido">Total: ${pedido.precioTotal}</p>
+            <p className="text-pedido">Hora estimada: {pedido.horaEstimada}hs</p>
             <hr className="separator-white"></hr>
             <div className="mx-2 mb-3">
             <select className="dropdown-estado form-select mb-3 me-2" id="categoria" name="categoria" onChange={e => {changeEstadoPedido(e.target.value, pedido) }}>

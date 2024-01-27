@@ -6,6 +6,7 @@ import { pedidoService } from '../../services/PedidoService';
 import { format, parseISO } from 'date-fns';
 import { ProyeccionProductosPedido } from '../../context/interfaces/Proyecciones/ProyeccionPedidoUsuario';
 import {styles} from "../PDF/Estilos"
+import { GlobalContext, useUnidadContext } from "../../context/GlobalContext";
 interface Props {
   pedido_Id: number;
 }
@@ -13,13 +14,14 @@ interface Props {
 
 export default function PdfFactura({pedido_Id}: Props) {
 
+  const { rol } = useUnidadContext();
   const [datosFactura, setDatosFactura] = useState<ProyeccionDatosFactura>();
   const [datosProductosPedido, setDatosProductosPedido] = useState<ProyeccionProductosPedido[]>();
 
   const servicio = new pedidoService();
   const getDatos = async () => {
     const traerdatos = await servicio.getDatosFacturas(pedido_Id);
-    const traerDatosProductos = await servicio.getProductosPedido(pedido_Id);
+    const traerDatosProductos = await servicio.getProductosPedido(pedido_Id, rol);
     setDatosFactura(traerdatos)
     setDatosProductosPedido(traerDatosProductos)
   }

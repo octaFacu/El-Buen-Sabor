@@ -19,7 +19,7 @@ export class ProductoService extends ServiceBasicos {
   async getIngredientes(productoid: Number, rol: string) {
 
     try {
-      console.log("ROL: " + rol);
+      console.log("ROL: "+rol);
       let res = await fetch(this.url + "/ingredientes/" + productoid, {
         method: "GET",
         headers: {
@@ -42,21 +42,21 @@ export class ProductoService extends ServiceBasicos {
   }
 
 
-  async saveIngredienteProd(ingredienteProd: IngredienteDeProducto, rol: string) {
+  async saveIngredienteProd(ingredienteProd: IngredienteDeProducto, rol: string){
 
     console.log("Ingrediente pasado al servicio: " + JSON.stringify(ingredienteProd));
 
 
-    try {
-      const requestOptions = {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'X-Role': rol
-        },
-        body: JSON.stringify(ingredienteProd)
-      };
-
+        try{    
+            const requestOptions = {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                'X-Role': rol
+              },
+              body: JSON.stringify(ingredienteProd)
+            };
+          
 
 
       let res = await fetch("http://localhost:8080" + "/ingredienteProd/save", requestOptions);
@@ -395,6 +395,7 @@ export class ProductoService extends ServiceBasicos {
 
     } catch (err: any) {
       console.log(`Error ${err.status}: ${err.statusText}`);
+
     }
   }
 

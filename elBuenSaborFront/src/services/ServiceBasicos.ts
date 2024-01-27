@@ -20,7 +20,7 @@ export class ServiceBasicos {
   async getAllBasic(rol: string) {
     try {
       let res = await fetch(this.baseUrl + this._urlEspecifico, {
-        method: 'GET', 
+        method: 'GET',
         headers: {
           'Content-Type': 'application/json',
           'X-Role': rol
@@ -47,7 +47,7 @@ export class ServiceBasicos {
       console.log("id: " + id);
       console.log("rol: " + rol);
       const res = await fetch(this.baseUrl + this._urlEspecifico + `/${id}`, {
-        method: 'GET', 
+        method: 'GET',
         headers: {
           'Content-Type': 'application/json',
           'X-Role': rol
@@ -69,19 +69,19 @@ export class ServiceBasicos {
     try {
       const res = await fetch(this.baseUrl + this._urlEspecifico + `/${id}`, {
         method: "DELETE",
-          headers: {
-            'Content-Type': 'application/json',
-            'X-Role': rol
-          },
+        headers: {
+          'Content-Type': 'application/json',
+          'X-Role': rol
+        },
       });
-  
+
       if (!res.ok) {
         throw new Error(`Error ${res.status}: ${res.statusText}`);
       }
 
     } catch (err: any) {
       console.log(`Error: ${err.message}`);
-      throw err; 
+      throw err;
     }
   }
 
@@ -140,18 +140,18 @@ export class ServiceBasicos {
     try {
       let res = await fetch(
         this.baseUrl +
-          this._urlEspecifico +
-          "/paged?page=" +
-          page +
-          "&size=" +
-          size,
-          {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-              'X-Role': rol
-            },
-          }
+        this._urlEspecifico +
+        "/paged?page=" +
+        page +
+        "&size=" +
+        size,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            'X-Role': rol
+          },
+        }
       );
 
       if (!res.ok) {
@@ -167,23 +167,23 @@ export class ServiceBasicos {
 
   //Metodo para activar o desactivar los objetos de manera logica
 
-  async softDelete(id: number, rol: string):Promise<void> {
-   try{
-    let res = await fetch(this.baseUrl+this._urlEspecifico+"/soft/"+id ,{
-      method: 'PATCH',
-      headers: {
-        "Content-Type": "application/json",
-        'X-Role': rol
-      },
-    })
-    
-    if (!res.ok) {
-      throw { status: res.status, statusText: res.statusText };
-    }
+  async softDelete(id: number, rol: string): Promise<void> {
+    try {
+      let res = await fetch(this.baseUrl + this._urlEspecifico + "/soft/" + id, {
+        method: 'PATCH',
+        headers: {
+          "Content-Type": "application/json",
+          'X-Role': rol
+        },
+      })
 
-   }catch (err: any) {
-    console.log(`Error ${err.status}: ${err.statusText}`);
-  }
+      if (!res.ok) {
+        throw { status: res.status, statusText: res.statusText };
+      }
+
+    } catch (err: any) {
+      console.log(`Error ${err.status}: ${err.statusText}`);
+    }
   }
 
 }

@@ -157,6 +157,7 @@ export default function MisDireccionesComponents({ usuario }: Props) {
           mostrarModal={modalConfirmacion}
           cerrarModal={() => setModalConfirmacion(false)}
           confirmar={() => confirmarEliminar(direccion.idDireccion)}
+          recarga={false}
         />
       )}
     </div>

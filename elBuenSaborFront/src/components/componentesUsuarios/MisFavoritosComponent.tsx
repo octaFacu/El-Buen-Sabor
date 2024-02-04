@@ -57,8 +57,8 @@ export default function MisFavoritosComponent({ usuario }: Props) {
             <div key={producto.id} className="mb-4">
               <div className="card card-favoritos">
                 <div className="card-body SeparacionItems">
-                  <div className="imagen d-none d-md-block">
-                    <img src={`img/${producto.imagen}`} alt={producto.denominacion} />
+                <div className="imagen contenedor">
+                    <img src={producto.imagen} alt={producto.denominacion} className="contenedorIMG"/>
                   </div>
                   <div className="denominacion">
                     <p>{producto.denominacion}</p>

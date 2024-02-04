@@ -5,12 +5,16 @@ interface ModalConfirmacionProps {
   mostrarModal: boolean;
   cerrarModal: () => void;
   confirmar: () => Promise<void>;
+  recarga: boolean;
 }
 
-const ModalConfirmacion: React.FC<ModalConfirmacionProps> = ({ mostrarModal, cerrarModal, confirmar }) => {
+const ModalConfirmacion: React.FC<ModalConfirmacionProps> = ({ mostrarModal, cerrarModal, confirmar, recarga = false }) => {
   const handleConfirmar = () => {
     confirmar();
     cerrarModal();
+    if(recarga){
+      location.reload();
+    }
   };
 
   const handleCancelar = () => {

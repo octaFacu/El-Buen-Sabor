@@ -86,3 +86,18 @@
       justify-content: center;
     }
   }
+
+  @media (max-width: 576px) {
+    .SeparacionItems {
+      grid-template-columns: 7rem 2fr 1fr 0fr;
+    }
+  }
+    
+    .contenedor{
+      margin-right: 5rem;
+    }
+    .contenedorIMG{
+      border-radius: 16px;
+      width: 6rem;
+      height: 50%;
+    }

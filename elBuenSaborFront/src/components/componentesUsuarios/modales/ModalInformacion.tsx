@@ -119,6 +119,7 @@ export default function ModalInformacion({ cerrarModal, usuario }: ModalProps) {
         mostrarModal={mostrarConfirmacion}
         cerrarModal={handleCancelarGuardar}
         confirmar={handleConfirmarGuardar}
+        recarga={true}
       />
     </div>
   );

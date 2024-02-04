@@ -72,7 +72,7 @@ export default function InformacionUsuario({ opcion }: props) {
     if (!isLoading) {
       traeUsuario();
     }
-  }, [isLoading, usuario]); // si cambia el usuario o si no esta cargando se vuelve a llamar a traerUsuario
+  }, [isLoading]); // si cambia el usuario o si no esta cargando se vuelve a llamar a traerUsuario
 
   const renderCard = () => {
     switch (boton) {

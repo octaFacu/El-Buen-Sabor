@@ -9,6 +9,7 @@ import * as SockJS from 'sockjs-client';
 import * as Socket from 'socket.io-client';
 import SortListComponent from "./SortListComponent";
 import { useUnidadContext } from "../../context/GlobalContext";
+import { FacturaService } from "../../services/FacturaService";
 
 
 export const CajeroPedidosPage = () => {
@@ -20,6 +21,7 @@ export const CajeroPedidosPage = () => {
     const [pedidos, setPedidos] = useState<Pedido[]>([]);
     const [estadoDePedidos, setEstadoDePedidos] = useState<EstadoPedido>(EstadoPedido.AConfirmar);
     const servicePedido = new pedidoService();
+    const serviceFactura = new FacturaService();
     const [listaPendientes, setListaPendientes] = useState<number[]>([]);
 
     const getPedidos = async () => {
@@ -137,6 +139,12 @@ export const CajeroPedidosPage = () => {
     const handleChangeEstado = (estadoDePedido: EstadoPedido, pedidoChanged: Pedido) => {
         pedidoChanged.estado = estadoDePedido.toString();
         servicePedido.updateEntity(pedidoChanged, rol);
+        if(estadoDePedido.toString() == "Entregado"){
+            console.log("Entrando a creacion de factura")
+            serviceFactura.createFactura(pedidoChanged, rol);
+            console.log("Creacion de factura hecha");
+
+        }
         window.location.reload();
     }
 

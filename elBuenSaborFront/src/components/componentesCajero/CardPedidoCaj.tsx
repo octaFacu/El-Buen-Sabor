@@ -5,6 +5,7 @@ import PedidoHasProductos from "../../context/interfaces/PedidoHasProductos"
 import { pedidoService } from "../../services/PedidoService"
 import ProductoPedidoCard from "./ProductoPedidoCard"
 import { useUnidadContext } from "../../context/GlobalContext"
+import { FacturaService } from "../../services/FacturaService"
 interface ProdFormProps {
 
     pedido: Pedido,
@@ -15,6 +16,7 @@ interface ProdFormProps {
 const CardPedidoCaja: React.FC<ProdFormProps> = ({ pedido, changeEstadoPedido}) => {
 
     const servicePedido = new pedidoService();
+    const facturaService = new FacturaService();
     const [productos, setProductos] = useState<PedidoHasProductos[]>([]);
     const { rol } = useUnidadContext();
 
@@ -26,6 +28,11 @@ const CardPedidoCaja: React.FC<ProdFormProps> = ({ pedido, changeEstadoPedido}) 
         .then(data => {
             setProductos(data)
         })
+    }
+
+    const generarNC = async() => {
+        let factura = await servicePedido.getDatosFacturas(pedido.id!, rol);
+        facturaService.generarNCPDF(factura.id!, rol);
     }
 
     useEffect(() => {
@@ -66,6 +73,11 @@ const CardPedidoCaja: React.FC<ProdFormProps> = ({ pedido, changeEstadoPedido}) 
                                         )
                                     ))}
             </select>
+            {pedido.estado === "Entregado" && 
+            <div className="d-flex justify-content-end">
+                <div className="btn btn-danger" onClick={generarNC}>Gen NC</div>
+            </div>
+            }
               </div>                  
         </div>
     )

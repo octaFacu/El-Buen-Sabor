@@ -20,6 +20,7 @@ const CardPedidoCocina: React.FC<ProdFormProps> = ({ pedido, estado, changeEstad
     const servicePedido = new pedidoService();
     const [productos, setProductos] = useState<PedidoHasProductos[]>([]);
     const [editTime, setEditTime] = useState<Boolean>(false);
+    const [timeChanging, setTimeChanging] = useState<string>('');
 
     const handleChangeEstado = () => {
         pedido.estado = "Listo";
@@ -29,13 +30,12 @@ const CardPedidoCocina: React.FC<ProdFormProps> = ({ pedido, estado, changeEstad
 
     const handleTimeChange = (asc: boolean) => {
         //Añadir o restar 5 minutos
-        pedido.horaEstimada = asc ? manipulateTime(5) : manipulateTime(-5);
-        forceUpdate();
+        setTimeChanging(asc ? manipulateTime(5) : manipulateTime(-5));
     };
 
 
     const manipulateTime = (minutesChange: number) => {
-        const [hours, minutes, seconds] = pedido.horaEstimada.split(':').map(Number);
+        const [hours, minutes, seconds] = timeChanging.split(':').map(Number);
 
         let totalMinutes = hours * 60 + minutes + minutesChange;
         totalMinutes = Math.max(totalMinutes, 0); // Ensure it doesn't go below 0
@@ -56,9 +56,14 @@ const CardPedidoCocina: React.FC<ProdFormProps> = ({ pedido, estado, changeEstad
             })
     }
     const saveTime = async () => {
+        pedido.horaEstimada = timeChanging;
+
         setEditTime(!editTime);
+
         //enviar un update del pedido con la nueva hora estimada
         servicePedido.updateEntity(pedido, rol);
+        setTimeChanging('');
+
     };
 
     useEffect(() => {
@@ -66,7 +71,7 @@ const CardPedidoCocina: React.FC<ProdFormProps> = ({ pedido, estado, changeEstad
         getProductos();
     }, [pedido]);
 
-    useEffect(() => { }, [editTime, pedido]);
+    useEffect(() => { }, [editTime, timeChanging]);
 
     return ( //mx-5 me-3
         <div className="container my-3 card-pedidos px-2 pt-2 pb-2" style={{ maxWidth: "93%" }}>
@@ -95,6 +100,7 @@ const CardPedidoCocina: React.FC<ProdFormProps> = ({ pedido, estado, changeEstad
                     onClick={
                         () => {
                             setEditTime(!editTime);
+                            setTimeChanging(pedido.horaEstimada);
                         }}
                 ><i className="material-icons" style={{ fontSize: "20px", cursor: "pointer", color: "white" }}>create</i></button>
             </div>
@@ -108,7 +114,7 @@ const CardPedidoCocina: React.FC<ProdFormProps> = ({ pedido, estado, changeEstad
                     <div className="btn" onClick={() => handleTimeChange(false)}>
                         <i className="material-icons" style={{ fontSize: "30px", cursor: "pointer" }}>arrow_drop_down</i>
                     </div>
-                    <div className="container text-pedido">{pedido.horaEstimada}hs</div>
+                    <div className="container text-pedido">{timeChanging}hs</div>
                     <div className="btn" onClick={() => handleTimeChange(true)}>
                         <i className="material-icons white" style={{ fontSize: "30px", cursor: "pointer" }}>arrow_drop_up</i>
                     </div>

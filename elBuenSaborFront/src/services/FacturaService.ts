@@ -76,6 +76,7 @@ export class FacturaService extends ServiceBasicos {
     
       async generarNCPDF(idFactura: number, rol: string) {
         try {
+          console.log("generando NC de factura "+idFactura);
           let res = await fetch(this.url + "/notaCredito/" + idFactura,
           {
             method: "GET",

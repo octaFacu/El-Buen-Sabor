@@ -109,12 +109,13 @@ async getProductosByPedido(idPedido: number, rol: string) {
   }
   
 
-  async createPedidoAndPedidoHasProducto(pedido: RequestPedido) {
+  async createPedidoAndPedidoHasProducto(pedido: RequestPedido, rol: string) {
     try {
       let res = await fetch(this.url + "/createPedidoAndProducto", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+            'X-Role': rol
         },
         body: JSON.stringify(pedido),
       });
@@ -132,9 +133,14 @@ async getProductosByPedido(idPedido: number, rol: string) {
 
 
 
-  async getDatosFacturas(idPedido: number) {
+  async getDatosFacturas(idPedido: number, rol: string){
     try {
-      let res = await fetch(this.url + "/getDatoFactura/" + idPedido);
+      let res = await fetch(this.url + "/getDatoFactura/" + idPedido, {
+        method: "GET",
+        headers: {
+            'X-Role': rol
+        },
+      });
 
       if (!res.ok) {
         throw { status: res.status, statusText: res.statusText };
@@ -171,7 +177,7 @@ async getProductosByPedido(idPedido: number, rol: string) {
 
       //Si es pagado en efectivo y fue entregado
       if(datos.estado == "Entregado" ){
-        let fc: ProyeccionDatosFactura = await this.getDatosFacturas(datos.id!);
+        let fc: ProyeccionDatosFactura = await this.getDatosFacturas(datos.id!, rol);
 
         let serviceFC = new FacturaService(); 
 

@@ -56,14 +56,14 @@ const ProductoCard: React.FunctionComponent<ProductoCardProps> = ({ producto, ca
                 ><i className="material-icons" style={{ fontSize: "30px", cursor: "pointer", color: "white" }}>create</i></button>
 
                 {/* <button className={`btn btn-sm ${botonActivo ? "btn-danger" : "btn-success"}`} onClick={async() => { */}
-                <button className="btn btn-sm" style={{backgroundColor: "#864e1b", color: "white"}} 
-                onClick={async() => { 
-                    setbotonActivo(!botonActivo)
-                   
-                    let productoNuevo: Producto = producto;
-                    productoNuevo.activo = !(producto.activo);
-                   
-                    await productoService.actualizarEntityActivo(productoNuevo, rol);
+                <button className="btn btn-sm" style={{ backgroundColor: "#864e1b", color: "white" }}
+                    onClick={async () => {
+                        setbotonActivo(!botonActivo)
+
+                        let productoNuevo: Producto = producto;
+                        productoNuevo.activo = !(producto.activo);
+
+                        await productoService.actualizarEntityActivo(productoNuevo, rol);
 
                     }}
                 >{botonActivo
@@ -72,7 +72,7 @@ const ProductoCard: React.FunctionComponent<ProductoCardProps> = ({ producto, ca
 
 
             </td>
-            <td><img src={producto.imagen} className="imagen-style"/></td>
+            <td><img src={producto.imagen} className="imagen-style" /></td>
 
         </tr>
 

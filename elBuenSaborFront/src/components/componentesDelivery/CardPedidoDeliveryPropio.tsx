@@ -7,6 +7,7 @@ import ProductoDeliveryCard from "./ProductoDeliveryCard"
 import MapLocation from "./MapLocation"
 import { useUnidadContext } from "../../context/GlobalContext"
 import { useAuth0 } from "@auth0/auth0-react"
+import { FacturaService } from "../../services/FacturaService"
 
 interface ProdFormProps {
 
@@ -19,11 +20,13 @@ const CardPedidoDeliveryPropio: React.FC<ProdFormProps> = ({ pedido }) => {
     const { user } = useAuth0();
     const { rol } = useUnidadContext();
     const servicePedido = new pedidoService();
+    const serviceFactura = new FacturaService();
     const [productos, setProductos] = useState<PedidoHasProductos[]>([]);
 
     const handleChangeEstado = () => {
         pedido.estado = "Entregado";
         servicePedido.updateEntity(pedido, rol);
+        serviceFactura.createFactura(pedido, rol);
         window.location.reload();
     };
 

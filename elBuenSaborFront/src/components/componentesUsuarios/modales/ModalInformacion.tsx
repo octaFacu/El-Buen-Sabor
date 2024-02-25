@@ -34,6 +34,26 @@ export default function ModalInformacion({ cerrarModal, usuario }: ModalProps) {
     console.log("asdlj")
   };
 
+
+
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { id, value } = event.target;
+  
+    const soloLetras = /^[a-zA-Z]+$/;
+  
+    const soloNumeros = /^[0-9]*$/;
+  
+    if ((id === 'nombre' || id === 'apellido') && (soloLetras.test(value) || value === '')) {
+      setUsuarioTemp((prevUsuario) => ({ ...prevUsuario, [id]: value }));
+    } 
+    else if (id === 'telefono' && (soloNumeros.test(value) || value === '')) {
+      setUsuarioTemp((prevUsuario) => ({ ...prevUsuario, [id]: value }));
+    }     
+  };
+    
+
+
+
   const handleGuardarClick = () => {
     setMostrarConfirmacion(true);
   };
@@ -74,7 +94,8 @@ export default function ModalInformacion({ cerrarModal, usuario }: ModalProps) {
                 className="form-control text-center text-white"
                 placeholder="Nombre"
                 value={usuarioTemp.nombre}
-                onChange={handleChange}
+                onChange={handleInputChange}
+                required
               />
               <p className="text-white parrafo bold">Apellido:</p>
               <input
@@ -83,7 +104,8 @@ export default function ModalInformacion({ cerrarModal, usuario }: ModalProps) {
                 className="form-control text-center text-white"
                 placeholder="Apellido"
                 value={usuarioTemp.apellido}
-                onChange={handleChange}
+                onChange={handleInputChange}
+                required
               />
               <p className="text-white parrafo bold">Número de Teléfono:</p>
               <input
@@ -92,7 +114,8 @@ export default function ModalInformacion({ cerrarModal, usuario }: ModalProps) {
                 className="form-control text-center text-white"
                 placeholder="Número de Teléfono"
                 value={usuarioTemp.telefono}
-                onChange={handleChange}
+                onChange={handleInputChange}
+                required
               />
               <div className="modal-footer justify-content-center text-center">
                 <button

@@ -28,12 +28,24 @@ export default function InformacionAdicionalPostRegistro() {
         email: user.email || '',
       }));
     }
+    console.log(user)
   }, [user]);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = event.target;
-    setUsuario((prevUsuario) => ({ ...prevUsuario, [id]: value }));
+  
+    const soloLetras = /^[a-zA-Z]+$/;
+  
+    const soloNumeros = /^[0-9]*$/;
+  
+    if ((id === 'nombre' || id === 'apellido') && (soloLetras.test(value) || value === '')) {
+      setUsuario((prevUsuario) => ({ ...prevUsuario, [id]: value }));
+    } 
+    else if (id === 'telefono' && (soloNumeros.test(value) || value === '')) {
+      setUsuario((prevUsuario) => ({ ...prevUsuario, [id]: value }));
+    }     
   };
+    
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -58,8 +70,8 @@ export default function InformacionAdicionalPostRegistro() {
     return <PageLoader/>;
   }
 
-  if (user && user.login_count === 1) {
-    
+  if (user && user.login_count == 1) {
+    console.log("NO TENGO LOG")
     return (
       <div className="container mx-auto justify-content-center align-items-center" >
       <div className="card cardFormularioConitnuacion">
@@ -85,6 +97,7 @@ export default function InformacionAdicionalPostRegistro() {
                   placeholder="Ingrese su nombre"
                   value={usuario.nombre}
                   onChange={handleInputChange}
+                  required
                 />
               </div>
               <div className="mb-3">
@@ -98,6 +111,7 @@ export default function InformacionAdicionalPostRegistro() {
                   placeholder="Ingrese su apellido"
                   value={usuario.apellido}
                   onChange={handleInputChange}
+                  required
                 />
               </div>
               <div className="mb-3">
@@ -111,6 +125,7 @@ export default function InformacionAdicionalPostRegistro() {
                   placeholder="Ingrese su teléfono"
                   value={usuario.telefono}
                   onChange={handleInputChange}
+                  required
                 />
               </div>
               <button type="submit" className="btn btnFormContinuacion">
@@ -122,7 +137,7 @@ export default function InformacionAdicionalPostRegistro() {
       </div>
     );
   } else {
-    
-    return navigate("/");
+    console.log("Paso por aca TENGO LOG")
+    window.location.href = 'http://localhost:5173';
   }
 }

@@ -1,38 +1,38 @@
 import { useState, useEffect } from "react";
 import "../pagesStyles/usuarios.css";
-import MiCuentaComponent from '../../components/componentesUsuarios/MiCuentaComponent'
-import MisDireccionesComponents from '../../components/componentesUsuarios/MisDireccionesComponents'
-import MisFavoritosComponent from '../../components/componentesUsuarios/MisFavoritosComponent'
-import MisPedidosComponent from '../../components/componentesUsuarios/MisPedidosComponent'
-import { useAuth0 } from '@auth0/auth0-react'
+import MiCuentaComponent from "../../components/componentesUsuarios/MiCuentaComponent";
+import MisDireccionesComponents from "../../components/componentesUsuarios/MisDireccionesComponents";
+import MisFavoritosComponent from "../../components/componentesUsuarios/MisFavoritosComponent";
+import MisPedidosComponent from "../../components/componentesUsuarios/MisPedidosComponent";
+import { useAuth0 } from "@auth0/auth0-react";
 import { ServiceBasicos } from "../../services/ServiceBasicos";
 import { Usuario } from "../../context/interfaces/interfaces";
 import PageLoader from "../../components/pageLoader/PageLoader";
 import { useUnidadContext } from "../../context/GlobalContext";
 
-import { BrowserRouter, Route, NavLink } from 'react-router-dom';
+import { BrowserRouter, Route, NavLink } from "react-router-dom";
 
 interface props {
-  opcion: number
+  opcion: number;
 }
 
 export default function InformacionUsuario({ opcion }: props) {
   const [boton, setBoton] = useState<number | null>(null);
-   const { rol } = useUnidadContext();
+  const { rol } = useUnidadContext();
   const [usuario, setUsuario] = useState<Usuario>({
     id: "",
     nombre: "",
     apellido: "",
     telefono: "",
     activo: true,
-    email: ""
+    email: "",
   });
 
   const handleBoton = (numeroBoton: number) => {
     setBoton(numeroBoton);
   };
 
-  const { user, isLoading } = useAuth0();
+  const { isAuthenticated, user, isLoading } = useAuth0();
 
   const traeUsuario = async () => {
     const servicioUsuarios = new ServiceBasicos("usuario");
@@ -53,18 +53,17 @@ export default function InformacionUsuario({ opcion }: props) {
         default:
           return setBoton(1);
       }
-
     } catch (error) {
       console.error(error);
     }
   };
 
   const traerId = async (): Promise<string> => {
-    if (user) {
+    if (user && isAuthenticated) {
       const userId = await user.userId;
       return userId;
     } else {
-      return ""; //  nunca llega 
+      return "4";
     }
   };
 
@@ -89,7 +88,7 @@ export default function InformacionUsuario({ opcion }: props) {
     }
   };
   if (isLoading) {
-    return <PageLoader />;     // Se podria cambiar poner algun snippet o algo para indicar la carga de una mejor manera
+    return <PageLoader />; // Se podria cambiar poner algun snippet o algo para indicar la carga de una mejor manera
   }
 
   return (
@@ -106,46 +105,77 @@ export default function InformacionUsuario({ opcion }: props) {
             <div className="card-body text-center  d-flex flex-column align-items-center w-100">
               <h5 className="card-title">{usuario.nombre}</h5>
               <p className="card-text">{user?.email}</p>
-              <NavLink to="/usuarios/MiCuenta" className="sinDecoracion text-white mr-2 mb-md-3 d-block w-100 ">
+              <NavLink
+                to="/usuarios/MiCuenta"
+                className="sinDecoracion text-white mr-2 mb-md-3 d-block w-100 "
+              >
                 <button
-                  className={`btn-tam text-white w-100 d-flex align-items-center justify-content-center ${boton === 1 ? 'btn-activo' : ''}`}
+                  className={`btn-tam text-white w-100 d-flex align-items-center justify-content-center ${
+                    boton === 1 ? "btn-activo" : ""
+                  }`}
                   onClick={() => handleBoton(1)}
                 >
-                  <i className="material-icons text-black tam-icono mr-2 text-white">face</i> Mi Cuenta
+                  <i className="material-icons text-black tam-icono mr-2 text-white">
+                    face
+                  </i>{" "}
+                  Mi Cuenta
                 </button>
               </NavLink>
 
-              <NavLink to="/usuarios/MisDirecciones" className="sinDecoracion text-white mr-2 mb-md-3 d-block w-100 ">
+              <NavLink
+                to="/usuarios/MisDirecciones"
+                className="sinDecoracion text-white mr-2 mb-md-3 d-block w-100 "
+              >
                 <button
-                  className={`btn-tam text-white w-100 d-flex align-items-center justify-content-center ${boton === 2 ? 'btn-activo' : ''}`}
+                  className={`btn-tam text-white w-100 d-flex align-items-center justify-content-center ${
+                    boton === 2 ? "btn-activo" : ""
+                  }`}
                   onClick={() => handleBoton(2)}
                 >
-                  <i className="material-icons text-black tam-icono mr-2 text-white">location_on</i> Mis Direcciones
+                  <i className="material-icons text-black tam-icono mr-2 text-white">
+                    location_on
+                  </i>{" "}
+                  Mis Direcciones
                 </button>
               </NavLink>
 
-              <NavLink to="/usuarios/MisPedidos" className="sinDecoracion text-white mr-2 mb-md-3 d-block w-100 ">
+              <NavLink
+                to="/usuarios/MisPedidos"
+                className="sinDecoracion text-white mr-2 mb-md-3 d-block w-100 "
+              >
                 <button
-                  className={`btn-tam text-white w-100 d-flex align-items-center justify-content-center ${boton === 3 ? 'btn-activo' : ''}`}
+                  className={`btn-tam text-white w-100 d-flex align-items-center justify-content-center ${
+                    boton === 3 ? "btn-activo" : ""
+                  }`}
                   onClick={() => handleBoton(3)}
                 >
-                  <i className="material-icons text-black tam-icono mr-2 text-white">local_dining</i> Mis Pedidos</button>
+                  <i className="material-icons text-black tam-icono mr-2 text-white">
+                    local_dining
+                  </i>{" "}
+                  Mis Pedidos
+                </button>
               </NavLink>
 
-              <NavLink to="/usuarios/MisFavoritos" className="sinDecoracion text-white mr-2 mb-md-3 d-block w-100 ">
+              <NavLink
+                to="/usuarios/MisFavoritos"
+                className="sinDecoracion text-white mr-2 mb-md-3 d-block w-100 "
+              >
                 <button
-                  className={`btn-tam text-white w-100 d-flex align-items-center justify-content-center ${boton === 4 ? 'btn-activo' : ''}`}
+                  className={`btn-tam text-white w-100 d-flex align-items-center justify-content-center ${
+                    boton === 4 ? "btn-activo" : ""
+                  }`}
                   onClick={() => handleBoton(4)}
                 >
-                  <i className="material-icons text-black tam-icono mr-2 text-white">favorite_border</i> Mis Favoritos
+                  <i className="material-icons text-black tam-icono mr-2 text-white">
+                    favorite_border
+                  </i>{" "}
+                  Mis Favoritos
                 </button>
               </NavLink>
             </div>
           </div>
         </div>
-        <div className="col-md-8 col-sm-12">
-          {renderCard()}
-        </div>
+        <div className="col-md-8 col-sm-12">{renderCard()}</div>
       </div>
     </div>
   );

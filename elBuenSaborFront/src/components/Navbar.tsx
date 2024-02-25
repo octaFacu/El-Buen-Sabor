@@ -49,8 +49,8 @@ const Navbar: React.FC = () => {
     )
   }
 
-  console.log(isAuthenticated);
-  console.log(user);
+  //console.log(isAuthenticated);
+  //console.log(user);
 
   if (isAuthenticated) {
     return (

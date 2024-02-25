@@ -10,12 +10,14 @@ interface Props {
   mostrarModal: boolean;
   cerrarModal: () => void;
   idPedido: number;
+  esEnvio: boolean;
 }
 
 const ModalPedido: React.FC<Props> = ({
   mostrarModal,
   cerrarModal,
   idPedido,
+  esEnvio,
 }) => {
   const [pedidoUsuario, setPedidoUsuario] = useState<PedidoHasProductos[]>([]);
 
@@ -23,12 +25,16 @@ const ModalPedido: React.FC<Props> = ({
     return null;
   }
 
+  const totalPedido = pedidoUsuario.reduce((total, pedidoHasProd) => {
+    return total + pedidoHasProd.producto.precioTotal * pedidoHasProd.cantidad;
+  }, 0);
+
   const servicioPedio = new pedidoService();
   const navigate = useNavigate();
 
   const traerPedidos = async () => {
     const productosPedido = await servicioPedio.getProductosByPedido(idPedido);
-    setPedidoUsuario(productosPedido)
+    setPedidoUsuario(productosPedido);
   };
 
   useEffect(() => {
@@ -36,74 +42,94 @@ const ModalPedido: React.FC<Props> = ({
   }, []);
 
   const handleAddToCart = () => {
-
     const carrito: ProductoParaPedido[] = [];
 
     localStorage.setItem("carritoArreglo", "");
 
     //Cargo la variable "carrito" con los prodcutos y sus cantidades para poder subirla al carrito del lolcalStorage
     pedidoUsuario.forEach((elemento: PedidoHasProductos, index: number) => {
-
       const pedidoParaCarrito: ProductoParaPedido = {
         cantidad: elemento.cantidad,
-        producto: elemento.producto
+        producto: elemento.producto,
       };
 
-      carrito.push(pedidoParaCarrito)
-
+      carrito.push(pedidoParaCarrito);
     });
 
     localStorage.setItem("carritoArreglo", JSON.stringify(carrito));
     cerrarModal();
-    navigate('/carrito');
-
-  }
+    navigate("/carrito");
+  };
 
   return (
-    <div className="modal modal-custom modal-overlay" style={{ display: "block" }}>
+    <div
+      className="modal modal-custom modal-overlay"
+      style={{ display: "block" }}
+    >
       <div className="modal-dialog d-flex align-items-center justify-content-center modal-dialog-centered ">
         <div className="modal-content card-modalPedido">
           <div className="modal-body text-center">
             <h2 className="texto-blanco">Tu Pedido</h2>
-            <button type="button" className="close centrado" onClick={cerrarModal}>
+            <button
+              type="button"
+              className="close centrado"
+              onClick={cerrarModal}
+            >
               <span>&times;</span>
             </button>
           </div>
           <div className="modal-body">
             {pedidoUsuario?.map((pedidoHasProd, index) => {
               return (
-                <div
-                  key={index}
-                  className="pedido-item"
-                >
+                <div key={index} className="pedido-item">
                   <div className="col-3">
                     <div>
-                      <img src={pedidoHasProd.producto.imagen} alt={pedidoHasProd.producto.denominacion} className="imagenes-pedidos-usuario" />
+                      <img
+                        src={pedidoHasProd.producto.imagen}
+                        alt={pedidoHasProd.producto.denominacion}
+                        className="imagenes-pedidos-usuario"
+                      />
                     </div>
                   </div>
                   <div className="col-6 centrado-denominacion">
-                    <span className="texto-blanco">{pedidoHasProd.producto.denominacion}</span>
+                    <span className="texto-blanco">
+                      {pedidoHasProd.producto.denominacion}
+                    </span>
                   </div>
                   <div className="col-3 contenedor-derecho">
                     <div className="texto-blanco">
-                      <span className="separador">x{pedidoHasProd.cantidad}</span>
+                      <span className="separador">
+                        x{pedidoHasProd.cantidad}
+                      </span>
                     </div>
                     <div className="pedido-item-derecho texto-blanco">
-                      <span className="precio">${pedidoHasProd.producto.precioTotal * pedidoHasProd.cantidad}</span>
+                      <span className="precio">
+                        $
+                        {pedidoHasProd.producto.precioTotal *
+                          pedidoHasProd.cantidad}
+                      </span>
                     </div>
                   </div>
                 </div>
-              )
+              );
             })}
             <div className="d-flex justify-content-center texto-blanco mt-2">
-              <p>Total actualizado ${ }</p>
+              <p>Total actualizado ${totalPedido}</p>
             </div>
+            {
+                    // Aquí va tu condicional if
+                    !(esEnvio) && (
+                      <div className="texto-blanco text-center">
+                        <span>descuento por retiro en  local ${totalPedido - (totalPedido*0.1)}</span>
+                      </div>
+                    )
+                  }
           </div>
           <div className="d-flex justify-content-center">
             <button className="btn modal-pedido" onClick={cerrarModal}>
               Cerrar
             </button>
-            <PdfFactura pedido_Id={idPedido} />
+            <PdfFactura pedido_Id={idPedido} esEnvio={esEnvio}/>
             <button className="btn modal-pedido" onClick={handleAddToCart}>
               Añadir al carrito
             </button>

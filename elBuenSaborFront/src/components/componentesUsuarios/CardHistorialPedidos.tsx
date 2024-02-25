@@ -34,7 +34,7 @@ export default function CardHistorialPedidos({ historial }: Props) {
         </div>
       </div>
       {abrirModal && (
-        <ModalPedido mostrarModal={abrirModal} cerrarModal={cerrarModal} idPedido={idPedido} />
+        <ModalPedido mostrarModal={abrirModal} cerrarModal={cerrarModal} idPedido={idPedido} esEnvio={historial.es_envio}/>
       )}
     </>
   )

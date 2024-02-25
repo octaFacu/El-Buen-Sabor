@@ -43,9 +43,14 @@ const ModalEdicionDireccion: React.FC<ModalProps> = ({
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = event.target;
-    setDirec((prevDireccion) => ({ ...prevDireccion, [id]: value }));
+    
+    const soloNumerosYLetrasConEspacios = /^[a-zA-Z0-9\s]*$/;
+  
+    if (soloNumerosYLetrasConEspacios.test(value) && value.trim() !== '') {
+      setDirec((prevDireccion) => ({ ...prevDireccion, [id]: value }));
+    }
   };
-
+  
   // Función para comprobar que el error es del tipo ExcepcionesVerificaUsuario
   function isExcepcionesVerificaUsuario(error: any): error is ExcepcionesVerificaUsuario {
     // aca retornamos el mensaje
@@ -76,6 +81,7 @@ const ModalEdicionDireccion: React.FC<ModalProps> = ({
               value={direc.calle}
               placeholder="Calle"
               onChange={handleChange}
+              required
             />
             <p className="text-white parrafo bold text-center">
               numero de casa:

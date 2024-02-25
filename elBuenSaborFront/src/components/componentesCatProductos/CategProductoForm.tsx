@@ -91,26 +91,34 @@ const CategProductoForm: React.FunctionComponent<CategProductoFormProps> = ({ es
 
                                    
                                     if(datos.id){
-
                                         
-                                            //guardar los datos sin un padre
-                                            setDatos({id: id, denominacion:nombre, activo: activo })
-                                        
+                                        //guardar los datos sin un padre
+                                        setDatos({id: id, denominacion:nombre, activo: activo })
 
-                                        //pasar los datos guardados al metodo de update
-                                        categoriaProductoService.updateEntity(datos, rol)
+                                        if(datos.nombre.trim() != "" && datos.nombre != null && datos.nombre.length <= 255){
+
+                                            //pasar los datos guardados al metodo de update
+                                            categoriaProductoService.updateEntity(datos, rol)
+                                        }
+
 
                                     }else{
-                                        
-                                         
-                                        //Creacion de nueva categoria sin un padre
-                                        categoriaProductoService.createEntity({denominacion: nombre, activo: activo }, rol);
+                                        if(nombre.trim() != "" && nombre != null){
+                                            if(nombre.length <= 255){
+                                                //Creacion de nueva categoria sin un padre
+                                                categoriaProductoService.createEntity({denominacion: nombre, activo: activo }, rol);      
+                                            }
+
+                                        }
                                         
                                     }
-                                    //Cambiar el estado para que se cierre el formulario
-                                    cambiarEstado(!estado);
-                                    //Actualizar la pagina
-                                    window.location.reload();
+
+                                    if(nombre.trim() != "" && nombre != null  && nombre.length <= 255){
+                                        //Cambiar el estado para que se cierre el formulario
+                                        cambiarEstado(!estado);
+                                        //Actualizar la pagina
+                                        window.location.reload();
+                                    }
                                 }}> <i className="material-icons" style={{fontSize: "30px", cursor:"pointer"}}>check</i></button>
                             </form>
                         </div>

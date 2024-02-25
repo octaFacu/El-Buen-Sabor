@@ -201,13 +201,15 @@ const ModalCreacionProd: React.FC<ProdFormProps> = ({ estado, cambiarEstado, cat
 
 
     const handleSaving = async() => {
+
+        if(state.productoSelect.denominacion.trim() !== '' && state.productoSelect.descripcion.trim() !== '' && state.productoSelect.precioTotal > 0 && file != undefined) { 
+
         console.log("Entro a guardado... guardando imagen...");
         await handleFileUpload();
-    
-        console.log("Buscando costo...");
+        
         var costo: number = await calcularCosto();
 
-        console.log("Entrando al seteo de categoria...");
+       
         console.log("Categorias: "+JSON.stringify(categorias));
         var categoria = await categoriaCambio(state.idCategoria);
 
@@ -215,23 +217,26 @@ const ModalCreacionProd: React.FC<ProdFormProps> = ({ estado, cambiarEstado, cat
             
             console.log("CATEGORIA ELEGIDA" + JSON.stringify(categoria));
 
-        // Use Promise.all to wait for both costo and categoria to resolve
-        await Promise.all([
-            setState((prevState) => ({
-                ...prevState,
-                productoSelect: {
-                    ...prevState.productoSelect,
-                    costoTotal: costo,
-                    categoriaProducto: categoria!
-                },
-                llamarGuardado: true
-            })),
-        ]);
+            // Use Promise.all to wait for both costo and categoria to resolve
+            await Promise.all([
+                setState((prevState) => ({
+                    ...prevState,
+                    productoSelect: {
+                        ...prevState.productoSelect,
+                        costoTotal: costo,
+                        categoriaProducto: categoria!
+                    },
+                    llamarGuardado: true
+                })),
+            ]);
           
 
         
         }
         
+
+        }
+
     };
 
     const callSave = async () => {
@@ -262,7 +267,7 @@ const ModalCreacionProd: React.FC<ProdFormProps> = ({ estado, cambiarEstado, cat
             }))
             cambiarEstado(!estado);
             setCambios(true);
-            //window.location.reload();
+            window.location.reload();
 
         }
 
@@ -365,7 +370,6 @@ const ModalCreacionProd: React.FC<ProdFormProps> = ({ estado, cambiarEstado, cat
     useEffect(() => {
         if (!state.ingredientesGuardados) {
 
-        
           getIngredientes();
         }
       }, [state.productoSelect]);
@@ -418,7 +422,7 @@ const ModalCreacionProd: React.FC<ProdFormProps> = ({ estado, cambiarEstado, cat
                                 
                                     <div className="mb-3" style={{ maxWidth: "50%" }}>
                                         <label htmlFor="nombre" className="form-label">Nombre</label>
-                                        <input className="form-input form-control" type="text" id="nombre" name="denominacion" required value={state.productoSelect.denominacion} onChange={handleChangeProducto} />
+                                        <input className="form-input form-control" type="text" id="nombre" name="denominacion" max-length="255" required value={state.productoSelect.denominacion} onChange={handleChangeProducto} />
                                     </div>
                                 </div>
                                 <div className="container d-flex justify-content-around">
@@ -429,7 +433,7 @@ const ModalCreacionProd: React.FC<ProdFormProps> = ({ estado, cambiarEstado, cat
                                         </div>
                                         <div className="mb-3">
                                             <label htmlFor="stockActual" className="form-label">Precio Total</label>
-                                            <input type="number" min="0"  className="form-control ms-2 form-input" id="precioTotal" name="precioTotal" required value={state.productoSelect.precioTotal} onChange={handleChangeProducto} />
+                                            <input type="number" min="1"  className="form-control ms-2 form-input" id="precioTotal" name="precioTotal" required value={state.productoSelect.precioTotal} onChange={handleChangeProducto} />
                                         </div>
                                     </div>
                                 </div>
@@ -439,13 +443,13 @@ const ModalCreacionProd: React.FC<ProdFormProps> = ({ estado, cambiarEstado, cat
                                     <div className="text-center d-flex">
                                         <div className="mb-3">
                                             <label htmlFor="stockMinimo" className="form-label">Descripcion</label>
-                                            <textarea className="form-control me-2 form-input" id="descripcion" name="descripcion" required value={state.productoSelect.descripcion.toString()} onChange={handleChangeProductoArea} />
+                                            <textarea className="form-control me-2 form-input" id="descripcion" name="descripcion" max-length="255" required value={state.productoSelect.descripcion.toString()} onChange={handleChangeProductoArea} />
                                         </div>
 
                                         {state.botonManufacturado && (state.productoSelect.esManufacturado ) &&
                                             <div className="mb-3">
                                                 <label htmlFor="stockMaximo" className="form-label">Receta</label>
-                                                <textarea className="form-control ms-2 form-input" id="receta" name="receta" required value={state.productoSelect.receta?.toString()} onChange={handleChangeProductoArea} />
+                                                <textarea className="form-control ms-2 form-input" id="receta" name="receta" max-length="1000" required value={state.productoSelect.receta?.toString()} onChange={handleChangeProductoArea} />
 
                                             </div>
                                         }

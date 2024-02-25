@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import "../../pages/pagesStyles/categoriaIngredienteABM.css"
 import { CategoriaProducto } from "../../context/interfaces/interfaces";
 import { CategoriaProductoService } from "../../services/CategoriaProductoService";
+import { useUnidadContext } from "../../context/GlobalContext";
 
 interface CategProductoCardProps {
 
@@ -19,13 +20,14 @@ interface CategProductoCardProps {
 
 const CategProductoCard: React.FunctionComponent<CategProductoCardProps> = ({denominacion, activo, id, cambiarEstado, estado, setDatos, datos}) => {
     
+    const { rol } = useUnidadContext();
     const [botonActivo, setbotonActivo] = useState<Boolean>(activo)
     const categoriaProductoService = new CategoriaProductoService();
 
     useEffect(() => {
         if(datos.id){
             // categoriaIngredienteService.updateActivoRubro(datos)
-            categoriaProductoService.updateEntity(datos)
+            categoriaProductoService.updateEntity(datos, rol);
             
         }
         
@@ -35,7 +37,7 @@ const CategProductoCard: React.FunctionComponent<CategProductoCardProps> = ({den
         
         <tr className="" style={botonActivo ? {backgroundColor: '#659355', borderRadius: "25px"} : {backgroundColor: '#C34942', borderRadius: "25px"}}  >
 
-            <td>{denominacion}</td>
+            <td className="text-overflow">{denominacion}</td>
             
             <td>
                 <button className="btn mx-2 btn-sm" style={{backgroundColor: "#864e1b"}} onClick={

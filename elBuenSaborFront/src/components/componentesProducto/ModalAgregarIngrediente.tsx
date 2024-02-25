@@ -96,7 +96,7 @@ const ModalAgregarIngrediente: React.FC<ProdFormProps> = ({ estado, cambiarEstad
                 <div className="overlay">
                     <div className="container my-5 contenedorModal" style={{borderRadius: "25px", backgroundColor: "#f99132", color: "white", maxWidth: "50%"}}>
                         <div className="" style={{textAlign: "center", alignContent: "center"}}>
-                            <h3>Cargando...</h3>
+                            <h3>No se han encontrado ingredientes cargados...</h3>
                         </div>
                     </div>
                 </div>

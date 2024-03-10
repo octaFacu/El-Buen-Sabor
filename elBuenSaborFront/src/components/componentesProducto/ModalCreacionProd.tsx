@@ -44,7 +44,7 @@ const ModalCreacionProd: React.FC<ProdFormProps> = ({ estado, cambiarEstado, cat
     //ESTADOS PARA EL COMPONENTE
     const [state, setState] = useState<State>({
         productoSelect: new Producto(), //Producto a modificar y guardar
-        botonManufacturado: true, //Estado de manufacturacion del producto
+        botonManufacturado: datos?.receta == "" ? false : true, //Estado de manufacturacion del producto
         ingredientesProducto: [], //Ingredientes pertenecientes al producto
         modalIngr: false, //Estado de vista de modal incluir ingrediente
         ingredientesGuardados: true, //Bandera para guardado de ingredientes
@@ -171,10 +171,11 @@ const ModalCreacionProd: React.FC<ProdFormProps> = ({ estado, cambiarEstado, cat
       //Cargar los datos que pueden venir para edicion
     const cargarDatos = async () => {
         if (datos !== undefined) {
+            console.log("El boton manufacturado es... "+datos.esManufacturado);
             await setState((prevState) => ({
                 ...prevState,
                 productoSelect: { ...datos! },
-                botonManufacturado: datos!.esManufacturado,
+                botonManufacturado: datos!.receta == "" ? false : true,
                 idCategoria: datos!.categoriaProducto.id!,
                 ingredientesGuardados: false
               }));
@@ -201,11 +202,14 @@ const ModalCreacionProd: React.FC<ProdFormProps> = ({ estado, cambiarEstado, cat
 
 
     const handleSaving = async() => {
+        console.log("Entre al guardado...");
+        if(state.productoSelect.denominacion.trim() !== '' && state.productoSelect.descripcion.trim() !== '' && state.productoSelect.precioTotal > 0 && (file != undefined || (state.productoSelect.id != undefined || state.productoSelect.id != 0))) { 
 
-        if(state.productoSelect.denominacion.trim() !== '' && state.productoSelect.descripcion.trim() !== '' && state.productoSelect.precioTotal > 0 && file != undefined) { 
+        if(file != undefined){
+            console.log("Entro a guardado... guardando imagen...");
+            await handleFileUpload();
+        }
 
-        console.log("Entro a guardado... guardando imagen...");
-        await handleFileUpload();
         
         var costo: number = await calcularCosto();
 
@@ -243,7 +247,7 @@ const ModalCreacionProd: React.FC<ProdFormProps> = ({ estado, cambiarEstado, cat
         console.log("Antes de entrar al guardado...");
         console.log("PRODUCTO DESPUES DE CATEGORIA Y COSTO: "+JSON.stringify(state.productoSelect));
         if (state.productoSelect.id !== 0 && state.productoSelect.id !== null) {
-
+            console.log("Antes de entrar al update...");
             updateProducto();
             setIngredientesProducto([]);
             
@@ -276,6 +280,7 @@ const ModalCreacionProd: React.FC<ProdFormProps> = ({ estado, cambiarEstado, cat
 
 
     const handleFileUpload = async () => {
+        console.log("Entrando a update...");
         if (file) {
           try {
             const urlImagen = await cloudinaryService.uploadImage(file);
@@ -381,6 +386,7 @@ const ModalCreacionProd: React.FC<ProdFormProps> = ({ estado, cambiarEstado, cat
       }, [state.llamarGuardado]);
 
 
+
     //si las categorias aun no han cargado...
     if (categorias === undefined || categorias.length === 0) {
         return (
@@ -411,12 +417,13 @@ const ModalCreacionProd: React.FC<ProdFormProps> = ({ estado, cambiarEstado, cat
 
                 <div className="overlay">
                     <div className="container my-5 contenedorModal modaloverflow modal-dialog-scrollable" style={{ borderRadius: "25px", backgroundColor: "#f99132", color: "white", maxWidth: "50%" }}>
-                        <div className="childmodaloverflow center-align" style={{ alignContent: "center", overflowY: 'auto', maxHeight: '650px' }}>
+                        <div className="childmodaloverflow center-align pe-4 ps-4" style={{ alignContent: "center", overflowY: 'auto', maxHeight: '650px' }}>
                             <form className="text-center d-flex flex-column align-items-center" onSubmit={(e) => {
                                 e.preventDefault()
 
                             }}>
-                                <h3 className="mb-3 ps-3 pe-3 rounded" style={{textAlign: "center", backgroundColor: "#864e1b", minWidth: "100%"}}>Nuevo Producto</h3>
+                                {state.productoSelect.id != undefined && state.productoSelect.id != 0 ? <h3 className="mb-3 ps-1 pe-1 pt-2 pb-2 rounded" style={{textAlign: "center", backgroundColor: "#864e1b", minWidth: "100%"}}> Editar Producto</h3>
+                                : <h3 className="mb-3 ps-1 pe-1 pt-2 pb-2 rounded" style={{textAlign: "center", backgroundColor: "#864e1b", minWidth: "100%"}}> Nuevo Producto</h3>}
 
                                 <div className="container d-flex justify-content-around">
                                 
@@ -537,6 +544,7 @@ const ModalCreacionProd: React.FC<ProdFormProps> = ({ estado, cambiarEstado, cat
                                 <button type="submit" className="btn" style={{ backgroundColor: "#864e1b", color: "white" }} onClick={async (event) => {
 
                                     event.preventDefault();
+                                    console.log("Aprete el boton...");
                                     handleSaving();
 
                                         }

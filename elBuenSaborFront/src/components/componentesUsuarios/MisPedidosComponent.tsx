@@ -53,7 +53,7 @@ export default function MisPedidosComponent({ usuario }: Props) {
           <div className="d-flex flex-column mb-3">
             {
               pedidos.content.length === 0 ? (
-                <h4 className='text-center'>Todavia no ah realizado ningun pedido</h4>
+                <h4 className='text-center'>Todavia no ha realizado ningún pedido.</h4>
               ) : (
                 pedidos.content.map((historial: ProyeccionPedidoUsuario) => (
                   <div key={historial.pedido_id}>

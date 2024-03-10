@@ -84,22 +84,22 @@ const ModalEdicionDireccion: React.FC<ModalProps> = ({
               required
             />
             <p className="text-white parrafo bold text-center">
-              numero de casa:
+              Número de casa:
             </p>
             <input
               type="text"
               className="form-control text-center text-white"
               id="nroCasa"
-              placeholder="numero de casa"
+              placeholder="Número de casa"
               value={direc.nroCasa}
               onChange={handleChange}
             />
-            <p className="text-white parrafo bold text-center">piso/depto:</p>
+            <p className="text-white parrafo bold text-center">Piso/Depto:</p>
             <input
               type="text"
               className="form-control text-center text-white"
               id="pisoDpto"
-              placeholder="piso/depto"
+              placeholder="Piso/Depto"
               value={direc.pisoDpto}
               onChange={handleChange}
             />

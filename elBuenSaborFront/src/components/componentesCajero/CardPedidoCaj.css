@@ -29,7 +29,7 @@
 }
 .product-container {
     border-radius: 4%;
-    background-color: #5a3b1f;
+    background-color: #ba8250;
     display: flex; /* Use flexbox to align items side by side */
     align-items: center; /* Align items vertically within the container */
 }

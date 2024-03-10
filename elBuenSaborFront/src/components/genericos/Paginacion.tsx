@@ -12,39 +12,49 @@ interface PaginacionProps {
 
 const Paginacion: FunctionComponent<PaginacionProps> = ({ page, setPage, totalPages }) => {
 
-    let currentPage = page + 1
+    const isFirstPage = page === 0;
+    const isLastPage = page === totalPages - 1;
 
-    const renderItems = () => {
-
-        const renderedItems = []
-
-        for (let i = 0; i < totalPages; i++) {
-            renderedItems.push(
-
-                /*    <li key={i} className={`page-item ${page === i && "active"}`} aria-current="page">
-                       <a className="page-link" href="#" onClick={() => setPage(i)}>{i + 1}</a>
-                   </li> */
-
-                <li key={i} className={`page-item ${page === i && "active"}`} aria-current="page">
-                    <a className="page-link" onClick={() => setPage(i)}>{i + 1}</a>
-                </li>
-            );
+    const goToFirstPage = () => {
+        if (!isFirstPage) {
+            setPage(0);
         }
+    };
 
-        return renderedItems
+    const goToLastPage = () => {
+        if (!isLastPage) {
+            setPage(totalPages - 1);
+        }
+    };
 
-    }
+    const goToPreviousPage = () => {
+        if (!isFirstPage) {
+            setPage(page - 1);
+        }
+    };
+
+    const goToNextPage = () => {
+        if (!isLastPage) {
+            setPage(page + 1);
+        }
+    };
 
     return (
         <ul className="pagination ctr mb-2">
-            <li className={`page-item ${page === 0 ? "disabled" : "pointer"}`}>
-                <a className="page-link" onClick={() => setPage(page - 1)}>Anterior</a>
+            <li className={`page-item ${isFirstPage ? "disabled" : "pointer"}`}>
+                <a className="page-link" onClick={goToFirstPage}><i className="small material-icons">fast_rewind</i></a>
             </li>
-
-            {renderItems()}
-
-            <li className={`page-item colorActivo ${currentPage === totalPages ? "disabled" : "pointer"}`}>
-                <a className="page-link" onClick={() => setPage(page + 1)}>Siguiente</a>
+            <li className={`page-item ${isFirstPage ? "disabled" : "pointer"}`}>
+                <a className="page-link" onClick={goToPreviousPage}><i className="small material-icons">keyboard_arrow_left</i></a>
+            </li>
+            <li className={`page-item active`}>
+                <a className="page-link">{page + 1}</a>
+            </li>
+            <li className={`page-item ${isLastPage ? "disabled" : "pointer"}`}>
+                <a className="page-link" onClick={goToNextPage}><i className="small material-icons">keyboard_arrow_right</i></a>
+            </li>
+            <li className={`page-item ${isLastPage ? "disabled" : "pointer"}`}>
+                <a className="page-link" onClick={goToLastPage}><i className="small material-icons">fast_forward</i></a>
             </li>
         </ul>
     );

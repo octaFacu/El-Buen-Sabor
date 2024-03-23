@@ -93,7 +93,7 @@ export const routesConfig = [
     {
         path: '/informacionAdicional',
         component: InformacionAdicionalPostRegistro,
-        roles: ['cliente'],
+        roles: [],
     },
     {
         path: '/abm/categoriaIngredientes',

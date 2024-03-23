@@ -30,6 +30,10 @@ const AppRoutes: React.FC<AppRouteProps> = ({
     if(user) { 
       var rolesString = user['rol']; //IT IS AN OBJECT
 
+      if(rolesString == "" || rolesString == undefined){
+        userRoles.push("cliente");
+      }
+
       console.log("Roles: "+rolesString);
 
       for (const key in rolesString) {

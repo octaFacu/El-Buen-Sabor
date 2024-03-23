@@ -78,7 +78,7 @@ export const ContextProvider = ({ children }: props) => {
           rolGuardar = import.meta.env.VITE_CLIENTE
           break;
         default:
-          rolGuardar = ""
+          rolGuardar = import.meta.env.VITE_CLIENTE
           break;
       }
     }

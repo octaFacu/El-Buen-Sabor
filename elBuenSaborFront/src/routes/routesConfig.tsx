@@ -51,7 +51,7 @@ export const routesConfig = [
     {
         path: '/checkout',
         component: Checkout,
-        roles: [],
+        roles: ['cliente'],
     },
     {
         path: '/success',
@@ -68,32 +68,32 @@ export const routesConfig = [
     {
         path: '/usuarios',
         component: InformacionUsuario,
-        roles: [],
+        roles: ['cliente'],
     },
     {
         path: '/usuarios/MiCuenta',
         component: InformacionUsuario,
-        roles: [],
+        roles: ['cliente'],
     },
     {
         path: '/usuarios/MisDirecciones',
         component: InformacionUsuario,
-        roles: [],
+        roles: ['cliente'],
     },
     {
         path: '/usuarios/MisPedidos',
         component: InformacionUsuario,
-        roles: [],
+        roles: ['cliente'],
     },
     {
         path: '/usuarios/MisFavoritos',
         component: InformacionUsuario,
-        roles: [],
+        roles: ['cliente'],
     },
     {
         path: '/informacionAdicional',
         component: InformacionAdicionalPostRegistro,
-        roles: [],
+        roles: ['cliente'],
     },
     {
         path: '/abm/categoriaIngredientes',

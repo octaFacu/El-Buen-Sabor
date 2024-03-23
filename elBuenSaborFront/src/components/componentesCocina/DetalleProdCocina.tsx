@@ -68,7 +68,7 @@ const DetalleProdCocina: React.FC<ProdFormProps> = ({ producto, estado, changeEs
             <>
                 {estado &&
                     <div className="overlay" onClick={() => changeEstado(!estado)}>
-                        <div className="container productoContainer my-5 mt-4 mb-4 contenedorModal modaloverflow" onClick={e => e.stopPropagation()} style={{ borderRadius: "25px", backgroundColor: "#f99132", color: "white", maxWidth: "50%" }}>
+                        <div className="container productoContainer my-5 mt-4 mb-4 ps-5 pe-5 contenedorModal modaloverflow" onClick={e => e.stopPropagation()} style={{ borderRadius: "25px", backgroundColor: "#f99132", color: "white", maxWidth: "50%" }}>
                             <h2 className="mt-3 productoTitle pt-2 pb-2">{producto.denominacion}</h2>
                             <p className="mt-3 productoTitle pt-2 pb-2"></p>
 
@@ -84,7 +84,7 @@ const DetalleProdCocina: React.FC<ProdFormProps> = ({ producto, estado, changeEs
                                     </>
                                 ))}
                             </ul>
-                            <div className="productoContainer tiempoProducto">
+                            <div className="productoContainer tiempoProducto ms-5 me-5">
                                 <h4>{producto.tiempoCocina}</h4>
                             </div>
                             <div>

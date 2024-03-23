@@ -20,9 +20,11 @@ const AppRoutes: React.FC<AppRouteProps> = ({
 
   if(!isLoading){
     if (!isAuthenticated && roles.length !== 0) {
+      console.log("ENTRO A NO AUTENTICADO Y ROLES NO 0")
       return <Navigate to="/" />;
     }else if(!isAuthenticated && roles.length === 0){
-      return <Routes><Route path={path} element={<Component />} /></Routes>;
+      console.log("ENTRO A NO AUTENTICADO Y ROLES 0")
+      return <Component />;//<Routes><Route path={path} element={<Component />} /></Routes>;
     }
 
     if(user) { 

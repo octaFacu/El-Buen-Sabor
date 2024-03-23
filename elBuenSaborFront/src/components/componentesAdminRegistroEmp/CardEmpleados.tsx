@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import EmpleadoModal from './EmpleadoModal';
 import '../../css/EmpleadoRegistro.css'
 import { ServiceBasicos } from '../../services/ServiceBasicos';
+import { useUnidadContext } from '../../context/GlobalContext';
 
 interface Props {
   empleado: Usuario;
@@ -25,10 +26,11 @@ export default function CardEmpleados({ empleado, actualizarEmpleado }: Props) {
     setShowModal(false);
 
   }
+  const { rol } = useUnidadContext();
 
   const habilitar_Deshabilitar = () => {
     // Realiza la modificación, por ejemplo, deshabilita o habilita al empleado
-    servicio.softDelete(empleado.id);
+    servicio.softDelete(empleado.id,rol);
   
     // Notifica al componente padre sobre la modificación
     actualizarEmpleado({ ...empleado, activo: !empleado.activo });

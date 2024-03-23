@@ -1,3 +1,4 @@
+import { useUnidadContext } from '../../context/GlobalContext';
 import { AdminService } from '../../services/AdminService';
 import { useNavigate } from 'react-router-dom';
 
@@ -8,20 +9,21 @@ interface Props {
 
 export default function BotonExcelYAtrasComponent({informe, nombre}: Props) {
     const navigate = useNavigate();
-    
+    const { rol } = useUnidadContext();
+
     const handleExcel = async (opcion: number) => {
         const servicioAdmin = new AdminService();
         try {
             let blob: Blob;
             switch (opcion) {
                 case 1:
-                    blob = await servicioAdmin.generarInformeClientes();
+                    blob = await servicioAdmin.generarInformeClientes(rol);
                     break;
                 case 2:
-                    blob = await servicioAdmin.generarInformeProductos();
+                    blob = await servicioAdmin.generarInformeProductos(rol);
                     break;
                 case 3:
-                    blob = await servicioAdmin.generarInformeGanancias();
+                    blob = await servicioAdmin.generarInformeGanancias(rol);
                     break;
                 default:
                     console.error("Opción no válida");

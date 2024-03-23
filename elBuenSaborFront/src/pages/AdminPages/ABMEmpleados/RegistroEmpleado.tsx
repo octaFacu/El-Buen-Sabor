@@ -86,12 +86,14 @@ export default function RegistroEmpleado() {
             </button>
           </div>
         </div>
+        {empleados.content.length > 0 && (
         <Paginacion
           page={empleados.pageable.pageNumber}
           setPage={actualizarPagina}
           totalPages={empleados.totalPages}
           size={empleados.size}
         />
+      )}
       </div>
     </div>
   );

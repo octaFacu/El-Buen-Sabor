@@ -5,6 +5,7 @@ import "../../pages/pagesStyles/usuarios.css";
 import { useAuth0 } from "@auth0/auth0-react";
 import { Usuario } from "../../context/interfaces/interfaces";
 import { ServiceBasicos } from "../../services/ServiceBasicos";
+import { useUnidadContext } from '../../context/GlobalContext';
 
 export default function MiCuentaComponent() {
   const [modalInformacion, setModalInformacion] = useState<Boolean>(false);
@@ -18,6 +19,7 @@ export default function MiCuentaComponent() {
     activo: true,
     email: ""
   });
+  const { rol } = useUnidadContext();
 
   const traerId = (): string => {
     if (user) {
@@ -30,7 +32,7 @@ export default function MiCuentaComponent() {
   const traeUsuario = async () => {
     const servicioUsuarios = new ServiceBasicos("usuario");
     try {
-      const usuarioGuardado = await servicioUsuarios.getOne(traerId());
+      const usuarioGuardado = await servicioUsuarios.getOne(traerId(),rol);
       setUsuario(usuarioGuardado);
     } catch (error) {
       console.error(error);

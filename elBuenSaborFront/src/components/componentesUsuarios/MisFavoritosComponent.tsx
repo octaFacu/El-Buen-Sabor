@@ -8,6 +8,7 @@ import { ClienteService } from "../../services/ClienteService";
 import "../../css/favoritos.css";
 import { PageProyeccionHistorialPedido } from "../../context/interfaces/Proyecciones/ProyeccionHistorialPedidoCliente";
 import Paginacion from "../genericos/Paginacion";
+import { useUnidadContext } from "../../context/GlobalContext";
 
 interface Props {
   usuario: Usuario;
@@ -22,12 +23,13 @@ export default function MisFavoritosComponent({ usuario }: Props) {
 
   const servicioFavorito = new FavoritoService();
   const servicioCliente = new ClienteService();
+  const { rol } = useUnidadContext();
 
   const traerFavorito = async (pageNumber: number) => {
-    await servicioCliente.getClienteByUsuarioId(usuario.id);
+    await servicioCliente.getClienteByUsuarioId(usuario.id,rol);
 
     const prod = await servicioFavorito.getFavoritosDeUsuario(
-      await servicioCliente.getIdCliente(usuario.id),
+      await servicioCliente.getIdCliente(usuario.id,rol),
       5,
       pageNumber
     );
@@ -72,7 +74,7 @@ export default function MisFavoritosComponent({ usuario }: Props) {
                           onMouseEnter={() => setHoveredProductId(producto.id)}
                           onMouseLeave={() => setHoveredProductId(null)}
                           onClick={() =>
-                            servicioFavorito.deleteEntity(producto.id)
+                            servicioFavorito.deleteEntity(producto.id,rol)
                           }
                         >
                           <i className="material-icons iconos">

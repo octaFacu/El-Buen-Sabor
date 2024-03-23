@@ -28,7 +28,7 @@ export default function PdfFactura({ pedido_Id, esEnvio }: Props) {
 
   const servicio = new pedidoService();
   const getDatos = async () => {
-    const traerdatos = await servicio.getDatosFacturas(pedido_Id);
+    const traerdatos = await servicio.getDatosFacturas(pedido_Id,rol);
     const traerDatosProductos = await servicio.getProductosPedido(
       pedido_Id,
       rol
@@ -50,10 +50,11 @@ export default function PdfFactura({ pedido_Id, esEnvio }: Props) {
       return "";
     }
   };
-  const precioTotal = datosProductosPedido.reduce((total, producto) => {
+  const precioTotal = datosProductosPedido?.reduce((total, producto) => {
     return total + producto.precio_total * producto.cantidad;
-  }, 0);
-  var conDesc =  precioTotal - (precioTotal*0.1)
+  }, 0) || 0; 
+  
+  const conDesc = precioTotal - (precioTotal * 0.1);
 
   const formateoNumeroFactura = () => {
     const numeroFormateado = datosFactura?.numero_factura

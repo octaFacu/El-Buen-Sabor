@@ -5,6 +5,7 @@ import PdfFactura from "../../PDF/PdfFactura";
 import PedidoHasProductos from "../../../context/interfaces/PedidoHasProductos";
 import { ProductoParaPedido } from "../../../context/interfaces/interfaces";
 import { useNavigate } from "react-router-dom";
+import { useUnidadContext } from "../../../context/GlobalContext";
 
 interface Props {
   mostrarModal: boolean;
@@ -24,6 +25,7 @@ const ModalPedido: React.FC<Props> = ({
   if (!mostrarModal) {
     return null;
   }
+  const { rol } = useUnidadContext();
 
   const totalPedido = pedidoUsuario.reduce((total, pedidoHasProd) => {
     return total + pedidoHasProd.producto.precioTotal * pedidoHasProd.cantidad;
@@ -33,7 +35,7 @@ const ModalPedido: React.FC<Props> = ({
   const navigate = useNavigate();
 
   const traerPedidos = async () => {
-    const productosPedido = await servicioPedio.getProductosByPedido(idPedido);
+    const productosPedido = await servicioPedio.getProductosByPedido(idPedido, rol);
     setPedidoUsuario(productosPedido);
   };
 

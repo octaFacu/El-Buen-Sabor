@@ -6,6 +6,7 @@ import CardHistorialPedidos from "./CardHistorialPedidos";
 import { PageProyeccionHistorialPedido } from "../../context/interfaces/Proyecciones/ProyeccionHistorialPedidoCliente";
 import Paginacion from "../genericos/Paginacion";
 import "../../css/favoritos.css";
+import { useUnidadContext } from "../../context/GlobalContext";
 
 interface Props {
   usuario: Usuario;
@@ -14,6 +15,7 @@ interface Props {
 export default function MisPedidosComponent({ usuario }: Props) {
   const [pedidos, setPedidos] = useState<PageProyeccionHistorialPedido<ProyeccionPedidoUsuario>>();
 
+  const { rol } = useUnidadContext();
 
   const servicioCliente = new ClienteService();
 
@@ -21,9 +23,9 @@ export default function MisPedidosComponent({ usuario }: Props) {
 
   const traerPedidos = async (pageNumber: number) => {
     try {
-      const idCliente = await servicioCliente.getIdCliente(usuario.id)
+      const idCliente = await servicioCliente.getIdCliente(usuario.id, rol)
       const pedido = await servicioCliente.getPedidosUsuario(
-       idCliente, pageNumber
+        rol,idCliente, pageNumber
       );
       setPedidos(pedido);
     } catch (error) {

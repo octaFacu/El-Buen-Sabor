@@ -32,7 +32,7 @@ export class ClienteService extends ServiceBasicos {
   }
 
 
-  async getPedidosUsuario(clienteId: number, page: number = 0, size: number = 1, fechaInicio: Date | null = null, fechaFin: Date | null = null, rol: string): Promise<PageProyeccionHistorialPedido<ProyeccionPedidoUsuario>> {
+  async getPedidosUsuario( rol: string,clienteId: number, page: number = 0, size: number = 1, fechaInicio: Date | null = null, fechaFin: Date | null = null): Promise<PageProyeccionHistorialPedido<ProyeccionPedidoUsuario>> {
     try {
       let parametros = `?page=${page}&size=${size}`;
       if (fechaInicio !== null && fechaFin !== null) {

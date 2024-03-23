@@ -3,6 +3,7 @@ import { Usuario } from '../../context/interfaces/interfaces';
 import { AdminService } from '../../services/AdminService';
 import { ServiceBasicos } from '../../services/ServiceBasicos';
 import ModalConfirmacion from '../componentesUsuarios/modales/ModalConfirmacion';
+import { useUnidadContext } from '../../context/GlobalContext';
 
 
 interface Props {
@@ -21,7 +22,7 @@ export default function EmpleadoModal({ show, onHide, empleado, actualizarEmplea
     const serviceEmp = new ServiceBasicos("usuario")
 
     const [idRol, setIdRol] = useState<string>("");
-    const [nombreRol, setNombreRol] = useState<string>(empleado.nombreRol);
+    const [nombreRol, setNombreRol] = useState<string>(empleado?.nombreRol);
 
     const [mostrarConfirmacion, setMostrarConfirmacion] = useState<boolean>(false);
 
@@ -68,6 +69,7 @@ export default function EmpleadoModal({ show, onHide, empleado, actualizarEmplea
         return valorRol;
     }
 
+    const { rol } = useUnidadContext();
 
 
     const GuardarEmpleado = async () => {
@@ -86,7 +88,7 @@ export default function EmpleadoModal({ show, onHide, empleado, actualizarEmplea
         //actualizarEmpleado(empleadoModificado);
         const empleadoModificado: Usuario = { ...datosEmpleado, nombreRol: nombreRol };
         actualizarEmpleado(empleadoModificado);
-        serviceEmp.updateEntity(empleadoModificado);
+        serviceEmp.updateEntity(empleadoModificado, rol);
     }
 
     const BorrarEmpleado = async () => {

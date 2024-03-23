@@ -5,6 +5,7 @@ import { DireccionService } from "../../services/DireccionService";
 import "../../css/direccionesUsuario.css";
 import { ServiceBasicos } from "../../services/ServiceBasicos";
 import { Usuario, Direccion } from "../../context/interfaces/interfaces";
+import { useUnidadContext } from "../../context/GlobalContext";
 
 interface Props {
   usuario: Usuario;
@@ -37,12 +38,14 @@ export default function MisDireccionesComponents({ usuario }: Props) {
     });
     setModo("agregar");
   };
+  
+  const { rol } = useUnidadContext();
 
   const traerDirecciones = async () => {
     const servicioDireccion = new DireccionService();
     try {
       const direcciones = await servicioDireccion.getDireccionesByusuarioId(
-        usuario.id
+        usuario.id, rol
       );
       setDirecciones(direcciones);
     } catch (error) {
@@ -62,7 +65,7 @@ export default function MisDireccionesComponents({ usuario }: Props) {
 
   const traerDireccionParaEditar = async (id: number) => {
     try {
-      setDireccion(await servicioDireccion.getOne(id));
+      setDireccion(await servicioDireccion.getOne(id, rol));
     } catch (error) {
       console.log(error);
     }
@@ -80,7 +83,7 @@ export default function MisDireccionesComponents({ usuario }: Props) {
   const confirmarEliminar = async (id: number) => {
     setModalConfirmacion(false);
     try {
-      await servicioDireccion.softDelete(id);
+      await servicioDireccion.softDelete(id, rol);
     } catch (error) {
       console.log(error);
     }

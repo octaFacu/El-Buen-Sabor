@@ -4,6 +4,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { ServiceBasicos } from "../../../services/ServiceBasicos";
 import ModalConfirmacion from "./ModalConfirmacion";
 import { Usuario } from "../../../context/interfaces/interfaces";
+import { useUnidadContext } from "../../../context/GlobalContext";
 
 interface ModalProps {
   cerrarModal: () => void;
@@ -52,6 +53,7 @@ export default function ModalInformacion({ cerrarModal, usuario }: ModalProps) {
   };
     
 
+  const { rol } = useUnidadContext();
 
 
   const handleGuardarClick = () => {
@@ -64,7 +66,7 @@ export default function ModalInformacion({ cerrarModal, usuario }: ModalProps) {
   const handleConfirmarGuardar = async () => {
     const servicioUsuarios = new ServiceBasicos("usuario");
     try {
-      await servicioUsuarios.updateEntity(usuarioTemp);
+      await servicioUsuarios.updateEntity(usuarioTemp,rol);
       cerrarModal();
     } catch (error) {
       console.error(error);

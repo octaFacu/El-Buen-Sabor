@@ -3,16 +3,18 @@ import { ProductoService } from '../../../services/ProductoService';
 import { proyeccionInformeRentabilidad } from '../../../context/interfaces/Proyecciones/ProyeccionInformeGananciasGrafico';
 import { Bar } from 'react-chartjs-2';
 import OrdenamientoFechas from './OrdenamientoFechas';
+import { useUnidadContext } from '../../../context/GlobalContext';
 
 export default function InformeRentabiliadadComponent() {
     const servicioProducto = new ProductoService();
     const [informacionGrafico, setInforimacionGrafico] = useState<proyeccionInformeRentabilidad[]>();
     const [startDate, setStartDate] = useState<Date | null>(null);
     const [endDate, setEndDate] = useState<Date | null>(null); 
+    const { rol } = useUnidadContext();
 
     const getInformacionGrafico = async () => {
         try {
-            const traerInfo = await servicioProducto.getInformeRentabilidad(startDate, endDate);
+            const traerInfo = await servicioProducto.getInformeRentabilidad(startDate, endDate,rol);
             setInforimacionGrafico(traerInfo);
         } catch (err: any) {
             console.error(err);

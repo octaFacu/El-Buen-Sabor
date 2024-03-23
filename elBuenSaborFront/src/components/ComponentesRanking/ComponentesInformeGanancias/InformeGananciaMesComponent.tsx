@@ -4,15 +4,17 @@ import { ProductoService } from "../../../services/ProductoService";
 import { Scatter } from 'react-chartjs-2';
 import { format } from 'date-fns';
 import 'chartjs-adapter-date-fns';
+import { useUnidadContext } from "../../../context/GlobalContext";
 
 
 export default function InformeGananciaMesComponent() {
     const servicioProducto = new ProductoService();
     const [informacionGrafico, setInformacionGrafico] = useState<proyeccionGananciaMes[]>();
+    const { rol } = useUnidadContext();
 
     const getInformacionGrafico = async () => {
         try {
-            const traerInfo = await servicioProducto.getInformeGananciasMes();
+            const traerInfo = await servicioProducto.getInformeGananciasMes(rol);
             setInformacionGrafico(traerInfo);
         } catch (err: any) {
             console.error(err);

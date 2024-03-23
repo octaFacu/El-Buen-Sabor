@@ -5,6 +5,7 @@ import { Pie } from 'react-chartjs-2';
 import { CategoryScale } from 'chart.js';
 import Chart from 'chart.js/auto';
 import OrdenamientoFechas from './OrdenamientoFechas';
+import { useUnidadContext } from '../../../context/GlobalContext';
 
 Chart.register(CategoryScale);
 export default function InformeGananciaComponent() {
@@ -13,11 +14,12 @@ export default function InformeGananciaComponent() {
     const [startDate, setStartDate] = useState<Date | null>(null);
     const [endDate, setEndDate] = useState<Date | null>(null); // 
 
-
+    
+    const { rol } = useUnidadContext();
 
     const getInformacionGrafico = async () => {
         try {
-            const traerInfo = await servicioProducto.getInformeGananciasGrafico(startDate,endDate);
+            const traerInfo = await servicioProducto.getInformeGananciasGrafico(startDate,endDate,rol);
             setInforimacionGrafico(traerInfo);
         } catch (err: any) {
             console.error(err);

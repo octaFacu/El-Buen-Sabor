@@ -3,6 +3,7 @@ import { ServiceBasicos } from "../../../services/ServiceBasicos";
 import { DireccionService } from "../../../services/DireccionService";
 import { Direccion, ExcepcionesVerificaUsuario } from "../../../context/interfaces/interfaces";
 import "./modal.css";
+import { useUnidadContext } from "../../../context/GlobalContext";
 
 interface ModalProps {
   cerrarModal: () => void;
@@ -16,16 +17,18 @@ const ModalEdicionDireccion: React.FC<ModalProps> = ({
   direccion,
 }) => {
   const [direc, setDirec] = useState<Direccion>(direccion);
+  const { rol } = useUnidadContext();
+
 
   const handleSubmit = async () => {
     const servicioDireccion = new DireccionService();
     const usuarioId = direc.usuario.id;
     try {
       if (modo === "editar") {
-        await servicioDireccion.updateDireccion(usuarioId, direc);
+        await servicioDireccion.updateDireccion(usuarioId, direc,rol);
         cerrarModal();
       } else {
-        await servicioDireccion.verificarYCrearDireccion(usuarioId, direc);
+        await servicioDireccion.verificarYCrearDireccion(usuarioId, direc,rol);
         cerrarModal();
       }
     } catch (error: any) {

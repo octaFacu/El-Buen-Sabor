@@ -1,3 +1,4 @@
+import MenuComponent from '../../components/MenusComponents/MenuComponent';
 import '../../css/estilosEstadistias.css'
 import { useNavigate } from 'react-router-dom';
 
@@ -19,10 +20,14 @@ export default function PaginaPrincipalAdministrador() {
       case 5:
         navigate("/admin/estadisticas/rankingCliente");
         break;
+        case 6:
+        navigate("/abm/menu");
+        break;
     }
   }
 
   return (
+    <>
     <div className="container mx-auto">
       <div className="card card-admin ">
         <div className="contenedor-tituloEstadistica text-white">
@@ -33,7 +38,7 @@ export default function PaginaPrincipalAdministrador() {
           
             <button className='btn btn-administrar text-white mb-2' onClick={()=> handleClick(2)}>Administrar Empleados</button>
             <button className='btn btn-administrar text-white  mb-2' onClick={()=> handleClick(3)}>ver informe ganancias</button>
-            <button className='btn btn-administrar text-white mb-2'>Gestionar Rubros - Insumos - Productos</button>
+            <button className='btn btn-administrar text-white mb-2' onClick={()=> handleClick(6)}>Gestionar Rubros - Insumos - Productos</button>
           </div>
           <div className="d-flex justify-content-between btn-separador btn-AñadirPadding">
             <button className='btn btn-administrar btn-administrar-tam text-white btn-margenDerecho' onClick={()=> handleClick(4)}>Ver ranking comidas</button>
@@ -42,5 +47,9 @@ export default function PaginaPrincipalAdministrador() {
         </div>
       </div>
     </div>
+    <div className="mt-5 mx-5">
+      <MenuComponent></MenuComponent>
+    </div>
+    </>
   );
 }

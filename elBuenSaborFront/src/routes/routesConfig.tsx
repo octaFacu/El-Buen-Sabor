@@ -20,6 +20,7 @@ import RegistroEmpleado from '../pages/AdminPages/ABMEmpleados/RegistroEmpleado'
 import SuccessPage from '../pages/CartPages/MercadoPagoBackURLS/SuccessPage';
 import PendingPage from '../pages/CartPages/MercadoPagoBackURLS/PendingPage';
 import FailurePage from '../pages/CartPages/MercadoPagoBackURLS/FailurePage';
+import { MenuABM } from '../pages/ABMPages/MenuABM';
 
 
 export const routesConfig = [
@@ -143,10 +144,17 @@ export const routesConfig = [
     {
         path: '/Admin/Administrar/Empleados',
         component: RegistroEmpleado,
+        roles: ['admin'],
     },
     {
         path: '/Admin/Administrar/Empleados',
         component: RegistroEmpleado,
+        roles: ['admin'],
+    },
+    {
+        path: '/abm/menu',
+        component: MenuABM,
+        roles: ['admin', 'cocinero'],
     },
     {
         path: '*',

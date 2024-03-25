@@ -140,7 +140,7 @@ const Checkout: FC<CheckoutProps> = () => {
 
         console.log(requestPedido);
 
-        const data = await pedidoSrv.createPedidoAndPedidoHasProducto(requestPedido)
+        const data = await pedidoSrv.createPedidoAndPedidoHasProducto(requestPedido, rol)
         console.log("Pedido guardado");
         console.log(data);
 

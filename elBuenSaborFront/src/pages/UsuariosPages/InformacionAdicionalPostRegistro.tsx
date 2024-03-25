@@ -137,7 +137,17 @@ export default function InformacionAdicionalPostRegistro() {
       </div>
     );
   } else {
-    console.log("Paso por aca TENGO LOG")
-    window.location.href = 'http://localhost:5173';
+    if(rol == "" || rol == "cliente"){
+      window.location.href = 'http://localhost:5173';
+    }else if(rol == "admin"){
+      window.location.href = 'http://localhost:5173/admin/';
+    }else if(rol == "cocinero"){
+      window.location.href = 'http://localhost:5173/dashboard-cocina/';
+    }else if(rol == "delivery"){
+      window.location.href = 'http://localhost:5173/dashboard-delivery/';
+    }else{
+      window.location.href = 'http://localhost:5173/dashboard-pedidos/';
+    }
+
   }
 }

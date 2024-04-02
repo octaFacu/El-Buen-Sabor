@@ -22,7 +22,7 @@ export default function EmpleadoModal({ show, onHide, empleado, actualizarEmplea
     const serviceEmp = new ServiceBasicos("usuario")
 
     const [idRol, setIdRol] = useState<string>("");
-    const [nombreRol, setNombreRol] = useState<string>(empleado?.nombreRol);
+    const [nombreRol, setNombreRol] = useState<string>(empleado.nombreRol  ?? "");
 
     const [mostrarConfirmacion, setMostrarConfirmacion] = useState<boolean>(false);
 
@@ -64,7 +64,7 @@ export default function EmpleadoModal({ show, onHide, empleado, actualizarEmplea
             "Cocinero": "rol_iZcV6RkmERma4CwD",
             "delivery": "rol_0Z5rG7VtWJ7W1hiP"
         };
-        const valorRol = roles[empleado.nombreRol];
+        const valorRol = roles[empleado.nombreRol ?? ""];
 
         return valorRol;
     }

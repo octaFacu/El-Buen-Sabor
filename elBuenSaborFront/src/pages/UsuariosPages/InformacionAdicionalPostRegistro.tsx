@@ -17,7 +17,8 @@ export default function InformacionAdicionalPostRegistro() {
     apellido: "",
     telefono: "",
     activo: true,
-    email: ""
+    email: "",
+    nombreRol: "CLIENTE"
   });
 
   useEffect(() => {
@@ -57,6 +58,7 @@ export default function InformacionAdicionalPostRegistro() {
       const cliente = {
         ...usuario,
         usuario: usuarioGuardado,
+        
       };
   
       await servicioCliente.createEntity(cliente, rol);
@@ -139,14 +141,19 @@ export default function InformacionAdicionalPostRegistro() {
   } else {
     if(rol == "" || rol == "cliente"){
       window.location.href = 'http://localhost:5173';
+      console.log("cliente")
     }else if(rol == "admin"){
       window.location.href = 'http://localhost:5173/admin/';
+      console.log("admin")
     }else if(rol == "cocinero"){
       window.location.href = 'http://localhost:5173/dashboard-cocina/';
+      console.log("cocinero")
     }else if(rol == "delivery"){
       window.location.href = 'http://localhost:5173/dashboard-delivery/';
+      console.log("delivery")
     }else{
       window.location.href = 'http://localhost:5173/dashboard-pedidos/';
+      console.log("ROL "+rol)
     }
 
   }

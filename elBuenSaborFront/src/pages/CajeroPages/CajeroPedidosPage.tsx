@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ListaCartasABM } from "../../components/genericos/ListaCartasABM"
 import Pedido, { EstadoPedido } from "../../context/interfaces/Pedido";
 import { pedidoService } from "../../services/PedidoService";
@@ -92,8 +92,9 @@ export const CajeroPedidosPage = () => {
         getPedidos();
         const socket = new SockJS('http://localhost:8080/ws-endpoint');
         //const socket = Socket.io('/ws-endpoint');
-        const stompClient = Stomp.over(socket);
+        const stompClient = Stomp.over(socket);0
 
+        console.log("Entering Web Socket handler")
         const handleNotification = async (attributeValue: string) => {
 
             console.log('Received attribute value:', attributeValue);
@@ -133,7 +134,7 @@ export const CajeroPedidosPage = () => {
 
     useEffect(() => {
         console.log("PEDIDOS HAN CAMBIADO");
-        //HERE I NEED TO RE RENDER WITH WHAT THE CURRENT LIST HAS, NO CHANGES
+        //HERE I NEED TO RE RENDER WITH WHAT THE CURRENT LIST HAS, NO CHANGES -- que significa esto T-T ¿? ya me olvidé lol
     }, [pedidos]);
 
     const handleChangeEstado = (estadoDePedido: EstadoPedido, pedidoChanged: Pedido) => {
@@ -148,8 +149,13 @@ export const CajeroPedidosPage = () => {
         window.location.reload();
     }
 
-
+    const dropdownRef = useRef<HTMLSelectElement>(null);
     const handleEstadoChange = (newEstado: EstadoPedido) => {
+        
+        if (dropdownRef.current) {
+            dropdownRef.current.selectedIndex = newEstado;
+          }
+
         setEstadoDePedidos(newEstado);
     };
 
@@ -175,6 +181,8 @@ export const CajeroPedidosPage = () => {
             }
         }
     };
+
+    
 
     return (
         <div>
@@ -206,7 +214,7 @@ export const CajeroPedidosPage = () => {
                             <input style={{ display: "none" }}></input>
                         </div>
                         <div className="childPed">
-                            <select className="dropdown-estado form-select mb-3 mr-3 " id="categoria" name="categoria" onChange={(e) => { handleEstadoChange(EstadoPedido[e.target.value as keyof typeof EstadoPedido]) }}>
+                            <select className="dropdown-estado form-select mb-3 mr-3" ref={dropdownRef} id="categoria" name="categoria" onChange={(e) => { handleEstadoChange(EstadoPedido[e.target.value as keyof typeof EstadoPedido]) }}>
                                 {/* <option selected value={estadoDePedidos.valueOf()}>{estadoDePedidos.valueOf()}</option> */}
                                 {Object.values(EstadoPedido)
                                     .filter(state => typeof state === "string")

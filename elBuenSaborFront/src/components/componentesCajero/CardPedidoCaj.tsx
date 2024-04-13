@@ -67,7 +67,7 @@ const CardPedidoCaja: React.FC<ProdFormProps> = ({ pedido, changeEstadoPedido}) 
                                     .filter(state => typeof state === "string")
                                     .map((state, index) => (
                                         pedido.estado !== state && (
-                                            <option key={index} value={state} disabled={"Listo" === state || "AConfirmar" === state || (!pedido.esEnvio && state === "EnDelivery")}>
+                                            <option key={index} value={state} disabled={ "Listo" === state || "AConfirmar" === state || /*(!pedido.esEnvio &&*/ state === "EnDelivery"}>
                                                 {state} 
                                             </option>
                                         )

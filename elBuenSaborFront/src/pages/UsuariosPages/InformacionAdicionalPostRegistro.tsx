@@ -151,8 +151,11 @@ export default function InformacionAdicionalPostRegistro() {
     }else if(rol == "delivery"){
       window.location.href = 'http://localhost:5173/dashboard-delivery/';
       console.log("delivery")
-    }else{
+    }else if(rol == "cajero"){
       window.location.href = 'http://localhost:5173/dashboard-pedidos/';
+      console.log("ROL "+rol)
+    }else{
+      window.location.href = 'hhttp://localhost:5173';
       console.log("ROL "+rol)
     }
 

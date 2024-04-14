@@ -139,24 +139,26 @@ export default function InformacionAdicionalPostRegistro() {
       </div>
     );
   } else {
-    if(rol == "" || rol == "cliente"){
-      window.location.href = 'http://localhost:5173';
-      console.log("cliente")
-    }else if(rol == "admin"){
+
+    //Los roles aún no están convertidos en 
+    if(rol == "" || rol == import.meta.env.VITE_CLIENTE){
+     window.location.href = 'http://localhost:5173';
+      //console.log("cliente")
+    }else if(rol == import.meta.env.VITE_ADMIN){
       window.location.href = 'http://localhost:5173/admin/';
-      console.log("admin")
-    }else if(rol == "cocinero"){
+      //console.log("admin")
+    }else if(rol == import.meta.env.VITE_COCINERO){
       window.location.href = 'http://localhost:5173/dashboard-cocina/';
-      console.log("cocinero")
-    }else if(rol == "delivery"){
+      //console.log("cocinero")
+    }else if(rol == import.meta.env.VITE_DELIVERY){
       window.location.href = 'http://localhost:5173/dashboard-delivery/';
-      console.log("delivery")
-    }else if(rol == "cajero"){
+      //console.log("delivery")
+    }else if(rol == import.meta.env.VITE_CAJERO){
       window.location.href = 'http://localhost:5173/dashboard-pedidos/';
-      console.log("ROL "+rol)
+      //console.log("cajero")
     }else{
       window.location.href = 'hhttp://localhost:5173';
-      console.log("ROL "+rol)
+      //console.log("ROL "+rol)
     }
 
   }

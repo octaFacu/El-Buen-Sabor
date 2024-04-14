@@ -41,7 +41,7 @@ export const CajeroPedidosPage = () => {
     }
 
     async function handleSetListaPendientes(estado: string) {
-        console.log("Estoy entrando al setter de lista de pendientes");
+        //console.log("Estoy entrando al setter de lista de pendientes");
         switch (estado) {
             case "AConfirmar": {
                 if (!listaPendientes.includes(0)) {
@@ -78,7 +78,7 @@ export const CajeroPedidosPage = () => {
             };
         }
         listaPendientes.forEach(num => {
-            console.log("PEDIDOS RECIBIDOS:" + num);
+            //console.log("PEDIDOS RECIBIDOS:" + num);
         });
     }
 
@@ -94,10 +94,10 @@ export const CajeroPedidosPage = () => {
         //const socket = Socket.io('/ws-endpoint');
         const stompClient = Stomp.over(socket);0
 
-        console.log("Entering Web Socket handler")
+        //console.log("Entering Web Socket handler")
         const handleNotification = async (attributeValue: string) => {
 
-            console.log('Received attribute value:', attributeValue);
+            //console.log('Received attribute value:', attributeValue);
             await handleSetListaPendientes(attributeValue);
 
 
@@ -111,9 +111,9 @@ export const CajeroPedidosPage = () => {
 
         stompClient.connect({}, () => {
             // Connected
-            console.log("conectado al web socket");
+            //console.log("conectado al web socket");
             const subscription = stompClient.subscribe('/topic/pedidos', async (notification) => {
-                console.log("entro a la notificacion");
+                //console.log("entro a la notificacion");
                 await handleNotification(notification.body); // Pass the message body to the handler
                 await getPedidos();
             });
@@ -133,7 +133,7 @@ export const CajeroPedidosPage = () => {
     }, [estadoDePedidos]);
 
     useEffect(() => {
-        console.log("PEDIDOS HAN CAMBIADO");
+        //console.log("PEDIDOS HAN CAMBIADO");
         //HERE I NEED TO RE RENDER WITH WHAT THE CURRENT LIST HAS, NO CHANGES -- que significa esto T-T ¿? ya me olvidé lol
     }, [pedidos]);
 
@@ -141,9 +141,9 @@ export const CajeroPedidosPage = () => {
         pedidoChanged.estado = estadoDePedido.toString();
         servicePedido.updateEntity(pedidoChanged, rol);
         if(estadoDePedido.toString() == "Entregado"){
-            console.log("Entrando a creacion de factura")
+            //console.log("Entrando a creacion de factura")
             serviceFactura.createFactura(pedidoChanged, rol);
-            console.log("Creacion de factura hecha");
+            //console.log("Creacion de factura hecha");
 
         }
         window.location.reload();

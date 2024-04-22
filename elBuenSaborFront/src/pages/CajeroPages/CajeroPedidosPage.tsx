@@ -83,7 +83,7 @@ export const CajeroPedidosPage = () => {
     }
 
     async function handleDeSetListaPendientes(estado: EstadoPedido) {
-        console.log(estado);
+        //console.log(estado);
         const updatedNumbers = listaPendientes.filter((number) => number == estado);
         await setListaPendientes(updatedNumbers);
     }
@@ -137,18 +137,29 @@ export const CajeroPedidosPage = () => {
         //HERE I NEED TO RE RENDER WITH WHAT THE CURRENT LIST HAS, NO CHANGES -- que significa esto T-T ¿? ya me olvidé lol
     }, [pedidos]);
 
-    const handleChangeEstado = (estadoDePedido: EstadoPedido, pedidoChanged: Pedido) => {
+
+  
+    const handleChangeEstado = async (estadoDePedido: EstadoPedido, pedidoChanged: Pedido) => {
+        var estado = pedidoChanged.estado; // Capturamos el estado actual antes de actualizarlo
         pedidoChanged.estado = estadoDePedido.toString();
-        servicePedido.updateEntity(pedidoChanged, rol);
-        if(estadoDePedido.toString() == "Entregado"){
-            //console.log("Entrando a creacion de factura")
-            serviceFactura.createFactura(pedidoChanged, rol);
-            //console.log("Creacion de factura hecha");
-
+        console.log("Anterior" + estado)
+    
+        await servicePedido.updateEntity(pedidoChanged, rol);
+        if (estadoDePedido === EstadoPedido.Entregado) {
+            await serviceFactura.createFactura(pedidoChanged, rol);
         }
-        window.location.reload();
-    }
+    
+        // Filtramos los pedidos para mostrar solo los que coinciden con el estado actual
+        const updatedPedidos = pedidos.filter(pedido => pedido.estado === estado);
+        console.log("-------------------AS-------------------")
 
+        //console.log(updatedPedidos)
+        setPedidos(updatedPedidos);
+    };
+    
+    
+    
+    
     const dropdownRef = useRef<HTMLSelectElement>(null);
     const handleEstadoChange = (newEstado: EstadoPedido) => {
         

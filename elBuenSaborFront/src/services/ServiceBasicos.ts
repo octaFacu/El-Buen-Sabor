@@ -42,10 +42,10 @@ export class ServiceBasicos {
   // realiza un getOne con un id que puede ser tipo number o tipo string
   async getOne(id: number | string, rol: string) {
     try {
-      console.log("Entrando a get one...");
-      console.log("url: " + this.baseUrl + this._urlEspecifico + `/${id}`);
-      console.log("id: " + id);
-      console.log("rol: " + rol);
+      //console.log("Entrando a get one...");
+      //console.log("url: " + this.baseUrl + this._urlEspecifico + `/${id}`);
+      //console.log("id: " + id);
+      //console.log("rol: " + rol);
       const res = await fetch(this.baseUrl + this._urlEspecifico + `/${id}`, {
         method: 'GET',
         headers: {
@@ -62,7 +62,7 @@ export class ServiceBasicos {
       const jsonRes = await res.json();
       return jsonRes;
     } catch (err: any) {
-      console.log(`Error ${err.status}: ${err.statusText}`);
+      //console.log(`Error ${err.status}: ${err.statusText}`);
     }
   }
   async deleteEntity(id: number | string, rol: string) {
@@ -80,7 +80,7 @@ export class ServiceBasicos {
       }
 
     } catch (err: any) {
-      console.log(`Error: ${err.message}`);
+      //console.log(`Error: ${err.message}`);
       throw err;
     }
   }
@@ -109,7 +109,7 @@ export class ServiceBasicos {
       let jsonRes = await res.json();
       return jsonRes;
     } catch (err: any) {
-      console.log(`Error ${err.status}: ${err.statusText}`);
+      //console.log(`Error ${err.status}: ${err.statusText}`);
     }
   }
 

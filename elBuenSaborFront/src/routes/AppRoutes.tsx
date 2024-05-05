@@ -20,10 +20,10 @@ const AppRoutes: React.FC<AppRouteProps> = ({
 
   if(!isLoading){
     if (!isAuthenticated && roles.length !== 0) {
-      console.log("ENTRO A NO AUTENTICADO Y ROLES NO 0")
+
       return <Navigate to="/" />;
     }else if(!isAuthenticated && roles.length === 0){
-      console.log("ENTRO A NO AUTENTICADO Y ROLES 0")
+      
       return <Component />;//<Routes><Route path={path} element={<Component />} /></Routes>;
     }
 
@@ -34,7 +34,7 @@ const AppRoutes: React.FC<AppRouteProps> = ({
         userRoles.push("cliente");
       }
 
-      console.log("Roles: "+rolesString);
+      //console.log("Roles: "+rolesString);
 
       for (const key in rolesString) {
         if (rolesString.hasOwnProperty(key) && typeof rolesString[key] === "string") {
@@ -47,7 +47,7 @@ const AppRoutes: React.FC<AppRouteProps> = ({
         return <Component />;
 
       } else {
-        console.log("roles del usuario: "+userRoles);
+        //console.log("roles del usuario: "+userRoles);
         return <Navigate to="/access-denied" />;
       }
     }else{

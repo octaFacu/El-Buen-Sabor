@@ -73,7 +73,7 @@ export default function InformacionAdicionalPostRegistro() {
   }
 
   if (user && user.login_count == 1) {
-    console.log("NO TENGO LOG")
+
     return (
       <div className="container mx-auto justify-content-center align-items-center" >
       <div className="card cardFormularioConitnuacion">
@@ -139,27 +139,22 @@ export default function InformacionAdicionalPostRegistro() {
       </div>
     );
   } else {
-
-    //Los roles aún no están convertidos en 
-    if(rol == "" || rol == import.meta.env.VITE_CLIENTE){
+    //setTimeout(() => {
+    //Los roles aún no están convertidos en strings con los nombres
+    if( rol == import.meta.env.VITE_CLIENTE){
      window.location.href = 'http://localhost:5173';
-      //console.log("cliente")
     }else if(rol == import.meta.env.VITE_ADMIN){
       window.location.href = 'http://localhost:5173/admin/';
-      //console.log("admin")
     }else if(rol == import.meta.env.VITE_COCINERO){
       window.location.href = 'http://localhost:5173/dashboard-cocina/';
-      //console.log("cocinero")
     }else if(rol == import.meta.env.VITE_DELIVERY){
       window.location.href = 'http://localhost:5173/dashboard-delivery/';
-      //console.log("delivery")
     }else if(rol == import.meta.env.VITE_CAJERO){
       window.location.href = 'http://localhost:5173/dashboard-pedidos/';
-      //console.log("cajero")
     }else{
-      window.location.href = 'hhttp://localhost:5173';
-      //console.log("ROL "+rol)
+      window.location.href = 'http://localhost:5173';
     }
+  //}, 1000);
 
   }
 }

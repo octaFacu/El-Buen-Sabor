@@ -77,7 +77,7 @@ export default function HistorialClienteAdmin() {
           <div className="d-flex flex-column mb-3">
             {
               historial.content.length === 0 ? (
-                <h4 className='text-center'>Este usuario todavia no ah realizado ningun pedido</h4>
+                <h4 className='text-center'>Este usuario todavia no ha realizado ningun pedido</h4>
               ) : (
                 historial.content.map((historial: ProyeccionPedidoUsuario) => (
                   <div key={historial.pedido_id}>

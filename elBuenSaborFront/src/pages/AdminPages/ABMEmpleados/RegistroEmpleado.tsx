@@ -80,7 +80,7 @@ export default function RegistroEmpleado() {
               </div>
             )}
           </div>
-          <div className="boton-atras-container">
+          <div className="boton-atras-container mb-4">
             <button className="btnAtras ms-3" onClick={volverAtras}>
               Atras
             </button>

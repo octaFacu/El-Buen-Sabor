@@ -25,14 +25,13 @@ const App: React.FC = () => {
           )}
         />
       ));
-    
+    //<!--<FloatingBtn></FloatingBtn>-->
 
   return (
       <ContextProvider>
           <BrowserRouter>
               <Navbar />
               <Routes>{routes}</Routes>
-              <FloatingBtn></FloatingBtn>
           </BrowserRouter>
       </ContextProvider>
   );

@@ -47,15 +47,19 @@ const CartCard: FC<CartCardProps> = ({ product, actualizarCantidad, eliminarProd
 
                     <div className="resp-cart-cant col-md-4 d-flex justify-content-evenly align-items-center">
                         <div className="bg-cart-cant d-flex align-items-center">
+
                             <button className="cant-btn-resta bg-cant-btn" onClick={() => {
                                 actualizarCantidad(index, product.cantidad - 1)
                                 handleValorTotalChange(product.producto.precioTotal, false)
                             }} disabled={product.cantidad === 1}>-</button>
+
                             <span className="cart-cant fs-5">{product.cantidad}</span>   {/*PARA RESPONSIVIDAD PASAR DE "px-5" A "px-3"*/}
+
                             <button className="bg-cant-btn" onClick={() => {
                                 actualizarCantidad(index, product.cantidad + 1)
                                 handleValorTotalChange(product.producto.precioTotal, true)
-                            }}>+</button>
+                            }} disabled={product.cantidad > 9}>+</button>
+
                         </div>
 
                         <span className="mt-1 fs-4">=</span>

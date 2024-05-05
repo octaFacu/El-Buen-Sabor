@@ -6,6 +6,7 @@
 
 .responsiveFooter{
   margin-bottom: 20px;
+  
 }
 
 .social-logo {
@@ -28,6 +29,5 @@
 
   .responsiveFooter{
     text-align: center !important;
-    margin-bottom: 20px;
   }
 }

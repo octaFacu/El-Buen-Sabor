@@ -4,17 +4,13 @@ import facebook from "../../../assets/facebook.png";
 import instagram from "../../../assets/instagram.png";
 import twitter from "../../../assets/twitter.png";
 
-interface FooterProps {
-
-}
-
-const Footer: FC<FooterProps> = () => {
+const Footer = () => {
     return (
         <footer className="bg-footer text-light py-5 ">
             <div className="container">
-                <div className="row d-flex ">
+                <div className="d-flex justify-content-evenly flex-column">
                     {/* Sección 1: Siguenos */}
-                    <div className="col-md-4 responsiveFooter">
+                    <div className="responsiveFooter">
                         <h5>Síguenos</h5>
                         <ul className="list-unstyled ">
                             <li>
@@ -32,12 +28,12 @@ const Footer: FC<FooterProps> = () => {
                         </ul>
                     </div>
                     {/* Sección 2: Donde estamos */}
-                    <div className="col-md-4 responsiveFooter">
+                    <div className="responsiveFooter">
                         <h5>Donde estamos</h5>
                         <p>Dirección del local</p>
                     </div>
                     {/* Sección 3: Contactanos */}
-                    <div className="col-md-4 responsiveFooter">
+                    <div className="responsiveFooter">
                         <h5>Contáctanos</h5>
                         <p>Número de teléfono: (123) 456-7890</p>
                         <p>Email: ejemplo@gmail.com</p>

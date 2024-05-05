@@ -134,3 +134,11 @@
     width: 90%;
   }
 }
+
+/* Si la pantalla tiene una altura inferior a 750px, Detalle producto se hace scrolleable */
+@media (max-height: 750px) { 
+  .contenedorModalProduct {
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+}

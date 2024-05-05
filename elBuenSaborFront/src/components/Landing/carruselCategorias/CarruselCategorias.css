@@ -6,8 +6,7 @@ button {
   background-color: #fda859;
   color: white;
 
-  /* width: 60%; */
-  max-width: 60%;
+  width: 70%;
 
   margin: auto;
   margin-top: 2%;
@@ -53,16 +52,14 @@ button {
 /* Cuando la pantalla tenga una anchura de 992px o menos */
 @media (max-width: 992px) {
   .menuCat {
-    max-width: 80%;
-    /* width: 80%; */
+    width: 85%;
   }
 }
 
 /* Cuando la pantalla tenga una anchura de 767px o menos */
 @media (max-width: 767px) {
   .menuCat {
-    /* width: 90%; */
-    max-width: 90%;
+    width: 100%;
   }
   .cat {
     font-size: 16px;
@@ -78,7 +75,9 @@ button {
 /* Cuando la pantalla tenga una anchura de 767px o menos */
 @media (max-width: 575px) {
   .menuCat {
-    /* width: 100%; */
-    max-width: 100%;
+    width: 100%;
+  }
+  .icon-cat-carrousel-last-item{
+    display: none;
   }
 }

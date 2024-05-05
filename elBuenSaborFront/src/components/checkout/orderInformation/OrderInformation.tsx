@@ -44,7 +44,7 @@ const OrderInformation: FC<OrderInformationProps> = ({ valorTotal, localStorageV
 
             <div className="d-flex justify-content-between">
                 <span>Total:</span>
-                <span>${!esEnvio ? valorTotal * 0.9 : valorTotal}</span>
+                <span>${(!esEnvio ? (valorTotal * 0.9).toFixed(2) : valorTotal.toFixed(2))}</span>
             </div>
         </div>
     );

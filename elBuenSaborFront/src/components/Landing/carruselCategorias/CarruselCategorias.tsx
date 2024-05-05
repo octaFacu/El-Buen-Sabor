@@ -68,8 +68,6 @@ const CarruselCategorias: FC<CarruselCategoriasProps> = (props: CarruselCategori
                     <hr className="hr-title mx-3" ></hr>
                 </div>
 
-                {/* <div style={{ textAlign: "center" }}><h2 style={{ color: "#864e1b" }}>¡NUESTRAS CATEGORIAS!</h2></div> */}
-
                 <div className="menuCat">
 
                     {/* Boton ir a la izquierda */}
@@ -85,15 +83,15 @@ const CarruselCategorias: FC<CarruselCategoriasProps> = (props: CarruselCategori
 
                     <div className="cat">
                         <div>
-                            <button id={`${prevIndex}`} onClick={() => handleFilter(categorias[prevIndex])}><i className="material-icons" > local_dining</i> {categorias[prevIndex].denominacion} </button>
+                            <button id={`${prevIndex}`} onClick={() => handleFilter(categorias[prevIndex])}><i className="material-icons " > local_dining</i> {categorias[prevIndex].denominacion} </button>
                         </div>
 
                         <div>
-                            <button id={`${activeIndex}`} onClick={() => handleFilter(categorias[activeIndex])}><i className="material-icons" > local_dining</i> {categorias[activeIndex].denominacion} </button>
+                            <button id={`${activeIndex}`} onClick={() => handleFilter(categorias[activeIndex])}><i className="material-icons " > local_dining</i> {categorias[activeIndex].denominacion} </button>
                         </div>
 
-                        <div>
-                            <button id={`${nextIndex}`} onClick={() => handleFilter(categorias[nextIndex])}><i className="material-icons" > local_dining</i> {categorias[nextIndex].denominacion} </button>
+                        <div className="icon-cat-carrousel-last-item">
+                            <button id={`${nextIndex}`} onClick={() => handleFilter(categorias[nextIndex])}><i className="material-icons " > local_dining</i> {categorias[nextIndex].denominacion} </button>
                         </div>
                     </div>
 

@@ -7,6 +7,7 @@ import PedidoHasProductos from "../../../context/interfaces/PedidoHasProductos";
 import Pedido from "../../../context/interfaces/Pedido";
 import { pedidoService } from "../../../services/PedidoService";
 import { MercadoPagoService } from "../../../services/MercadoPagoService";
+import { useUnidadContext } from "../../../context/GlobalContext";
 
 interface PagoProps {
     usuarioMP: UserAuth0
@@ -24,6 +25,7 @@ const Pago: FC<PagoProps> = ({ usuarioMP, localStorageValues, pedidoHasProductos
     //initMercadoPago(import.meta.env.VITE_MP_TEST_PUBLIC_KEY! as string);
     const pedidoSrv = new pedidoService();
     const mpSrv = new MercadoPagoService();
+    const { rol } = useUnidadContext();
 
     const [preferenceId, setPreferenceId] = useState<string | null>(null);
 
@@ -43,7 +45,7 @@ const Pago: FC<PagoProps> = ({ usuarioMP, localStorageValues, pedidoHasProductos
 
         requestPedido.pedido.activo = false;
 
-        await pedidoSrv.createPedidoAndPedidoHasProducto(requestPedido)
+        await pedidoSrv.createPedidoAndPedidoHasProducto(requestPedido, rol)
 
         localStorage.removeItem("carritoArreglo");
 
@@ -73,7 +75,7 @@ const Pago: FC<PagoProps> = ({ usuarioMP, localStorageValues, pedidoHasProductos
 
     if (preferenceId === "" || preferenceId === null || preferenceId === undefined) {
         return (
-            <img src={listLoader} alt="Loading..." className="list-loader-gif" />
+            <img style={{ height: "40px", margin: "30px 30px 0px 0px"}} src={listLoader} alt="Loading..." className="list-loader-gif" />
         );
     }
 

@@ -67,7 +67,7 @@ const DetalleProducto: FC<DetalleProductoProps> = ({ producto, modalDetalleProdu
             {/* Ventana modal */}
             {modalDetalleProducto && (
                 <div className="overlayModalProduct">
-                    <div className="contenedorModalProduct">
+                    <div className="contenedorModalProduct" style={{  overflowY: 'auto' }}>
 
                         <div className="d-flex mb-2 ">
 

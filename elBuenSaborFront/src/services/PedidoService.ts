@@ -11,7 +11,7 @@ export class pedidoService extends ServiceBasicos {
   }
 
 
-  async getProductosPedido(pedidoId: number, rol: string){
+  async getProductosPedido(pedidoId: number, rol: string) {
     try {
       let res = await fetch(this.url + "/producto/" + pedidoId, {
         method: "GET",
@@ -38,17 +38,17 @@ export class pedidoService extends ServiceBasicos {
 
     try {
 
-        let res = await fetch(this.url + "/estado/"+ estado, {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            'X-Role': rol
-          },
-        })
+      let res = await fetch(this.url + "/estado/" + estado, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          'X-Role': rol
+        },
+      })
 
       let jsonRes = await res.json();
       return jsonRes;
-      
+
 
     } catch (err: any) {
       console.log(`Error ${err.status}: ${err.statusText}`);
@@ -58,11 +58,11 @@ export class pedidoService extends ServiceBasicos {
 
 
 
-async getByDelivery(idDelivery: string, rol: string) {
+  async getByDelivery(idDelivery: string, rol: string) {
 
-  try {
+    try {
 
-      let res = await fetch(this.url + "/delivery/"+ idDelivery, {
+      let res = await fetch(this.url + "/delivery/" + idDelivery, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -71,43 +71,43 @@ async getByDelivery(idDelivery: string, rol: string) {
       })
 
       if (!res.ok) {
-          throw { status: res.status, statusText: res.statusText }
+        throw { status: res.status, statusText: res.statusText }
       }
 
       let jsonRes = await res.json()
       return jsonRes
 
-  } catch (err: any) {
+    } catch (err: any) {
       console.log(`Error ${err.status}: ${err.statusText}`);
+    }
   }
-}
 
-async getProductosByPedido(idPedido: number, rol: string) {
+  async getProductosByPedido(idPedido: number, rol: string) {
 
-    console.log("LOS PRODUCTOS DE ESTE PEDIDO: "+ idPedido);
+    console.log("LOS PRODUCTOS DE ESTE PEDIDO: " + idPedido);
 
     try {
 
-        let res = await fetch(this.url + "/productos/"+ idPedido, {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            'X-Role': rol
-          },
-        });
+      let res = await fetch(this.url + "/productos/" + idPedido, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          'X-Role': rol
+        },
+      });
 
-        if (!res.ok) {
-            throw { status: res.status, statusText: res.statusText }
-        }
+      if (!res.ok) {
+        throw { status: res.status, statusText: res.statusText }
+      }
 
-        let jsonRes = await res.json();
-        return jsonRes;
+      let jsonRes = await res.json();
+      return jsonRes;
 
     } catch (err: any) {
       console.log(`Error ${err.status}: ${err.statusText}`);
     }
   }
-  
+
 
   async createPedidoAndPedidoHasProducto(pedido: RequestPedido, rol: string) {
     try {
@@ -115,7 +115,7 @@ async getProductosByPedido(idPedido: number, rol: string) {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-            'X-Role': rol
+          'X-Role': rol
         },
         body: JSON.stringify(pedido),
       });
@@ -133,12 +133,12 @@ async getProductosByPedido(idPedido: number, rol: string) {
 
 
 
-  async getDatosFacturas(idPedido: number, rol: string){
+  async getDatosFacturas(idPedido: number, rol: string) {
     try {
       let res = await fetch(this.url + "/getDatoFactura/" + idPedido, {
         method: "GET",
         headers: {
-            'X-Role': rol
+          'X-Role': rol
         },
       });
 
@@ -176,18 +176,18 @@ async getProductosByPedido(idPedido: number, rol: string) {
 
 
       //Si es pagado en efectivo y fue entregado
-      if(datos.estado == "Entregado" ){
+      if (datos.estado == "Entregado") {
         let fc: ProyeccionDatosFactura = await this.getDatosFacturas(datos.id!, rol);
 
-        let serviceFC = new FacturaService(); 
+        let serviceFC = new FacturaService();
 
         //Crear factura si no existe
-        if(fc == null || fc == undefined){
+        if (fc == null || fc == undefined) {
           fc = await serviceFC.createFactura(datos, rol);
         }
-          
+
         serviceFC.generarFCPDF(fc.id, rol);
-        
+
       }
 
       return jsonRes;
@@ -196,8 +196,27 @@ async getProductosByPedido(idPedido: number, rol: string) {
     }
   }
 
+  async validoStockPedido(pedido: RequestPedido, rol: string) {
+    try {
+      let res = await fetch(this.url + "/validoStockPedido", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          'X-Role': rol
+        },
+        body: JSON.stringify(pedido),
+      });
 
-
+      if (!res.ok) {
+        throw { status: res.status, statusText: res.statusText };
+      }
+      
+      let jsonRes = await res.json().then(res => res);
+      return jsonRes;
+    } catch (err: any) {
+      console.log(`Error ${err.status}: ${err.statusText}`);
+    }
+  }
 
 
 }

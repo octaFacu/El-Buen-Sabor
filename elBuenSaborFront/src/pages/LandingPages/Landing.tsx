@@ -369,6 +369,7 @@ export const Landing = () => {
         <CartNotification
           mensaje={"Producto añadido al carrito!"}
           show={showNotification}
+          btnCart={true}
         />
 
       </>
@@ -429,6 +430,7 @@ export const Landing = () => {
       <CartNotification
         mensaje={"Producto añadido al carrito!"}
         show={showNotification}
+        btnCart={true}
       />
 
     </>

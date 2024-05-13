@@ -5,9 +5,10 @@ import { NavLink } from 'react-router-dom';
 interface CartNotificationProps {
   mensaje: string;
   show: boolean;
+  btnCart?: boolean
 }
 
-const CartNotification: React.FC<CartNotificationProps> = ({ mensaje, show }) => {
+const CartNotification: React.FC<CartNotificationProps> = ({ mensaje, show, btnCart }) => {
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
@@ -28,11 +29,13 @@ const CartNotification: React.FC<CartNotificationProps> = ({ mensaje, show }) =>
       <span>{mensaje}</span>
       <div className='d-flex justify-content-center align-items-center'>
 
-        <NavLink className="omegalul" to="/carrito">
-          <button className='btn btn-go-to-cart mt-2 d-flex align-items-center'>Ir al
-            <i className="material-icons" style={{ fontSize: "30px", color: "white" }}>shopping_cart</i>
-          </button>
-        </NavLink>
+        {btnCart &&
+          <NavLink className="omegalul" to="/carrito">
+            <button className='btn btn-go-to-cart mt-2 d-flex align-items-center'>Ir al
+              <i className="material-icons" style={{ fontSize: "30px", color: "white" }}>shopping_cart</i>
+            </button>
+          </NavLink>
+        }
 
       </div>
 

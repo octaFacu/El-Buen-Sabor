@@ -7,6 +7,7 @@ import { PageProyeccionHistorialPedido } from "../../context/interfaces/Proyecci
 import Paginacion from "../genericos/Paginacion";
 import "../../css/favoritos.css";
 import { useUnidadContext } from "../../context/GlobalContext";
+import CartNotification from "../Landing/cartNotification/CartNotification";
 
 interface Props {
   usuario: Usuario;
@@ -20,12 +21,13 @@ export default function MisPedidosComponent({ usuario }: Props) {
   const servicioCliente = new ClienteService();
 
   const [page, setPage] = useState<number>(0);
+  const [show, setShow] = useState<boolean>(false);
 
   const traerPedidos = async (pageNumber: number) => {
     try {
       const idCliente = await servicioCliente.getIdCliente(usuario.id, rol)
       const pedido = await servicioCliente.getPedidosUsuario(
-        rol,idCliente, pageNumber
+        rol, idCliente, pageNumber
       );
       setPedidos(pedido);
     } catch (error) {
@@ -46,31 +48,35 @@ export default function MisPedidosComponent({ usuario }: Props) {
   }
 
   return (
-    <div className="container mx-auto">
-      <div className="card card-favoritos mt-6">
-        <div className="contenedor-titulo text-white">
-          <h3 className="card-title text-center">Historial de pedidos</h3>
-        </div>
-        <div className="card-body d-flex flex-column scrollable-container">
-          <div className="d-flex flex-column mb-3">
-            {
-              pedidos.content.length === 0 ? (
-                <h4 className='text-center'>Todavia no ha realizado ningún pedido.</h4>
-              ) : (
-                pedidos.content.map((historial: ProyeccionPedidoUsuario) => (
-                  <div key={historial.pedido_id}>
-                    <CardHistorialPedidos historial={historial} />
-                  </div>
-                ))
-              )
-            }
+    <>
+      <div className="container mx-auto">
+        <div className="card card-favoritos mt-6">
+          <div className="contenedor-titulo text-white">
+            <h3 className="card-title text-center">Historial de pedidos</h3>
           </div>
-          <Paginacion page={pedidos.pageable.pageNumber}
-            setPage={actualizarPagina}
-            totalPages={pedidos.totalPages}
-            size={pedidos.size} />
+          <div className="card-body d-flex flex-column scrollable-container">
+            <div className="d-flex flex-column mb-3">
+              {
+                pedidos.content.length === 0 ? (
+                  <h4 className='text-center'>Todavia no ha realizado ningún pedido.</h4>
+                ) : (
+                  pedidos.content.map((historial: ProyeccionPedidoUsuario) => (
+                    <div key={historial.pedido_id}>
+                      <CardHistorialPedidos historial={historial} setShow={setShow} />
+                    </div>
+                  ))
+                )
+              }
+            </div>
+            <Paginacion page={pedidos.pageable.pageNumber}
+              setPage={actualizarPagina}
+              totalPages={pedidos.totalPages}
+              size={pedidos.size} />
+          </div>
         </div>
       </div>
-    </div>
+      <CartNotification mensaje="No se pudo agregar el pedido al carrito porque algunos de los productos no se encuentran disponibles." show={show} />
+    </>
+
   );
 }

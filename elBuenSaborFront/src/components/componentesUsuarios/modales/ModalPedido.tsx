@@ -12,6 +12,7 @@ interface Props {
   cerrarModal: () => void;
   idPedido: number;
   esEnvio: boolean;
+  setShow: (val: boolean) => void
 }
 
 const ModalPedido: React.FC<Props> = ({
@@ -19,8 +20,17 @@ const ModalPedido: React.FC<Props> = ({
   cerrarModal,
   idPedido,
   esEnvio,
+  setShow
 }) => {
   const [pedidoUsuario, setPedidoUsuario] = useState<PedidoHasProductos[]>([]);
+
+  const handleNotification = () => {
+    setShow(true);
+
+    setTimeout(() => {
+      setShow(false);
+    }, 3000);
+  };
 
   if (!mostrarModal) {
     return null;
@@ -44,6 +54,16 @@ const ModalPedido: React.FC<Props> = ({
   }, []);
 
   const handleAddToCart = () => {
+
+    pedidoUsuario.forEach((elemento: PedidoHasProductos, index: number) => {
+      if(elemento.producto.activo === false){
+        cerrarModal();
+        handleNotification()
+        // setShow(false)
+        throw new Error("No se pudo agregar el pedido al carrito porque algunos de los productos no se encuentra disponible.")
+      } 
+    });
+
     const carrito: ProductoParaPedido[] = [];
 
     localStorage.setItem("carritoArreglo", "");
@@ -57,7 +77,7 @@ const ModalPedido: React.FC<Props> = ({
 
       carrito.push(pedidoParaCarrito);
     });
-
+    
     localStorage.setItem("carritoArreglo", JSON.stringify(carrito));
     cerrarModal();
     navigate("/carrito");

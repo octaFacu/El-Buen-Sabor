@@ -28,11 +28,21 @@ const Pago: FC<PagoProps> = ({ usuarioMP, localStorageValues, pedidoHasProductos
     const { rol } = useUnidadContext();
 
     const [preferenceId, setPreferenceId] = useState<string | null>(null);
+    const [esStockValido, setEsStockValido] = useState<boolean>(false);
 
     const requestData: RequestDataMP = {
         usuario: usuarioMP,
         productos: localStorageValues,
         esEnvio: pedido.esEnvio
+    }
+
+    const validarStock = async () => {
+        const requestPedido: RequestPedido = {
+            pedido: pedido,
+            pedidoHasProducto: pedidoHasProductos
+        };
+        const validacion: boolean = await pedidoSrv.validoStockPedido(requestPedido, rol)
+        setEsStockValido(validacion)
     }
 
     //Este metodo va a guardar el pedido en el localStorage, para que luego se genere despues del pego
@@ -62,9 +72,13 @@ const Pago: FC<PagoProps> = ({ usuarioMP, localStorageValues, pedidoHasProductos
     }
 
     useEffect(() => {
-
+        validarStock()
         fetchCheckout(requestData)
     }, [])
+
+    useEffect(() => {
+        console.log("Es stock valido " + esStockValido);
+    }, [esStockValido])
 
     const customization = {
         visual: {
@@ -73,19 +87,30 @@ const Pago: FC<PagoProps> = ({ usuarioMP, localStorageValues, pedidoHasProductos
         },
     }
 
-    if (preferenceId === "" || preferenceId === null || preferenceId === undefined) {
+    if (preferenceId === "" || preferenceId === null || preferenceId === undefined || esStockValido === undefined) {
         return (
-            <img style={{ height: "40px", margin: "30px 30px 0px 0px"}} src={listLoader} alt="Loading..." className="list-loader-gif" />
+            <img style={{ height: "40px", margin: "30px 30px 0px 0px" }} src={listLoader} alt="Loading..." className="list-loader-gif" />
         );
     }
 
-    return (
-        <div className="btn-mp" onClick={generoPedidoMP}>
-            <Wallet
-                initialization={{ preferenceId: preferenceId! }}
-            />
-        </div>
-    );
+    if (esStockValido === false) {
+        return (
+            <div>
+
+            </div>
+        );
+    }
+
+    if (esStockValido === true) {
+        return (
+            <div className="btn-mp" onClick={generoPedidoMP}>
+                <Wallet
+                    initialization={{ preferenceId: preferenceId! }}
+                />
+            </div>
+        );
+    }
+
 
 }
 

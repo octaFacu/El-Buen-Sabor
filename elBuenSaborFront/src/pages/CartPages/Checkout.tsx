@@ -59,6 +59,7 @@ const Checkout: FC<CheckoutProps> = () => {
         
     });
     const [direccionPersist, setDireccionPersist] = useState<Direccion>();
+    const [esStockValido, setEsStockValido] = useState<boolean | undefined>(undefined);
 
     const fetchUsuario = async (userId: string) => {
         const data = await usuarioSrv.getOne(userId, rol)
@@ -139,6 +140,13 @@ const Checkout: FC<CheckoutProps> = () => {
         };
 
         console.log(requestPedido);
+
+        const validacion: boolean = await pedidoSrv.validoStockPedido(requestPedido, rol)
+        setEsStockValido(validacion)
+
+        if(!validacion){
+            throw new Error("No se puede agregar al carrito porque no hay stock en ciertos ingredientes")
+        }
 
         const data = await pedidoSrv.createPedidoAndPedidoHasProducto(requestPedido, rol)
         console.log("Pedido guardado");

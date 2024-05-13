@@ -7,9 +7,11 @@ import "../../css/favoritos.css";
 
 interface Props {
   historial: ProyeccionPedidoUsuario
+
+  setShow: (val: boolean) => void
 }
 
-export default function CardHistorialPedidos({ historial }: Props) {
+export default function CardHistorialPedidos({ historial, setShow }: Props) {
 
   const [abrirModal, setAbrirModal] = useState<boolean>(false)
   const [idPedido, setIdPedido] = useState<number>(0)
@@ -34,7 +36,7 @@ export default function CardHistorialPedidos({ historial }: Props) {
         </div>
       </div>
       {abrirModal && (
-        <ModalPedido mostrarModal={abrirModal} cerrarModal={cerrarModal} idPedido={idPedido} esEnvio={historial.es_envio}/>
+        <ModalPedido mostrarModal={abrirModal} cerrarModal={cerrarModal} idPedido={idPedido} esEnvio={historial.es_envio} setShow={setShow}/>
       )}
     </>
   )

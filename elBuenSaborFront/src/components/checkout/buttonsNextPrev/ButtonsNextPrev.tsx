@@ -1,9 +1,11 @@
-import { FC } from "react";
+import { FC, useEffect, useState } from "react";
 import Pago from "../mercadoPago/Pago";
-import { ProductoParaPedido, UserAuth0 } from "../../../context/interfaces/interfaces";
+import { ProductoParaPedido, RequestPedido, UserAuth0 } from "../../../context/interfaces/interfaces";
 import Pedido from "../../../context/interfaces/Pedido";
 import PedidoHasProductos from "../../../context/interfaces/PedidoHasProductos";
 import "./ButtonsNextPrev.css"
+import { pedidoService } from "../../../services/PedidoService";
+import { useUnidadContext } from "../../../context/GlobalContext";
 
 interface ButtonsNextPrevProps {
     estadoCompra: number;
@@ -30,11 +32,11 @@ const ButtonsNextPrev: FC<ButtonsNextPrevProps> = (
         pedido
     }) => {
 
-
     //SEGUIR ACA CON SI EL PAGO ES CON MERCADO PAGO REENDERIZO UN BOTON U OTRO
     return (
         <div className="btn-checkout-format d-flex justify-content-between align-items-start">
             {estadoCompra > 1 ? <button className={`btn-checkout-back ${estadoCompra === 3 && 'ocultar-btn-checkout-back'}`} onClick={() => setEstadoCompra(estadoCompra - 1)}>Paso Anterior</button> : <div></div>}
+
             {pagoMercadoPago && estadoCompra === 3
                 ?
                 <Pago

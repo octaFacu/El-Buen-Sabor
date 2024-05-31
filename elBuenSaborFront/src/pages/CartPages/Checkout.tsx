@@ -17,6 +17,7 @@ import ModalEdicionDireccion from "../../components/componentesUsuarios/modales/
 import { UsuarioService } from "../../services/UsuarioService";
 import "../pagesStyles/checkout.css"
 import { useUnidadContext } from "../../context/GlobalContext";
+import ModalFalloValidacionStock from "../../components/ModalFalloValidacionStock";
 
 
 interface CheckoutProps {
@@ -145,7 +146,8 @@ const Checkout: FC<CheckoutProps> = () => {
         setEsStockValido(validacion)
 
         if(!validacion){
-            throw new Error("No se puede agregar al carrito porque no hay stock en ciertos ingredientes")
+            setMostrarModalFalloValidacion(true);
+            return;
         }
 
         const data = await pedidoSrv.createPedidoAndPedidoHasProducto(requestPedido, rol)
@@ -210,6 +212,7 @@ const Checkout: FC<CheckoutProps> = () => {
     if (!user) {
         return <PageLoader />
     }
+    const [mostrarModalFalloValidacion, setMostrarModalFalloValidacion] = useState(false);
 
     return (
         <>
@@ -279,7 +282,10 @@ const Checkout: FC<CheckoutProps> = () => {
                 />
             )}
 
-
+            
+{mostrarModalFalloValidacion && (
+                <ModalFalloValidacionStock cerrarModal={() => setMostrarModalFalloValidacion(false)} />
+            )}
         </>
     );
 }

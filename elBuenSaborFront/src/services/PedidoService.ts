@@ -1,4 +1,5 @@
 import Pedido from "../context/interfaces/Pedido";
+import Producto from "../context/interfaces/Producto";
 import { ProyeccionDatosFactura } from "../context/interfaces/Proyecciones/ProyeccionDatosFactura";
 import { RequestPedido } from "../context/interfaces/interfaces";
 import { FacturaService } from "./FacturaService";
@@ -217,6 +218,7 @@ export class pedidoService extends ServiceBasicos {
       console.log(`Error ${err.status}: ${err.statusText}`);
     }
   }
+
 
 
 }

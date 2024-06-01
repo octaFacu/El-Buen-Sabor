@@ -27,6 +27,7 @@ const DetalleProducto: FC<DetalleProductoProps> = ({ producto, modalDetalleProdu
     const [cant, setCant] = useState<number>(1)
     const [existeFav, setExisteFav] = useState<boolean>(false)
 
+
     useEffect(() => {
 
         if(existeFav){
@@ -37,9 +38,23 @@ const DetalleProducto: FC<DetalleProductoProps> = ({ producto, modalDetalleProdu
             favoritos.map(fav => {
                 if (producto.id === fav.producto.id) {
                     setExisteFav(true);
-                    console.log("Es favorito");
+                    
                 }
             })
+        }
+
+        //Modificacion, validacion de stock 01062024
+        const storedCartItems = localStorage.getItem('carritoArreglo');
+        if (storedCartItems) {
+            var LocalStorageValues:ProductoParaPedido[]  = (JSON.parse(storedCartItems));
+            if(producto != undefined && producto != null){
+                LocalStorageValues.map(item => {
+                    if (item.producto.id === producto!.id) {
+                        setCant(item.cantidad)
+                        console.log("Seteo la cantidad "+item.cantidad);
+                    }
+                })
+            }
         }
 
     }, [producto, favoritos])
@@ -73,7 +88,6 @@ const DetalleProducto: FC<DetalleProductoProps> = ({ producto, modalDetalleProdu
 
                             <div className="btn-container">
                                 <button className="btn rounded-circle btn-go-back" onClick={() => {
-                                    setCant(1)
                                     setModalDetalleProducto(!modalDetalleProducto)
                                 }}>
                                     <img src={leftArrow} alt="Flecha" width="20" height="30" />
@@ -136,7 +150,7 @@ const DetalleProducto: FC<DetalleProductoProps> = ({ producto, modalDetalleProdu
                             <div className="bg-cant d-flex align-items-center">
                                 <button className="cant-btn-resta bg-cant-btn " disabled={cant === 1} onClick={() => setCant(cant - 1)}>-</button>
                                 <span className="px-3">{cant}</span>
-                                <button className="bg-cant-btn" onClick={() => setCant(cant + 1)}>+</button>
+                                <button className="bg-cant-btn" disabled={cant > 9} onClick={() => setCant(cant + 1)}>+</button>
                             </div>
                             <button className="btn btn-add-cart d-flex align-items-center" onClick={() => {
                                 handleAddToCart({ producto: producto, cantidad: cant })

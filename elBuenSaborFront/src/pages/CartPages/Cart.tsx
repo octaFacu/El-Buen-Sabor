@@ -1,16 +1,24 @@
 import React, { useEffect, useState } from 'react'
 import GenericContainer from '../../components/cart/genericContainer/GenericContainer'
 import ReturnButton from '../../components/cart/returnButton/ReturnButton'
-import { ProductoParaPedido } from '../../context/interfaces/interfaces';
+import { ProductoParaPedido, RequestPedido } from '../../context/interfaces/interfaces';
 import CartListCard from '../../components/cart/cartListCard/CartListCard';
 import { NavLink, Outlet, useNavigate } from 'react-router-dom';
 import { useAuth0 } from '@auth0/auth0-react';
-import { Link } from 'react-router-dom';
+import { useUnidadContext } from '../../context/GlobalContext';
+import { ProductoService } from '../../services/ProductoService';
+import Producto from '../../context/interfaces/Producto';
+
 
 export const Cart = () => {
 
+    const { rol } = useUnidadContext();
     const [valorTotal, setValorTotal] = useState<number>(0);
     const [localStorageValues, setLocalStorageValues] = useState<ProductoParaPedido[]>([]);
+    const [cantidadModificada, setCantidadModificada] = useState(false);
+    const [mostrarModalFalloValidacion, setMostrarModalFalloValidacion] = useState(false);
+
+    const prodSrv = new ProductoService();
 
     //Para saber si el usuario esta logueado
     const { isAuthenticated, loginWithRedirect } = useAuth0()
@@ -23,6 +31,30 @@ export const Cart = () => {
             return nuevosProductos;
         });
     };
+
+    const ChequearCantidadesProductos = async() => {
+        {localStorageValues.map((producto, index) => (
+            ValidarCantidad(producto, index)
+                     
+        ))};
+    
+    };
+
+    //01062024 - PF
+    const ValidarCantidad = async(producto: ProductoParaPedido, index: number) => {
+        const cantidadProducto: number = await prodSrv.TraerStockProducto(producto.producto, rol)
+
+        if(cantidadProducto < producto.cantidad){
+
+            //Mostrar mensaje de "lo sentimos"
+            setMostrarModalFalloValidacion(true);
+
+            //Modificar la cantidad para que se ajuste a la cantidad que tenemos
+            actualizarCantidad(index, cantidadProducto);
+
+            setCantidadModificada(true);
+        }
+    }
 
     //Elimina un produco del carrito
     const eliminarProducto = (indice: number) => {
@@ -52,7 +84,7 @@ export const Cart = () => {
 
     useEffect(() => {
         localStorage.setItem('carritoArreglo', JSON.stringify(localStorageValues));
-        // console.log(localStorageValues);
+
     }, [localStorageValues])
 
 
@@ -79,23 +111,34 @@ export const Cart = () => {
 
                         {/* Valida si el usuario esta logueado para ver a que vista mandarlo */}
                         {isAuthenticated
-                            ? <NavLink
+                            ? 
+                            <NavLink
                                 className="px-5 py-2 btn btn-add-order d-flex"
+                                onClick={(e) =>{
+                                    //Agregar el chequeo de stock para los productos antes de redirigir
+                                    e.preventDefault();
+
+                                }}
                                 to={"/checkout"}
                                 state={{
                                     valorTotal: valorTotal,
                                     localStorageValues: localStorageValues
                                 }}
                             >Continuar</NavLink>
+                            
+                            
                             : <NavLink
                                 className="px-5 py-2 btn btn-add-order d-flex"
-                                onClick={() => loginWithRedirect({
+                                onClick={(e) => {
+                                    e.preventDefault();
+                                    loginWithRedirect({
                                     authorizationParams: {
                                         screen_hint: 'signup',
                                         redirect_uri: 'http://localhost:5173/informacionAdicional',
                                     },
-                                })}
+                                })}}
                                 to={"#"}
+                            
                             >Continuar</NavLink>
                         }
 

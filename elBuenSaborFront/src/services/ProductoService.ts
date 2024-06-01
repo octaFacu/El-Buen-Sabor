@@ -399,4 +399,28 @@ export class ProductoService extends ServiceBasicos {
     }
   }
 
+
+  async validoStockProducto(producto: Producto, rol: string) {
+    try {
+      let res = await fetch(this.url + "/stockProducto", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          'X-Role': rol
+        },
+        body: JSON.stringify(producto),
+      });
+
+      if (!res.ok) {
+        throw { status: res.status, statusText: res.statusText };
+      }
+      
+      let jsonRes = await res.json().then(res => res);
+      return jsonRes;
+    } catch (err: any) {
+      console.log(`Error ${err.status}: ${err.statusText}`);
+    }
+  }
+
+
 }

@@ -42,7 +42,21 @@ const ProductCard: FC<ProductCardProps> = ({ producto, setProductoSeleccionado, 
                             </div>
                         </div>
                         <div className="shopping">
-                            <button onClick={() => handleAddToCart({ producto: producto, cantidad: 1 })}>
+                            <button onClick={() => {
+                                        const storedCartItems = localStorage.getItem('carritoArreglo');
+                                        if (storedCartItems) {
+                                            var LocalStorageValues:ProductoParaPedido[]  = (JSON.parse(storedCartItems));
+                                            if(producto != undefined && producto != null){
+                                                LocalStorageValues.map(item => {
+                                                    if (item.producto.id === producto!.id) {
+                                                        if(item.cantidad < 10){
+                                                            handleAddToCart({ producto: producto, cantidad: 1 })
+                                                        }
+                                                    }
+                                                })
+                                            }
+                                        }
+                            }}>
                                 <i className="material-icons cart-icon"> add_shopping_cart</i>
                             </button>
                         </div>

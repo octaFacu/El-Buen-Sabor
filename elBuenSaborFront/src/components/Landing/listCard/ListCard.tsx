@@ -21,7 +21,7 @@ interface ListCardProps {
 const ListCard: FC<ListCardProps> = ({ categoria, productos, setModalDetalleProducto, setProductoSeleccionado, isLoading, handleAddToCart }) => {
 
     if (productos === null || productos.length === 0) {
-        console.log("LOGGGGGGGGG");
+        
         return (
             <div className="container-cat" style={{ marginTop: "3%" }}>
                 <div className="centerTitle">

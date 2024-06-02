@@ -30,4 +30,7 @@
   .responsiveFooter{
     text-align: center !important;
   }
+  .footer-container{
+    flex-direction: column !important;
+  }
 }

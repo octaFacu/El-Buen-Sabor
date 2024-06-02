@@ -8,7 +8,7 @@ const Footer = () => {
     return (
         <footer className="bg-footer text-light py-5 ">
             <div className="container">
-                <div className="d-flex justify-content-evenly flex-column">
+                <div className="d-flex justify-content-evenly footer-container">
                     {/* Sección 1: Siguenos */}
                     <div className="responsiveFooter">
                         <h5>Síguenos</h5>

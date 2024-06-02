@@ -1,5 +1,5 @@
 import { FC, useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { Navigate, useLocation, useNavigate } from "react-router-dom";
 import { Direccion, ProductoParaPedido, RequestPedido, UserAuth0, Usuario } from "../../context/interfaces/interfaces";
 import OrderInformation from "../../components/checkout/orderInformation/OrderInformation";
 import PurchaseSteps from "../../components/checkout/purchaseSteps/PurchaseSteps";
@@ -34,6 +34,7 @@ const Checkout: FC<CheckoutProps> = () => {
 
     //Consigo el usuario para conseguir sus direcciones y metodos de pago
     const { user } = useAuth0();
+    const navigate = useNavigate();
 
     //Informacion traida desde el carrito
     const location = useLocation();
@@ -155,6 +156,8 @@ const Checkout: FC<CheckoutProps> = () => {
         console.log(data);
 
         localStorage.setItem('carritoArreglo', "");
+
+        navigate('/success');
 
     }
 

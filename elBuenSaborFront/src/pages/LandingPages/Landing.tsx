@@ -53,7 +53,7 @@ export const Landing = () => {
         miArreglo.forEach((elemento: ProductoParaPedido, index: number) => {
           // Validacion para ver si ya existe el producto que se esta por agregar al carrito, para sobreescribirlo y que no se repita en el mismo
           if (value.producto.id === elemento.producto.id) {
-            miArreglo[index].cantidad = elemento.cantidad + value.cantidad
+            miArreglo[index].cantidad = value.cantidad
             repetido = true;
           }
         });

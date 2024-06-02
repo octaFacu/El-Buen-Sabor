@@ -8,6 +8,7 @@ import { useAuth0 } from '@auth0/auth0-react';
 import { useUnidadContext } from '../../context/GlobalContext';
 import { ProductoService } from '../../services/ProductoService';
 import Producto from '../../context/interfaces/Producto';
+import { json } from 'stream/consumers';
 
 
 export const Cart = () => {
@@ -25,6 +26,7 @@ export const Cart = () => {
 
     //Actualiza las cantidades de un producto en las cartas
     const actualizarCantidad = (indice: number, nuevaCantidad: number) => {
+        console.log("Actualizo la cantidad")
         setLocalStorageValues((prevProductos) => {
             const nuevosProductos = [...prevProductos];
             nuevosProductos[indice].cantidad = nuevaCantidad;
@@ -34,9 +36,10 @@ export const Cart = () => {
 
 
     const handleNavClick = async(e: React.MouseEvent<HTMLAnchorElement, MouseEvent>, path: string, state?: any) => {
+        e.preventDefault(); 
         await ChequearCantidadesProductos();
         if (cantidadModificada) {
-          e.preventDefault(); 
+          
           //Mostrar popup de que se modifico
           
         } else {
@@ -45,10 +48,10 @@ export const Cart = () => {
       };
     
       const handleUnauthenticatedNavClick = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
+        e.preventDefault(); 
         ChequearCantidadesProductos();
         if (cantidadModificada) {
           e.preventDefault(); 
-
           //Mostrar popup de que se modifico
         } else {
           // Si no se modificaron los productos
@@ -61,23 +64,20 @@ export const Cart = () => {
         }
       };
 
-
-
-
     const ChequearCantidadesProductos = async() => {
-        {localStorageValues.map((producto, index) => (
-            ValidarCantidad(producto, index)
+        {localStorageValues.map(async (producto, index) => (
+            await ValidarCantidad(producto, index)
                      
         ))};
-    
     };
 
     //01062024 - PF
     const ValidarCantidad = async(producto: ProductoParaPedido, index: number) => {
-        const cantidadProducto: number = await prodSrv.TraerStockProducto(producto.producto, rol)
+        console.log(JSON.stringify(producto.producto));
+        const cantidadProducto = await prodSrv.TraerStockProducto(producto.producto, rol)
 
         if(cantidadProducto < producto.cantidad){
-
+            console.log("Paso por la modificacion de la cantidad")
             //Mostrar mensaje de "lo sentimos"
             setMostrarModalFalloValidacion(true);
 

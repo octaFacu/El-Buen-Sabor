@@ -47,13 +47,20 @@ const ProductCard: FC<ProductCardProps> = ({ producto, setProductoSeleccionado, 
                                         if (storedCartItems) {
                                             var LocalStorageValues:ProductoParaPedido[]  = (JSON.parse(storedCartItems));
                                             if(producto != undefined && producto != null){
+                                                var seteado:boolean =false;
                                                 LocalStorageValues.map(item => {
                                                     if (item.producto.id === producto!.id) {
                                                         if(item.cantidad < 10){
-                                                            handleAddToCart({ producto: producto, cantidad: 1 })
+                                                            var cantidadNueva:number = item.cantidad + 1;
+                                                            handleAddToCart({ producto: producto, cantidad: cantidadNueva })
+                                                            seteado=true;
                                                         }
                                                     }
                                                 })
+
+                                                if(!seteado){
+                                                     handleAddToCart({ producto: producto, cantidad: 1 })
+                                                }
                                             }
                                         }
                             }}>

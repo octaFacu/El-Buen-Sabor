@@ -416,6 +416,8 @@ export class ProductoService extends ServiceBasicos {
       }
       
       let jsonRes = await res.json().then(res => res);
+
+      console.log(jsonRes)
       return jsonRes;
     } catch (err: any) {
       console.log(`Error ${err.status}: ${err.statusText}`);

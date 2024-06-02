@@ -17,7 +17,7 @@ export const Cart = () => {
     const [localStorageValues, setLocalStorageValues] = useState<ProductoParaPedido[]>([]);
     const [cantidadModificada, setCantidadModificada] = useState(false);
     const [mostrarModalFalloValidacion, setMostrarModalFalloValidacion] = useState(false);
-
+    const navigate = useNavigate();
     const prodSrv = new ProductoService();
 
     //Para saber si el usuario esta logueado
@@ -31,6 +31,38 @@ export const Cart = () => {
             return nuevosProductos;
         });
     };
+
+
+    const handleNavClick = async(e: React.MouseEvent<HTMLAnchorElement, MouseEvent>, path: string, state?: any) => {
+        await ChequearCantidadesProductos();
+        if (cantidadModificada) {
+          e.preventDefault(); 
+          //Mostrar popup de que se modifico
+          
+        } else {
+            navigate(path, { state });// Si no se modificaron los productos
+        }
+      };
+    
+      const handleUnauthenticatedNavClick = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
+        ChequearCantidadesProductos();
+        if (cantidadModificada) {
+          e.preventDefault(); 
+
+          //Mostrar popup de que se modifico
+        } else {
+          // Si no se modificaron los productos
+          loginWithRedirect({
+            authorizationParams: {
+              screen_hint: 'signup',
+              redirect_uri: 'http://localhost/informacionAdicional',
+            },
+          });
+        }
+      };
+
+
+
 
     const ChequearCantidadesProductos = async() => {
         {localStorageValues.map((producto, index) => (
@@ -116,8 +148,10 @@ export const Cart = () => {
                                 className="px-5 py-2 btn btn-add-order d-flex"
                                 onClick={(e) =>{
                                     //Agregar el chequeo de stock para los productos antes de redirigir
-                                    e.preventDefault();
-
+                                    handleNavClick(e, "/checkout", {
+                                        valorTotal: 100, 
+                                        localStorageValues: {}
+                                      });
                                 }}
                                 to={"/checkout"}
                                 state={{
@@ -130,13 +164,7 @@ export const Cart = () => {
                             : <NavLink
                                 className="px-5 py-2 btn btn-add-order d-flex"
                                 onClick={(e) => {
-                                    e.preventDefault();
-                                    loginWithRedirect({
-                                    authorizationParams: {
-                                        screen_hint: 'signup',
-                                        redirect_uri: 'http://localhost:5173/informacionAdicional',
-                                    },
-                                })}}
+                                    handleUnauthenticatedNavClick(e);}}
                                 to={"#"}
                             
                             >Continuar</NavLink>

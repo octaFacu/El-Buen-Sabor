@@ -144,23 +144,12 @@ export const Cart = () => {
                         {/* Valida si el usuario esta logueado para ver a que vista mandarlo */}
                         {isAuthenticated
                             ? 
-                            <NavLink
-                                className="px-5 py-2 btn btn-add-order d-flex"
-                                onClick={(e) =>{
-                                    //Agregar el chequeo de stock para los productos antes de redirigir
-                                    handleNavClick(e, "/checkout", {
-                                        valorTotal: 100, 
-                                        localStorageValues: {}
-                                      });
-                                }}
-                                to={"/checkout"}
-                                state={{
-                                    valorTotal: valorTotal,
-                                    localStorageValues: localStorageValues
-                                }}
-                            >Continuar</NavLink>
-                            
-                            
+                            <a
+                            className="px-5 py-2 btn btn-add-order d-flex"
+                            onClick={(e) => handleNavClick(e, "/checkout", { valorTotal, localStorageValues })}
+                            >
+                            Continuar
+                            </a>
                             : <NavLink
                                 className="px-5 py-2 btn btn-add-order d-flex"
                                 onClick={(e) => {

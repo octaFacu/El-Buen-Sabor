@@ -400,7 +400,7 @@ export class ProductoService extends ServiceBasicos {
   }
 
 
-  async validoStockProducto(producto: Producto, rol: string) {
+  async TraerStockProducto(producto: Producto, rol: string) {
     try {
       let res = await fetch(this.url + "/stockProducto", {
         method: "POST",

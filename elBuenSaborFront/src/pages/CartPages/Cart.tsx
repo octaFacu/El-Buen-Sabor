@@ -7,16 +7,13 @@ import { NavLink, Outlet, useNavigate } from 'react-router-dom';
 import { useAuth0 } from '@auth0/auth0-react';
 import { useUnidadContext } from '../../context/GlobalContext';
 import { ProductoService } from '../../services/ProductoService';
-import Producto from '../../context/interfaces/Producto';
-import { json } from 'stream/consumers';
-
 
 export const Cart = () => {
 
     const { rol } = useUnidadContext();
     const [valorTotal, setValorTotal] = useState<number>(0);
     const [localStorageValues, setLocalStorageValues] = useState<ProductoParaPedido[]>([]);
-    const [cantidadModificada, setCantidadModificada] = useState(false);
+    const [cantidadModificada, setCantidadModificada] = useState<boolean | null>(null);
     const [mostrarModalFalloValidacion, setMostrarModalFalloValidacion] = useState(false);
     const navigate = useNavigate();
     const prodSrv = new ProductoService();
@@ -27,48 +24,56 @@ export const Cart = () => {
     //Actualiza las cantidades de un producto en las cartas
     const actualizarCantidad = (indice: number, nuevaCantidad: number) => {
         console.log("Actualizo la cantidad")
-        setLocalStorageValues((prevProductos) => {
-            const nuevosProductos = [...prevProductos];
-            nuevosProductos[indice].cantidad = nuevaCantidad;
-            return nuevosProductos;
-        });
+        if(nuevaCantidad > 0){
+            setLocalStorageValues((prevProductos) => {
+                const nuevosProductos = [...prevProductos];
+                nuevosProductos[indice].cantidad = nuevaCantidad;
+                return nuevosProductos;
+            });
+        }else{
+            eliminarProducto(indice);
+        }
+
     };
 
 
-    const handleNavClick = async(e: React.MouseEvent<HTMLAnchorElement, MouseEvent>, path: string, state?: any) => {
+    const handleNavClick = async(e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
         e.preventDefault(); 
         await ChequearCantidadesProductos();
-        if (cantidadModificada) {
-          
-          //Mostrar popup de que se modifico
-          
-        } else {
-            navigate(path, { state });// Si no se modificaron los productos
-        }
       };
     
-      const handleUnauthenticatedNavClick = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
-        e.preventDefault(); 
-        ChequearCantidadesProductos();
-        if (cantidadModificada) {
-          e.preventDefault(); 
-          //Mostrar popup de que se modifico
-        } else {
-          // Si no se modificaron los productos
-          loginWithRedirect({
-            authorizationParams: {
-              screen_hint: 'signup',
-              redirect_uri: 'http://localhost/informacionAdicional',
-            },
-          });
+
+      useEffect(() => {
+        if(cantidadModificada != null){
+            if(cantidadModificada == true){
+                alert("Se cambiaron las cantidades")
+                setCantidadModificada(null);
+            }else{
+                if(isAuthenticated){
+                    var state = { valorTotal, localStorageValues }
+                    navigate("/checkout", {state});
+                }else{
+                    // Si no se modificaron los productos
+                    loginWithRedirect({
+                        authorizationParams: {
+                        screen_hint: 'signup',
+                        redirect_uri: 'http://localhost/informacionAdicional',
+                        },
+                    });
+                }
+            }
         }
-      };
+      }, [cantidadModificada])
 
     const ChequearCantidadesProductos = async() => {
-        {localStorageValues.map(async (producto, index) => (
+        const validationPromises =localStorageValues.map(async (producto, index) => (
             await ValidarCantidad(producto, index)
-                     
-        ))};
+        ));
+        await Promise.all(validationPromises);
+
+        if(cantidadModificada == null){
+            setCantidadModificada(false);
+        }
     };
 
     //01062024 - PF
@@ -141,23 +146,12 @@ export const Cart = () => {
                     <div className="my-4 d-flex justify-content-evenly align-items-center">
                         <div className="mx-5"></div>
 
-                        {/* Valida si el usuario esta logueado para ver a que vista mandarlo */}
-                        {isAuthenticated
-                            ? 
                             <a
                             className="px-5 py-2 btn btn-add-order d-flex"
-                            onClick={(e) => handleNavClick(e, "/checkout", { valorTotal, localStorageValues })}
+                            onClick={(e) => handleNavClick(e)}
                             >
                             Continuar
                             </a>
-                            : <NavLink
-                                className="px-5 py-2 btn btn-add-order d-flex"
-                                onClick={(e) => {
-                                    handleUnauthenticatedNavClick(e);}}
-                                to={"#"}
-                            
-                            >Continuar</NavLink>
-                        }
 
                         <div className="container-valor-total">
                             <span className="txt-Total">Total: </span>

@@ -23,7 +23,7 @@ export const ContextProvider = ({ children }: props) => {
   const [ingredientes, setIngredientes] = useState<Ingrediente[]>([]);
   const productosService = new ProductoService();
   const categoriasPService = new CategoriaProductoService();
-  const [rol, setRol] = useState<string>("");
+  const [rol, setRol] = useState<string>("nc");
 
 
   const { isAuthenticated, isLoading, user } = useAuth0();

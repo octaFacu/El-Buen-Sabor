@@ -15,6 +15,7 @@ export const Cart = () => {
     const [localStorageValues, setLocalStorageValues] = useState<ProductoParaPedido[]>([]);
     const [cantidadModificada, setCantidadModificada] = useState<boolean | null>(null);
     const [mostrarModalFalloValidacion, setMostrarModalFalloValidacion] = useState(false);
+    const [chequeandoStockDisponible, setChequeandoStockDisponible] = useState<boolean | null>(null)
     const navigate = useNavigate();
     const prodSrv = new ProductoService();
 
@@ -44,6 +45,7 @@ export const Cart = () => {
     
 
       useEffect(() => {
+if(!chequeandoStockDisponible) {
         if(cantidadModificada != null){
             if(cantidadModificada == true){
                 alert("Se cambiaron las cantidades")
@@ -52,6 +54,7 @@ export const Cart = () => {
                 if(isAuthenticated){
                     var state = { valorTotal, localStorageValues }
                     navigate("/checkout", {state});
+                    
                 }else{
                     // Si no se modificaron los productos
                     loginWithRedirect({
@@ -61,35 +64,55 @@ export const Cart = () => {
                         },
                     });
                 }
+                setChequeandoStockDisponible(null);
             }
+            setCantidadModificada(null); 
+
         }
+    }
+    
       }, [cantidadModificada])
 
     const ChequearCantidadesProductos = async() => {
+        setChequeandoStockDisponible(true); 
         const validationPromises =localStorageValues.map(async (producto, index) => (
             await ValidarCantidad(producto, index)
+            
         ));
         await Promise.all(validationPromises);
+        console.log("Termine las promesas "+ cantidadModificada)
+        setChequeandoStockDisponible(false); 
 
-        if(cantidadModificada == null){
-            setCantidadModificada(false);
-        }
     };
+
+    useEffect(() => {
+        if(chequeandoStockDisponible != null){
+            if(!chequeandoStockDisponible){
+                if(cantidadModificada == null){
+                    setCantidadModificada(false);
+                }
+
+                setChequeandoStockDisponible(false);
+            }
+        }
+    }, [chequeandoStockDisponible])
 
     //01062024 - PF
     const ValidarCantidad = async(producto: ProductoParaPedido, index: number) => {
-        console.log(JSON.stringify(producto.producto));
+        console.log("Pasando por el chequeo de producto")
         const cantidadProducto = await prodSrv.TraerStockProducto(producto.producto, rol)
 
         if(cantidadProducto < producto.cantidad){
             console.log("Paso por la modificacion de la cantidad")
             //Mostrar mensaje de "lo sentimos"
+            setCantidadModificada(true);
             setMostrarModalFalloValidacion(true);
 
             //Modificar la cantidad para que se ajuste a la cantidad que tenemos
             actualizarCantidad(index, cantidadProducto);
 
-            setCantidadModificada(true);
+            
+            console.log("Cantidad TIENE QUE SER VERDADERO "+ cantidadModificada)
         }
     }
 

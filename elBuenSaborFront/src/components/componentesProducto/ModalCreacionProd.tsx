@@ -271,7 +271,7 @@ const ModalCreacionProd: React.FC<ProdFormProps> = ({ estado, cambiarEstado, cat
             }))
             cambiarEstado(!estado);
             setCambios(true);
-            window.location.reload();
+            //window.location.reload();
 
         }
 

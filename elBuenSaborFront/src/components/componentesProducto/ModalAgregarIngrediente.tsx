@@ -38,6 +38,8 @@ const ModalAgregarIngrediente: React.FC<ProdFormProps> = ({ estado, cambiarEstad
 
     useEffect(() => {
         setIngredienteNuevo(new IngredienteDeProducto());
+        setIngredienteSelect(ingredientes[0]);
+        setMedidaSelect(medidas[0]);
     }, [estado]);
 
 
@@ -182,7 +184,7 @@ const ModalAgregarIngrediente: React.FC<ProdFormProps> = ({ estado, cambiarEstad
 
                                             cambiarEstado(!estado);
                                             cambiarEstadoFormProd(true);
-                                                                               
+                            
  
                                 }
                                 }}> <i className="material-icons" style={{fontSize: "30px", cursor:"pointer"}}>check</i></button> 

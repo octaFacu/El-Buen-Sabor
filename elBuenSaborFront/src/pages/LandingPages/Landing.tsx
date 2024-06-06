@@ -17,6 +17,7 @@ import { FavoritoService } from '../../services/FavoritoService'
 import { useAuth0 } from '@auth0/auth0-react'
 import { log } from 'console'
 import MasVendidos from '../../components/Landing/masVendidos/MasVendidos'
+import FloatingBtn from '../../components/navigation/FloatingBtn'
 
 export const Landing = () => {
 
@@ -99,11 +100,11 @@ export const Landing = () => {
     if (data.error) {
       await setProductosPorFiltro(null);
       console.log(data);
-      console.log("ES NULLLLLLLLL");
+
     } else {
       await setProductosPorFiltro(data.content);
       console.log(data);
-      console.log("NO ES NULLLLLLLLL");
+
     }
   }
 
@@ -409,6 +410,7 @@ export const Landing = () => {
         ))}
 
         {/* {isLoading && <ListLoader />} */}
+        
 
       </div>
 
@@ -432,7 +434,8 @@ export const Landing = () => {
         show={showNotification}
         btnCart={true}
       />
-
+{(rol == import.meta.env.VITE_ADMIN || rol == import.meta.env.VITE_CAJERO ||
+  rol == import.meta.env.VITE_COCINERO || rol == import.meta.env.VITE_DELIVERY) && <FloatingBtn></FloatingBtn>}
     </>
   )
 }

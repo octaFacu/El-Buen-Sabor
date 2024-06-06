@@ -10,6 +10,8 @@ import CardPedidoCocina from "../../components/componentesCocina/CardPedidoCocin
 import DetalleProdCocina from "../../components/componentesCocina/DetalleProdCocina";
 import Producto from "../../context/interfaces/Producto";
 import { useUnidadContext } from "../../context/GlobalContext";
+import MenuComponent from "../../components/MenusComponents/MenuComponent";
+import { Link } from "react-router-dom";
 
 
 export const CocineroPedidosPage = () => {
@@ -133,6 +135,38 @@ export const CocineroPedidosPage = () => {
 
         </div >
         </div>
+        <br></br>
+        <div className="mt-5 mx-5">
+      
+        <div className="container mx-auto">
+            <div className="card card-admin">
+                <div className='justify-content-around mt-2 mb-2 py-2 row'>
+                    <Link className='mx-2 col-md-2 my-2' to="/abm/productos/" style={{ color: 'white' }}>
+                        <button className="btn btn-outline-light btnhover w-100">
+                            <p>Productos</p>
+                        </button>
+                    </Link>
+                    <Link className='mx-2 col-md-2 my-2' to="/abm/categoriaProductos/" style={{ color: 'white' }}>
+                        <button className="btn btn-outline-light btnhover w-100">
+                            <p>Categorias de Productos</p>
+                        </button>
+                    </Link>
+                    <Link className='mx-2 col-md-2 my-2' to="/abm/ingredientes/" style={{ color: 'white' }}>
+                        <button className="btn btn-outline-light btnhover w-100">
+                            <p>Ingredientes</p>
+                        </button>
+                    </Link>
+                    <Link className='mx-2 col-md-2 my-2' to="/abm/categoriaIngredientes/" style={{ color: 'white' }}>
+                        <button className="btn btn-outline-light btnhover w-100">
+                            <p>Categorias de Ingredientes</p>
+                        </button>
+                    </Link>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
         <br></br>
         <DetalleProdCocina producto={productoModal} estado={estadoModal} changeEstado={setEstadoModal}></DetalleProdCocina>
         </div>

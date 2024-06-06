@@ -20,24 +20,18 @@ return(
           </button>
         </div>
         <div className="mx-4">
-          <h3>- Usuario -</h3>
-          <button className="btn btn-outline-light">
-            <Link to="/usuarios/" style={{ color: 'white' }}>Información del Usuario</Link>
-          </button>
-        </div>
-        <div className="mx-4">
           <h3>- ABMs -</h3>
           <button className="btn btn-outline-light mb-1">
-            <Link to="/abm/productos/" style={{ color: 'white' }}>Productos</Link>
+            <Link to="/admin/" style={{ color: 'white' }}>Admin</Link>
           </button>
           <button className="btn btn-outline-light mb-1">
-            <Link to="/abm/categoriaProductos/" style={{ color: 'white' }}>Categorias de Productos</Link>
+            <Link to="/dashboard-cocina/" style={{ color: 'white' }}>Administrador Cocina</Link>
           </button>
           <button className="btn btn-outline-light mb-1">
-            <Link to="/abm/ingredientes/" style={{ color: 'white' }}>Ingredientes</Link>
+            <Link to="/dashboard-delivery/" style={{ color: 'white' }}>Administrador Delivery</Link>
           </button>
           <button className="btn btn-outline-light">
-            <Link to="/abm/categoriaIngredientes/" style={{ color: 'white' }}>Categorias de Ingredientes</Link>
+            <Link to="/dashboard-pedidos/" style={{ color: 'white' }}>Administrador Cajero</Link>
           </button>
         </div>
       </div>

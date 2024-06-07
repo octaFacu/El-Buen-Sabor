@@ -45,6 +45,7 @@ export const ContextProvider = ({ children }: props) => {
     };
 
     const saveRol = async (rolGuardar: string) => {
+      console.log("SETEANDO ROL: "+rolGuardar);
       await setRol(rolGuardar);
     }
 
@@ -54,16 +55,15 @@ export const ContextProvider = ({ children }: props) => {
       
       
       if(user != null) {
-        //console.log("User id: " + user.userId);
+        
       const data = await usuarioservice.getOne(user.userId, rolPaso);
-      //console.log("User ROL TRAIDO DE LA DB: " + data.nombreRol);
       const nombreRol = data.nombreRol;
       
       //Setear la id del rol segun el nombre
       switch (nombreRol.toUpperCase()) {
         case "ADMIN":
           rolGuardar =  import.meta.env.VITE_ADMIN
-          //console.log("Rol a guardar "+rolGuardar);
+          
           break;
         case "COCINERO":
           rolGuardar = import.meta.env.VITE_COCINERO
@@ -87,37 +87,28 @@ export const ContextProvider = ({ children }: props) => {
 
     const fetchDataIngredientes = async () => {
       const data = await ingredientesService.getAllBasic(rol);
-      //console.log("Ingredientes: " + data);
       setIngredientes(data);
     };
 
     const fetchDataProductos = async () => {
-     // console.log("Tomando producto, rol: " + rol);
       const data = await productosService.getAllBasic(rol);
-      //console.log("Productos: " + data);
       setProductos(data);
     };
 
     const fetchDataCatProductos = async () => {
-     // console.log("Tomando categorias, rol: " + rol);
       const data = await categoriasPService.getAllBasic(rol);
-      //console.log("Categorias: " + data);
       setCategoriasProductos(data);
     };
 
     const loadAllContext = async () => {
-      //console.log("Entro al seteo de contexto");
     
       if (!isLoading) {
-        //console.log("ya ha cargado");
     
         if (!isAuthenticated) {
-          //console.log("No está autenticado.");
           await setRol("");
         }
     
         if (isAuthenticated && user) {
-          //console.log("Esta autenticado.");
           await fetchRol();
         }
     

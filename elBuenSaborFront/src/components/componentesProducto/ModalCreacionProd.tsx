@@ -10,6 +10,7 @@ import ModalAgregarIngrediente from "./ModalAgregarIngrediente";
 import { CloudinaryService } from "../../services/CloudinaryService";
 import IngredienteDeProducto from "../../context/interfaces/IngredienteDeProducto";
 import TablaIngredientesMostrar from "./TablaIngredientesMostrar";
+import PageLoader from "../pageLoader/PageLoader";
 
 
 //Interfaz que 
@@ -21,6 +22,7 @@ interface State {
     ingredientesGuardados: boolean;
     idCategoria: number;
     llamarGuardado: boolean;
+    loaderVisible: boolean;
 }
 
 interface ProdFormProps {
@@ -50,7 +52,8 @@ const ModalCreacionProd: React.FC<ProdFormProps> = ({ estado, cambiarEstado, cat
         modalIngr: false, //Estado de vista de modal incluir ingrediente
         ingredientesGuardados: true, //Bandera para guardado de ingredientes
         idCategoria: 0, //Id de la categoria de producto
-        llamarGuardado: false
+        llamarGuardado: false,
+        loaderVisible: false
     });
 
 
@@ -86,6 +89,13 @@ const ModalCreacionProd: React.FC<ProdFormProps> = ({ estado, cambiarEstado, cat
         await setState((prevState) => ({
             ...prevState,
             botonManufacturado: value,
+        }));
+    };
+
+    const setLoaderVisible = async (value: boolean) => {
+        await setState((prevState) => ({
+            ...prevState,
+            loaderVisible: value,
         }));
     };
 
@@ -230,6 +240,7 @@ const ModalCreacionProd: React.FC<ProdFormProps> = ({ estado, cambiarEstado, cat
 
 
         const handleSaving = async () => {
+            setLoaderVisible(true);
             console.log("Entre al guardado...");
             if (state.productoSelect.denominacion.trim() !== '' && state.productoSelect.descripcion.trim() !== '' && state.productoSelect.precioTotal > 0 && (file != undefined || (state.productoSelect.id != undefined || state.productoSelect.id != 0))) {
 
@@ -270,6 +281,7 @@ const ModalCreacionProd: React.FC<ProdFormProps> = ({ estado, cambiarEstado, cat
 
 
             }
+            
 
         };
 
@@ -285,6 +297,7 @@ const ModalCreacionProd: React.FC<ProdFormProps> = ({ estado, cambiarEstado, cat
                     ...prevState,
                     llamarGuardado: false
                 }))
+                setLoaderVisible(false);
                 cambiarEstado(!estado);
                 setCambios(true);
                 //window.location.reload();
@@ -299,6 +312,7 @@ const ModalCreacionProd: React.FC<ProdFormProps> = ({ estado, cambiarEstado, cat
                     ...prevState,
                     llamarGuardado: false
                 }))
+                setLoaderVisible(false);
                 cambiarEstado(!estado);
                 setCambios(true);
                 //window.location.reload();
@@ -441,6 +455,7 @@ const ModalCreacionProd: React.FC<ProdFormProps> = ({ estado, cambiarEstado, cat
                 <ModalAgregarIngrediente estado={state.modalIngr}
                     cambiarEstado={cambiarModalIngr} ingredientesList={state.ingredientesProducto}
                     setIngredientesList={setIngredientesProducto} cambiarEstadoFormProd={cambiarEstado} />
+                    {state.loaderVisible && <PageLoader></PageLoader>}
                 {estado && !state.modalIngr &&
 
 
@@ -539,17 +554,7 @@ const ModalCreacionProd: React.FC<ProdFormProps> = ({ estado, cambiarEstado, cat
                                             <select ref={categoriaRef} className="form-select select-style" name="categoriaProducto" onChange={handleCategoriaCambio}>
 
                                                 <option selected value={state.productoSelect.categoriaProducto.id}>{state.productoSelect.categoriaProducto.denominacion}</option>
-                                                {/* {datos ?
-                                                categorias.map(cat => (
-                                                        cat.denominacion !== Productonuevo.categoriaProducto.denominacion &&
-                                                        <option selected={datos.categoriaProducto.id === cat.id ? true : false} value={cat.id}>{cat.denominacion}</option>
-                                                ))
-                                                :
-                                                categorias.map(cat => (
-                                                        cat.denominacion !== Productonuevo.categoriaProducto.denominacion &&
-                                                        <option value={cat.id}>{cat.denominacion}</option>
-                                                ))
-                                            } */}
+     
                                                 {categorias.map(cat => (
                                                     cat.denominacion !== state.productoSelect.categoriaProducto.denominacion &&
                                                     <option value={cat.id}>{cat.denominacion}</option>
@@ -573,7 +578,7 @@ const ModalCreacionProd: React.FC<ProdFormProps> = ({ estado, cambiarEstado, cat
                                         <button type="submit" className="btn" style={{ backgroundColor: "#864e1b", color: "white" }} onClick={async (event) => {
 
                                             event.preventDefault();
-                                            console.log("Aprete el boton...");
+        
                                             handleSaving();
 
                                         }

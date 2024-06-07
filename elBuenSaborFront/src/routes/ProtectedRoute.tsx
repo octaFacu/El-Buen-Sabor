@@ -20,7 +20,7 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ allowedRoles, children 
 
 if(isAuthenticated && user){
   
-  var rolesString = user['rol']; //IT IS AN OBJECT
+  var rolesString = user['rol']; 
 
     for (const key in rolesString) {
       if (rolesString.hasOwnProperty(key) && typeof rolesString[key] === "string") {

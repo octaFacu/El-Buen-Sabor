@@ -170,23 +170,24 @@ const ModalAgregarIngrediente: React.FC<ProdFormProps> = ({ estado, cambiarEstad
 
 
                                    if(ingredienteSelect.id !== 0 || medidaSelect!.id !== 0 || Ingredientenuevo.cantidad !== 0){
-                                            
+                                            //08062024 --- Chequear que la unidad de medida elegida sea correcta
+                                            if(ingredienteSelect.unidadmedida.id === medidaSelect!.id || (medidaSelect!.padre != null
+                                                 && ingredienteSelect.unidadmedida.id === medidaSelect!.padre?.id)){
 
-                                            Ingredientenuevo.idIngrediente = ingredienteSelect.id!;
-                                            Ingredientenuevo.idMedida = medidaSelect!.id!;
+                                                Ingredientenuevo.idIngrediente = ingredienteSelect.id!;
+                                                Ingredientenuevo.idMedida = medidaSelect!.id!;
 
-                                            if(productoId != undefined){
-                                                Ingredientenuevo.idProducto = productoId;
+                                                if(productoId != undefined){
+                                                    Ingredientenuevo.idProducto = productoId;
+                                                }
+
+                                                setIngredientesList([...ingredientesList, Ingredientenuevo]);
+                                                
+
+                                                cambiarEstado(!estado);
+                                                cambiarEstadoFormProd(true);
                                             }
-
-                                            setIngredientesList([...ingredientesList, Ingredientenuevo]);
-                                            
-
-                                            cambiarEstado(!estado);
-                                            cambiarEstadoFormProd(true);
-                            
- 
-                                }
+                                    }
                                 }}> <i className="material-icons" style={{fontSize: "30px", cursor:"pointer"}}>check</i></button> 
                             </form>
                         </div>

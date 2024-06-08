@@ -88,7 +88,6 @@ export const ContextProvider = ({ children }: props) => {
       }
     }
   }else{
-    console.log("RECUPERO ROL DE LOCAL STORAGE");
     rolGuardar = localStorage.getItem('userRole')!;
   }
     await saveRol(rolGuardar);

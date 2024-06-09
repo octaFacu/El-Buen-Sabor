@@ -23,7 +23,10 @@ const ModalCompra: React.FunctionComponent<ModalCompraProps> = ({ ingrediente, e
     return (
         <div>
             {estadoCompra &&
-                <div className="overlay" onClick={() => cambiarEstadoCompra(!estadoCompra)}>
+                <div className="overlay" onClick={() =>{ 
+                    setCantidadAgregar(0);
+                    setPrecio(0); 
+                    cambiarEstadoCompra(!estadoCompra)}}>
                     <div className="container my-5 contenedorModal" style={{ borderRadius: "25px", backgroundColor: "#f99132", color: "white", maxWidth: "50%" }} onClick={e => e.stopPropagation()}>
                         <div className="" style={{ textAlign: "center" }}>
                             <div className="rounded container pb-2 pt-4" style={{ textAlign: "center", backgroundColor: "#864e1b", maxWidth: "60%" }}>
@@ -47,7 +50,11 @@ const ModalCompra: React.FunctionComponent<ModalCompraProps> = ({ ingrediente, e
 
 
                         <div className="container mt-4" style={{ display: "flex", justifyContent: "center" }}>
-                        <button className="btn btn-danger mx-3" onClick={() => cambiarEstadoCompra(!estadoCompra)}><i className="material-icons" style={{ fontSize: "30px", cursor: "pointer" }}>highlight_off</i></button>
+                        <button className="btn btn-danger mx-3" onClick={() =>{
+                            setCantidadAgregar(0);
+                            setPrecio(0); 
+                            cambiarEstadoCompra(!estadoCompra)}}>
+                                <i className="material-icons" style={{ fontSize: "30px", cursor: "pointer" }}>highlight_off</i></button>
 
                         <button type="submit" className="btn" style={{ backgroundColor: "#864e1b", color: "white" }} onClick={() => {
 
@@ -59,6 +66,8 @@ const ModalCompra: React.FunctionComponent<ModalCompraProps> = ({ ingrediente, e
                                 ingrediente.precioCompra = precio;
 
                                 ingredientesService.updateEntity(ingrediente, rol);
+                                setCantidadAgregar(0);
+                                setPrecio(0);
                                 cambiarEstadoCompra(!estadoCompra);
 
                             }

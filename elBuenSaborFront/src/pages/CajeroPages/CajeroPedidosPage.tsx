@@ -36,7 +36,13 @@ export const CajeroPedidosPage = () => {
         const estadoString = EstadoPedido[estadoDePedidos];
 
 
-        const filteredPedidos = allPedidos.filter(pedido => pedido.estado.toString() === estadoString);
+        var filteredPedidos = allPedidos.filter(pedido => pedido.estado.toString() === estadoString);
+        filteredPedidos = filteredPedidos.filter(pedido => {
+            const fechaPedido = new Date(pedido.fechaPedido);
+            const now = new Date();
+            const cutoffTime = new Date(now.getTime() - 24 * 60 * 60 * 1000); // 24 horas antes
+            return fechaPedido >= cutoffTime;
+          });
         await setPedidos(filteredPedidos);
     }
 
@@ -133,8 +139,7 @@ export const CajeroPedidosPage = () => {
     }, [estadoDePedidos]);
 
     useEffect(() => {
-        //console.log("PEDIDOS HAN CAMBIADO");
-        //HERE I NEED TO RE RENDER WITH WHAT THE CURRENT LIST HAS, NO CHANGES -- que significa esto T-T ¿? ya me olvidé lol
+        
     }, [pedidos]);
 
 
@@ -142,7 +147,6 @@ export const CajeroPedidosPage = () => {
     const handleChangeEstado = async (estadoDePedido: EstadoPedido, pedidoChanged: Pedido) => {
         var estado = pedidoChanged.estado; // Capturamos el estado actual antes de actualizarlo
         pedidoChanged.estado = estadoDePedido.toString();
-        console.log("Anterior" + estado)
     
         await servicePedido.updateEntity(pedidoChanged, rol);
         if (estadoDePedido === EstadoPedido.Entregado) {
@@ -150,10 +154,14 @@ export const CajeroPedidosPage = () => {
         }
     
         // Filtramos los pedidos para mostrar solo los que coinciden con el estado actual
-        const updatedPedidos = pedidos.filter(pedido => pedido.estado === estado);
-        console.log("-------------------AS-------------------")
+        var updatedPedidos = pedidos.filter(pedido => pedido.estado === estado);
+        updatedPedidos = updatedPedidos.filter(pedido => {
+            const fechaPedido = new Date(pedido.fechaPedido);
+            const now = new Date();
+            const cutoffTime = new Date(now.getTime() - 24 * 60 * 60 * 1000); // 24 horas antes
+            return fechaPedido >= cutoffTime;
+          });
 
-        //console.log(updatedPedidos)
         setPedidos(updatedPedidos);
     };
     

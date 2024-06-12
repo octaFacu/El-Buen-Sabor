@@ -16,7 +16,6 @@ export const CajeroPedidosPage = () => {
     const { rol } = useUnidadContext();
 
     (window as any).global = window
-    const [estadoModal, setEstadoModal] = useState(false);
     const [allPedidos, setAllPedidos] = useState<Pedido[]>([]);
     const [pedidos, setPedidos] = useState<Pedido[]>([]);
     const [estadoDePedidos, setEstadoDePedidos] = useState<EstadoPedido>(EstadoPedido.AConfirmar);
@@ -25,7 +24,7 @@ export const CajeroPedidosPage = () => {
     const [listaPendientes, setListaPendientes] = useState<number[]>([]);
 
     const getPedidos = async () => {
-        //servicePedido.getByEstado(EstadoPedido[estadoDePedidos])
+
         servicePedido.getAllBasic(rol)
             .then(data => {
                 setAllPedidos(data)
@@ -136,7 +135,7 @@ export const CajeroPedidosPage = () => {
 
     useEffect(() => {
         getPedidosEstado();
-    }, [estadoDePedidos]);
+    }, [estadoDePedidos, pedidos]);
 
     useEffect(() => {
         

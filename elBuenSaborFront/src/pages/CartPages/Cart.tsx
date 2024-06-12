@@ -48,7 +48,7 @@ export const Cart = () => {
 if(!chequeandoStockDisponible) {
         if(cantidadModificada != null){
             if(cantidadModificada == true){
-                alert("Se cambiaron las cantidades")
+                //alert("Se cambiaron las cantidades")
                 setCantidadModificada(null);
             }else{
                 if(isAuthenticated){
@@ -56,6 +56,7 @@ if(!chequeandoStockDisponible) {
                     navigate("/checkout", {state});
                     
                 }else{
+                    
                     // Si no se modificaron los productos
                     loginWithRedirect({
                         authorizationParams: {

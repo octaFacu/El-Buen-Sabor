@@ -244,7 +244,7 @@ const ModalCreacionProd: React.FC<ProdFormProps> = ({ estado, cambiarEstado, cat
             console.log("Entre al guardado...");
             if (state.productoSelect.denominacion.trim() !== '' && state.productoSelect.descripcion.trim() !== '' && state.productoSelect.precioTotal > 0 && (file != undefined || (state.productoSelect.id != undefined || state.productoSelect.id != 0))) {
 
-                if ((state.productoSelect.receta !== undefined && state.productoSelect.receta.trim() !== '') || state.productoSelect.esManufacturado == false) {
+                if ((state.productoSelect.receta !== undefined && state.productoSelect.receta.trim() !== '') || state.botonManufacturado == false) {
                     if (file != undefined) {
                         console.log("Entro a guardado... guardando imagen...");
                         await handleFileUpload();
@@ -273,13 +273,16 @@ const ModalCreacionProd: React.FC<ProdFormProps> = ({ estado, cambiarEstado, cat
                                 llamarGuardado: true
                             })),
                         ]);
-
-
-
+                    }else{
+                        setLoaderVisible(false);
                     }
+                }else{
+                    setLoaderVisible(false);
                 }
 
 
+            }else{
+                setLoaderVisible(false);
             }
             
 
@@ -300,7 +303,10 @@ const ModalCreacionProd: React.FC<ProdFormProps> = ({ estado, cambiarEstado, cat
                 setLoaderVisible(false);
                 cambiarEstado(!estado);
                 setCambios(true);
-                //window.location.reload();
+
+                if(state.botonManufacturado === false) { 
+                    window.location.reload();
+                }
 
             } else {
                 console.log("Entro a crear el producto");
@@ -315,7 +321,10 @@ const ModalCreacionProd: React.FC<ProdFormProps> = ({ estado, cambiarEstado, cat
                 setLoaderVisible(false);
                 cambiarEstado(!estado);
                 setCambios(true);
-                //window.location.reload();
+                
+                if(state.botonManufacturado === false) { 
+                    window.location.reload();
+                }
 
             }
 

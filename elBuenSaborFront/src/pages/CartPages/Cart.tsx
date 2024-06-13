@@ -7,6 +7,7 @@ import { NavLink, Outlet, useNavigate } from 'react-router-dom';
 import { useAuth0 } from '@auth0/auth0-react';
 import { useUnidadContext } from '../../context/GlobalContext';
 import { ProductoService } from '../../services/ProductoService';
+import ModalFalloValidacionStock from '../../components/ModalFalloValidacionStock';
 
 export const Cart = () => {
 
@@ -52,11 +53,12 @@ if(!chequeandoStockDisponible) {
                 setCantidadModificada(null);
             }else{
                 if(isAuthenticated){
+                    console.log("Authenticated");
                     var state = { valorTotal, localStorageValues }
                     navigate("/checkout", {state});
                     
                 }else{
-                    
+                    console.log("Not authenticated");
                     // Si no se modificaron los productos
                     loginWithRedirect({
                         authorizationParams: {
@@ -101,19 +103,20 @@ if(!chequeandoStockDisponible) {
     //01062024 - PF
     const ValidarCantidad = async(producto: ProductoParaPedido, index: number) => {
         console.log("Pasando por el chequeo de producto")
-        const cantidadProducto = await prodSrv.TraerStockProducto(producto.producto, rol)
+        if(producto.producto.esManufacturado){
+            const cantidadProducto = await prodSrv.TraerStockProducto(producto.producto, rol)
+        
 
-        if(cantidadProducto < producto.cantidad){
-            console.log("Paso por la modificacion de la cantidad")
-            //Mostrar mensaje de "lo sentimos"
-            setCantidadModificada(true);
-            setMostrarModalFalloValidacion(true);
+            if(cantidadProducto < producto.cantidad){
+                console.log("Paso por la modificacion de la cantidad")
+                //Mostrar mensaje de "lo sentimos"
+                setCantidadModificada(true);
+                setMostrarModalFalloValidacion(true);
 
-            //Modificar la cantidad para que se ajuste a la cantidad que tenemos
-            actualizarCantidad(index, cantidadProducto);
+                //Modificar la cantidad para que se ajuste a la cantidad que tenemos
+                actualizarCantidad(index, cantidadProducto);
 
-            
-            console.log("Cantidad TIENE QUE SER VERDADERO "+ cantidadModificada)
+            }
         }
     }
 
@@ -187,7 +190,9 @@ if(!chequeandoStockDisponible) {
 
 
             </GenericContainer>
-
+            {mostrarModalFalloValidacion && (
+                <ModalFalloValidacionStock cerrarModal={() => setMostrarModalFalloValidacion(false)} />
+            )}
         </>
     )
 

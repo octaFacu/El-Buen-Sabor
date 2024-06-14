@@ -12,6 +12,8 @@ interface ProductoCardProps {
     estadoVista: boolean,
     cambiarEstadoVista: any,
 
+    estadoCompra:boolean,
+    cambiarEstadoCompra: any,
 
     producto: Producto
 
@@ -21,7 +23,7 @@ interface ProductoCardProps {
 
 }
 
-const ProductoCard: React.FunctionComponent<ProductoCardProps> = ({ producto, cambiarEstado, estado, cambiarEstadoVista, estadoVista, setearDatos, datos }) => {
+const ProductoCard: React.FunctionComponent<ProductoCardProps> = ({ producto, cambiarEstado, estado, cambiarEstadoVista, estadoVista, setearDatos, datos, cambiarEstadoCompra, estadoCompra }) => {
 
     const [botonActivo, setbotonActivo] = useState<Boolean>(producto.activo)
     const { rol } = useUnidadContext();
@@ -72,6 +74,15 @@ const ProductoCard: React.FunctionComponent<ProductoCardProps> = ({ producto, ca
 
 
             </td>
+            <td>
+                { !producto.esManufacturado &&
+            <button className="btn mx-2 btn-sm" style={{backgroundColor: "#864e1b"}} 
+                onClick={
+                     () => {
+                     setearDatos(producto)
+                     cambiarEstadoCompra(!estadoCompra)}}
+                ><i className="material-icons" style={{fontSize: "30px", cursor:"pointer", color: "white"}}>add_shopping_cart</i></button>}</td>
+                     
             <td><img src={producto.imagen} className="imagen-style" /></td>
 
         </tr>

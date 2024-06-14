@@ -32,13 +32,11 @@ export const ProductosABM = () => {
        
         categoriaProductoService.getAllBasic(rol)
             .then(data => {
-                console.log("CARGANDO CATEGORIAS "+ data);
                 setCategorias(data)
             })
 
             productoService.getAllBasic(rol)
             .then(data => {
-                console.log("CARGANDO PRODUCTOS "+ data);
                 setProductos(data)
             })
         

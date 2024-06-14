@@ -42,10 +42,7 @@ export class ServiceBasicos {
   // realiza un getOne con un id que puede ser tipo number o tipo string
   async getOne(id: number | string, rol: string) {
     try {
-      //console.log("Entrando a get one...");
-      //console.log("url: " + this.baseUrl + this._urlEspecifico + `/${id}`);
-      //console.log("id: " + id);
-      //console.log("rol: " + rol);
+
       const res = await fetch(this.baseUrl + this._urlEspecifico + `/${id}`, {
         method: 'GET',
         headers: {

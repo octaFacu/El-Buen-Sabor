@@ -25,73 +25,73 @@ export const Cart = () => {
 
     //Actualiza las cantidades de un producto en las cartas
     const actualizarCantidad = (indice: number, nuevaCantidad: number) => {
-        console.log("Actualizo la cantidad")
-        if(nuevaCantidad > 0){
+
+        if (nuevaCantidad > 0) {
             setLocalStorageValues((prevProductos) => {
                 const nuevosProductos = [...prevProductos];
                 nuevosProductos[indice].cantidad = nuevaCantidad;
                 return nuevosProductos;
             });
-        }else{
+        } else {
             eliminarProducto(indice);
         }
 
     };
 
 
-    const handleNavClick = async(e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
-        e.preventDefault(); 
+    const handleNavClick = async (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
+        e.preventDefault();
         await ChequearCantidadesProductos();
-      };
-    
+    };
 
-      useEffect(() => {
-if(!chequeandoStockDisponible) {
-        if(cantidadModificada != null){
-            if(cantidadModificada == true){
-                //alert("Se cambiaron las cantidades")
-                setCantidadModificada(null);
-            }else{
-                if(isAuthenticated){
-                    console.log("Authenticated");
-                    var state = { valorTotal, localStorageValues }
-                    navigate("/checkout", {state});
-                    
-                }else{
-                    console.log("Not authenticated");
-                    // Si no se modificaron los productos
-                    loginWithRedirect({
-                        authorizationParams: {
-                        screen_hint: 'signup',
-                        redirect_uri: 'http://localhost/informacionAdicional',
-                        },
-                    });
+
+    useEffect(() => {
+        if (!chequeandoStockDisponible) {
+            if (cantidadModificada != null) {
+                if (cantidadModificada == true) {
+                    //alert("Se cambiaron las cantidades")
+                    setCantidadModificada(null);
+                } else {
+                    if (isAuthenticated) {
+                        console.log("Authenticated");
+                        var state = { valorTotal, localStorageValues }
+                        navigate("/checkout", { state });
+
+                    } else {
+                        console.log("Not authenticated");
+                        // Si no se modificaron los productos
+                        loginWithRedirect({
+                            authorizationParams: {
+                                screen_hint: 'signup',
+                                redirect_uri: 'http://localhost/informacionAdicional',
+                            },
+                        });
+                    }
+                    setChequeandoStockDisponible(null);
                 }
-                setChequeandoStockDisponible(null);
+                setCantidadModificada(null);
+
             }
-            setCantidadModificada(null); 
-
         }
-    }
-    
-      }, [cantidadModificada])
 
-    const ChequearCantidadesProductos = async() => {
-        setChequeandoStockDisponible(true); 
-        const validationPromises =localStorageValues.map(async (producto, index) => (
+    }, [cantidadModificada])
+
+    const ChequearCantidadesProductos = async () => {
+        setChequeandoStockDisponible(true);
+        const validationPromises = localStorageValues.map(async (producto, index) => (
             await ValidarCantidad(producto, index)
-            
+
         ));
         await Promise.all(validationPromises);
-        console.log("Termine las promesas "+ cantidadModificada)
-        setChequeandoStockDisponible(false); 
+
+        setChequeandoStockDisponible(false);
 
     };
 
     useEffect(() => {
-        if(chequeandoStockDisponible != null){
-            if(!chequeandoStockDisponible){
-                if(cantidadModificada == null){
+        if (chequeandoStockDisponible != null) {
+            if (!chequeandoStockDisponible) {
+                if (cantidadModificada == null) {
                     setCantidadModificada(false);
                 }
 
@@ -101,14 +101,16 @@ if(!chequeandoStockDisponible) {
     }, [chequeandoStockDisponible])
 
     //01062024 - PF
-    const ValidarCantidad = async(producto: ProductoParaPedido, index: number) => {
-        console.log("Pasando por el chequeo de producto")
-        if(producto.producto.esManufacturado){
-            const cantidadProducto = await prodSrv.TraerStockProducto(producto.producto, rol)
-        
+    const ValidarCantidad = async (producto: ProductoParaPedido, index: number) => {
 
-            if(cantidadProducto < producto.cantidad){
-                console.log("Paso por la modificacion de la cantidad")
+        console.log("EL STOCK ES DE "+producto.producto.stock);
+        console.log("MANUFACTURADO "+producto.producto.esManufacturado)
+        if (producto.producto.esManufacturado) {
+            const cantidadProducto = await prodSrv.TraerStockProducto(producto.producto, rol)
+
+
+            if (cantidadProducto < producto.cantidad) {
+
                 //Mostrar mensaje de "lo sentimos"
                 setCantidadModificada(true);
                 setMostrarModalFalloValidacion(true);
@@ -116,6 +118,16 @@ if(!chequeandoStockDisponible) {
                 //Modificar la cantidad para que se ajuste a la cantidad que tenemos
                 actualizarCantidad(index, cantidadProducto);
 
+            }
+        } else {
+            console.log("PASANDO POR PRODUCTO NO MANUFACTURADO, EL STOCK ES DE "+producto.producto.stock)
+            if (producto.producto.stock < producto.cantidad) {
+                //Mostrar mensaje de "lo sentimos"
+                setCantidadModificada(true);
+                setMostrarModalFalloValidacion(true);
+
+                //Modificar la cantidad para que se ajuste a la cantidad que tenemos
+                actualizarCantidad(index, producto.producto.stock);
             }
         }
     }
@@ -173,12 +185,12 @@ if(!chequeandoStockDisponible) {
                     <div className="my-4 d-flex justify-content-evenly align-items-center">
                         <div className="mx-5"></div>
 
-                            <a
+                        <a
                             className="px-5 py-2 btn btn-add-order d-flex"
                             onClick={(e) => handleNavClick(e)}
-                            >
+                        >
                             Continuar
-                            </a>
+                        </a>
 
                         <div className="container-valor-total">
                             <span className="txt-Total">Total: </span>

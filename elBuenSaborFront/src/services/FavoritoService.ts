@@ -80,4 +80,28 @@ export class FavoritoService extends ServiceBasicos {
     }
   }
 
+
+  async traerProductoFavorito(id: number){
+    try {
+      let res = await fetch(this.url + "/getProductoFavorito/"+id, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      if (!res.ok) {
+        throw { res };
+      }
+
+      let jsonRes = await res.json();
+      return jsonRes;
+
+    } catch (err: any) {
+      console.log(err);
+
+    }
+  }
+
+
+
 }

@@ -7,7 +7,7 @@ import { NavLink, Outlet, useNavigate } from 'react-router-dom';
 import { useAuth0 } from '@auth0/auth0-react';
 import { useUnidadContext } from '../../context/GlobalContext';
 import { ProductoService } from '../../services/ProductoService';
-
+import ModalFalloValidacionStock  from '../../components/ModalFalloValidacionStock';
 export const Cart = () => {
 
     const { rol } = useUnidadContext();
@@ -18,6 +18,7 @@ export const Cart = () => {
     const [chequeandoStockDisponible, setChequeandoStockDisponible] = useState<boolean | null>(null)
     const navigate = useNavigate();
     const prodSrv = new ProductoService();
+    const [modalIsOpen, setModalIsOpen] = useState(false);
 
     //Para saber si el usuario esta logueado
     const { isAuthenticated, loginWithRedirect } = useAuth0()
@@ -48,13 +49,13 @@ export const Cart = () => {
 if(!chequeandoStockDisponible) {
         if(cantidadModificada != null){
             if(cantidadModificada == true){
-                alert("Se cambiaron las cantidades")
+                setModalIsOpen(true);
                 setCantidadModificada(null);
             }else{
                 if(isAuthenticated){
                     var state = { valorTotal, localStorageValues }
-                    navigate("/checkout", {state});
-                    
+                    //navigate("/checkout", {state});
+                    console.log("prueba ")
                 }else{
                     // Si no se modificaron los productos
                     loginWithRedirect({
@@ -148,6 +149,11 @@ if(!chequeandoStockDisponible) {
     }, [localStorageValues])
 
 
+    const closeModal = () => {
+        setModalIsOpen(false);
+      };
+    
+
     return (
         <>
 
@@ -186,7 +192,7 @@ if(!chequeandoStockDisponible) {
 
 
             </GenericContainer>
-
+            {modalIsOpen && <ModalFalloValidacionStock cerrarModal={closeModal} />}
         </>
     )
 

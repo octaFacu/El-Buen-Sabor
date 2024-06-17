@@ -9,6 +9,7 @@ import "../../css/favoritos.css";
 import { PageProyeccionHistorialPedido } from "../../context/interfaces/Proyecciones/ProyeccionHistorialPedidoCliente";
 import Paginacion from "../genericos/Paginacion";
 import { useUnidadContext } from "../../context/GlobalContext";
+import { ProductoParaPedido } from "../../context/interfaces/interfaces";
 
 interface Props {
   usuario: Usuario;
@@ -26,10 +27,10 @@ export default function MisFavoritosComponent({ usuario }: Props) {
   const { rol } = useUnidadContext();
 
   const traerFavorito = async (pageNumber: number) => {
-    await servicioCliente.getClienteByUsuarioId(usuario.id,rol);
+    await servicioCliente.getClienteByUsuarioId(usuario.id, rol);
 
     const prod = await servicioFavorito.getFavoritosDeUsuario(
-      await servicioCliente.getIdCliente(usuario.id,rol),
+      await servicioCliente.getIdCliente(usuario.id, rol),
       5,
       pageNumber
     );
@@ -43,6 +44,40 @@ export default function MisFavoritosComponent({ usuario }: Props) {
   useEffect(() => {
     traerFavorito(page);
   }, [productos]);
+
+  const handleOnClick = async (productoId: number) => {
+    try {
+      const producto = await servicioFavorito.traerProductoFavorito(productoId);
+
+      const storedCartItems = localStorage.getItem("carritoArreglo");
+      let LocalStorageValues: ProductoParaPedido[] = [];
+
+      if (storedCartItems) {
+        LocalStorageValues = JSON.parse(storedCartItems);
+      }
+
+      if (producto != undefined && producto != null) {
+        let seteado = false;
+
+        // Verificar si el producto ya está en el carrito
+        LocalStorageValues = LocalStorageValues.map((item) => {
+          if (item.producto.id === producto.id) {
+            seteado = true;
+            if (item.cantidad < 10) {
+              return { ...item, cantidad: item.cantidad + 1 };
+            }
+          }
+          return item;
+        });
+        if (!seteado) {
+          LocalStorageValues.push({ producto, cantidad: 1 });
+        }
+        console.log(producto);
+      }
+    } catch (err) {
+      console.error("Error: " + err);
+    }
+  };
 
   return (
     <div className="container text-center" style={{ marginTop: "3.2rem" }}>
@@ -74,7 +109,7 @@ export default function MisFavoritosComponent({ usuario }: Props) {
                           onMouseEnter={() => setHoveredProductId(producto.id)}
                           onMouseLeave={() => setHoveredProductId(null)}
                           onClick={() =>
-                            servicioFavorito.deleteEntity(producto.id,rol)
+                            servicioFavorito.deleteEntity(producto.id, rol)
                           }
                         >
                           <i className="material-icons iconos">
@@ -87,7 +122,9 @@ export default function MisFavoritosComponent({ usuario }: Props) {
                           className="SeparacionEntreIconos"
                           onMouseEnter={() => setHoverCartIcon(producto.id)}
                           onMouseLeave={() => setHoverCartIcon(null)}
-                          onClick={() => console.log(producto)}
+                          onClick={() => {
+                            handleOnClick(producto.idProducto);
+                          }}
                         >
                           <i
                             className={`material-icons iconos ${

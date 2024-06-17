@@ -109,7 +109,7 @@ export default function EmpleadoModal({ show, onHide, empleado, actualizarEmplea
                         <div className="row">
                             <div className="col">
                                 <div className="form-group">
-                                    <label htmlFor="nombre">Nombre:</label>
+                                    <label  className="fw-bold" htmlFor="nombre">Nombre: </label>
                                     <input type="text" className="form-control text-white" id="nombre" value={datosEmpleado.nombre} onChange={handleInputChange} />
                                 </div>
                             </div>

@@ -20,28 +20,33 @@ export default function HistorialClienteAdmin() {
   const location = useLocation();
   const { startDate, endDate } = location.state || {};
 
+
+  const parsedClienteId = clienteId ? parseInt(clienteId, 10) : 0;
+
+
   const traerHistorialPedidos = async (pageNumber: number) => {
     try {
       const servicioPedido = new ClienteService();
       if (startDate !== null && endDate !== null) {
         const historialFiltrado = await servicioPedido.getPedidosUsuario(
-          parseInt(clienteId ?? '0'),
+          rol,
+          parsedClienteId,
           pageNumber,
           1,
           startDate,
-          endDate, rol
+          endDate
         );
 
         setHistorial(historialFiltrado);
       } else {
         
         const historial = await servicioPedido.getPedidosUsuario(
-          parseInt(clienteId ?? '0'),
+          rol,
+          parsedClienteId,
           pageNumber,
           undefined,
           null,
-          null,    
-          rol
+          null
         );
         setHistorial(historial);
       }

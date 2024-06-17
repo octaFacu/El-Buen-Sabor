@@ -39,23 +39,15 @@ export default function CardEmpleados({ empleado, actualizarEmpleado }: Props) {
   return (
     <div className="card card-cliente">
       <div className="card-body d-inline-flex justify-content-between">
-        <p className="card-text">Nombre:{empleado.nombre}</p>
-        <p className="card-text">Email: {empleado.email}</p>
-        <p className="card-text">
+        <p className="card-text  fw-bold">Nombre: {empleado.nombre}</p>
+        <p className="card-text fw-bold">Email: {empleado.email}</p>
+        <p className="card-text fw-bold">
           Roles: {empleado.nombreRol ? empleado.nombreRol : "Sin rol asignado"}
         </p>
         <div>
           <button className="btn-ModEmpleado text-center" onClick={() => mostrarModal()}>
             Ver
           </button>
-
-          <button
-            className={` text-center ms-2 ${empleado.activo ? 'btn-DesactivarEmpleado' : 'btn-habilitado'}`}
-            onClick={() => habilitar_Deshabilitar()}
-          >
-            {empleado.activo ? "Deshabilitar" : "Habilitar"}
-          </button>
-
 
         </div>
       </div>

@@ -60,6 +60,7 @@ export interface proyeccionProductoFavorito{
   id: number;
   imagen: string;
   denominacion: string;
+  idProducto: number;
 }
 
 export interface ExcepcionesVerificaUsuario{

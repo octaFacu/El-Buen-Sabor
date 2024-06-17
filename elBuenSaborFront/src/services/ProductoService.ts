@@ -44,7 +44,6 @@ export class ProductoService extends ServiceBasicos {
 
   async saveIngredienteProd(ingredienteProd: IngredienteDeProducto, rol: string){
 
-    console.log("Ingrediente pasado al servicio: " + JSON.stringify(ingredienteProd));
 
 
         try{    
@@ -281,7 +280,7 @@ export class ProductoService extends ServiceBasicos {
     }
 
     try {
-      console.log("ENTRANDO A CREAR METHOD SERVICE " + JSON.stringify(nuevoProducto));
+      
       let res = await fetch(this.url, {
         method: "POST",
         headers: {
@@ -298,8 +297,6 @@ export class ProductoService extends ServiceBasicos {
       let jsonRes = await res.json();
 
       if (nuevoProducto.esManufacturado === true) {
-        console.log("Rol: " + rol);
-        console.log("NUEVOS INGREDIENTES: ")
 
         for (var ingr of ing) {
           console.log(ingr.idIngrediente);

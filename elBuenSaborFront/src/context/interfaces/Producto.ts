@@ -13,6 +13,7 @@ export class Producto {
   precioTotal: number = 0;
   categoriaProducto: CategoriaProducto = { id: undefined, denominacion: "", activo: true };
   ingredientes?: Ingrediente[];
+  stock: number;
 
 
 
@@ -25,6 +26,7 @@ export class Producto {
     this.descripcion = '';
     this.receta = '';
     this.costoTotal = 0;
+    this.stock = 0;
     this.imagen = '';
     this.precioTotal = 0;
     this.categoriaProducto = { id: undefined, denominacion: '', activo: true };

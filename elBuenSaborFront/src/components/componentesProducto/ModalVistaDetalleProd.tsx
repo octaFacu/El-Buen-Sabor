@@ -88,6 +88,9 @@ const ModalVistaDetalleProd: React.FunctionComponent<ModalVistaDetalleProps> = (
                             <h4>$ {producto.precioTotal.toString()}</h4>
                             <h4>Costo: ${producto.costoTotal.toString()}</h4>
                             <h4>Descripcion:</h4> <p>{producto.descripcion}</p>
+                            {(!producto.esManufacturado || producto.receta == null) &&
+                                <h4>Stock: {producto.stock!.toString()}</h4>
+                            }
 
                             {producto.esManufacturado && producto.receta != "" && producto.receta != null &&
                                 <div>

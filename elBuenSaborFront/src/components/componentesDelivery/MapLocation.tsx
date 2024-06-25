@@ -22,7 +22,7 @@ const MapLocation: React.FC<MapProps> = ({ direccion, id }) => {
     }
 
     if (!mapRef.current) {
-      const direccionString = `${direccion.nroCasa} ${direccion.calle}, Luján de Cuyo, Mendoza, Argentina`;
+      const direccionString = `${direccion.nroCasa} ${direccion.calle}, Mendoza, Mendoza, Argentina`;
 
       // Create a new map instance
       const map = L.map(mapContainerId).setView([0, 0] as LatLngTuple, 13);

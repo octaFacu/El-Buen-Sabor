@@ -21,6 +21,8 @@ const ModalEdicionDireccion: React.FC<ModalProps> = ({
 
 
   const handleSubmit = async () => {
+
+    if(direc.calle.trim() != '' && direc.nroCasa != null) {
     const servicioDireccion = new DireccionService();
     const usuarioId = direc.usuario.id;
     try {
@@ -38,6 +40,7 @@ const ModalEdicionDireccion: React.FC<ModalProps> = ({
         alert(error.msj);
       }
     }
+  }
   };
 
   useEffect(() => {
@@ -49,7 +52,7 @@ const ModalEdicionDireccion: React.FC<ModalProps> = ({
     
     const soloNumerosYLetrasConEspacios = /^[a-zA-Z0-9\s]*$/;
   
-    if (soloNumerosYLetrasConEspacios.test(value) && value.trim() !== '') {
+    if (soloNumerosYLetrasConEspacios.test(value)) {
       setDirec((prevDireccion) => ({ ...prevDireccion, [id]: value }));
     }
   };

@@ -232,11 +232,12 @@ export class ProductoService extends ServiceBasicos {
 
   async actualizarEntity(datos: any, ing: IngredienteDeProducto[], rol: string) {
     try {
+      console.log(JSON.stringify(datos));
       //Pasarle a la direccion con un put la info
       let res = await fetch(
-        this.url + `/${datos.id}`,
+        this.url + `/update`,
         {
-          method: "PUT",
+          method: "POST",
           headers: {
             "Content-Type": "application/json",
             'X-Role': rol
@@ -246,6 +247,7 @@ export class ProductoService extends ServiceBasicos {
       );
 
       if (!res.ok) {
+        console.log(JSON.stringify(res))
         throw { status: res.status, statusText: res.statusText };
       }
 

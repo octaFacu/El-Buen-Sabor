@@ -42,7 +42,6 @@ const ModalVistaDetalleProd: React.FunctionComponent<ModalVistaDetalleProps> = (
             nuevoIng.idProducto = ingredientes[i].producto.id;
             nuevoIng.idMedida = ingredientes[i].unidadmedida.id;
 
-
             castIngredientes.push(nuevoIng);
         }
         console.log("Los ingredientes han sido cargados!");

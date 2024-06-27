@@ -137,9 +137,24 @@ export class ClienteService extends ServiceBasicos {
     } catch (err: any) {
       console.log(`Error ${err.status}: ${err.statusText}`);
     }
-
   }
   
-
+  
+  async deleteClienteByUsuarioId(idUsuario:string)  {
+    try {
+        const response = await fetch(`${this.url}/usuario/${idUsuario}`, {
+            method: 'DELETE',
+        });
+        
+        if (!response.ok) {
+            throw new Error('Error eliminando el cliente');
+        }
+  
+        return await response.json();
+    } catch (error) {
+        console.error('Error eliminando el cliente:', error);
+        throw error;
+    }
+  };
 
 }

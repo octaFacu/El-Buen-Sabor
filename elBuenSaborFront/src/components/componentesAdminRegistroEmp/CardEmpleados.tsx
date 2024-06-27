@@ -5,6 +5,8 @@ import EmpleadoModal from './EmpleadoModal';
 import '../../css/EmpleadoRegistro.css'
 import { ServiceBasicos } from '../../services/ServiceBasicos';
 import { useUnidadContext } from '../../context/GlobalContext';
+import { ClienteService } from '../../services/ClienteService';
+import ModalConfirmacion from "../componentesUsuarios/modales/ModalConfirmacion";
 
 interface Props {
   empleado: Usuario;
@@ -15,7 +17,10 @@ export default function CardEmpleados({ empleado, actualizarEmpleado }: Props) {
 
 
   const servicio = new ServiceBasicos("usuario");
+  const servicioCliente = new ClienteService();
 
+
+  const [modalConfirmacion, setModalConfirmacion] = useState<boolean>(false);
   const [showModal, setShowModal] = useState(false);
 
   const mostrarModal = () => {
@@ -28,12 +33,15 @@ export default function CardEmpleados({ empleado, actualizarEmpleado }: Props) {
   }
   const { rol } = useUnidadContext();
 
-  const habilitar_Deshabilitar = () => {
-    // Realiza la modificación, por ejemplo, deshabilita o habilita al empleado
-    servicio.softDelete(empleado.id,rol);
-  
-    // Notifica al componente padre sobre la modificación
-    actualizarEmpleado({ ...empleado, activo: !empleado.activo });
+
+  const confirmarEliminar = async () => {
+    setModalConfirmacion(false);
+    servicioCliente.deleteClienteByUsuarioId(empleado.id);
+    servicio.deleteEntity(empleado.id,rol);
+  };
+
+  const abrirModalConfirmacion = () => {
+    setModalConfirmacion(true);
   };
 
   return (
@@ -48,11 +56,26 @@ export default function CardEmpleados({ empleado, actualizarEmpleado }: Props) {
           <button className="btn-ModEmpleado text-center" onClick={() => mostrarModal()}>
             Ver
           </button>
+          <button
+            className={` text-center ms-2 ${empleado.activo ? 'btn-DesactivarEmpleado' : 'btn-habilitado'}`}
+            onClick={() => abrirModalConfirmacion()}
+          >
+           Eliminar
+          </button>
+        
 
         </div>
       </div>
       {showModal && (
         <EmpleadoModal show={showModal} onHide={closeModal} empleado={empleado}   actualizarEmpleado={actualizarEmpleado}/>
+      )}
+       {modalConfirmacion && (
+        <ModalConfirmacion
+          mostrarModal={modalConfirmacion}
+          cerrarModal={() => setModalConfirmacion(false)}
+          confirmar={() => confirmarEliminar()}
+          recarga={true}
+        />
       )}
     </div>
   )

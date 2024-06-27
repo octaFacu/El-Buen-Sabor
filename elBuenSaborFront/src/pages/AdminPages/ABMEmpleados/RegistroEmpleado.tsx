@@ -7,21 +7,20 @@ import Paginacion from "../../../components/genericos/Paginacion";
 import "../../../css/EmpleadoRegistro.css";
 import { useNavigate } from "react-router-dom";
 import PageLoader from "../../../components/pageLoader/PageLoader";
-import { useUnidadContext } from '../../../context/GlobalContext';
-
+import { useUnidadContext } from "../../../context/GlobalContext";
 
 export default function RegistroEmpleado() {
   const navigate = useNavigate();
-  const [empleados, setEmpleados] =
-    useState<PageProyeccionHistorialPedido<Usuario>>();
+  const [empleados, setEmpleados] = useState<PageProyeccionHistorialPedido<Usuario>>();
+
   const [page, setPage] = useState<number>(0);
   const { rol } = useUnidadContext();
 
   const traerEmpleados = async (pageNumber: number) => {
     const servicioUsuario = new AdminService();
-    setEmpleados(await servicioUsuario.traerEmpleado(pageNumber, 10, rol))
-  }
-
+    const empleados = await servicioUsuario.traerEmpleado(pageNumber, 10, rol);
+    setEmpleados(empleados);
+};
 
   useEffect(() => {
     traerEmpleados(page);
@@ -44,7 +43,6 @@ export default function RegistroEmpleado() {
         }
       );
 
-      // Devuelve una nueva copia del estado con la lista actualizada
       return { ...prevEmpleados, content: empleadosActualizados };
     });
   };
@@ -56,6 +54,8 @@ export default function RegistroEmpleado() {
     navigate(-1);
   };
 
+
+  
   return (
     <div className="container mx-auto">
       <div className="card card-EmpleadoReg ancho-card">
@@ -87,14 +87,14 @@ export default function RegistroEmpleado() {
           </div>
         </div>
         {empleados.content.length > 0 && (
-        <Paginacion
-          page={empleados.pageable.pageNumber}
-          setPage={actualizarPagina}
-          totalPages={empleados.totalPages}
-          size={empleados.size}
-        />
-      )}
+          <Paginacion
+            page={empleados.pageable.pageNumber}
+            setPage={actualizarPagina}
+            totalPages={empleados.totalPages}
+            size={empleados.size}
+          />
+        )}
       </div>
     </div>
   );
-}  
+}

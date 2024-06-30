@@ -10,7 +10,7 @@ import { PageProyeccionHistorialPedido } from "../../context/interfaces/Proyecci
 import Paginacion from "../genericos/Paginacion";
 import { useUnidadContext } from "../../context/GlobalContext";
 import { ProductoParaPedido } from "../../context/interfaces/interfaces";
-
+import   CartNotification from '../Landing/cartNotification/CartNotification';
 interface Props {
   usuario: Usuario;
 }
@@ -21,7 +21,8 @@ export default function MisFavoritosComponent({ usuario }: Props) {
   const [hoveredProductId, setHoveredProductId] = useState<number | null>(null);
   const [hoverCartIcon, setHoverCartIcon] = useState<number | null>(null);
   const [page, setPage] = useState<number>(0);
-
+  const [showNotification, setShowNotification] = useState(false);
+  const [notificationMessage, setNotificationMessage] = useState('');
   const servicioFavorito = new FavoritoService();
   const servicioCliente = new ClienteService();
   const { rol } = useUnidadContext();
@@ -48,17 +49,17 @@ export default function MisFavoritosComponent({ usuario }: Props) {
   const handleOnClick = async (productoId: number) => {
     try {
       const producto = await servicioFavorito.traerProductoFavorito(productoId);
-
+  
       const storedCartItems = localStorage.getItem("carritoArreglo");
       let LocalStorageValues: ProductoParaPedido[] = [];
-
+  
       if (storedCartItems) {
         LocalStorageValues = JSON.parse(storedCartItems);
       }
-
+  
       if (producto != undefined && producto != null) {
         let seteado = false;
-
+  
         // Verificar si el producto ya está en el carrito
         LocalStorageValues = LocalStorageValues.map((item) => {
           if (item.producto.id === producto.id) {
@@ -69,15 +70,22 @@ export default function MisFavoritosComponent({ usuario }: Props) {
           }
           return item;
         });
+  
         if (!seteado) {
           LocalStorageValues.push({ producto, cantidad: 1 });
         }
+  
+        // Guardar el carrito actualizado en el localStorage
+        localStorage.setItem("carritoArreglo", JSON.stringify(LocalStorageValues));
+        setNotificationMessage(`Producto ${producto.denominacion} agregado al carrito`);
+        setShowNotification(true);
         console.log(producto);
       }
     } catch (err) {
       console.error("Error: " + err);
     }
   };
+  
 
   return (
     <div className="container text-center" style={{ marginTop: "3.2rem" }}>
@@ -149,6 +157,7 @@ export default function MisFavoritosComponent({ usuario }: Props) {
           )}
         </div>
       </div>
+      <CartNotification mensaje={notificationMessage} show={showNotification}  btnCart={true}      />
     </div>
   );
 }

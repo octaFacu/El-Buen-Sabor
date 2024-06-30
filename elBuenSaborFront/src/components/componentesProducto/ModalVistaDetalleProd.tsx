@@ -31,7 +31,7 @@ const ModalVistaDetalleProd: React.FunctionComponent<ModalVistaDetalleProps> = (
 
         for (let i = 0; i < ingredientes.length; i++) {
 
-            console.log(JSON.stringify(ingredientes[i]));
+            //console.log(JSON.stringify(ingredientes[i]));
 
 
             let nuevoIng: IngredienteDeProducto = new IngredienteDeProducto();

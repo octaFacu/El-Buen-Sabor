@@ -10,13 +10,15 @@ import { Usuario } from "../../context/interfaces/interfaces";
 import PageLoader from "../../components/pageLoader/PageLoader";
 import { useUnidadContext } from "../../context/GlobalContext";
 
-import { BrowserRouter, Route, NavLink } from "react-router-dom";
+import { BrowserRouter, Route, NavLink, useLocation } from "react-router-dom";
 
 interface props {
   opcion: number;
 }
 
 export default function InformacionUsuario({ opcion }: props) {
+
+  const location = useLocation();
   const [boton, setBoton] = useState<number | null>(null);
   const { rol } = useUnidadContext();
   const [usuario, setUsuario] = useState<Usuario>({
@@ -40,19 +42,6 @@ export default function InformacionUsuario({ opcion }: props) {
       const id = await traerId();
       const usuarioGuardado = await servicioUsuarios.getOne(id, rol);
       setUsuario(usuarioGuardado);
-
-      switch (window.location.pathname) {
-        case "/usuarios/MiCuenta":
-          return setBoton(1);
-        case "/usuarios/MisDirecciones":
-          return setBoton(2);
-        case "/usuarios/MisPedidos":
-          return setBoton(3);
-        case "/usuarios/MisFavoritos":
-          return setBoton(4);
-        default:
-          return setBoton(1);
-      }
     } catch (error) {
       console.error(error);
     }
@@ -66,6 +55,21 @@ export default function InformacionUsuario({ opcion }: props) {
       return "4";
     }
   };
+
+  useEffect(() => {
+    switch (location.pathname) {
+      case "/usuarios/MiCuenta":
+        return setBoton(1);
+      case "/usuarios/MisDirecciones":
+        return setBoton(2);
+      case "/usuarios/MisPedidos":
+        return setBoton(3);
+      case "/usuarios/MisFavoritos":
+        return setBoton(4);
+      default:
+        return setBoton(1);
+    }
+  }, [location.pathname]);
 
   useEffect(() => {
     if (!isLoading) {

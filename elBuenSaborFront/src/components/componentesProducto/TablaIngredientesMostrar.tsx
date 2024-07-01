@@ -19,83 +19,57 @@ const TablaIngredientesMostrar: React.FC<TablaIngredientesProdProps> = ({
   productoId,
 }) => {
   const ingredienteService = new IngredientesService();
-  const [isLoading, setIsLoading] = useState(true);
   const medidas = new ServiceBasicos("unidadDeMedida");
-  const [ingNombre, setIngNombre] = useState<string[]>([]);
-  const [medidaNombre, setMedidaNombre] = useState<string[]>([]);
-  const [ingredientes, setIngredientes] =useState<ProyeccionIngredienteDetalle[]>([]);
-
+  const [isLoading, setIsLoading] = useState(true);
+  const [ingredientes, setIngredientes] = useState<ProyeccionIngredienteDetalle[]>([]);
   const { rol } = useUnidadContext();
 
-  //Get the names of the objects related to the ingredienteProd
   const getNamesMembers = async (ing: IngredienteDeProducto) => {
+    const ingrediente: ProyeccionIngredienteDetalle = new ProyeccionIngredienteDetalle();
+    ingrediente.id = ing.id!;
+    ingrediente.cantidad = ing.cantidad;
+
     try {
-      // const ingredienteData = await ingredienteService.getOne(ing.ingrediente);
-      // setIngNombre((prevIngNombre) => [...prevIngNombre, ingredienteData.nombre]);
+      const ingredienteData = await ingredienteService.getOne(ing.idIngrediente as number, rol);
+      ingrediente.denominacion = ingredienteData.nombre;
 
-      // const medidaData = await medidas.getOne(ing.unidadMedida);
-      // setMedidaNombre((prevMedidaNombre) => [...prevMedidaNombre, medidaData.denominacion]);
-      var ingrediente: ProyeccionIngredienteDetalle = new ProyeccionIngredienteDetalle;
-      
-      ingrediente.id = ing.id!;
-      ingrediente.cantidad = ing.cantidad;
-      ingredienteService
-        .getOne(ing.idIngrediente as number, rol)
-        .then((ingredienteData) => {
-          ingrediente.denominacion =  ingredienteData.nombre
-        });
+      const medidaData = await medidas.getOne(ing.idMedida as number, rol);
+      ingrediente.medida = medidaData.denominacion;
 
-      medidas.getOne(ing.idMedida as number, rol).then((medidaData) => {
-        ingrediente.medida = medidaData.denominacion;
-      });
-      setIngredientes([...ingredientes, ingrediente]);
+      return ingrediente;
     } catch (error) {
-      // Handle any errors that might occur during the API calls
       console.error("Error fetching data:", error);
+      return null;
     }
   };
 
   useEffect(() => {
-    // Fetch data when the component mounts or when ingredienteProdList changes
-    setIngNombre([]);
-    setMedidaNombre([]);
+    const fetchIngredientes = async () => {
+      const fetchedIngredientes = await Promise.all(
+        ingredientesProd.map(async (ingredienteProd) => {
+          const fetchedIngrediente = await getNamesMembers(ingredienteProd);
+          return fetchedIngrediente;
+        })
+      );
+
+      setIngredientes(fetchedIngredientes.filter(Boolean) as ProyeccionIngredienteDetalle[]);
+      setIsLoading(false);
+    };
+
     if (ingredientesProd.length > 0) {
+      fetchIngredientes();
+    } else {
       setIsLoading(false);
     }
-
-    ingredientesProd.forEach((ingredienteProd) => {
-      console.log("ingrediente: ");
-      console.log(JSON.stringify(ingredienteProd));
-
-      if (ingredientesProd.length > 0) {
-        getNamesMembers(ingredienteProd);
-        console.log(ingredientes);
-      }
-
-      //  if(productoId !== ingredienteProd.idProducto){
-      //     setIngredientesProd([]);
-      //  }
-    });
   }, [ingredientesProd]);
-
-  useEffect(()=>{
-    if (ingredientes.length > 0) {
-      setIsLoading(false);
-    }
-  },[ingredientes])
 
   const handleRemoveIngredient = (index: number) => {
     const updatedIngredientesProd = [...ingredientesProd];
-
     updatedIngredientesProd.splice(index, 1);
-
     setIngredientesProd(updatedIngredientesProd);
   };
 
-  if (
-    (ingredientesProd.length === 0 ||
-      ingredientes.length === 0 &&
-    edicion == false)) {
+  if (isLoading) {
     return <div>Cargando ingredientes...</div>;
   }
 
@@ -130,9 +104,7 @@ const TablaIngredientesMostrar: React.FC<TablaIngredientesProdProps> = ({
                 <td>
                   <button
                     className="btn btn-danger"
-                    onClick={() => {
-                      handleRemoveIngredient(index);
-                    }}
+                    onClick={() => handleRemoveIngredient(index)}
                   >
                     <i
                       className="material-icons"

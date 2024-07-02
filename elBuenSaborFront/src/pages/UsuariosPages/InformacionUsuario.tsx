@@ -42,6 +42,7 @@ export default function InformacionUsuario({ opcion }: props) {
       const id = await traerId();
       const usuarioGuardado = await servicioUsuarios.getOne(id, rol);
       setUsuario(usuarioGuardado);
+
     } catch (error) {
       console.error(error);
     }
@@ -57,18 +58,21 @@ export default function InformacionUsuario({ opcion }: props) {
   };
 
   useEffect(() => {
-    switch (location.pathname) {
-      case "/usuarios/MiCuenta":
-        return setBoton(1);
-      case "/usuarios/MisDirecciones":
-        return setBoton(2);
-      case "/usuarios/MisPedidos":
-        return setBoton(3);
-      case "/usuarios/MisFavoritos":
-        return setBoton(4);
-      default:
-        return setBoton(1);
+    if (usuario) {
+      switch (location.pathname) {
+        case "/usuarios/MiCuenta":
+          return setBoton(1);
+        case "/usuarios/MisDirecciones":
+          return setBoton(2);
+        case "/usuarios/MisPedidos":
+          return setBoton(3);
+        case "/usuarios/MisFavoritos":
+          return setBoton(4);
+        default:
+          return setBoton(1);
+      }
     }
+
   }, [location.pathname]);
 
   useEffect(() => {
@@ -95,92 +99,91 @@ export default function InformacionUsuario({ opcion }: props) {
     return <PageLoader />; // Se podria cambiar poner algun snippet o algo para indicar la carga de una mejor manera
   }
 
-  return (
-    <div className="container">
-      <div className="row mx-auto my-4">
-        <div className="col-md-4 col-sm-12 mt-md-5">
-          <div className="card-InfoUsu mt-md-5  pb-5 d-flex flex-column align-items-center">
-            <img
-              style={{ maxWidth: "200px", maxHeight: "200px" }}
-              src={user?.picture}
-              alt="Descripción de la imagen"
-              className="card-img-top rounded-circle card-img-custom mt-5"
-            />
-            <div className="card-body text-center  d-flex flex-column align-items-center w-100">
-              <h5 className="card-title">{usuario.nombre}</h5>
-              <p className="card-text">{user?.email}</p>
-              <NavLink
-                to="/usuarios/MiCuenta"
-                className="sinDecoracion text-white mr-2 mb-md-3 d-block w-100 "
-              >
-                <button
-                  className={`btn-tam text-white w-100 d-flex align-items-center justify-content-center ${
-                    boton === 1 ? "btn-activo" : ""
-                  }`}
-                  onClick={() => handleBoton(1)}
+  if (usuario.id != "") {
+    return (
+      <div className="container">
+        <div className="row mx-auto my-4">
+          <div className="col-md-4 col-sm-12 mt-md-5">
+            <div className="card-InfoUsu mt-md-5  pb-5 d-flex flex-column align-items-center">
+              <img
+                style={{ maxWidth: "200px", maxHeight: "200px" }}
+                src={user?.picture}
+                alt="Descripción de la imagen"
+                className="card-img-top rounded-circle card-img-custom mt-5"
+              />
+              <div className="card-body text-center  d-flex flex-column align-items-center w-100">
+                <h5 className="card-title">{usuario.nombre}</h5>
+                <p className="card-text">{user?.email}</p>
+                <NavLink
+                  to="/usuarios/MiCuenta"
+                  className="sinDecoracion text-white mr-2 mb-md-3 d-block w-100 "
                 >
-                  <i className="material-icons text-black tam-icono mr-2 text-white">
-                    face
-                  </i>{" "}
-                  Mi Cuenta
-                </button>
-              </NavLink>
+                  <button
+                    className={`btn-tam text-white w-100 d-flex align-items-center justify-content-center ${boton === 1 ? "btn-activo" : ""
+                      }`}
+                    onClick={() => handleBoton(1)}
+                  >
+                    <i className="material-icons text-black tam-icono mr-2 text-white">
+                      face
+                    </i>{" "}
+                    Mi Cuenta
+                  </button>
+                </NavLink>
 
-              <NavLink
-                to="/usuarios/MisDirecciones"
-                className="sinDecoracion text-white mr-2 mb-md-3 d-block w-100 "
-              >
-                <button
-                  className={`btn-tam text-white w-100 d-flex align-items-center justify-content-center ${
-                    boton === 2 ? "btn-activo" : ""
-                  }`}
-                  onClick={() => handleBoton(2)}
+                <NavLink
+                  to="/usuarios/MisDirecciones"
+                  className="sinDecoracion text-white mr-2 mb-md-3 d-block w-100 "
                 >
-                  <i className="material-icons text-black tam-icono mr-2 text-white">
-                    location_on
-                  </i>{" "}
-                  Mis Direcciones
-                </button>
-              </NavLink>
+                  <button
+                    className={`btn-tam text-white w-100 d-flex align-items-center justify-content-center ${boton === 2 ? "btn-activo" : ""
+                      }`}
+                    onClick={() => handleBoton(2)}
+                  >
+                    <i className="material-icons text-black tam-icono mr-2 text-white">
+                      location_on
+                    </i>{" "}
+                    Mis Direcciones
+                  </button>
+                </NavLink>
 
-              <NavLink
-                to="/usuarios/MisPedidos"
-                className="sinDecoracion text-white mr-2 mb-md-3 d-block w-100 "
-              >
-                <button
-                  className={`btn-tam text-white w-100 d-flex align-items-center justify-content-center ${
-                    boton === 3 ? "btn-activo" : ""
-                  }`}
-                  onClick={() => handleBoton(3)}
+                <NavLink
+                  to="/usuarios/MisPedidos"
+                  className="sinDecoracion text-white mr-2 mb-md-3 d-block w-100 "
                 >
-                  <i className="material-icons text-black tam-icono mr-2 text-white">
-                    local_dining
-                  </i>{" "}
-                  Mis Pedidos
-                </button>
-              </NavLink>
+                  <button
+                    className={`btn-tam text-white w-100 d-flex align-items-center justify-content-center ${boton === 3 ? "btn-activo" : ""
+                      }`}
+                    onClick={() => handleBoton(3)}
+                  >
+                    <i className="material-icons text-black tam-icono mr-2 text-white">
+                      local_dining
+                    </i>{" "}
+                    Mis Pedidos
+                  </button>
+                </NavLink>
 
-              <NavLink
-                to="/usuarios/MisFavoritos"
-                className="sinDecoracion text-white mr-2 mb-md-3 d-block w-100 "
-              >
-                <button
-                  className={`btn-tam text-white w-100 d-flex align-items-center justify-content-center ${
-                    boton === 4 ? "btn-activo" : ""
-                  }`}
-                  onClick={() => handleBoton(4)}
+                <NavLink
+                  to="/usuarios/MisFavoritos"
+                  className="sinDecoracion text-white mr-2 mb-md-3 d-block w-100 "
                 >
-                  <i className="material-icons text-black tam-icono mr-2 text-white">
-                    favorite_border
-                  </i>{" "}
-                  Mis Favoritos
-                </button>
-              </NavLink>
+                  <button
+                    className={`btn-tam text-white w-100 d-flex align-items-center justify-content-center ${boton === 4 ? "btn-activo" : ""
+                      }`}
+                    onClick={() => handleBoton(4)}
+                  >
+                    <i className="material-icons text-black tam-icono mr-2 text-white">
+                      favorite_border
+                    </i>{" "}
+                    Mis Favoritos
+                  </button>
+                </NavLink>
+              </div>
             </div>
           </div>
+          <div className="col-md-8 col-sm-12">{renderCard()}</div>
         </div>
-        <div className="col-md-8 col-sm-12">{renderCard()}</div>
       </div>
-    </div>
-  );
+    );
+  }
+
 }

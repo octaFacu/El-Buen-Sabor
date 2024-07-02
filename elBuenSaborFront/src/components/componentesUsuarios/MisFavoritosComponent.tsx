@@ -43,8 +43,10 @@ export default function MisFavoritosComponent({ usuario }: Props) {
   };
 
   useEffect(() => {
-    traerFavorito(page);
-  }, [productos]);
+    if(rol && usuario){
+      traerFavorito(page);
+    }
+  }, [productos, rol]);
 
   const handleOnClick = async (productoId: number) => {
     try {

@@ -12,8 +12,8 @@ interface PaginacionProps {
 
 const Paginacion: FunctionComponent<PaginacionProps> = ({ page, setPage, totalPages }) => {
 
-    const isFirstPage = page === 0;
-    const isLastPage = page === totalPages - 1;
+    const isFirstPage = page === 0 || Number.isNaN(page) ? true : false;
+    const isLastPage = page === totalPages - 1 || Number.isNaN(page) ? false : true;
 
     const goToFirstPage = () => {
         if (!isFirstPage) {

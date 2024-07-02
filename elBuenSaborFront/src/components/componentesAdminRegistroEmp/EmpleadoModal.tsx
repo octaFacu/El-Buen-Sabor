@@ -89,6 +89,7 @@ export default function EmpleadoModal({ show, onHide, empleado, actualizarEmplea
         const empleadoModificado: Usuario = { ...datosEmpleado, nombreRol: nombreRol };
         actualizarEmpleado(empleadoModificado);
         serviceEmp.updateEntity(empleadoModificado, rol);
+        onHide();
     }
 
     const BorrarEmpleado = async () => {
